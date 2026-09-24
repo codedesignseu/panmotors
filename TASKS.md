@@ -44,7 +44,7 @@ Tick each task when it is done and checked in the browser.
 ## 5. SEO, GEO and extra pages
 - [ ] `inc/schema.php`: JSON-LD graph from options (AutoDealer, WebSite, WebPage, FAQPage)
 - [ ] Skip link, `lang`, landmarks, heading outline checked
-- [ ] Preload hero poster and main fonts
+- [x] Preload hero poster and main fonts
 - [ ] robots.txt rules and optional `llms.txt`
 - [ ] `page.php` with H1, breadcrumb and WebPage schema, used for About, Aftercare, Visit (per D7) and Privacy/Cookies
 
