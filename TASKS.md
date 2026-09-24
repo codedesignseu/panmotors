@@ -24,9 +24,9 @@ Tick each task when it is done and checked in the browser.
 - [x] Demo content entered from `_design/` data so the page looks like the design
 
 ## 3. Header and footer
-- [ ] `header.php`: nav, logo, menu, contact pill, burger, mobile menu
-- [ ] `menu.js`
-- [ ] `footer.php` with dynamic year
+- [x] `header.php`: nav, logo, menu, contact pill, burger, mobile menu
+- [x] `menu.js`
+- [x] `footer.php` with dynamic year
 
 ## 4. Homepage sections (one per session)
 - [ ] Hero + `hero-video.js`
