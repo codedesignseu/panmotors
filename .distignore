@@ -6,3 +6,4 @@ CLAUDE.md
 .gitignore
 .distignore
 .DS_Store
+dev
