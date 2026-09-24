@@ -961,7 +961,9 @@ p {
 
 .pm-tile {
 	position: relative;
-	flex: 1 1 calc(25% - 11px);
+	/* Basis 0 (not the design's calc(25% - 11px)) so flex-grow has room to work:
+	   same widths at rest, and the hovered tile visibly widens. */
+	flex: 1 1 0;
 	min-width: 0;
 	max-width: calc(50% - 7px);
 	height: 620px;
@@ -1119,6 +1121,148 @@ p {
 	font-size: 14px;
 	line-height: 1.75;
 	opacity: .68;
+}
+
+/* About (home): background blends ink → paper while scrolling (heritage-fade.js). */
+.pm-about {
+	--fade: 0;
+	--tfade: 0;
+	background: color-mix(in oklab, var(--ink), var(--paper) calc(var(--fade) * 100%));
+	color: color-mix(in oklab, var(--paper), var(--ink) calc(var(--tfade) * 100%));
+	transition: background-color .12s linear, color .45s cubic-bezier(.4, 0, .2, 1);
+}
+
+.pm-about__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+	align-items: center;
+	gap: 48px;
+}
+
+.pm-about__media {
+	aspect-ratio: 4 / 5;
+}
+
+.pm-about__eyebrow {
+	margin-bottom: 26px;
+}
+
+.pm-about__title {
+	margin: 0 0 32px;
+	font-size: clamp(40px, 5.4vw, 88px);
+	line-height: .94;
+}
+
+.pm-about__text {
+	max-width: 46ch;
+	margin: 0 0 22px;
+	font-size: 16px;
+	line-height: 1.8;
+	opacity: .78;
+}
+
+.pm-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	margin-top: 38px;
+	padding-top: 30px;
+	border-top: 1px solid color-mix(in oklab, currentColor, transparent 72%);
+}
+
+.pm-stats__value {
+	font-family: var(--font-display);
+	font-size: clamp(30px, 2.6vw, 40px);
+	line-height: 1;
+}
+
+.pm-stats__label {
+	margin-top: 10px;
+	font-size: 11px;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+	opacity: .58;
+}
+
+@media (max-width: 880px) {
+	.pm-stats {
+		grid-template-columns: 1fr 1fr;
+		gap: 18px;
+	}
+}
+
+/* Latest Cars (home): drag slider. */
+.pm-latest {
+	padding: 120px 0 132px;
+	overflow: hidden;
+}
+
+.pm-latest__head {
+	margin-bottom: 44px;
+}
+
+.pm-latest__controls {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.pm-latest__counter {
+	margin-right: 14px;
+	font-size: 12px;
+	letter-spacing: .2em;
+	opacity: .55;
+}
+
+.pm-latest__viewport {
+	width: 100%;
+	overflow: hidden;
+}
+
+.pm-latest__viewport:focus-visible {
+	outline-offset: -2px;
+}
+
+.pm-latest__track {
+	display: flex;
+	gap: 18px;
+	cursor: grab;
+	touch-action: pan-y;
+	user-select: none;
+	-webkit-user-select: none;
+	will-change: transform;
+}
+
+.pm-latest__track.is-dragging {
+	cursor: grabbing;
+}
+
+.pm-slide {
+	flex: none;
+	width: min(68vw, 980px);
+	margin: 0;
+}
+
+.pm-slide__media {
+	aspect-ratio: 16 / 9;
+}
+
+.pm-slide__caption {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	margin-top: 4px; /* From the design system's figcaption rule. */
+	padding-top: 18px;
+	font-size: 11px;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+@media (max-width: 880px) {
+	.pm-slide {
+		width: 84vw;
+	}
 }
 
 /* 10. Inner pages (D9): page hero, breadcrumb, intro, CTA band */
