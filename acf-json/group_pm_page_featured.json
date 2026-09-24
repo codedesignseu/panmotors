@@ -180,7 +180,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates/page-featured-cars.php"
+                "value": "templates\/page-featured-cars.php"
             }
         ]
     ],
@@ -193,5 +193,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790264035
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790264095
 }

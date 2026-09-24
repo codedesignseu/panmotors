@@ -177,7 +177,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Pan Motors Live appears on the homepage only. The Instagram link comes from <strong>Pan Motors settings → Profiles</strong>.",
+            "message": "Pan Motors Live appears on the homepage only. The Instagram link comes from <strong>Pan Motors settings → Profiles<\/strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -357,7 +357,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https://",
+                    "placeholder": "https:\/\/",
                     "parent_repeater": "field_pm_live_posts"
                 },
                 {
@@ -595,7 +595,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques</strong>.",
+            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques<\/strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -618,5 +618,8 @@
     "active": true,
     "description": "Homepage hero, Pan Motors Live and section headings. Other section content lives on each section page.",
     "show_in_rest": 0,
-    "modified": 1790264035
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790264095
 }

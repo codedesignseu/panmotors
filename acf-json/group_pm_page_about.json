@@ -261,7 +261,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The marques list on this page comes from <strong>Pan Motors settings → Marques</strong>.",
+            "message": "The marques list on this page comes from <strong>Pan Motors settings → Marques<\/strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -271,7 +271,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates/page-about.php"
+                "value": "templates\/page-about.php"
             }
         ]
     ],
@@ -284,5 +284,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790264035
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790264095
 }
