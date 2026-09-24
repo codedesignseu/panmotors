@@ -45,3 +45,7 @@ No car post type, `single-car.php`, `archive-car.php` or car ACF group was ever 
 ## Verification status
 
 No WordPress install is linked yet, so nothing has been checked in the browser. Checks so far: `php -l` on every PHP file.
+
+## Applied
+
+All Change and Missing items above were applied on 24 Sep 2026 in separate commits (schema stub, markup and semantics, CSS). No content model changes were needed.

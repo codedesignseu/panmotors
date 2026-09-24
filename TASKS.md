@@ -6,16 +6,17 @@ Tick each task when it is done and checked in the browser.
 - [x] LocalWP site `panmotors.local`, WP_DEBUG on, ACF Pro installed
 - [x] `wp-content/themes/panmotors/` created and set up as a git repo
 - [x] Full Claude Design export (with images and videos) copied to `_design/`
-- [ ] `_design/` excluded from deploys (add it to a `.distignore`, or keep it out of the production zip)
+- [x] `_design/` excluded from deploys (add it to a `.distignore`, or keep it out of the production zip)
 - [x] Decisions D1-D5 answered (D6 language: English for now, translation-ready)
 
 ## 1. Foundation
-- [ ] Theme header in `style.css`, `functions.php` loading `inc/`
-- [ ] `inc/setup.php`: theme supports (title-tag, post-thumbnails, custom-logo, html5, responsive-embeds), menus `primary` + `footer`, image sizes
-- [ ] `inc/enqueue.php`: fonts, main.css, JS modules with filemtime versions
-- [ ] Self-hosted woff2 fonts + `@font-face`
-- [ ] `main.css`: tokens, reset, base type, utilities, reveal animations, reduced-motion
-- [ ] `index.php`, `page.php`, `404.php` minimal, in the site style
+Code complete. Not yet checked in the browser (no WordPress install linked).
+- [x] Theme header in `style.css`, `functions.php` loading `inc/`
+- [x] `inc/setup.php`: theme supports (title-tag, post-thumbnails, custom-logo, html5, responsive-embeds), menus `primary` + `footer`, image sizes
+- [x] `inc/enqueue.php`: fonts, main.css, JS modules with filemtime versions
+- [x] Self-hosted woff2 fonts + `@font-face`
+- [x] `main.css`: tokens, reset, base type, utilities, reveal animations, reduced-motion
+- [x] `index.php`, `page.php`, `404.php` minimal, in the site style
 
 ## 2. Content model
 - [ ] ACF options page with entity facts (names, one-sentence description, address, geo, phones, email, hours with machine fields, marques, sameAs profiles), form shortcode
