@@ -127,8 +127,24 @@ video {
 	backface-visibility: hidden;
 }
 
-figure {
+figure,
+dl,
+dd {
 	margin: 0;
+}
+
+address {
+	font-style: normal;
+}
+
+summary {
+	display: block;
+	cursor: pointer;
+	list-style: none;
+}
+
+summary::-webkit-details-marker {
+	display: none;
 }
 
 a {
@@ -238,6 +254,13 @@ p {
 	color: var(--ink);
 }
 
+/* Unstyled list (marquee, link rows). */
+.pm-list-reset {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
 /* Horizontal / vertical section padding. */
 .pm-pad {
 	padding-left: var(--pad-x);
@@ -255,13 +278,14 @@ p {
 	color: var(--ink);
 }
 
-/* Small uppercase accent label above headings. */
+/* Small uppercase accent label above headings. A <p>, or a <span> inside the home H1. */
 .pm-eyebrow {
 	display: block;
-	margin-bottom: 22px;
+	margin: 0 0 22px;
 	color: var(--accent);
 	font-family: var(--font-body);
 	font-size: 11px;
+	font-weight: 400;
 	letter-spacing: .32em;
 	line-height: 1.4;
 	text-transform: uppercase;
