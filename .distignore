@@ -1,0 +1,8 @@
+_design
+docs
+TASKS.md
+CLAUDE.md
+.git
+.gitignore
+.distignore
+.DS_Store
