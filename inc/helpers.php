@@ -196,3 +196,40 @@ function panmotors_page_url( $key ) {
 	$id = panmotors_page( $key );
 	return $id ? (string) get_permalink( $id ) : '';
 }
+
+/**
+ * Render an inner section page: page hero, intro text, the section, CTA band.
+ *
+ * Used by the page templates in templates/. The section argument is a callback so each
+ * template decides what goes in the middle.
+ *
+ * @param callable   $section Prints the page's section content.
+ * @param array|null $cta     cta-band args, or null for no CTA band (Contact).
+ */
+function panmotors_inner_page( callable $section, ?array $cta = array() ) {
+	get_header();
+
+	while ( have_posts() ) {
+		the_post();
+		get_template_part( 'template-parts/components/page-hero' );
+		get_template_part( 'template-parts/components/page-intro' );
+		$section();
+		if ( null !== $cta ) {
+			get_template_part( 'template-parts/components/cta-band', null, $cta );
+		}
+	}
+
+	get_footer();
+}
+
+/**
+ * Print the temporary section placeholder.
+ *
+ * @param string $label Section name.
+ * @return callable
+ */
+function panmotors_placeholder( $label ) {
+	return static function () use ( $label ) {
+		get_template_part( 'template-parts/components/section-placeholder', null, array( 'label' => $label ) );
+	};
+}
