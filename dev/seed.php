@@ -8,10 +8,15 @@
  * What it does:
  * - Imports _design/uploads into the media library with descriptive file names,
  *   titles, alt text and captions (theme-map 9.5).
- * - Syncs the acf-json field groups into the database so they are editable in wp-admin.
- * - Fills the Pan Motors options page and the homepage fields with the _design data.
- * - Creates the Primary and Footer menus and assigns them.
+ * - Updates the database copies of the field groups from acf-json, so they are editable in wp-admin.
+ * - Fills the Pan Motors options page with the business facts from the design.
+ * - Creates the section pages and the legal pages (D9, docs/pages.md), assigns their templates,
+ *   fills their fields and maps them in Pan Motors settings → Site pages.
+ * - Fills the homepage hero and removes section content left on Home by earlier versions.
+ * - Creates the Primary and Footer menus with page links and assigns them.
  * - Sets a static front page, the site title and the custom logo.
+ *
+ * Copy marked DRAFT is for the client to confirm or replace.
  *
  * Safe to re-run: media is matched on the original file name, fields are overwritten.
  * Everything it creates is flagged with the `_pm_demo` meta / `panmotors_demo_content` option
@@ -40,16 +45,20 @@ if ( ! is_dir( PANMOTORS_SEED_SRC ) ) {
 
 /*
  * ------------------------------------------------------------------
- * 1. Field groups: import acf-json into the database if not there yet.
+ * 1. Field groups: update the database copies from acf-json, so wp-admin matches the repo.
  * ------------------------------------------------------------------
  */
+// Update in place: with the existing ID, ACF also removes fields that are no longer in the JSON.
+// Never acf_delete_field_group() here, it deletes the acf-json file too.
 foreach ( glob( get_template_directory() . '/acf-json/group_*.json' ) as $pm_json ) {
 	$pm_group = json_decode( file_get_contents( $pm_json ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-	if ( ! $pm_group || acf_get_field_group_post( $pm_group['key'] ) ) {
+	if ( ! $pm_group ) {
 		continue;
 	}
+	$pm_existing    = acf_get_field_group_post( $pm_group['key'] );
+	$pm_group['ID'] = $pm_existing ? $pm_existing->ID : 0;
 	acf_import_field_group( $pm_group );
-	WP_CLI::log( "Imported field group: {$pm_group['title']}" );
+	WP_CLI::log( "Field group: {$pm_group['title']}" );
 }
 
 /*
@@ -219,7 +228,360 @@ WP_CLI::log( 'Options page filled.' );
 
 /*
  * ------------------------------------------------------------------
- * 4. Front page.
+ * 4. Pages (D9). Found by path on re-run only so the seed stays idempotent.
+ *    The theme itself never finds pages by slug; it reads Site pages.
+ * ------------------------------------------------------------------
+ */
+
+/**
+ * Create or update a published page and return its ID.
+ *
+ * @param string $slug     Page slug.
+ * @param string $title    Page title (the H1).
+ * @param string $template Page template path, or '' for the default template.
+ * @param string $content  Post content.
+ * @param int    $existing Existing page ID to reuse, if any.
+ * @return int
+ */
+function panmotors_seed_page( $slug, $title, $template = '', $content = '', $existing = 0 ) {
+	$page = $existing ? get_post( $existing ) : get_page_by_path( $slug );
+	$data = array(
+		'post_type'    => 'page',
+		'post_status'  => 'publish',
+		'post_title'   => $title,
+		'post_name'    => $slug,
+		'post_content' => $content,
+	);
+
+	if ( $page ) {
+		$data['ID'] = $page->ID;
+		$id         = wp_update_post( $data );
+	} else {
+		$id = wp_insert_post( $data );
+	}
+
+	update_post_meta( $id, '_wp_page_template', $template ? $template : 'default' );
+	update_post_meta( $id, '_pm_demo', 1 );
+
+	return (int) $id;
+}
+
+/**
+ * Update several fields on a post, by field name.
+ *
+ * @param int   $post_id Post ID.
+ * @param array $fields  Name => value.
+ */
+function panmotors_seed_fields( $post_id, $fields ) {
+	foreach ( $fields as $name => $value ) {
+		update_field( 'field_pm_' . $name, $value, $post_id );
+	}
+}
+
+$pm_pages = array(
+	'featured' => panmotors_seed_page( 'featured-cars', 'Featured Cars', 'templates/page-featured-cars.php' ),
+	'values'   => panmotors_seed_page( 'our-values', 'Our Values', 'templates/page-values.php' ),
+	'about'    => panmotors_seed_page( 'about', 'About Pan Motors', 'templates/page-about.php' ),
+	'latest'   => panmotors_seed_page( 'latest-cars', 'Latest Cars', 'templates/page-latest-cars.php' ),
+	'live'     => panmotors_seed_page( 'live', 'Pan Motors Live', 'templates/page-live.php' ),
+	'showroom' => panmotors_seed_page( 'showroom', 'The Showroom', 'templates/page-showroom.php' ),
+	'contact'  => panmotors_seed_page( 'contact', 'Contact', 'templates/page-contact.php' ),
+);
+
+// Map them in Pan Motors settings → Site pages.
+foreach ( $pm_pages as $pm_key => $pm_page_id ) {
+	update_field( 'field_pm_page_' . $pm_key, $pm_page_id, 'option' );
+}
+
+// Featured Cars.
+panmotors_seed_fields(
+	$pm_pages['featured'],
+	array(
+		'page_hero_image' => $pm_media['black_studio'],
+		'page_eyebrow'    => 'The Paphos collection',
+		'page_intro'      => 'A rotating selection of luxury and performance cars, prepared and presented in our Paphos showroom.',
+		'page_body'       => '<p>Every car on this page has been chosen, prepared and photographed at Pan Motors in Paphos. The selection changes as cars arrive and leave, so it shows the collection as it is today rather than a catalogue.</p><p>To see a car in person, arrange a private viewing at the showroom on Avenue 65 in Mesoyi.</p>',
+		'featured_cars'   => array(
+			array(
+				'image'      => $pm_media['porsche_studio'],
+				'marque'     => 'Porsche',
+				'model_name' => '911 Carrera',
+				'ref_no'     => 'No. 04',
+				'spec'       => 'Flat six',
+				'note'       => 'Kept in slate grey',
+				'link'       => '',
+			),
+			array(
+				'image'      => $pm_media['grey_sunset'],
+				'marque'     => 'Grand Touring',
+				'model_name' => 'Mid-Engine Coupé',
+				'ref_no'     => 'No. 09',
+				'spec'       => 'Twin-turbo V8',
+				'note'       => 'Last light',
+				'link'       => '',
+			),
+			array(
+				'image'      => $pm_media['ferrari_rear'],
+				'marque'     => 'Ferrari',
+				'model_name' => '458 Italia',
+				'ref_no'     => 'No. 12',
+				'spec'       => 'V8',
+				'note'       => 'Single owner',
+				'link'       => '',
+			),
+			array(
+				'image'      => $pm_media['black_studio'],
+				'marque'     => 'Track',
+				'model_name' => 'Winged Coupé',
+				'ref_no'     => 'No. 17',
+				'spec'       => 'Naturally aspirated',
+				'note'       => 'Carbon aero',
+				'link'       => '',
+			),
+		),
+	)
+);
+
+// Our Values.
+panmotors_seed_fields(
+	$pm_pages['values'],
+	array(
+		'page_hero_image' => '',
+		'page_eyebrow'    => 'How we work',
+		'page_intro'      => 'Three habits decide how a car is kept, recorded and shown at Pan Motors.',
+		'page_body'       => '<p>A boutique is judged by what happens when nobody is looking: how a car is stored, how its history is kept, and how it is shown to the next owner. These are the habits we hold ourselves to in Paphos.</p>',
+		'values'          => array(
+			array(
+				'index'  => '01 — Keeping',
+				'title'  => 'Kept Running',
+				'body'   => 'Climate bay, battery care, a circulation drive every month. Nothing in the collection sits still for long.',
+				'detail' => '<p>DRAFT: Every car is stored in a climate-controlled bay, kept on a battery conditioner and driven on a short circulation route each month, so seals, fluids and tyres stay in use. [Client to confirm the routine.]</p>',
+				'image'  => $pm_media['sr_floor'],
+			),
+			array(
+				'index'  => '02 — Record',
+				'title'  => 'Written Down',
+				'body'   => 'Every service, every owner, every road. The file matters as much as the car it belongs to.',
+				'detail' => '<p>DRAFT: Each car has a file with its service history, previous owners and the work done while it was with us. The file goes with the car to its next owner. [Client to confirm.]</p>',
+				'image'  => $pm_media['sr_bay'],
+			),
+			array(
+				'index'  => '03 — Showing',
+				'title'  => 'Shown Rarely',
+				'body'   => 'One guest at a time, by appointment, with the doors closed and the lights low.',
+				'detail' => '<p>DRAFT: Private viewings are one guest at a time, by appointment, so there is time to look properly and ask questions. [Client to confirm how viewings are booked.]</p>',
+				'image'  => $pm_media['sr_night'],
+			),
+		),
+	)
+);
+
+// About.
+panmotors_seed_fields(
+	$pm_pages['about'],
+	array(
+		'page_hero_image' => $pm_media['sr_night'],
+		'page_eyebrow'    => 'Mesoyi, Paphos',
+		'page_intro'      => 'Sales, service and a boutique under one roof on Avenue 65.',
+		'page_body'       => '',
+		'about_image'     => $pm_media['mclaren'],
+		'about_story'     => '<p>Sales, service and a boutique sit under one roof, so a car is prepared, presented and looked after by the same people who sold it.</p><p>DRAFT: [Client to add the family story: when Pan Motors started, who runs it today, and how the building on Avenue 65 came to be.]</p>',
+		'about_stats'     => array(
+			array(
+				'value' => 'Sales',
+				'label' => 'Luxury and performance',
+			),
+			array(
+				'value' => 'Service',
+				'label' => 'Aftercare in house',
+			),
+			array(
+				'value' => 'Boutique',
+				'label' => 'Parts and accessories',
+			),
+		),
+	)
+);
+
+// Latest Cars. Every place is Paphos (D5).
+panmotors_seed_fields(
+	$pm_pages['latest'],
+	array(
+		'page_hero_image' => $pm_media['mclaren'],
+		'page_eyebrow'    => 'Latest arrivals',
+		'page_intro'      => 'Recent arrivals at the Paphos showroom, photographed as they came in.',
+		'page_body'       => '<p>New cars reach Pan Motors throughout the year. This page shows the most recent arrivals in Paphos, before they join the featured collection or find their next owner.</p>',
+		'latest_cars'     => array(
+			array(
+				'image'   => $pm_media['mclaren'],
+				'caption' => 'Bay four, morning light',
+				'place'   => 'Paphos',
+			),
+			array(
+				'image'   => $pm_media['red_night'],
+				'caption' => 'Night run, empty ring road',
+				'place'   => 'Paphos',
+			),
+			array(
+				'image'   => $pm_media['black_studio'],
+				'caption' => 'Single lamp, no reflectors',
+				'place'   => 'Paphos',
+			),
+			array(
+				'image'   => $pm_media['grey_sunset'],
+				'caption' => 'After the rain, last light',
+				'place'   => 'Paphos',
+			),
+			array(
+				'image'   => $pm_media['ferrari_rear'],
+				'caption' => 'Rear three-quarter, no. 458',
+				'place'   => 'Paphos',
+			),
+			array(
+				'image'   => $pm_media['porsche_studio'],
+				'caption' => 'Glass black, held on the line',
+				'place'   => 'Paphos',
+			),
+		),
+	)
+);
+
+// Pan Motors Live.
+panmotors_seed_fields(
+	$pm_pages['live'],
+	array(
+		'page_hero_image' => '',
+		'page_eyebrow'    => 'Social',
+		'page_intro'      => 'Short films and photographs from the showroom floor, as posted on Instagram.',
+		'page_body'       => '<p>Pan Motors Live collects recent posts from our Instagram: arrivals, details and drives around Paphos. Follow along for new cars as they come in.</p>',
+		'live_cta_label'  => 'Follow the floor',
+		'live_posts'      => array(
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_cinematic'],
+				'image'    => '',
+				'url'      => 'https://www.instagram.com/reel/DdHtvoxqTge/',
+				'caption'  => 'Cinematic',
+				'likes'    => '24K',
+				'comments' => '188',
+			),
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_coast'],
+				'image'    => '',
+				'url'      => 'https://www.instagram.com/reel/DcrFwhYifCK/',
+				'caption'  => 'Coast road',
+				'likes'    => '138K',
+				'comments' => '407',
+			),
+			array(
+				'type'     => 'photo',
+				'video'    => '',
+				'image'    => $pm_media['grey_sunset'],
+				'url'      => 'https://www.instagram.com/reel/DZar26hC_wg/',
+				'caption'  => 'Last light',
+				'likes'    => '123K',
+				'comments' => '432',
+			),
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_silent'],
+				'image'    => '',
+				'url'      => 'https://www.instagram.com/reel/DQMRsfkjFY2/',
+				'caption'  => 'Silent run',
+				'likes'    => '83K',
+				'comments' => '774',
+			),
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_hero'],
+				'image'    => $pm_media['red_night'],
+				'url'      => 'https://www.instagram.com/reel/C2mB7yrCFWs/',
+				'caption'  => 'Night pass',
+				'likes'    => '151K',
+				'comments' => '734',
+			),
+			array(
+				'type'     => 'photo',
+				'video'    => '',
+				'image'    => $pm_media['porsche_studio'],
+				'url'      => 'https://www.instagram.com/panmotors/',
+				'caption'  => 'Studio',
+				'likes'    => '69K',
+				'comments' => '496',
+			),
+		),
+	)
+);
+
+// Showroom.
+panmotors_seed_fields(
+	$pm_pages['showroom'],
+	array(
+		'page_hero_image' => $pm_media['sr_forecourt'],
+		'page_eyebrow'    => 'Avenue 65, Mesoyi',
+		'page_intro'      => 'Paphos, open six days a week. Sales, service and the boutique under one roof.',
+		'page_body'       => '<p>The Pan Motors showroom is on Avenue 65 in Mesoyi, Paphos. Cars are presented indoors under controlled light, with the service workshop and the boutique in the same building.</p>',
+		'showroom_photos' => array( $pm_media['sr_night'], $pm_media['sr_bay'], $pm_media['sr_floor'], $pm_media['sr_forecourt'] ),
+		'getting_here'    => '<p>DRAFT: From Paphos centre, [client to add the route and approximate driving time to Avenue 65, Mesoyi].</p><p>DRAFT: From Paphos International Airport, [client to add the route and approximate driving time].</p><p>DRAFT: Parking: [client to confirm where visitors park].</p>',
+	)
+);
+
+// Contact: enquire card and FAQs (theme-map 9.4). Draft answers for the client to confirm.
+panmotors_seed_fields(
+	$pm_pages['contact'],
+	array(
+		'page_hero_image' => '',
+		'page_eyebrow'    => 'Paphos, Cyprus',
+		'page_intro'      => 'Call, write, or walk in during showroom hours. Someone from the family will answer.',
+		'page_body'       => '<p>Pan Motors is on Avenue 65 in Mesoyi, Paphos. Use the form to ask about a car or arrange a private viewing, or call the showroom during opening hours.</p>',
+		'enquire_title'   => 'Come And See',
+		'enquire_intro'   => 'Call, write, or walk in during showroom hours. Someone from the family will answer.',
+		'faq_title'       => 'Questions',
+		'faqs'            => array(
+			array(
+				'question' => 'Where is Pan Motors?',
+				'answer'   => 'DRAFT: Pan Motors is on Avenue 65 in Mesoyi, Paphos 8060, Cyprus. [Client to add a landmark and parking details.]',
+			),
+			array(
+				'question' => 'What are your opening hours?',
+				'answer'   => 'DRAFT: Monday to Friday 08:00 to 13:00 and 14:30 to 18:00, Saturday 08:00 to 13:00. Closed on Sunday.',
+			),
+			array(
+				'question' => 'Do I need an appointment to visit the showroom?',
+				'answer'   => 'DRAFT: You are welcome to walk in during opening hours. For a private viewing, call or write ahead and we will set a time. [Client to confirm.]',
+			),
+			array(
+				'question' => 'Which marques do you work with?',
+				'answer'   => 'DRAFT: Porsche, Maserati, Ferrari, Lamborghini, Aston Martin and Bentley, among others. [Client to confirm the list.]',
+			),
+			array(
+				'question' => 'Do you look after cars after purchase?',
+				'answer'   => 'DRAFT: Yes. Service and aftercare are handled in house in Paphos, by the same people who prepared the car. [Client to confirm scope.]',
+			),
+			array(
+				'question' => 'What is in the boutique?',
+				'answer'   => 'DRAFT: Parts and accessories for the marques we work with. [Client to describe the range.]',
+			),
+			array(
+				'question' => 'Do you deliver outside Paphos?',
+				'answer'   => 'DRAFT: [Client to confirm whether cars are delivered across Cyprus, and on what terms.]',
+			),
+		),
+	)
+);
+
+// Legal pages on page.php. WordPress's own privacy page is reused if it exists.
+$pm_legal_draft = '<p>DRAFT: [Client to supply the %s. The text below this line is a placeholder.]</p><h2>Who we are</h2><p>Pan Motors Ltd, Avenue 65, Mesoyi, Paphos 8060, Cyprus.</p>';
+$pm_privacy_id  = panmotors_seed_page( 'privacy-policy', 'Privacy Policy', '', sprintf( $pm_legal_draft, 'privacy policy' ), (int) get_option( 'wp_page_for_privacy_policy' ) );
+$pm_cookie_id   = panmotors_seed_page( 'cookie-policy', 'Cookie Policy', '', sprintf( $pm_legal_draft, 'cookie policy' ) );
+update_option( 'wp_page_for_privacy_policy', $pm_privacy_id );
+
+WP_CLI::log( 'Pages: ' . implode( ', ', array_map( fn( $id ) => get_permalink( $id ), array_merge( array_values( $pm_pages ), array( $pm_privacy_id, $pm_cookie_id ) ) ) ) );
+
+/*
+ * ------------------------------------------------------------------
+ * 5. Home: hero only. Section content now lives on the section pages.
  * ------------------------------------------------------------------
  */
 $pm_home = get_posts(
@@ -248,255 +610,44 @@ wp_update_post(
 );
 update_option( 'show_on_front', 'page' );
 update_option( 'page_on_front', $pm_front_id );
+update_post_meta( $pm_front_id, '_pm_demo', 1 );
 
-$pm_front = array(
-	// Hero.
-	'hero_eyebrow'     => 'Pan Motors, luxury car boutique in Paphos, Cyprus',
-	'hero_title'       => "Luxury\nin Motion",
-	'hero_video'       => $pm_media['v_hero'],
-	'hero_poster'      => $pm_media['red_night'],
-	'hero_cta_label'   => 'View the cars',
-	'hero_cta_link'    => '#floor',
-
-	// Featured Cars.
-	'featured_title'   => 'Featured Cars',
-	'featured_intro'   => 'A rotating selection of luxury and performance cars, prepared and presented in our Paphos showroom.',
-	'featured_cars'    => array(
-		array(
-			'image'      => $pm_media['porsche_studio'],
-			'marque'     => 'Porsche',
-			'model_name' => '911 Carrera',
-			'ref_no'     => 'No. 04',
-			'spec'       => 'Flat six',
-			'note'       => 'Kept in slate grey',
-			'link'       => '',
-		),
-		array(
-			'image'      => $pm_media['grey_sunset'],
-			'marque'     => 'Grand Touring',
-			'model_name' => 'Mid-Engine Coupé',
-			'ref_no'     => 'No. 09',
-			'spec'       => 'Twin-turbo V8',
-			'note'       => 'Last light',
-			'link'       => '',
-		),
-		array(
-			'image'      => $pm_media['ferrari_rear'],
-			'marque'     => 'Ferrari',
-			'model_name' => '458 Italia',
-			'ref_no'     => 'No. 12',
-			'spec'       => 'V8',
-			'note'       => 'Single owner',
-			'link'       => '',
-		),
-		array(
-			'image'      => $pm_media['black_studio'],
-			'marque'     => 'Track',
-			'model_name' => 'Winged Coupé',
-			'ref_no'     => 'No. 17',
-			'spec'       => 'Naturally aspirated',
-			'note'       => 'Carbon aero',
-			'link'       => '',
-		),
-	),
-
-	// Our Values.
-	'values_title'     => 'Our Values',
-	'values'           => array(
-		array(
-			'index' => '01 — Keeping',
-			'title' => 'Kept Running',
-			'body'  => 'Climate bay, battery care, a circulation drive every month. Nothing in the collection sits still for long.',
-		),
-		array(
-			'index' => '02 — Record',
-			'title' => 'Written Down',
-			'body'  => 'Every service, every owner, every road. The file matters as much as the car it belongs to.',
-		),
-		array(
-			'index' => '03 — Showing',
-			'title' => 'Shown Rarely',
-			'body'  => 'One guest at a time, by appointment, with the doors closed and the lights low.',
-		),
-	),
-
-	// About. The options description is printed first; this continues it without repeating it.
-	'about_image'      => $pm_media['mclaren'],
-	'about_eyebrow'    => 'Mesoyi, Paphos',
-	'about_title'      => 'About Pan Motors',
-	'about_text'       => '<p>Sales, service and a boutique sit under one roof, so a car is prepared, presented and looked after by the same people who sold it.</p>',
-	'about_stats'      => array(
-		array(
-			'value' => 'Sales',
-			'label' => 'Luxury and performance',
-		),
-		array(
-			'value' => 'Service',
-			'label' => 'Aftercare in house',
-		),
-		array(
-			'value' => 'Boutique',
-			'label' => 'Parts and accessories',
-		),
-	),
-
-	// Latest Cars. Every place is Paphos (D5).
-	'latest_eyebrow'   => 'Latest arrivals',
-	'latest_title'     => 'Latest Cars',
-	'latest_cars'      => array(
-		array(
-			'image'   => $pm_media['mclaren'],
-			'caption' => 'Bay four, morning light',
-			'place'   => 'Paphos',
-		),
-		array(
-			'image'   => $pm_media['red_night'],
-			'caption' => 'Night run, empty ring road',
-			'place'   => 'Paphos',
-		),
-		array(
-			'image'   => $pm_media['black_studio'],
-			'caption' => 'Single lamp, no reflectors',
-			'place'   => 'Paphos',
-		),
-		array(
-			'image'   => $pm_media['grey_sunset'],
-			'caption' => 'After the rain, last light',
-			'place'   => 'Paphos',
-		),
-		array(
-			'image'   => $pm_media['ferrari_rear'],
-			'caption' => 'Rear three-quarter, no. 458',
-			'place'   => 'Paphos',
-		),
-		array(
-			'image'   => $pm_media['porsche_studio'],
-			'caption' => 'Glass black, held on the line',
-			'place'   => 'Paphos',
-		),
-	),
-
-	// Pan Motors Live.
-	'live_eyebrow'     => 'Social',
-	'live_title'       => 'Pan Motors Live',
-	'live_cta_label'   => 'Follow the floor',
-	'live_posts'       => array(
-		array(
-			'type'     => 'video',
-			'video'    => $pm_media['v_cinematic'],
-			'image'    => '',
-			'url'      => 'https://www.instagram.com/reel/DdHtvoxqTge/',
-			'caption'  => 'Cinematic',
-			'likes'    => '24K',
-			'comments' => '188',
-		),
-		array(
-			'type'     => 'video',
-			'video'    => $pm_media['v_coast'],
-			'image'    => '',
-			'url'      => 'https://www.instagram.com/reel/DcrFwhYifCK/',
-			'caption'  => 'Coast road',
-			'likes'    => '138K',
-			'comments' => '407',
-		),
-		array(
-			'type'     => 'photo',
-			'video'    => '',
-			'image'    => $pm_media['grey_sunset'],
-			'url'      => 'https://www.instagram.com/reel/DZar26hC_wg/',
-			'caption'  => 'Last light',
-			'likes'    => '123K',
-			'comments' => '432',
-		),
-		array(
-			'type'     => 'video',
-			'video'    => $pm_media['v_silent'],
-			'image'    => '',
-			'url'      => 'https://www.instagram.com/reel/DQMRsfkjFY2/',
-			'caption'  => 'Silent run',
-			'likes'    => '83K',
-			'comments' => '774',
-		),
-		array(
-			'type'     => 'video',
-			'video'    => $pm_media['v_hero'],
-			'image'    => $pm_media['red_night'],
-			'url'      => 'https://www.instagram.com/reel/C2mB7yrCFWs/',
-			'caption'  => 'Night pass',
-			'likes'    => '151K',
-			'comments' => '734',
-		),
-		array(
-			'type'     => 'photo',
-			'video'    => '',
-			'image'    => $pm_media['porsche_studio'],
-			'url'      => 'https://www.instagram.com/panmotors/',
-			'caption'  => 'Studio',
-			'likes'    => '69K',
-			'comments' => '496',
-		),
-	),
-
-	// Showroom. Captions come from the attachments.
-	'showroom_eyebrow' => 'Avenue 65, Mesoyi',
-	'showroom_title'   => 'The Showroom',
-	'showroom_intro'   => 'Paphos, open six days a week. Sales, service and the boutique under one roof.',
-	'showroom_photos'  => array( $pm_media['sr_night'], $pm_media['sr_bay'], $pm_media['sr_floor'], $pm_media['sr_forecourt'] ),
-
-	// Questions (theme-map 9.4). Draft answers for the client to confirm.
-	'faq_title'        => 'Questions',
-	'faqs'             => array(
-		array(
-			'question' => 'Where is Pan Motors?',
-			'answer'   => 'DRAFT: Pan Motors is on Avenue 65 in Mesoyi, Paphos 8060, Cyprus. [Client to add a landmark and parking details.]',
-		),
-		array(
-			'question' => 'What are your opening hours?',
-			'answer'   => 'DRAFT: Monday to Friday 08:00 to 13:00 and 14:30 to 18:00, Saturday 08:00 to 13:00. Closed on Sunday.',
-		),
-		array(
-			'question' => 'Do I need an appointment to visit the showroom?',
-			'answer'   => 'DRAFT: You are welcome to walk in during opening hours. For a private viewing, call or write ahead and we will set a time. [Client to confirm.]',
-		),
-		array(
-			'question' => 'Which marques do you work with?',
-			'answer'   => 'DRAFT: Porsche, Maserati, Ferrari, Lamborghini, Aston Martin and Bentley, among others. [Client to confirm the list.]',
-		),
-		array(
-			'question' => 'Do you look after cars after purchase?',
-			'answer'   => 'DRAFT: Yes. Service and aftercare are handled in house in Paphos, by the same people who prepared the car. [Client to confirm scope.]',
-		),
-		array(
-			'question' => 'What is in the boutique?',
-			'answer'   => 'DRAFT: Parts and accessories for the marques we work with. [Client to describe the range.]',
-		),
-		array(
-			'question' => 'Do you deliver outside Paphos?',
-			'answer'   => 'DRAFT: [Client to confirm whether cars are delivered across Cyprus, and on what terms.]',
-		),
-	),
-
-	// Enquire.
-	'enquire_title'    => 'Come And See',
-	'enquire_intro'    => 'Call, write, or walk in during showroom hours. Someone from the family will answer.',
-);
-
-foreach ( $pm_front as $pm_name => $pm_value ) {
-	update_field( 'field_pm_' . $pm_name, $pm_value, $pm_front_id );
+// Remove section content that earlier seed versions stored on Home.
+$pm_moved = array( 'featured_', 'values', 'about_', 'latest_', 'live_', 'showroom_', 'faq', 'enquire_' );
+foreach ( array_keys( get_post_meta( $pm_front_id ) ) as $pm_meta_key ) {
+	$pm_bare = ltrim( $pm_meta_key, '_' );
+	foreach ( $pm_moved as $pm_prefix ) {
+		if ( str_starts_with( $pm_bare, $pm_prefix ) ) {
+			delete_post_meta( $pm_front_id, $pm_meta_key );
+			break;
+		}
+	}
 }
-WP_CLI::log( "Homepage fields filled on page {$pm_front_id}." );
+
+panmotors_seed_fields(
+	$pm_front_id,
+	array(
+		'hero_eyebrow'   => 'Pan Motors, luxury car boutique in Paphos, Cyprus',
+		'hero_title'     => "Luxury\nin Motion",
+		'hero_video'     => $pm_media['v_hero'],
+		'hero_poster'    => $pm_media['red_night'],
+		'hero_cta_label' => 'View the cars',
+		'hero_cta_link'  => '', // Empty: links to the Featured Cars page.
+	)
+);
+WP_CLI::log( "Homepage hero filled on page {$pm_front_id}." );
 
 /*
  * ------------------------------------------------------------------
- * 5. Menus. Links use home_url( '/#…' ) so they also work from inner pages.
+ * 6. Menus: page links only (D9).
  * ------------------------------------------------------------------
  */
 
 /**
- * Create or rebuild a menu of custom links and return its ID.
+ * Create or rebuild a menu of page links and return its ID.
  *
- * @param string   $name  Menu name.
- * @param string[] $links Label => anchor.
+ * @param string $name  Menu name.
+ * @param array  $links Label => page ID.
  * @return int
  */
 function panmotors_seed_menu( $name, $links ) {
@@ -508,16 +659,17 @@ function panmotors_seed_menu( $name, $links ) {
 	}
 
 	$position = 0;
-	foreach ( $links as $label => $anchor ) {
+	foreach ( $links as $label => $page_id ) {
 		wp_update_nav_menu_item(
 			$menu_id,
 			0,
 			array(
-				'menu-item-title'    => $label,
-				'menu-item-url'      => home_url( '/' . $anchor ),
-				'menu-item-type'     => 'custom',
-				'menu-item-status'   => 'publish',
-				'menu-item-position' => ++$position,
+				'menu-item-title'     => $label,
+				'menu-item-object'    => 'page',
+				'menu-item-object-id' => $page_id,
+				'menu-item-type'      => 'post_type',
+				'menu-item-status'    => 'publish',
+				'menu-item-position'  => ++$position,
 			)
 		);
 	}
@@ -532,20 +684,22 @@ set_theme_mod(
 		'primary' => panmotors_seed_menu(
 			'Primary',
 			array(
-				'Featured Cars'    => '#floor',
-				'Our Values'       => '#ways',
-				'About Pan Motors' => '#heritage',
-				'Latest Cars'      => '#gallery',
-				'Live'             => '#live',
-				'Showroom'         => '#showroom',
+				'Featured Cars'    => $pm_pages['featured'],
+				'Our Values'       => $pm_pages['values'],
+				'About Pan Motors' => $pm_pages['about'],
+				'Latest Cars'      => $pm_pages['latest'],
+				'Live'             => $pm_pages['live'],
+				'Showroom'         => $pm_pages['showroom'],
 			)
 		),
 		'footer'  => panmotors_seed_menu(
 			'Footer',
 			array(
-				'Featured Cars' => '#floor',
-				'Showroom'      => '#showroom',
-				'Contact'       => '#enquire',
+				'Featured Cars'  => $pm_pages['featured'],
+				'Showroom'       => $pm_pages['showroom'],
+				'Contact'        => $pm_pages['contact'],
+				'Privacy Policy' => $pm_privacy_id,
+				'Cookie Policy'  => $pm_cookie_id,
 			)
 		),
 	)
@@ -553,12 +707,13 @@ set_theme_mod(
 
 /*
  * ------------------------------------------------------------------
- * 6. Site settings.
+ * 7. Site settings.
  * ------------------------------------------------------------------
  */
 update_option( 'blogname', 'Pan Motors' );
+update_option( 'permalink_structure', '/%postname%/' );
+flush_rewrite_rules( false );
 set_theme_mod( 'custom_logo', $pm_media['logo'] );
-update_post_meta( $pm_front_id, '_pm_demo', 1 );
 update_option( 'panmotors_demo_content', gmdate( 'c' ), false );
 
 WP_CLI::success( 'Demo content seeded.' );
