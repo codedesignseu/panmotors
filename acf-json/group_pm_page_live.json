@@ -138,7 +138,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https://",
+                    "placeholder": "https:\/\/",
                     "parent_repeater": "field_pm_live_posts"
                 },
                 {
@@ -212,7 +212,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates/page-live.php"
+                "value": "templates\/page-live.php"
             }
         ]
     ],
@@ -225,5 +225,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790262553
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790262849
 }
