@@ -93,49 +93,35 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-featured-cars.php"
+                "value": "templates/page-featured-cars.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-values.php"
+                "value": "templates/page-about.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-about.php"
+                "value": "templates/page-latest-cars.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-latest-cars.php"
+                "value": "templates/page-showroom.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-live.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-showroom.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-contact.php"
+                "value": "templates/page-contact.php"
             }
         ]
     ],
@@ -148,8 +134,5 @@
     "active": true,
     "description": "Page hero and intro, shared by all section pages.",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790262849
+    "modified": 1790264035
 }

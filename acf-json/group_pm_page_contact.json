@@ -74,7 +74,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Address, phones, email, hours and the form shortcode come from <strong>Pan Motors settings<\/strong>.",
+            "message": "Address, phones, email, hours and the form shortcode come from <strong>Pan Motors settings</strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -188,7 +188,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-contact.php"
+                "value": "templates/page-contact.php"
             }
         ]
     ],
@@ -201,8 +201,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790262849
+    "modified": 1790264035
 }

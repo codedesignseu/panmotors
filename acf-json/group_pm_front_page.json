@@ -146,8 +146,288 @@
             "append": ""
         },
         {
+            "key": "field_pm_tab_live",
+            "label": "Pan Motors Live",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_msg_live",
+            "label": "Homepage only",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Pan Motors Live appears on the homepage only. The Instagram link comes from <strong>Pan Motors settings → Profiles</strong>.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_live_eyebrow",
+            "label": "Eyebrow",
+            "name": "live_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Social",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_live_title",
+            "label": "Heading",
+            "name": "live_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Pan Motors Live",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_live_cta_label",
+            "label": "Instagram button label",
+            "name": "live_cta_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Follow the floor",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_live_posts",
+            "label": "Posts",
+            "name": "live_posts",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entered by hand, no Instagram connection. Six posts fill the grid.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 9,
+            "collapsed": "field_pm_post_caption",
+            "button_label": "Add post",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pm_post_type",
+                    "label": "Type",
+                    "name": "type",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "video": "Video",
+                        "photo": "Photo"
+                    },
+                    "default_value": "video",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "layout": "horizontal",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_video",
+                    "label": "Video",
+                    "name": "video",
+                    "aria-label": "",
+                    "type": "file",
+                    "instructions": "Vertical MP4, under 8 MB.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_pm_post_type",
+                                "operator": "==",
+                                "value": "video"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": "",
+                    "mime_types": "mp4, webm",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_image",
+                    "label": "Image",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "The photo, or the poster frame for a video.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg, jpeg, png, webp, avif",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_url",
+                    "label": "Instagram post URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "https://",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_caption",
+                    "label": "Caption",
+                    "name": "caption",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_likes",
+                    "label": "Likes",
+                    "name": "likes",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Optional.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_comments",
+                    "label": "Comments",
+                    "name": "comments",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Optional.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_live_posts"
+                }
+            ]
+        },
+        {
             "key": "field_pm_tab_previews",
-            "label": "Section previews",
+            "label": "Section headings",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -177,7 +457,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Each homepage section shows content from its own page (Featured Cars, Our Values …). Edit it there. Here you can only change the homepage heading and the link to the page.",
+            "message": "Featured Cars, Our Values, About, Latest Cars and Showroom show content from their pages (Our Values from the About page). Edit it there. Here you can only change the homepage heading.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -187,7 +467,7 @@
             "name": "home_featured_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty to use the page title.",
+            "instructions": "Leave empty for the default.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -198,26 +478,6 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_featured_link",
-            "label": "Featured Cars link label",
-            "name": "home_featured_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"View all featured cars\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "View all featured cars",
-            "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -227,7 +487,7 @@
             "name": "home_values_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty to use the page title.",
+            "instructions": "Leave empty for the default.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -238,26 +498,6 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_values_link",
-            "label": "Our Values link label",
-            "name": "home_values_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"Our values\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Our values",
-            "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -267,7 +507,7 @@
             "name": "home_about_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty to use the page title.",
+            "instructions": "Leave empty for the default.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -278,26 +518,6 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_about_link",
-            "label": "About link label",
-            "name": "home_about_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"Our story\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Our story",
-            "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -307,7 +527,7 @@
             "name": "home_latest_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty to use the page title.",
+            "instructions": "Leave empty for the default.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -318,66 +538,6 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_latest_link",
-            "label": "Latest Cars link label",
-            "name": "home_latest_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"View all latest cars\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "View all latest cars",
-            "default_value": "",
-            "maxlength": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_live_title",
-            "label": "Live heading",
-            "name": "home_live_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty to use the page title.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_live_link",
-            "label": "Live link label",
-            "name": "home_live_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"More from Pan Motors Live\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "More from Pan Motors Live",
-            "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -387,7 +547,7 @@
             "name": "home_showroom_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty to use the page title.",
+            "instructions": "Leave empty for the default.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -398,26 +558,6 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_showroom_link",
-            "label": "Showroom link label",
-            "name": "home_showroom_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"Visit the showroom\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Visit the showroom",
-            "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -427,7 +567,7 @@
             "name": "home_enquire_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty to use the page title.",
+            "instructions": "Leave empty for the default.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -438,26 +578,6 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_enquire_link",
-            "label": "Enquire link label",
-            "name": "home_enquire_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for \"Contact us\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Contact us",
-            "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -475,7 +595,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques<\/strong>.",
+            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques</strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -496,10 +616,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Homepage hero and section preview labels. Section content lives on each section page.",
+    "description": "Homepage hero, Pan Motors Live and section headings. Other section content lives on each section page.",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790262849
+    "modified": 1790264035
 }
