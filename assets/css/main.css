@@ -1,7 +1,7 @@
 /* ==========================================================================
    Pan Motors — main stylesheet
    1. Fonts  2. Tokens  3. Reset  4. Base type  5. Utilities
-   6. Motion  7. Page templates  8. Reduced motion
+   6. Motion  7. Header  8. Footer  9. Page templates  10. Reduced motion
    Sections add their own blocks below as they are built.
    ========================================================================== */
 
@@ -528,7 +528,264 @@ p {
 	animation-delay: .38s;
 }
 
-/* 7. Page templates (index, page, 404) */
+/* 7. Header: fixed nav and mobile menu panel */
+
+.pm-nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 60;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 18px clamp(20px, 3vw, 40px);
+	background: linear-gradient(to bottom, rgba(12, 11, 11, .72), rgba(12, 11, 11, 0));
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+	color: var(--paper);
+}
+
+.admin-bar .pm-nav,
+.admin-bar .pm-menu {
+	top: var(--wp-admin--admin-bar--height, 32px);
+}
+
+.pm-nav__logo {
+	display: flex;
+	flex: none;
+	align-items: center;
+}
+
+.pm-nav__logo-img {
+	width: auto;
+	height: 46px;
+}
+
+.pm-nav__logo-text {
+	font-family: var(--font-display);
+	font-size: 26px;
+	letter-spacing: .04em;
+}
+
+.pm-nav__links {
+	display: flex;
+	align-items: center;
+	gap: clamp(16px, 2.4vw, 34px);
+	font-size: 12px;
+	font-weight: 400;
+	letter-spacing: .18em;
+	line-height: 1.4;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.pm-nav__link {
+	display: inline-block;
+	opacity: .78;
+	transition: opacity .3s, color .3s;
+}
+
+.pm-nav__link:hover,
+.pm-nav__link:focus-visible {
+	opacity: 1;
+}
+
+.pm-nav__contact {
+	flex: none;
+	padding: 11px 24px;
+	border: 1px solid rgba(243, 242, 242, .4);
+	border-radius: 999px;
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: 1.4;
+	text-transform: uppercase;
+	white-space: nowrap;
+	transition: background .4s, color .4s, border-color .4s;
+}
+
+.pm-nav__contact:hover,
+.pm-nav__contact:focus-visible {
+	background: var(--paper);
+	color: var(--ink);
+	border-color: var(--paper);
+}
+
+.pm-burger {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 1px solid rgba(243, 242, 242, .4);
+	border-radius: 999px;
+	background: rgba(12, 11, 11, .35);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: var(--paper);
+	transition: background .5s, border-color .5s, color .5s;
+}
+
+.pm-burger:hover,
+.pm-burger:focus-visible,
+.pm-burger[aria-expanded="true"] {
+	background: var(--paper);
+	color: var(--ink);
+	border-color: var(--paper);
+}
+
+.pm-burger__line {
+	display: block;
+	width: 18px;
+	height: 1px;
+	background: currentColor;
+}
+
+/* Mobile menu panel. Closed: moved up and out, hidden from assistive tech after the slide. */
+.pm-menu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 55;
+	max-height: 100vh;
+	max-height: 100dvh;
+	overflow-y: auto;
+	padding: 104px 24px 40px;
+	border-radius: 0 0 var(--r) var(--r);
+	background: rgba(12, 11, 11, .97);
+	-webkit-backdrop-filter: blur(14px);
+	backdrop-filter: blur(14px);
+	color: var(--paper);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transform: translateY(-102%);
+	transition: transform .85s var(--ease), opacity .5s ease, visibility 0s linear .85s;
+}
+
+.pm-menu.is-open {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: none;
+	transition: transform .85s var(--ease), opacity .5s ease, visibility 0s;
+}
+
+.pm-menu__links {
+	display: grid;
+	gap: 4px;
+}
+
+.pm-menu__link {
+	display: block;
+	padding: 6px 0;
+	border-bottom: 1px solid rgba(243, 242, 242, .12);
+	font-family: var(--font-display);
+	font-size: 30px;
+	letter-spacing: .01em;
+	line-height: 1.5;
+	transition: padding-left .5s var(--ease), color .4s;
+}
+
+.pm-menu__link:hover,
+.pm-menu__link:focus-visible {
+	padding-left: 14px;
+	color: var(--accent);
+}
+
+.pm-menu__link:focus-visible {
+	outline-offset: -2px;
+}
+
+@media (max-width: 1080px) {
+	.pm-nav__links,
+	.pm-nav__contact {
+		display: none;
+	}
+
+	.pm-burger {
+		display: inline-flex;
+	}
+}
+
+@media (min-width: 1081px) {
+	.pm-menu {
+		display: none;
+	}
+}
+
+/* Body scroll lock while the mobile menu is open. */
+.pm-menu-open,
+.pm-menu-open body {
+	overflow: hidden;
+}
+
+/* 8. Footer */
+
+.pm-footer {
+	padding: 0 var(--pad-x) 44px;
+	font-size: 11px;
+	letter-spacing: .18em;
+	line-height: 1.6;
+	text-transform: uppercase;
+}
+
+.pm-footer__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 32px;
+	padding-top: 34px;
+	border-top: 1px solid var(--line-light);
+	opacity: .62;
+}
+
+.pm-footer__brand {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.pm-footer__logo {
+	width: auto;
+	height: 34px;
+	filter: invert(1);
+}
+
+.pm-footer__links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 28px;
+}
+
+.pm-footer__address {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 24px;
+	margin-top: 18px;
+	opacity: .62;
+}
+
+.pm-footer a:hover,
+.pm-footer a:focus-visible {
+	color: var(--accent);
+}
+
+@media (max-width: 880px) {
+	.pm-footer__row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 22px;
+	}
+}
+
+/* 9. Page templates (index, page, 404) */
 
 .pm-page {
 	min-height: 70vh;
@@ -771,7 +1028,7 @@ p {
 	gap: 14px;
 }
 
-/* 8. Reduced motion: no reveals, no hero entrance, near-instant transitions. */
+/* 10. Reduced motion: no reveals, no hero entrance, near-instant transitions. */
 
 @media (prefers-reduced-motion: reduce) {
 	html {
