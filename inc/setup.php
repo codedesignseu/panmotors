@@ -46,6 +46,7 @@ function panmotors_setup() {
 	add_image_size( 'pm-wide', 1960, 1102, true );     // Latest Cars slides, 16:9.
 	add_image_size( 'pm-showroom', 2160, 1350, true ); // Showroom, 16:10.
 	add_image_size( 'pm-portrait', 1080, 1350, true ); // About and Live tiles, 4:5.
+	add_image_size( 'pm-og', 1200, 630, true );        // Open Graph and Twitter share image.
 }
 add_action( 'after_setup_theme', 'panmotors_setup' );
 

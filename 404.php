@@ -9,7 +9,7 @@ get_header();
 ?>
 <main id="main" class="pm-404 pm-pad">
 	<div class="pm-404__code" aria-hidden="true">404</div>
-	<span class="pm-eyebrow"><?php esc_html_e( 'Page not found', 'panmotors' ); ?></span>
+	<p class="pm-eyebrow"><?php esc_html_e( 'Page not found', 'panmotors' ); ?></p>
 	<h1 class="pm-404__title pm-title"><?php esc_html_e( 'Off the Map', 'panmotors' ); ?></h1>
 	<p class="pm-404__text"><?php esc_html_e( 'The page you were looking for has moved or no longer exists. The cars are still where we left them.', 'panmotors' ); ?></p>
 	<div class="pm-404__actions">

@@ -47,40 +47,31 @@ function panmotors_font_preload() {
 add_action( 'wp_head', 'panmotors_font_preload', 1 );
 
 /**
- * JS modules. Global ones load on every page, the rest only on the front page.
- * Missing files are skipped, so modules can be added one section at a time.
+ * Enqueue one JS module from assets/js/. Skipped quietly if the file is missing.
  *
- * @return array<string, bool> Module name => front page only.
+ * Section template parts call this when they render, so a section's JS only
+ * loads when the section is on the page. Classic themes print script modules
+ * in wp_footer, so enqueueing from inside the template works.
+ *
+ * @param string $name Module file name without extension, e.g. 'slider-drag'.
  */
-function panmotors_js_modules() {
-	return array(
-		'menu'            => false,
-		'reveal'          => false,
-		'hero-video'      => true,
-		'heritage-fade'   => true,
-		'slider-drag'     => true,
-		'live-videos'     => true,
-		'showroom-slider' => true,
-	);
+function panmotors_use_module( $name ) {
+	$js      = 'assets/js/' . $name . '.js';
+	$version = panmotors_asset_version( $js );
+
+	if ( $version ) {
+		wp_enqueue_script_module( 'pm-' . $name, PANMOTORS_URI . '/' . $js, array(), $version );
+	}
 }
 
 /**
- * Enqueue main stylesheet and JS modules.
+ * Enqueue the main stylesheet and the modules every page needs.
  */
 function panmotors_enqueue_assets() {
 	$css = 'assets/css/main.css';
 	wp_enqueue_style( 'pm-main', PANMOTORS_URI . '/' . $css, array(), panmotors_asset_version( $css ) );
 
-	// Script modules are deferred by nature. Each one checks for its own data-* hooks.
-	foreach ( panmotors_js_modules() as $name => $front_only ) {
-		$js      = 'assets/js/' . $name . '.js';
-		$version = panmotors_asset_version( $js );
-
-		if ( ! $version || ( $front_only && ! is_front_page() ) ) {
-			continue;
-		}
-		wp_enqueue_script_module( 'pm-' . $name, PANMOTORS_URI . '/' . $js, array(), $version );
-	}
+	panmotors_use_module( 'menu' );
+	panmotors_use_module( 'reveal' );
 }
 add_action( 'wp_enqueue_scripts', 'panmotors_enqueue_assets' );
-
