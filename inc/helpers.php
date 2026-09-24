@@ -119,3 +119,35 @@ function panmotors_menu_link_class( $atts, $item, $args ) {
 	return $atts;
 }
 add_filter( 'nav_menu_link_attributes', 'panmotors_menu_link_class', 10, 3 );
+
+/**
+ * Render a homepage section from template-parts/front/, and load its JS module only if it printed something.
+ *
+ * @param string $slug   Template part name, e.g. 'hero'.
+ * @param string $module JS module name, or '' for none.
+ */
+function panmotors_render_section( $slug, $module = '' ) {
+	ob_start();
+	get_template_part( 'template-parts/front/' . $slug );
+	$html = trim( (string) ob_get_clean() );
+
+	if ( '' === $html ) {
+		return;
+	}
+
+	echo $html . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in the template part.
+
+	if ( $module ) {
+		panmotors_use_module( $module );
+	}
+}
+
+/**
+ * Homepage hero poster attachment ID, or 0.
+ *
+ * @return int
+ */
+function panmotors_hero_poster_id() {
+	$front_id = (int) get_option( 'page_on_front' );
+	return $front_id ? (int) panmotors_field( 'hero_poster', $front_id, 0 ) : 0;
+}
