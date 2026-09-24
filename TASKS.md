@@ -31,8 +31,8 @@ Tick each task when it is done and checked in the browser.
 ## 4. Section components (home context first; page context after the inner pages are designed)
 - [x] Hero + `hero-video.js` (home only)
 - [x] Marquee (home only)
-- [ ] `featured-cars` + `car-tile.php` (showcase only, no links by default)
-- [ ] `values` (home; values live on the About page)
+- [x] `featured-cars` + `car-tile.php` (home context; showcase only, no links by default)
+- [x] `values` (home context; values live on the About page)
 - [ ] `about` + `heritage-fade.js` (fade on home only)
 - [ ] `latest-cars` + `slider-drag.js` (slider on home, grid on page)
 - [ ] `live` + `live-videos.js` (home only, posts on Home)
@@ -41,7 +41,7 @@ Tick each task when it is done and checked in the browser.
 - [ ] `faq` with `details`/`summary` (Contact page)
 - [ ] `enquire` card + `.pm-form` styles for plugin forms + static fallback form
 - [ ] `cta-band`
-- [ ] `reveal.js` wired to all sections
+- [x] `reveal.js` (wired to each section as it is built)
 
 ## 5. SEO, GEO and extra pages
 - [ ] `inc/schema.php`: JSON-LD graph from options (AutoDealer, WebSite, WebPage, FAQPage)
