@@ -18,10 +18,10 @@ Tick each task when it is done and checked in the browser.
 - [x] `index.php`, `page.php`, `404.php` minimal, in the site style
 
 ## 2. Content model
-- [ ] ACF options page with entity facts (names, one-sentence description, address, geo, phones, email, hours with machine fields, marques, sameAs profiles), form shortcode
-- [ ] ACF front page field group, one tab per section (featured cars, latest cars and live posts as repeaters)
-- [ ] Field groups exported to `acf-json/`
-- [ ] Demo content entered from `_design/` data so the page looks like the design
+- [x] ACF options page with entity facts (names, one-sentence description, address, geo, phones, email, hours with machine fields, marques, sameAs profiles), form shortcode
+- [x] ACF front page field group, one tab per section (featured cars, latest cars and live posts as repeaters)
+- [x] Field groups exported to `acf-json/`
+- [x] Demo content entered from `_design/` data so the page looks like the design
 
 ## 3. Header and footer
 - [ ] `header.php`: nav, logo, menu, contact pill, burger, mobile menu
