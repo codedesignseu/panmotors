@@ -1,0 +1,91 @@
+{
+    "key": "group_pm_page_showroom",
+    "title": "Showroom",
+    "fields": [
+        {
+            "key": "field_pm_showroom_photos",
+            "label": "Photos",
+            "name": "showroom_photos",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Landscape, 16:10. The caption comes from each image's caption in the media library.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "insert": "append",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_getting_here",
+            "label": "Getting here",
+            "name": "getting_here",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Directions from Paphos centre and Paphos airport, and parking. Plain, factual sentences.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_pm_msg_showroom_hours",
+            "label": "Opening hours and address",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Hours and address come from <strong>Pan Motors settings</strong>.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-showroom.php"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790262553
+}

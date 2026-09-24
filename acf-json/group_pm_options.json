@@ -212,7 +212,7 @@
                 "class": "",
                 "id": ""
             },
-            "placeholder": 8060,
+            "placeholder": "8060",
             "default_value": "",
             "maxlength": "",
             "prepend": "",
@@ -317,7 +317,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_tab_contact",
@@ -709,7 +709,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_facebook_url",
@@ -726,7 +726,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_google_business_url",
@@ -743,7 +743,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_other_profiles",
@@ -803,7 +803,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https:\/\/",
+                    "placeholder": "https://",
                     "parent_repeater": "field_pm_other_profiles"
                 }
             ]
@@ -845,6 +845,238 @@
             "maxlength": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_pm_tab_pages",
+            "label": "Site pages",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_msg_pages",
+            "label": "Section pages",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The theme links to these pages. Pick the page for each section; renaming or moving a page never breaks a link.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_page_featured",
+            "label": "Featured Cars page",
+            "name": "page_featured",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_page_values",
+            "label": "Our Values page",
+            "name": "page_values",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_page_about",
+            "label": "About page",
+            "name": "page_about",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_page_latest",
+            "label": "Latest Cars page",
+            "name": "page_latest",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_page_live",
+            "label": "Live page",
+            "name": "page_live",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_page_showroom",
+            "label": "Showroom page",
+            "name": "page_showroom",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_page_contact",
+            "label": "Contact page",
+            "name": "page_contact",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
         },
         {
             "key": "field_pm_tab_footer",
@@ -923,8 +1155,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790256668
+    "modified": 1790262553
 }

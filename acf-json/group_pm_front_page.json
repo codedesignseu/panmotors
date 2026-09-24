@@ -131,7 +131,7 @@
             "name": "hero_cta_link",
             "aria-label": "",
             "type": "text",
-            "instructions": "Anchor (#floor) or URL.",
+            "instructions": "Leave empty to link to the Featured Cars page.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -139,15 +139,15 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "#floor",
+            "default_value": "",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
-            "key": "field_pm_tab_marquee",
-            "label": "Marquee",
+            "key": "field_pm_tab_previews",
+            "label": "Section previews",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -162,10 +162,308 @@
             "placement": "top",
             "endpoint": 0,
             "selected": 0
+        },
+        {
+            "key": "field_pm_msg_previews",
+            "label": "Content comes from each page",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Each homepage section shows content from its own page (Featured Cars, Our Values …). Edit it there. Here you can only change the homepage heading and the link to the page.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_home_featured_title",
+            "label": "Featured Cars heading",
+            "name": "home_featured_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_featured_link",
+            "label": "Featured Cars link label",
+            "name": "home_featured_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"View all featured cars\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "View all featured cars",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_values_title",
+            "label": "Our Values heading",
+            "name": "home_values_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_values_link",
+            "label": "Our Values link label",
+            "name": "home_values_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"Our values\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "Our values",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_about_title",
+            "label": "About heading",
+            "name": "home_about_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_about_link",
+            "label": "About link label",
+            "name": "home_about_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"Our story\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "Our story",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_latest_title",
+            "label": "Latest Cars heading",
+            "name": "home_latest_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_latest_link",
+            "label": "Latest Cars link label",
+            "name": "home_latest_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"View all latest cars\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "View all latest cars",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_live_title",
+            "label": "Live heading",
+            "name": "home_live_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_live_link",
+            "label": "Live link label",
+            "name": "home_live_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"More from Pan Motors Live\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "More from Pan Motors Live",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_showroom_title",
+            "label": "Showroom heading",
+            "name": "home_showroom_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_showroom_link",
+            "label": "Showroom link label",
+            "name": "home_showroom_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"Visit the showroom\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "Visit the showroom",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_enquire_title",
+            "label": "Enquire heading",
+            "name": "home_enquire_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_home_enquire_link",
+            "label": "Enquire link label",
+            "name": "home_enquire_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty for \"Contact us\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "Contact us",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_pm_msg_marquee",
-            "label": "Marques",
+            "label": "Marquee",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -177,1247 +475,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques<\/strong>.",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_pm_tab_featured",
-            "label": "Featured Cars",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_featured_title",
-            "label": "Heading",
-            "name": "featured_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "40",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Featured Cars",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_featured_intro",
-            "label": "Intro",
-            "name": "featured_intro",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "60",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "new_lines": "",
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_pm_featured_cars",
-            "label": "Cars",
-            "name": "featured_cars",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "Showcase only, no prices. Four works best, the layout copes with 2–6.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 6,
-            "collapsed": "field_pm_car_model",
-            "button_label": "Add car",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_car_image",
-                    "label": "Image",
-                    "name": "image",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "id",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "jpg, jpeg, png, webp, avif",
-                    "preview_size": "medium",
-                    "parent_repeater": "field_pm_featured_cars"
-                },
-                {
-                    "key": "field_pm_car_marque",
-                    "label": "Marque",
-                    "name": "marque",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placeholder": "Porsche",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_featured_cars"
-                },
-                {
-                    "key": "field_pm_car_model",
-                    "label": "Model",
-                    "name": "model_name",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placeholder": "911 Turbo S",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_featured_cars"
-                },
-                {
-                    "key": "field_pm_car_ref",
-                    "label": "Reference",
-                    "name": "ref_no",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placeholder": "No. 04",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_featured_cars"
-                },
-                {
-                    "key": "field_pm_car_spec",
-                    "label": "Spec",
-                    "name": "spec",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placeholder": "Flat six",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_featured_cars"
-                },
-                {
-                    "key": "field_pm_car_note",
-                    "label": "Note",
-                    "name": "note",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "34",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placeholder": "Kept in slate grey",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_featured_cars"
-                },
-                {
-                    "key": "field_pm_car_link",
-                    "label": "Link",
-                    "name": "link",
-                    "aria-label": "",
-                    "type": "link",
-                    "instructions": "Optional. Tiles are showcase only by default.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array",
-                    "parent_repeater": "field_pm_featured_cars"
-                }
-            ]
-        },
-        {
-            "key": "field_pm_tab_values",
-            "label": "Our Values",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_values_title",
-            "label": "Heading",
-            "name": "values_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Our Values",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_values",
-            "label": "Values",
-            "name": "values",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 6,
-            "collapsed": "field_pm_value_title",
-            "button_label": "Add value",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_value_index",
-                    "label": "Index label",
-                    "name": "index",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "30",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placeholder": "01 — Keeping",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_values"
-                },
-                {
-                    "key": "field_pm_value_title",
-                    "label": "Title",
-                    "name": "title",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "70",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_values"
-                },
-                {
-                    "key": "field_pm_value_body",
-                    "label": "Text",
-                    "name": "body",
-                    "aria-label": "",
-                    "type": "textarea",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "rows": 3,
-                    "new_lines": "",
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "parent_repeater": "field_pm_values"
-                }
-            ]
-        },
-        {
-            "key": "field_pm_tab_about",
-            "label": "About",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_about_image",
-            "label": "Image",
-            "name": "about_image",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Portrait, 4:5.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "id",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpg, jpeg, png, webp, avif",
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_pm_about_eyebrow",
-            "label": "Eyebrow",
-            "name": "about_eyebrow",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Mesoyi, Paphos",
-            "default_value": "",
-            "maxlength": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_about_title",
-            "label": "Heading",
-            "name": "about_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "About Pan Motors",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_about_text",
-            "label": "Text",
-            "name": "about_text",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "The one-sentence description from Pan Motors settings is printed first. Add what follows it here.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "visual",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
-        },
-        {
-            "key": "field_pm_about_stats",
-            "label": "Stats",
-            "name": "about_stats",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "pagination": 0,
-            "min": 0,
-            "max": 4,
-            "collapsed": "",
-            "button_label": "Add stat",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_stat_value",
-                    "label": "Value",
-                    "name": "value",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "40",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_about_stats"
-                },
-                {
-                    "key": "field_pm_stat_label",
-                    "label": "Label",
-                    "name": "label",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "60",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_about_stats"
-                }
-            ]
-        },
-        {
-            "key": "field_pm_tab_latest",
-            "label": "Latest Cars",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_latest_eyebrow",
-            "label": "Eyebrow",
-            "name": "latest_eyebrow",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Latest arrivals",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_latest_title",
-            "label": "Heading",
-            "name": "latest_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Latest Cars",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_latest_cars",
-            "label": "Slides",
-            "name": "latest_cars",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "field_pm_slide_caption",
-            "button_label": "Add slide",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_slide_image",
-                    "label": "Image",
-                    "name": "image",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "Landscape, 16:9.",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "id",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "jpg, jpeg, png, webp, avif",
-                    "preview_size": "medium",
-                    "parent_repeater": "field_pm_latest_cars"
-                },
-                {
-                    "key": "field_pm_slide_caption",
-                    "label": "Caption",
-                    "name": "caption",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "60",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_latest_cars"
-                },
-                {
-                    "key": "field_pm_slide_place",
-                    "label": "Place",
-                    "name": "place",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "40",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "Paphos",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_latest_cars"
-                }
-            ]
-        },
-        {
-            "key": "field_pm_tab_live",
-            "label": "Pan Motors Live",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_live_eyebrow",
-            "label": "Eyebrow",
-            "name": "live_eyebrow",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Social",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_live_title",
-            "label": "Heading",
-            "name": "live_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Pan Motors Live",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_live_cta_label",
-            "label": "Button label",
-            "name": "live_cta_label",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Links to the Instagram URL in Pan Motors settings.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "34",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Follow the floor",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_live_posts",
-            "label": "Posts",
-            "name": "live_posts",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "Entered by hand. Six posts fill the grid.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 9,
-            "collapsed": "field_pm_post_caption",
-            "button_label": "Add post",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_post_type",
-                    "label": "Type",
-                    "name": "type",
-                    "aria-label": "",
-                    "type": "button_group",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "video": "Video",
-                        "photo": "Photo"
-                    },
-                    "default_value": "video",
-                    "return_format": "value",
-                    "allow_null": 0,
-                    "layout": "horizontal",
-                    "parent_repeater": "field_pm_live_posts"
-                },
-                {
-                    "key": "field_pm_post_video",
-                    "label": "Video",
-                    "name": "video",
-                    "aria-label": "",
-                    "type": "file",
-                    "instructions": "Vertical MP4, under 8 MB.",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_pm_post_type",
-                                "operator": "==",
-                                "value": "video"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "id",
-                    "library": "all",
-                    "min_size": "",
-                    "max_size": "",
-                    "mime_types": "mp4, webm",
-                    "parent_repeater": "field_pm_live_posts"
-                },
-                {
-                    "key": "field_pm_post_image",
-                    "label": "Image",
-                    "name": "image",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "The photo, or the poster frame for a video.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "id",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "jpg, jpeg, png, webp, avif",
-                    "preview_size": "medium",
-                    "parent_repeater": "field_pm_live_posts"
-                },
-                {
-                    "key": "field_pm_post_url",
-                    "label": "Instagram post URL",
-                    "name": "url",
-                    "aria-label": "",
-                    "type": "url",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "https:\/\/",
-                    "parent_repeater": "field_pm_live_posts"
-                },
-                {
-                    "key": "field_pm_post_caption",
-                    "label": "Caption",
-                    "name": "caption",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_live_posts"
-                },
-                {
-                    "key": "field_pm_post_likes",
-                    "label": "Likes",
-                    "name": "likes",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "Optional.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_live_posts"
-                },
-                {
-                    "key": "field_pm_post_comments",
-                    "label": "Comments",
-                    "name": "comments",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "Optional.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_live_posts"
-                }
-            ]
-        },
-        {
-            "key": "field_pm_tab_showroom",
-            "label": "Showroom",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_showroom_eyebrow",
-            "label": "Eyebrow",
-            "name": "showroom_eyebrow",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Avenue 65, Mesoyi",
-            "default_value": "",
-            "maxlength": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_showroom_title",
-            "label": "Heading",
-            "name": "showroom_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "The Showroom",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_showroom_intro",
-            "label": "Intro",
-            "name": "showroom_intro",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "new_lines": "",
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_pm_showroom_photos",
-            "label": "Photos",
-            "name": "showroom_photos",
-            "aria-label": "",
-            "type": "gallery",
-            "instructions": "Landscape, 16:10. The caption comes from each image's caption in the media library.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "id",
-            "library": "all",
-            "min": "",
-            "max": "",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpg, jpeg, png, webp, avif",
-            "insert": "append",
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_pm_msg_showroom_hours",
-            "label": "Opening hours",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "Hours come from <strong>Pan Motors settings → Opening hours<\/strong>.",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_pm_tab_faq",
-            "label": "Questions",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_faq_title",
-            "label": "Heading",
-            "name": "faq_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Questions",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_faqs",
-            "label": "Questions",
-            "name": "faqs",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "field_pm_faq_question",
-            "button_label": "Add question",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_faq_question",
-                    "label": "Question",
-                    "name": "question",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_faqs"
-                },
-                {
-                    "key": "field_pm_faq_answer",
-                    "label": "Answer",
-                    "name": "answer",
-                    "aria-label": "",
-                    "type": "textarea",
-                    "instructions": "One to three plain sentences. Fact first. Also used in FAQPage schema.",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "rows": 3,
-                    "new_lines": "",
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "parent_repeater": "field_pm_faqs"
-                }
-            ]
-        },
-        {
-            "key": "field_pm_tab_enquire",
-            "label": "Enquire",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_enquire_title",
-            "label": "Heading",
-            "name": "enquire_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Come And See",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_enquire_intro",
-            "label": "Intro",
-            "name": "enquire_intro",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "new_lines": "",
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_pm_msg_enquire_contact",
-            "label": "Contact details and form",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "Address, phones and email come from <strong>Pan Motors settings<\/strong>. The form shortcode is set there too.",
+            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques</strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -1438,10 +496,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Homepage content, one tab per section.",
+    "description": "Homepage hero and section preview labels. Section content lives on each section page.",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790256667
+    "modified": 1790262553
 }

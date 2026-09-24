@@ -1,0 +1,152 @@
+{
+    "key": "group_pm_page_intro",
+    "title": "Page hero and intro",
+    "fields": [
+        {
+            "key": "field_pm_page_hero_image",
+            "label": "Hero image",
+            "name": "page_hero_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Optional background, shown in grayscale. Landscape, at least 2400px wide.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_page_eyebrow",
+            "label": "Eyebrow",
+            "name": "page_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Small accent line above the title, e.g. \"Avenue 65, Mesoyi\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_page_intro",
+            "label": "Hero intro",
+            "name": "page_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "One or two sentences under the title. Also used as the short intro on the homepage preview.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 220,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_page_body",
+            "label": "Intro text",
+            "name": "page_body",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Opening copy for this page, shown under the hero. Own text for this page, not copied from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-featured-cars.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-values.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-about.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-latest-cars.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-live.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-showroom.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-contact.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Page hero and intro, shared by all section pages.",
+    "show_in_rest": 0,
+    "modified": 1790262553
+}

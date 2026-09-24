@@ -151,3 +151,48 @@ function panmotors_hero_poster_id() {
 	$front_id = (int) get_option( 'page_on_front' );
 	return $front_id ? (int) panmotors_field( 'hero_poster', $front_id, 0 ) : 0;
 }
+
+/**
+ * Section page keys and their options field (Pan Motors settings → Site pages).
+ *
+ * @return array<string, string>
+ */
+function panmotors_page_keys() {
+	return array(
+		'featured' => 'page_featured',
+		'values'   => 'page_values',
+		'about'    => 'page_about',
+		'latest'   => 'page_latest',
+		'live'     => 'page_live',
+		'showroom' => 'page_showroom',
+		'contact'  => 'page_contact',
+	);
+}
+
+/**
+ * ID of a section page, as mapped in the options. Never looked up by slug.
+ *
+ * @param string $key One of the panmotors_page_keys() keys, e.g. 'featured'.
+ * @return int Page ID, or 0 when unmapped or not published.
+ */
+function panmotors_page( $key ) {
+	$keys = panmotors_page_keys();
+	if ( ! isset( $keys[ $key ] ) ) {
+		return 0;
+	}
+
+	$id = (int) panmotors_option( $keys[ $key ], 0 );
+
+	return ( $id && 'publish' === get_post_status( $id ) ) ? $id : 0;
+}
+
+/**
+ * Permalink of a section page, or '' when unmapped.
+ *
+ * @param string $key Page key, e.g. 'contact'.
+ * @return string
+ */
+function panmotors_page_url( $key ) {
+	$id = panmotors_page( $key );
+	return $id ? (string) get_permalink( $id ) : '';
+}
