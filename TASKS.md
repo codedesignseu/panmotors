@@ -29,8 +29,8 @@ Tick each task when it is done and checked in the browser.
 - [x] `footer.php` with dynamic year
 
 ## 4. Homepage sections (one per session)
-- [ ] Hero + `hero-video.js`
-- [ ] Marquee
+- [x] Hero + `hero-video.js`
+- [x] Marquee
 - [ ] Featured Cars + `car-tile.php` (showcase only, no links by default)
 - [ ] Our Values
 - [ ] About + `heritage-fade.js`
