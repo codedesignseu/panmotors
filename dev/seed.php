@@ -61,6 +61,15 @@ foreach ( glob( get_template_directory() . '/acf-json/group_*.json' ) as $pm_jso
 	WP_CLI::log( "Field group: {$pm_group['title']}" );
 }
 
+// Remove database groups whose JSON is gone (D10: Our Values and Live page groups).
+// Their JSON file no longer exists, so acf_delete_field_group() has nothing else to delete.
+foreach ( get_posts( array( 'post_type' => 'acf-field-group', 'post_status' => 'any', 'posts_per_page' => -1 ) ) as $pm_old ) {
+	if ( str_starts_with( $pm_old->post_name, 'group_pm_' ) && ! file_exists( get_template_directory() . "/acf-json/{$pm_old->post_name}.json" ) ) {
+		acf_delete_field_group( $pm_old->ID );
+		WP_CLI::log( "Removed field group: {$pm_old->post_title}" );
+	}
+}
+
 /*
  * ------------------------------------------------------------------
  * 2. Media.
@@ -280,13 +289,24 @@ function panmotors_seed_fields( $post_id, $fields ) {
 
 $pm_pages = array(
 	'featured' => panmotors_seed_page( 'featured-cars', 'Featured Cars', 'templates/page-featured-cars.php' ),
-	'values'   => panmotors_seed_page( 'our-values', 'Our Values', 'templates/page-values.php' ),
 	'about'    => panmotors_seed_page( 'about', 'About Pan Motors', 'templates/page-about.php' ),
 	'latest'   => panmotors_seed_page( 'latest-cars', 'Latest Cars', 'templates/page-latest-cars.php' ),
-	'live'     => panmotors_seed_page( 'live', 'Pan Motors Live', 'templates/page-live.php' ),
 	'showroom' => panmotors_seed_page( 'showroom', 'The Showroom', 'templates/page-showroom.php' ),
 	'contact'  => panmotors_seed_page( 'contact', 'Contact', 'templates/page-contact.php' ),
 );
+
+// D10: Our Values and Live are not pages any more.
+foreach ( array( 'our-values', 'live' ) as $pm_gone ) {
+	$pm_gone_page = get_page_by_path( $pm_gone );
+	if ( $pm_gone_page ) {
+		wp_delete_post( $pm_gone_page->ID, true );
+		WP_CLI::log( "Deleted page /{$pm_gone}/" );
+	}
+}
+foreach ( array( 'page_values', 'page_live' ) as $pm_gone ) {
+	delete_option( "options_{$pm_gone}" );
+	delete_option( "_options_{$pm_gone}" );
+}
 
 // Map them in Pan Motors settings → Site pages.
 foreach ( $pm_pages as $pm_key => $pm_page_id ) {
@@ -342,40 +362,6 @@ panmotors_seed_fields(
 	)
 );
 
-// Our Values.
-panmotors_seed_fields(
-	$pm_pages['values'],
-	array(
-		'page_hero_image' => '',
-		'page_eyebrow'    => 'How we work',
-		'page_intro'      => 'Three habits decide how a car is kept, recorded and shown at Pan Motors.',
-		'page_body'       => '<p>A boutique is judged by what happens when nobody is looking: how a car is stored, how its history is kept, and how it is shown to the next owner. These are the habits we hold ourselves to in Paphos.</p>',
-		'values'          => array(
-			array(
-				'index'  => '01 — Keeping',
-				'title'  => 'Kept Running',
-				'body'   => 'Climate bay, battery care, a circulation drive every month. Nothing in the collection sits still for long.',
-				'detail' => '<p>DRAFT: Every car is stored in a climate-controlled bay, kept on a battery conditioner and driven on a short circulation route each month, so seals, fluids and tyres stay in use. [Client to confirm the routine.]</p>',
-				'image'  => $pm_media['sr_floor'],
-			),
-			array(
-				'index'  => '02 — Record',
-				'title'  => 'Written Down',
-				'body'   => 'Every service, every owner, every road. The file matters as much as the car it belongs to.',
-				'detail' => '<p>DRAFT: Each car has a file with its service history, previous owners and the work done while it was with us. The file goes with the car to its next owner. [Client to confirm.]</p>',
-				'image'  => $pm_media['sr_bay'],
-			),
-			array(
-				'index'  => '03 — Showing',
-				'title'  => 'Shown Rarely',
-				'body'   => 'One guest at a time, by appointment, with the doors closed and the lights low.',
-				'detail' => '<p>DRAFT: Private viewings are one guest at a time, by appointment, so there is time to look properly and ask questions. [Client to confirm how viewings are booked.]</p>',
-				'image'  => $pm_media['sr_night'],
-			),
-		),
-	)
-);
-
 // About.
 panmotors_seed_fields(
 	$pm_pages['about'],
@@ -398,6 +384,36 @@ panmotors_seed_fields(
 			array(
 				'value' => 'Boutique',
 				'label' => 'Parts and accessories',
+			),
+		),
+	)
+);
+
+// Our Values: on the About page (D10), shown as cards on the homepage.
+panmotors_seed_fields(
+	$pm_pages['about'],
+	array(
+		'values' => array(
+			array(
+				'index'  => '01 — Keeping',
+				'title'  => 'Kept Running',
+				'body'   => 'Climate bay, battery care, a circulation drive every month. Nothing in the collection sits still for long.',
+				'detail' => '<p>DRAFT: Every car is stored in a climate-controlled bay, kept on a battery conditioner and driven on a short circulation route each month, so seals, fluids and tyres stay in use. [Client to confirm the routine.]</p>',
+				'image'  => $pm_media['sr_floor'],
+			),
+			array(
+				'index'  => '02 — Record',
+				'title'  => 'Written Down',
+				'body'   => 'Every service, every owner, every road. The file matters as much as the car it belongs to.',
+				'detail' => '<p>DRAFT: Each car has a file with its service history, previous owners and the work done while it was with us. The file goes with the car to its next owner. [Client to confirm.]</p>',
+				'image'  => $pm_media['sr_bay'],
+			),
+			array(
+				'index'  => '03 — Showing',
+				'title'  => 'Shown Rarely',
+				'body'   => 'One guest at a time, by appointment, with the doors closed and the lights low.',
+				'detail' => '<p>DRAFT: Private viewings are one guest at a time, by appointment, so there is time to look properly and ask questions. [Client to confirm how viewings are booked.]</p>',
+				'image'  => $pm_media['sr_night'],
 			),
 		),
 	)
@@ -441,74 +457,6 @@ panmotors_seed_fields(
 				'image'   => $pm_media['porsche_studio'],
 				'caption' => 'Glass black, held on the line',
 				'place'   => 'Paphos',
-			),
-		),
-	)
-);
-
-// Pan Motors Live.
-panmotors_seed_fields(
-	$pm_pages['live'],
-	array(
-		'page_hero_image' => '',
-		'page_eyebrow'    => 'Social',
-		'page_intro'      => 'Short films and photographs from the showroom floor, as posted on Instagram.',
-		'page_body'       => '<p>Pan Motors Live collects recent posts from our Instagram: arrivals, details and drives around Paphos. Follow along for new cars as they come in.</p>',
-		'live_cta_label'  => 'Follow the floor',
-		'live_posts'      => array(
-			array(
-				'type'     => 'video',
-				'video'    => $pm_media['v_cinematic'],
-				'image'    => '',
-				'url'      => 'https://www.instagram.com/reel/DdHtvoxqTge/',
-				'caption'  => 'Cinematic',
-				'likes'    => '24K',
-				'comments' => '188',
-			),
-			array(
-				'type'     => 'video',
-				'video'    => $pm_media['v_coast'],
-				'image'    => '',
-				'url'      => 'https://www.instagram.com/reel/DcrFwhYifCK/',
-				'caption'  => 'Coast road',
-				'likes'    => '138K',
-				'comments' => '407',
-			),
-			array(
-				'type'     => 'photo',
-				'video'    => '',
-				'image'    => $pm_media['grey_sunset'],
-				'url'      => 'https://www.instagram.com/reel/DZar26hC_wg/',
-				'caption'  => 'Last light',
-				'likes'    => '123K',
-				'comments' => '432',
-			),
-			array(
-				'type'     => 'video',
-				'video'    => $pm_media['v_silent'],
-				'image'    => '',
-				'url'      => 'https://www.instagram.com/reel/DQMRsfkjFY2/',
-				'caption'  => 'Silent run',
-				'likes'    => '83K',
-				'comments' => '774',
-			),
-			array(
-				'type'     => 'video',
-				'video'    => $pm_media['v_hero'],
-				'image'    => $pm_media['red_night'],
-				'url'      => 'https://www.instagram.com/reel/C2mB7yrCFWs/',
-				'caption'  => 'Night pass',
-				'likes'    => '151K',
-				'comments' => '734',
-			),
-			array(
-				'type'     => 'photo',
-				'video'    => '',
-				'image'    => $pm_media['porsche_studio'],
-				'url'      => 'https://www.instagram.com/panmotors/',
-				'caption'  => 'Studio',
-				'likes'    => '69K',
-				'comments' => '496',
 			),
 		),
 	)
@@ -581,7 +529,7 @@ WP_CLI::log( 'Pages: ' . implode( ', ', array_map( fn( $id ) => get_permalink( $
 
 /*
  * ------------------------------------------------------------------
- * 5. Home: hero only. Section content now lives on the section pages.
+ * 5. Home: hero and Pan Motors Live. Other section content lives on the section pages.
  * ------------------------------------------------------------------
  */
 $pm_home = get_posts(
@@ -613,7 +561,8 @@ update_option( 'page_on_front', $pm_front_id );
 update_post_meta( $pm_front_id, '_pm_demo', 1 );
 
 // Remove section content that earlier seed versions stored on Home.
-$pm_moved = array( 'featured_', 'values', 'about_', 'latest_', 'live_', 'showroom_', 'faq', 'enquire_' );
+// live_ stays: Pan Motors Live is a homepage section (D10).
+$pm_moved = array( 'featured_', 'values', 'about_', 'latest_', 'showroom_', 'faq', 'enquire_' );
 foreach ( array_keys( get_post_meta( $pm_front_id ) ) as $pm_meta_key ) {
 	$pm_bare = ltrim( $pm_meta_key, '_' );
 	foreach ( $pm_moved as $pm_prefix ) {
@@ -636,6 +585,72 @@ panmotors_seed_fields(
 	)
 );
 WP_CLI::log( "Homepage hero filled on page {$pm_front_id}." );
+
+// Pan Motors Live: homepage-only section (D10). The Instagram URL comes from the options.
+panmotors_seed_fields(
+	$pm_front_id,
+	array(
+		'live_eyebrow'    => 'Social',
+		'live_title'      => 'Pan Motors Live',
+		'live_cta_label'  => 'Follow the floor',
+		'live_posts'      => array(
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_cinematic'],
+				'image'    => '',
+				'url'      => 'https://www.instagram.com/reel/DdHtvoxqTge/',
+				'caption'  => 'Cinematic',
+				'likes'    => '24K',
+				'comments' => '188',
+			),
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_coast'],
+				'image'    => '',
+				'url'      => 'https://www.instagram.com/reel/DcrFwhYifCK/',
+				'caption'  => 'Coast road',
+				'likes'    => '138K',
+				'comments' => '407',
+			),
+			array(
+				'type'     => 'photo',
+				'video'    => '',
+				'image'    => $pm_media['grey_sunset'],
+				'url'      => 'https://www.instagram.com/reel/DZar26hC_wg/',
+				'caption'  => 'Last light',
+				'likes'    => '123K',
+				'comments' => '432',
+			),
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_silent'],
+				'image'    => '',
+				'url'      => 'https://www.instagram.com/reel/DQMRsfkjFY2/',
+				'caption'  => 'Silent run',
+				'likes'    => '83K',
+				'comments' => '774',
+			),
+			array(
+				'type'     => 'video',
+				'video'    => $pm_media['v_hero'],
+				'image'    => $pm_media['red_night'],
+				'url'      => 'https://www.instagram.com/reel/C2mB7yrCFWs/',
+				'caption'  => 'Night pass',
+				'likes'    => '151K',
+				'comments' => '734',
+			),
+			array(
+				'type'     => 'photo',
+				'video'    => '',
+				'image'    => $pm_media['porsche_studio'],
+				'url'      => 'https://www.instagram.com/panmotors/',
+				'caption'  => 'Studio',
+				'likes'    => '69K',
+				'comments' => '496',
+			),
+		),
+	)
+);
 
 /*
  * ------------------------------------------------------------------
@@ -685,10 +700,8 @@ set_theme_mod(
 			'Primary',
 			array(
 				'Featured Cars'    => $pm_pages['featured'],
-				'Our Values'       => $pm_pages['values'],
 				'About Pan Motors' => $pm_pages['about'],
 				'Latest Cars'      => $pm_pages['latest'],
-				'Live'             => $pm_pages['live'],
 				'Showroom'         => $pm_pages['showroom'],
 			)
 		),
