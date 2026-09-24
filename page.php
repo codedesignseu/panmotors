@@ -16,17 +16,19 @@ while ( have_posts() ) :
 				<?php the_title( '<h1 class="pm-page__title">', '</h1>' ); ?>
 			</header>
 
-			<div class="pm-page__body pm-prose">
-				<?php
-				the_content();
+			<div class="pm-page__body">
+				<div class="pm-prose">
+					<?php
+					the_content();
 
-				wp_link_pages(
-					array(
-						'before' => '<nav class="pm-pagination" aria-label="' . esc_attr__( 'Page sections', 'panmotors' ) . '">',
-						'after'  => '</nav>',
-					)
-				);
-				?>
+					wp_link_pages(
+						array(
+							'before' => '<nav class="pm-pagination" aria-label="' . esc_attr__( 'Page sections', 'panmotors' ) . '">',
+							'after'  => '</nav>',
+						)
+					);
+					?>
+				</div>
 			</div>
 		</article>
 	</main>
