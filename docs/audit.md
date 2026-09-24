@@ -44,7 +44,7 @@ No car post type, `single-car.php`, `archive-car.php` or car ACF group was ever 
 
 ## Verification status
 
-No WordPress install is linked yet, so nothing has been checked in the browser. Checks so far: `php -l` on every PHP file.
+Checked on panmotors.local (24 Sep 2026) at 1440, 1080, 880 and 390px: 404, page.php, index.php (search). PHP log clean, no console errors, one H1 per page, no horizontal scroll. Fixed during the check: 404 eyebrow overlapping the H1, page.php body misaligned with its title, index list titles not in Bodoni.
 
 ## Applied
 

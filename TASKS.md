@@ -10,7 +10,6 @@ Tick each task when it is done and checked in the browser.
 - [x] Decisions D1-D5 answered (D6 language: English for now, translation-ready)
 
 ## 1. Foundation
-Code complete. Not yet checked in the browser (no WordPress install linked).
 - [x] Theme header in `style.css`, `functions.php` loading `inc/`
 - [x] `inc/setup.php`: theme supports (title-tag, post-thumbnails, custom-logo, html5, responsive-embeds), menus `primary` + `footer`, image sizes
 - [x] `inc/enqueue.php`: fonts, main.css, JS modules with filemtime versions
