@@ -10,6 +10,7 @@
  *   titles, alt text and captions (theme-map 9.5).
  * - Syncs the acf-json field groups into the database so they are editable in wp-admin.
  * - Fills the Pan Motors options page and the homepage fields with the _design data.
+ * - Creates the Primary and Footer menus and assigns them.
  * - Sets a static front page, the site title and the custom logo.
  *
  * Safe to re-run: media is matched on the original file name, fields are overwritten.
@@ -487,7 +488,72 @@ WP_CLI::log( "Homepage fields filled on page {$pm_front_id}." );
 
 /*
  * ------------------------------------------------------------------
- * 5. Site settings.
+ * 5. Menus. Links use home_url( '/#…' ) so they also work from inner pages.
+ * ------------------------------------------------------------------
+ */
+
+/**
+ * Create or rebuild a menu of custom links and return its ID.
+ *
+ * @param string   $name  Menu name.
+ * @param string[] $links Label => anchor.
+ * @return int
+ */
+function panmotors_seed_menu( $name, $links ) {
+	$menu    = wp_get_nav_menu_object( $name );
+	$menu_id = $menu ? (int) $menu->term_id : (int) wp_create_nav_menu( $name );
+
+	foreach ( (array) wp_get_nav_menu_items( $menu_id ) as $item ) {
+		wp_delete_post( $item->ID, true );
+	}
+
+	$position = 0;
+	foreach ( $links as $label => $anchor ) {
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'    => $label,
+				'menu-item-url'      => home_url( '/' . $anchor ),
+				'menu-item-type'     => 'custom',
+				'menu-item-status'   => 'publish',
+				'menu-item-position' => ++$position,
+			)
+		);
+	}
+
+	WP_CLI::log( "Menu {$name}: {$position} links." );
+	return $menu_id;
+}
+
+set_theme_mod(
+	'nav_menu_locations',
+	array(
+		'primary' => panmotors_seed_menu(
+			'Primary',
+			array(
+				'Featured Cars'    => '#floor',
+				'Our Values'       => '#ways',
+				'About Pan Motors' => '#heritage',
+				'Latest Cars'      => '#gallery',
+				'Live'             => '#live',
+				'Showroom'         => '#showroom',
+			)
+		),
+		'footer'  => panmotors_seed_menu(
+			'Footer',
+			array(
+				'Featured Cars' => '#floor',
+				'Showroom'      => '#showroom',
+				'Contact'       => '#enquire',
+			)
+		),
+	)
+);
+
+/*
+ * ------------------------------------------------------------------
+ * 6. Site settings.
  * ------------------------------------------------------------------
  */
 update_option( 'blogname', 'Pan Motors' );
