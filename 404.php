@@ -16,7 +16,9 @@ get_header();
 		<a class="pm-pill pm-pill--solid" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 			<?php esc_html_e( 'Back to home', 'panmotors' ); ?> <span aria-hidden="true">&rarr;</span>
 		</a>
-		<a class="pm-pill" href="<?php echo esc_url( home_url( '/#enquire' ) ); ?>"><?php esc_html_e( 'Contact us', 'panmotors' ); ?></a>
+		<?php if ( panmotors_page_url( 'contact' ) ) : ?>
+			<a class="pm-pill" href="<?php echo esc_url( panmotors_page_url( 'contact' ) ); ?>"><?php esc_html_e( 'Contact us', 'panmotors' ); ?></a>
+		<?php endif; ?>
 	</div>
 </div>
 <?php
