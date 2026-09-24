@@ -65,9 +65,13 @@
 	--accent: #ec3013;
 	--surface-dark: #161514;
 	--r: 24px;
-	--font-display: 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
-	--font-body: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	/* Fallbacks as in the design: glyphs the subsets lack (e.g. the → arrow) come from the same generic font. */
+	--font-display: 'Bodoni Moda', serif;
+	--font-body: 'Archivo', sans-serif;
 	--ease: cubic-bezier(.16, .84, .3, 1);
+	/* The design's text sits on Google Archivo's "normal" line height, 1.55. Self-hosted Archivo
+	   has different font metrics, so "normal" would be tighter here: use this instead. */
+	--lh: 1.55;
 	--line-dark: rgba(243, 242, 242, .14);
 	--line-light: rgba(12, 11, 11, .18);
 	--pad-x: 40px;
@@ -110,7 +114,7 @@ body {
 	font-family: var(--font-body);
 	font-size: 16px;
 	font-weight: 400;
-	line-height: 1.6;
+	line-height: var(--lh);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -288,7 +292,7 @@ p {
 	font-size: 11px;
 	font-weight: 400;
 	letter-spacing: .32em;
-	line-height: 1.4;
+	line-height: var(--lh);
 	text-transform: uppercase;
 }
 
@@ -577,7 +581,7 @@ p {
 	font-size: 12px;
 	font-weight: 400;
 	letter-spacing: .18em;
-	line-height: 1.4;
+	line-height: var(--lh);
 	text-transform: uppercase;
 	white-space: nowrap;
 }
@@ -600,7 +604,7 @@ p {
 	border-radius: 999px;
 	font-size: 11px;
 	letter-spacing: .2em;
-	line-height: 1.4;
+	line-height: var(--lh);
 	text-transform: uppercase;
 	white-space: nowrap;
 	transition: background .4s, color .4s, border-color .4s;
@@ -756,7 +760,7 @@ p {
 	padding: 0 var(--pad-x) 44px;
 	font-size: 11px;
 	letter-spacing: .18em;
-	line-height: 1.6;
+	line-height: var(--lh);
 	text-transform: uppercase;
 }
 
@@ -887,7 +891,7 @@ p {
 
 .pm-hero__cta-arrow {
 	font-size: 16px;
-	line-height: normal; /* As in the design: sets the pill height (about 61px). */
+	line-height: var(--lh); /* Pill height about 61px, as in the design. */
 }
 
 @media (max-width: 880px) {
@@ -931,7 +935,7 @@ p {
 	font-family: var(--font-display);
 	font-size: 26px;
 	letter-spacing: .12em;
-	line-height: normal;
+	line-height: var(--lh);
 	text-transform: uppercase;
 	white-space: nowrap;
 	opacity: .5;
@@ -941,6 +945,180 @@ p {
 	.pm-marquee__item {
 		font-size: 19px;
 	}
+}
+
+/* Featured Cars */
+.pm-featured {
+	padding-top: 132px;
+	padding-bottom: 40px;
+}
+
+.pm-featured__tiles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.pm-tile {
+	position: relative;
+	flex: 1 1 calc(25% - 11px);
+	min-width: 0;
+	max-width: calc(50% - 7px);
+	height: 620px;
+	max-height: 72vh;
+	min-height: 460px;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface-dark);
+	transition: flex-grow 1.05s var(--ease), box-shadow .9s ease;
+}
+
+.pm-tile__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 1.5s var(--ease), filter 1.2s ease;
+}
+
+.pm-tile__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(12, 11, 11, .1) 30%, rgba(12, 11, 11, .88) 100%);
+	pointer-events: none;
+}
+
+.pm-tile__copy {
+	position: absolute;
+	left: 22px;
+	right: 22px;
+	bottom: 24px;
+}
+
+.pm-tile__marque {
+	margin-bottom: 12px;
+	color: var(--accent);
+	font-size: 10px;
+	letter-spacing: .28em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-tile__model {
+	margin: 0 0 14px;
+	font-size: clamp(26px, 2.2vw, 34px);
+	line-height: 1.02;
+}
+
+.pm-tile__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 22px;
+	font-size: 11px;
+	letter-spacing: .14em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .66;
+}
+
+/* Optional per-tile link: the whole tile is the target. */
+.pm-tile__link::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+}
+
+/* Hover only where hover exists: touch screens keep the even row. */
+@media (hover: hover) {
+	.pm-tile:hover {
+		flex-grow: 2.6;
+		box-shadow: 0 34px 90px rgba(0, 0, 0, .55);
+	}
+
+	.pm-tile:hover .pm-tile__img {
+		transform: scale(1.055);
+	}
+}
+
+.pm-tile:focus-within {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
+@media (max-width: 880px) {
+	.pm-tile {
+		flex: 1 1 100%;
+		max-width: 100%;
+		height: 78vw;
+		min-height: 400px; /* max-height 72vh still applies, as in the design */
+	}
+}
+
+/* Our Values */
+.pm-values__title {
+	margin-bottom: 54px;
+}
+
+.pm-values__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 14px;
+}
+
+.pm-value {
+	display: block;
+	min-height: 340px;
+	padding: 44px 36px 36px;
+	border: 1px solid rgba(243, 242, 242, .16);
+	border-radius: var(--r);
+	background: transparent;
+	color: var(--paper);
+	transition: background .75s var(--ease), color .75s, border-color .75s, transform .75s var(--ease), box-shadow .75s;
+}
+
+.pm-value:hover,
+.pm-value:focus-visible {
+	background: var(--paper);
+	color: var(--ink);
+	border-color: var(--paper);
+	transform: translateY(-8px);
+	box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+}
+
+.pm-value__top {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 20px;
+	padding-bottom: 22px;
+	border-bottom: 1px solid currentColor;
+	opacity: .9;
+}
+
+.pm-value__index {
+	font-size: 11px;
+	letter-spacing: .28em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-value__arrow {
+	font-size: 20px;
+	line-height: var(--lh);
+}
+
+.pm-value__title {
+	margin: 40px 0 18px;
+	font-size: clamp(32px, 4.4vw, 44px);
+	line-height: 1;
+}
+
+.pm-value__body {
+	max-width: 34ch;
+	font-size: 14px;
+	line-height: 1.75;
+	opacity: .68;
 }
 
 /* 10. Inner pages (D9): page hero, breadcrumb, intro, CTA band */
