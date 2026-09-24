@@ -27,7 +27,7 @@ This is a luxury brand presence site, not a car listing site. No inventory, no c
 panmotors/
   style.css  functions.php  front-page.php  header.php  footer.php
   index.php  page.php  404.php
-  inc/        setup.php enqueue.php acf.php helpers.php
+  inc/        setup.php enqueue.php acf.php schema.php helpers.php
   template-parts/front/   one file per homepage section
   template-parts/components/  car-tile.php etc.
   assets/css/main.css   assets/js/*.js   assets/fonts/   assets/img/
@@ -50,8 +50,17 @@ panmotors/
 - Instagram posts are entered manually in ACF. No API calls.
 - Prefix all PHP functions, handles and option names with `panmotors_` / `pm-`.
 
+## SEO and GEO (see theme-map section 9)
+- One H1 per page. On the home page it holds both the "Pan Motors, luxury car boutique in Paphos, Cyprus" line and "Luxury in Motion".
+- Use semantic elements: `header`, `nav`, `main`, `section` with `aria-labelledby`, `footer`, `address`, `figure`/`figcaption`, `dl` for stats and hours, `details`/`summary` for FAQs.
+- All content is in the server-rendered HTML. JS never injects text, images or slides.
+- Business facts (name, address, phones, hours, marques, profiles) come only from the ACF options page and feed the visible text, the JSON-LD and the footer. Never hardcode them.
+- JSON-LD lives in `inc/schema.php` as one `@graph` (AutoDealer, WebSite, WebPage, FAQPage). No `Car`/`Product`/`Offer` markup.
+- Images always have width, height and alt. Hero poster preloaded with `fetchpriority="high"`.
+
 ## Workflow
 - After each task: load the page in the browser at 1440px, 1080px, 880px and 390px widths and compare against `_design/index.html`.
 - Check the PHP error log is clean (`WP_DEBUG` on locally).
+- Check the heading outline (one H1, no skipped levels) after every section.
 - Commit after each finished task with a clear message.
 - Stop and ask when a decision in theme-map.md section 8 is still open and the task depends on it.

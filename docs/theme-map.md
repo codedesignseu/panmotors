@@ -192,3 +192,115 @@ These go into the WP media library, not the theme folder. Only the logo fallback
 - **D4. Contact form.** Client installs a form plugin. Theme provides the visuals only (see section 10).
 - **D5. Content.** Place names are Paphos. Photos are placeholders the client swaps later. Copy leans into the premium boutique positioning, never dealership language ("stock", "inventory", "finance", "trade-in", prices).
 - **D6. Language.** Not confirmed. Build English only, with every theme string wrapped in translation functions so Greek can be added later with WPML or Polylang.
+
+## 9. SEO and GEO
+
+Goal: rank in Google for Paphos and Cyprus luxury car searches, and give AI answer engines (Google AI Overviews, ChatGPT, Perplexity, Claude) clear, quotable facts about Pan Motors. Everything is server-rendered PHP, so crawlers see all content without running JS. That alone fixes the biggest problem with the original export, which rendered everything client-side through React.
+
+### 9.1 Document outline
+
+One H1, one H2 per section, H3 for cards. No skipped levels. Nothing inside a heading that is not visible text.
+
+```
+<header> nav
+<main id="main">
+  <section aria-labelledby="hero-title">
+    H1  Pan Motors, luxury car boutique in Paphos, Cyprus   (the eyebrow line, styled small)
+        Luxury in Motion                                    (the big line, same H1, second span)
+  <section aria-label="Marques">  <ul> of brand names (second loop copy aria-hidden)
+  <section aria-labelledby="featured-title">  H2 Featured Cars   > H3 per car
+  <section aria-labelledby="values-title">    H2 Our Values     > H3 per value
+  <section aria-labelledby="about-title">     H2 About Pan Motors
+  <section aria-labelledby="latest-title">    H2 Latest Cars    > <figure>/<figcaption> per slide
+  <section aria-labelledby="live-title">      H2 Pan Motors Live
+  <section aria-labelledby="showroom-title">  H2 The Showroom   > hours as <dl> or <table>
+  <section aria-labelledby="faq-title">       H2 Questions      (new, see 9.4)
+  <section aria-labelledby="enquire-title">   H2 Come And See   > <address>
+</main>
+<footer> <address> again in short form
+```
+
+Rules:
+- The H1 wraps both the eyebrow and "Luxury in Motion" as two spans. Visually identical to the design, but the H1 now says who and where. Both parts are ACF fields.
+- Eyebrow lines above H2s ("Latest arrivals", "Social", "Avenue 65, Mesoyi") are `<p>`, not headings.
+- Stats in About ("Sales / Service / Boutique") are a `<dl>`.
+- Add a "Skip to content" link as the first element in `<body>`.
+- `language_attributes()` on `<html>` so it outputs `lang="en-GB"`.
+
+### 9.2 Entity facts (the GEO core)
+
+AI engines quote short, factual, consistent statements. The site states the same facts, word for word, in three places: visible text, JSON-LD, and the Google Business Profile.
+
+Single source: the ACF options page. Fields:
+- Legal name (Pan Motors Ltd), trading name (Pan Motors)
+- One-sentence description, for example: "Pan Motors is a family-run luxury and performance car boutique on Avenue 65 in Mesoyi, Paphos, Cyprus." Used in the About text, the meta description default and schema `description`.
+- Street, locality (Mesoyi), city (Paphos), postcode (8060), country (CY)
+- Latitude / longitude
+- Phones, email
+- Opening hours (existing repeater, plus machine fields: days, opens, closes)
+- Marques handled (repeater, also feeds the marquee)
+- Google Maps URL, Google Business Profile URL, Instagram, Facebook and any other profiles (`sameAs`)
+- Founded year (optional)
+
+The About paragraph must open with the one-sentence description. The address block uses `<address>` and plain text, never an image.
+
+### 9.3 Structured data (JSON-LD)
+
+Theme outputs one `@graph` in `wp_head` on the front page, built from options. Nothing hardcoded.
+
+- `AutoDealer` (the correct schema.org LocalBusiness subtype for a car business. It is never shown to visitors, so it does not conflict with the boutique positioning). `@id` = `https://panmotors.com/#business`. Fields: name, legalName, description, url, logo, image (3 showroom photos), telephone, email, address (`PostalAddress`), geo (`GeoCoordinates`), hasMap, openingHoursSpecification, sameAs, brand (one `Brand` per marque), areaServed (Paphos, Cyprus).
+- `WebSite` with `@id` `#website`, publisher → `#business`.
+- `WebPage` for the front page, about → `#business`, primaryImageOfPage.
+- `FAQPage` for the FAQ section (9.4). Google only shows FAQ rich results for a few site types now, but the markup still helps AI engines match questions to answers.
+- Do not mark up cars as `Car` or `Product` with `Offer`. There are no prices or listings, and fake offers risk a manual action.
+
+SEO plugin coordination: use Rank Math or Yoast for titles, meta, sitemap, OG and canonical. Turn off the plugin's own Organization / Local Business output, or hook the theme's `AutoDealer` node into the plugin's graph, so the page has one business entity, not two. Validate with Google's Rich Results Test and the Schema.org validator.
+
+### 9.4 New section: Questions (FAQ)
+
+The design is light on text. AI engines and Google need some answerable content. Add one section styled like the Showroom hours rows (hairline rows, Bodoni question, body answer, hover invert), using native `<details>`/`<summary>` so it works without JS and the answers stay in the HTML.
+
+ACF repeater `faqs` (`question`, `answer`). Suggested starting set for the client to approve:
+- Where is Pan Motors? (address, landmark, parking)
+- What are your opening hours?
+- Do I need an appointment to visit the showroom?
+- Which marques do you work with?
+- Do you look after cars after purchase? (service and aftercare)
+- What is in the boutique? (parts, accessories)
+- Do you deliver outside Paphos / across Cyprus?
+
+Answers: 1 to 3 plain sentences, the fact first. No marketing lead-ins.
+
+### 9.5 Images and video
+
+- Every image comes from the media library with real alt text describing the car or place ("Porsche 911 Turbo S in the Pan Motors showroom, Paphos"). Decorative images (blurred showroom background) get `alt=""`.
+- Rename files before upload: `porsche-911-turbo-s-pan-motors-paphos.jpg`, not `DSC08440-copy-Large.jpg` or `...generative-ai.jpg`.
+- Upload as WebP or AVIF where possible. Width and height attributes always set, so there's no layout shift.
+- Hero video: `preload="metadata"`, poster image is the LCP element, so preload it in `<head>` with `fetchpriority="high"`. Videos in the Live section load only when near the viewport.
+
+### 9.6 Core Web Vitals
+
+- LCP under 2.5s: preload the hero poster and the two main font files (Bodoni 400, Archivo 400), `font-display: swap`.
+- CLS near 0: fixed aspect-ratio boxes for every image, video and slider (already in the design).
+- INP: all JS deferred, no library, event handlers passive where possible.
+- Only load a section's JS when that section exists on the page.
+
+### 9.7 Crawl and index
+
+- The export's `noindex` and `robots.txt` are removed.
+- XML sitemap from the SEO plugin.
+- Canonical to `https://panmotors.com/`.
+- robots.txt allows search and AI crawlers (Googlebot, Bingbot, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended). Confirm with the client that they are fine with AI crawlers.
+- Optional `llms.txt` at the root with the entity facts and page list. Cheap to add, low but non-zero value.
+- Meta description default from the one-sentence description. OG and Twitter image: absolute URL to a 1200x630 showroom photo.
+
+### 9.8 Pages (decision D7)
+
+A one-page site gives Google and AI engines one URL and one topic to work with. Recommended minimum for a brand-presence site, all using `page.php` in the same style, no listings:
+- Home (the design)
+- About / The Boutique (story, family, the building, marques)
+- Aftercare (service and parts offer, if the client does offer service)
+- Visit / Contact (address, map link, hours, form, directions from Paphos centre and the airport)
+- Privacy and Cookie policy
+
+Each gets its own H1, meta, `WebPage` schema linked to `#business`, and a breadcrumb. The homepage nav keeps its anchor links, and the footer links to the pages.
