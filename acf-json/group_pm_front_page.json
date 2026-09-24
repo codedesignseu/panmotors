@@ -177,7 +177,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques</strong>.",
+            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques<\/strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -1049,7 +1049,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https://",
+                    "placeholder": "https:\/\/",
                     "parent_repeater": "field_pm_live_posts"
                 },
                 {
@@ -1237,7 +1237,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Hours come from <strong>Pan Motors settings → Opening hours</strong>.",
+            "message": "Hours come from <strong>Pan Motors settings → Opening hours<\/strong>.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -1417,7 +1417,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Address, phones and email come from <strong>Pan Motors settings</strong>. The form shortcode is set there too.",
+            "message": "Address, phones and email come from <strong>Pan Motors settings<\/strong>. The form shortcode is set there too.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -1440,5 +1440,8 @@
     "active": true,
     "description": "Homepage content, one tab per section.",
     "show_in_rest": 0,
-    "modified": 1790248409
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790256667
 }

@@ -212,7 +212,7 @@
                 "class": "",
                 "id": ""
             },
-            "placeholder": "8060",
+            "placeholder": 8060,
             "default_value": "",
             "maxlength": "",
             "prepend": "",
@@ -317,7 +317,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https://"
+            "placeholder": "https:\/\/"
         },
         {
             "key": "field_pm_tab_contact",
@@ -709,7 +709,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https://"
+            "placeholder": "https:\/\/"
         },
         {
             "key": "field_pm_facebook_url",
@@ -726,7 +726,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https://"
+            "placeholder": "https:\/\/"
         },
         {
             "key": "field_pm_google_business_url",
@@ -743,7 +743,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https://"
+            "placeholder": "https:\/\/"
         },
         {
             "key": "field_pm_other_profiles",
@@ -803,7 +803,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https://",
+                    "placeholder": "https:\/\/",
                     "parent_repeater": "field_pm_other_profiles"
                 }
             ]
@@ -923,5 +923,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790248409
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790256668
 }

@@ -79,3 +79,37 @@ function panmotors_acf_missing_notice() {
 	);
 }
 add_action( 'admin_notices', 'panmotors_acf_missing_notice' );
+
+/**
+ * Whether a post is the static front page.
+ *
+ * @param int|WP_Post|null $post Post.
+ * @return bool
+ */
+function panmotors_is_front_page_post( $post ) {
+	$post = get_post( $post );
+	return $post && 'page' === get_option( 'show_on_front' ) && (int) get_option( 'page_on_front' ) === $post->ID;
+}
+
+/**
+ * The homepage is built from ACF fields only. Use the classic screen there so the fields fill the page.
+ *
+ * @param bool    $use_block_editor Whether to use the block editor.
+ * @param WP_Post $post             Post being edited.
+ * @return bool
+ */
+function panmotors_front_page_block_editor( $use_block_editor, $post ) {
+	return panmotors_is_front_page_post( $post ) ? false : $use_block_editor;
+}
+add_filter( 'use_block_editor_for_post', 'panmotors_front_page_block_editor', 10, 2 );
+
+/**
+ * Hide the content editor on the front page edit screen. Its content is never shown.
+ */
+function panmotors_front_page_hide_editor() {
+	$post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( $post_id && panmotors_is_front_page_post( $post_id ) ) {
+		remove_post_type_support( 'page', 'editor' );
+	}
+}
+add_action( 'load-post.php', 'panmotors_front_page_hide_editor' );
