@@ -75,3 +75,29 @@ function panmotors_enqueue_assets() {
 	panmotors_use_module( 'reveal' );
 }
 add_action( 'wp_enqueue_scripts', 'panmotors_enqueue_assets' );
+
+/**
+ * Preload the hero poster on the front page. It is the LCP image (theme-map 9.5, 9.6).
+ *
+ * Uses the same srcset and sizes as the <img> in template-parts/front/hero.php so the
+ * browser picks the same file for both.
+ */
+function panmotors_hero_preload() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$poster_id = panmotors_hero_poster_id();
+	$src       = $poster_id ? wp_get_attachment_image_src( $poster_id, 'pm-hero' ) : false;
+
+	if ( ! $src ) {
+		return;
+	}
+
+	printf(
+		'<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="100vw" fetchpriority="high">' . "\n",
+		esc_url( $src[0] ),
+		esc_attr( (string) wp_get_attachment_image_srcset( $poster_id, 'pm-hero' ) )
+	);
+}
+add_action( 'wp_head', 'panmotors_hero_preload', 1 );
