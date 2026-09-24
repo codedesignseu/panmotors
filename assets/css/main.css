@@ -384,7 +384,7 @@ p {
 	letter-spacing: .26em;
 }
 
-/* Round icon button (arrows, sound toggle). */
+/* Round icon button (slider arrows). */
 .pm-round {
 	display: inline-flex;
 	align-items: center;
@@ -789,14 +789,6 @@ p {
 	gap: 28px;
 }
 
-.pm-footer__address {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 6px 24px;
-	margin-top: 18px;
-	opacity: .62;
-}
-
 .pm-footer a:hover,
 .pm-footer a:focus-visible {
 	color: var(--accent);
@@ -896,15 +888,6 @@ p {
 .pm-hero__cta-arrow {
 	font-size: 16px;
 	line-height: normal; /* As in the design: sets the pill height (about 61px). */
-}
-
-.pm-hero__sound {
-	border-color: rgba(243, 242, 242, .4);
-	font-size: 10px;
-	letter-spacing: .1em;
-	line-height: 1.2;
-	text-align: center;
-	text-transform: uppercase;
 }
 
 @media (max-width: 880px) {
@@ -1403,8 +1386,7 @@ p {
 	}
 
 	/* Poster only: hero-video.js never plays the video under this setting. */
-	.pm-hero__video,
-	.pm-hero__sound {
+	.pm-hero__video {
 		display: none;
 	}
 

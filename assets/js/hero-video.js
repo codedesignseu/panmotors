@@ -1,7 +1,7 @@
 /**
- * Hero video: starts playback, fades the video in over the poster, sound toggle.
+ * Hero video: starts playback (always muted), fades the video in over the poster.
  *
- * Hooks: [data-hero-video] section with a <video>, and the [data-hero-sound] button.
+ * Hooks: [data-hero-video] section with a <video>.
  * Reduced motion: never plays (poster only), and stops if the setting changes mid-visit.
  * Pauses while the hero is off screen.
  */
@@ -16,16 +16,8 @@ function initHeroVideo() {
 		return;
 	}
 
-	const sound = hero.querySelector('[data-hero-sound]');
 	let inView = true;
-
-	const setSound = (on) => {
-		video.muted = !on;
-		if (sound) {
-			sound.setAttribute('aria-pressed', String(on));
-			sound.textContent = on ? sound.dataset.on : sound.dataset.off;
-		}
-	};
+	video.muted = true;
 
 	const play = () => {
 		if (REDUCED.matches || !inView) {
@@ -40,19 +32,9 @@ function initHeroVideo() {
 	const stop = () => {
 		video.pause();
 		video.classList.remove('is-playing');
-		setSound(false);
 	};
 
 	video.addEventListener('playing', () => video.classList.add('is-playing'));
-
-	if (sound) {
-		sound.addEventListener('click', () => {
-			setSound(sound.getAttribute('aria-pressed') !== 'true');
-			if (video.paused) {
-				play();
-			}
-		});
-	}
 
 	REDUCED.addEventListener('change', (event) => (event.matches ? stop() : play()));
 
