@@ -160,10 +160,8 @@ function panmotors_hero_poster_id() {
 function panmotors_page_keys() {
 	return array(
 		'featured' => 'page_featured',
-		'values'   => 'page_values',
 		'about'    => 'page_about',
 		'latest'   => 'page_latest',
-		'live'     => 'page_live',
 		'showroom' => 'page_showroom',
 		'contact'  => 'page_contact',
 	);
