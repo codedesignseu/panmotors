@@ -1,6 +1,6 @@
 <?php
 /**
- * Homepage: one template part per section, in design order.
+ * Homepage: hero, marquee, then section previews in design order.
  *
  * A section whose fields are empty prints nothing, and its JS module is not loaded.
  *
@@ -9,17 +9,11 @@
 
 get_header();
 
+// Home-only parts. Section previews (featured cars, values …) are added as
+// components from template-parts/sections/ with context 'home' (pages.md §3).
 $panmotors_sections = array(
-	'hero'          => 'hero-video',
-	'marquee'       => '',
-	'featured-cars' => '',
-	'values'        => '',
-	'about'         => 'heritage-fade',
-	'latest'        => 'slider-drag',
-	'live'          => 'live-videos',
-	'showroom'      => 'showroom-slider',
-	'faq'           => '',
-	'enquire'       => '',
+	'hero'    => 'hero-video',
+	'marquee' => '',
 );
 
 foreach ( $panmotors_sections as $panmotors_slug => $panmotors_module ) {

@@ -15,7 +15,7 @@ $panmotors_poster_id = (int) panmotors_field( 'hero_poster', false, 0 );
 $panmotors_video_id  = (int) panmotors_field( 'hero_video', false, 0 );
 $panmotors_video_url = $panmotors_video_id ? wp_get_attachment_url( $panmotors_video_id ) : '';
 $panmotors_cta_label = panmotors_field( 'hero_cta_label' );
-$panmotors_cta_link  = panmotors_field( 'hero_cta_link' );
+$panmotors_cta_link  = panmotors_field( 'hero_cta_link', false, panmotors_page_url( 'featured' ) );
 
 if ( ! $panmotors_title && ! $panmotors_eyebrow ) {
 	return;
