@@ -3,21 +3,33 @@
  * Homepage: hero, marquee, then section previews in design order.
  *
  * A section whose fields are empty prints nothing, and its JS module is not loaded.
+ * Home matches _design/index.html exactly: nothing is added that the design does not have.
  *
  * @package panmotors
  */
 
 get_header();
 
-// Home-only parts. Section previews (featured cars, values …) are added as
-// components from template-parts/sections/ with context 'home' (pages.md §3).
-$panmotors_sections = array(
-	'hero'    => 'hero-video',
-	'marquee' => '',
+// Design order. Hero and marquee are home-only; the rest are section components in
+// 'home' context, reading their content from their own page (pages.md, D9/D10).
+panmotors_render_section( 'template-parts/front/hero', 'hero-video' );
+panmotors_render_section( 'template-parts/front/marquee' );
+panmotors_render_section(
+	'template-parts/sections/featured-cars',
+	'',
+	array(
+		'page_id' => panmotors_page( 'featured' ),
+		'context' => 'home',
+		'limit'   => 4,
+	)
 );
-
-foreach ( $panmotors_sections as $panmotors_slug => $panmotors_module ) {
-	panmotors_render_section( $panmotors_slug, $panmotors_module );
-}
+panmotors_render_section(
+	'template-parts/sections/values',
+	'',
+	array(
+		'page_id' => panmotors_page( 'about' ),
+		'context' => 'home',
+	)
+);
 
 get_footer();

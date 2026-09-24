@@ -121,14 +121,15 @@ function panmotors_menu_link_class( $atts, $item, $args ) {
 add_filter( 'nav_menu_link_attributes', 'panmotors_menu_link_class', 10, 3 );
 
 /**
- * Render a homepage section from template-parts/front/, and load its JS module only if it printed something.
+ * Render a template part, and load its JS module only if it printed something.
  *
- * @param string $slug   Template part name, e.g. 'hero'.
+ * @param string $part   Template part path, e.g. 'template-parts/front/hero' or 'template-parts/sections/values'.
  * @param string $module JS module name, or '' for none.
+ * @param array  $args   Arguments for the template part.
  */
-function panmotors_render_section( $slug, $module = '' ) {
+function panmotors_render_section( $part, $module = '', $args = array() ) {
 	ob_start();
-	get_template_part( 'template-parts/front/' . $slug );
+	get_template_part( $part, null, $args );
 	$html = trim( (string) ob_get_clean() );
 
 	if ( '' === $html ) {
