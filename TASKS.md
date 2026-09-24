@@ -28,17 +28,19 @@ Tick each task when it is done and checked in the browser.
 - [x] `menu.js`
 - [x] `footer.php` with dynamic year
 
-## 4. Homepage sections (one per session)
-- [x] Hero + `hero-video.js`
-- [x] Marquee
-- [ ] Featured Cars + `car-tile.php` (showcase only, no links by default)
-- [ ] Our Values
-- [ ] About + `heritage-fade.js`
-- [ ] Latest Cars + `slider-drag.js`
-- [ ] Pan Motors Live + `live-videos.js`
-- [ ] Showroom + hours + `showroom-slider.js`
-- [ ] Questions (FAQ) section with `details`/`summary`
-- [ ] Enquire card + `.pm-form` styles for plugin forms + static fallback form
+## 4. Section components (home + page context)
+- [x] Hero + `hero-video.js` (home only)
+- [x] Marquee (home only)
+- [ ] `featured-cars` + `car-tile.php` (showcase only, no links by default)
+- [ ] `values`
+- [ ] `about` + `heritage-fade.js` (fade on home only)
+- [ ] `latest-cars` + `slider-drag.js` (slider on home, grid on page)
+- [ ] `live` + `live-videos.js`
+- [ ] `showroom` + `showroom-slider.js`
+- [ ] `hours`
+- [ ] `faq` with `details`/`summary` (Contact page)
+- [ ] `enquire` card + `.pm-form` styles for plugin forms + static fallback form
+- [ ] `cta-band`
 - [ ] `reveal.js` wired to all sections
 
 ## 5. SEO, GEO and extra pages
@@ -46,7 +48,16 @@ Tick each task when it is done and checked in the browser.
 - [ ] Skip link, `lang`, landmarks, heading outline checked
 - [x] Preload hero poster and main fonts
 - [ ] robots.txt rules and optional `llms.txt`
-- [ ] `page.php` with H1, breadcrumb and WebPage schema, used for About, Aftercare, Visit (per D7) and Privacy/Cookies
+- [ ] Inner pages (D9, `pages.md` §4): page hero with breadcrumb, intro, section component, CTA band
+  - [ ] Featured Cars
+  - [ ] Our Values
+  - [ ] About
+  - [ ] Latest Cars
+  - [ ] Live
+  - [ ] Showroom (with "Getting here")
+  - [ ] Contact (enquire, hours, map link, FAQ, no CTA band)
+  - [ ] Privacy and Cookie policy on `page.php`
+- [ ] BreadcrumbList and per-page WebPage in the JSON-LD graph
 
 ## 6. Finish
 - [ ] Escaping review across all templates

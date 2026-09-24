@@ -1,5 +1,7 @@
 # Pan Motors theme map
 
+> **Multi-page site (D9, 24 Sep 2026).** [`pages.md`](pages.md) supersedes every part of this file that assumes one page with anchor links (`#floor`, `#ways`, `#enquire` …). Sections 3, 4, 9.1, 9.4 and 9.8 are marked where that applies. Everything else here (tokens, design details, entity facts, schema rules, media, CWV) still stands.
+
 Source: Claude Design export in `_design/` (index.html, support.js, image-slot.js, _ds/, uploads/).
 Target: classic PHP WordPress theme `panmotors`, ACF Pro, vanilla CSS and JS, no build step.
 
@@ -58,6 +60,8 @@ Breakpoints: 1080px (desktop links → burger), 880px (mobile layout). Also `pre
 
 ## 3. Page structure → templates
 
+> **Superseded in part by D9.** The table below lists the homepage sections and their design. In the built site each section is a component in `template-parts/sections/` with its own page (see `pages.md` §1–3). Anchors in this table are design references only; links go to pages.
+
 The design covers the homepage only. All sections render from `front-page.php` as template parts.
 
 | # | Section (anchor) | Template part | Content source | JS |
@@ -75,6 +79,8 @@ The design covers the homepage only. All sections render from `front-page.php` a
 | 11 | Footer | `footer.php` | Options, `wp_nav_menu('footer')` | none |
 
 ## 4. Section details
+
+> **Superseded in part by D9.** Visual details below still apply. Where a section links to an anchor (`#enquire`, `#floor`), it links to the matching page instead (Contact, Featured Cars). Content fields move to each section's own page (`pages.md` §2).
 
 ### 1. Nav
 - Fixed, gradient from `rgba(12,11,11,.72)` to transparent, `backdrop-filter: blur(2px)`.
@@ -192,13 +198,17 @@ These go into the WP media library, not the theme folder. Only the logo fallback
 - **D4. Contact form.** Client installs a form plugin. Theme provides the visuals only (see section 10).
 - **D5. Content.** Place names are Paphos. Photos are placeholders the client swaps later. Copy leans into the premium boutique positioning, never dealership language ("stock", "inventory", "finance", "trade-in", prices).
 - **D6. Language.** English only. No Greek version. Keep theme strings translation-ready.
+- **D7. Extra pages.** Settled by D9.
 - **D8. Platform.** Latest stable WordPress and PHP.
+- **D9. Multi-page site.** Each primary menu item is its own page with its own template. Content lives on its section's page and home shows previews. See `pages.md`.
 
 ## 9. SEO and GEO
 
 Goal: rank in Google for Paphos and Cyprus luxury car searches, and give AI answer engines (Google AI Overviews, ChatGPT, Perplexity, Claude) clear, quotable facts about Pan Motors. Everything is server-rendered PHP, so crawlers see all content without running JS. That alone fixes the biggest problem with the original export, which rendered everything client-side through React.
 
 ### 9.1 Document outline
+
+> **Superseded in part by D9.** This outline is the homepage. With D9, home sections are H2 previews that link to their pages, and every inner page has its own H1 in the page hero (`pages.md` §4–5). The FAQ section lives on the Contact page, not on home.
 
 One H1, one H2 per section, H3 for cards. No skipped levels. Nothing inside a heading that is not visible text.
 
@@ -259,6 +269,8 @@ SEO plugin coordination: use Rank Math or Yoast for titles, meta, sitemap, OG an
 
 ### 9.4 New section: Questions (FAQ)
 
+> **Superseded in part by D9.** The FAQ lives on the Contact page (`faqs` repeater there), and `FAQPage` schema is output on Contact only.
+
 The design is light on text. AI engines and Google need some answerable content. Add one section styled like the Showroom hours rows (hairline rows, Bodoni question, body answer, hover invert), using native `<details>`/`<summary>` so it works without JS and the answers stay in the HTML.
 
 ACF repeater `faqs` (`question`, `answer`). Suggested starting set for the client to approve:
@@ -296,6 +308,8 @@ Answers: 1 to 3 plain sentences, the fact first. No marketing lead-ins.
 - Meta description default from the one-sentence description. OG and Twitter image: absolute URL to a 1200x630 showroom photo.
 
 ### 9.8 Pages (decision D7)
+
+> **Superseded by D9.** The page list and templates are in `pages.md` §1. The homepage nav no longer uses anchor links.
 
 A one-page site gives Google and AI engines one URL and one topic to work with. Recommended minimum for a brand-presence site, all using `page.php` in the same style, no listings:
 - Home (the design)
