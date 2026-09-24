@@ -28,8 +28,8 @@ This is a luxury brand presence site, not a car listing site. No inventory, no c
 panmotors/
   style.css  functions.php  front-page.php  header.php  footer.php
   index.php  page.php  404.php
-  templates/  page-featured-cars.php page-values.php page-about.php page-latest-cars.php
-              page-live.php page-showroom.php page-contact.php   (page templates, D9)
+  templates/  page-featured-cars.php page-about.php page-latest-cars.php
+              page-showroom.php page-contact.php   (page templates, D9/D10)
   inc/        setup.php enqueue.php acf.php schema.php helpers.php
   template-parts/front/       home-only parts (hero, marquee)
   template-parts/sections/    section components, context 'home' or 'page'
@@ -43,6 +43,7 @@ panmotors/
 ## Rules
 - Each section's content lives on its own page and is edited there. The homepage reads it from that page. Nothing is entered twice. Find pages through the "Site pages" options (`panmotors_page()`, `panmotors_page_url()`), never by slug.
 - Links go to pages, never to homepage anchors.
+- The homepage matches `_design/index.html` exactly. Add nothing to it that the design does not have. Inner pages stay placeholders until they are designed (D10).
 - Escape all output: `esc_html`, `esc_attr`, `esc_url`, `wp_kses_post` for rich text.
 - Every ACF read handles empty values. A missing field hides its element, it never prints an empty tag or a PHP notice.
 - Images via `wp_get_attachment_image()` with proper `sizes`. Register image sizes in `inc/setup.php`. Hero and poster load eagerly with `fetchpriority="high"`, everything else lazy.

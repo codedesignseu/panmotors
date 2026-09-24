@@ -94,7 +94,7 @@ The design covers the homepage only. All sections render from `front-page.php` a
 - Background `<video>` muted, loop, autoplay, playsinline, grayscale + brightness .64, scale 1.04. Poster image.
 - Gradient overlay, then bottom-left copy: eyebrow, H1 with a line break, bottom-right: "View the cars" pill (hover → accent, lifts 3px, letter-spacing widens) and a round sound toggle.
 - Entrance animation `heroIn` (rise + blur), staggered 0 / .2s / .38s.
-- Fix: the sound button shows "ON" while muted, which reads backwards. Use "Sound on" / "Sound off" text or an icon with `aria-pressed`.
+- ~~Sound toggle~~ Removed (D10). The video is always muted.
 - ACF: `hero_eyebrow`, `hero_title` (textarea, `<br>` from new lines), `hero_video` (file), `hero_poster` (image), `hero_cta_label`, `hero_cta_link`.
 
 ### 3. Marquee
@@ -113,7 +113,7 @@ The design covers the homepage only. All sections render from `front-page.php` a
 - 3-column auto-fit grid (min 320px). Outlined cards, radius `--r`, min-height 340px.
 - Top row: index label + arrow, divided by a line. Then Bodoni title and body.
 - Hover inverts to paper background, ink text, lifts 8px, big shadow.
-- Each card links to `#enquire`.
+- Each card links to `#enquire`. (D10: links to the About page.)
 - ACF: `values` repeater (`index`, `title`, `body`).
 
 ### 6. About
@@ -201,6 +201,7 @@ These go into the WP media library, not the theme folder. Only the logo fallback
 - **D7. Extra pages.** Settled by D9.
 - **D8. Platform.** Latest stable WordPress and PHP.
 - **D9. Multi-page site.** Each primary menu item is its own page with its own template. Content lives on its section's page and home shows previews. See `pages.md`.
+- **D10. Review changes.** No Our Values or Live pages: values live on About, Live is home-only. Primary menu: Featured Cars, About Pan Motors, Latest Cars, Showroom. No hero sound button, no footer address line. Homepage matches the design exactly; inner pages wait for their own design. See `pages.md`.
 
 ## 9. SEO and GEO
 

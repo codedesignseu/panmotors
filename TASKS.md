@@ -28,14 +28,14 @@ Tick each task when it is done and checked in the browser.
 - [x] `menu.js`
 - [x] `footer.php` with dynamic year
 
-## 4. Section components (home + page context)
+## 4. Section components (home context first; page context after the inner pages are designed)
 - [x] Hero + `hero-video.js` (home only)
 - [x] Marquee (home only)
 - [ ] `featured-cars` + `car-tile.php` (showcase only, no links by default)
-- [ ] `values`
+- [ ] `values` (home; values live on the About page)
 - [ ] `about` + `heritage-fade.js` (fade on home only)
 - [ ] `latest-cars` + `slider-drag.js` (slider on home, grid on page)
-- [ ] `live` + `live-videos.js`
+- [ ] `live` + `live-videos.js` (home only, posts on Home)
 - [ ] `showroom` + `showroom-slider.js`
 - [ ] `hours`
 - [ ] `faq` with `details`/`summary` (Contact page)
@@ -50,10 +50,8 @@ Tick each task when it is done and checked in the browser.
 - [ ] robots.txt rules and optional `llms.txt`
 - [ ] Inner pages (D9, `pages.md` §4): page hero with breadcrumb, intro, section component, CTA band
   - [ ] Featured Cars
-  - [ ] Our Values
-  - [ ] About
+  - [ ] About (with Our Values)
   - [ ] Latest Cars
-  - [ ] Live
   - [ ] Showroom (with "Getting here")
   - [ ] Contact (enquire, hours, map link, FAQ, no CTA band)
   - [ ] Privacy and Cookie policy on `page.php`
