@@ -33,8 +33,8 @@ Tick each task when it is done and checked in the browser.
 - [x] Marquee (home only)
 - [x] `featured-cars` + `car-tile.php` (home context; showcase only, no links by default)
 - [x] `values` (home context; values live on the About page)
-- [ ] `about` + `heritage-fade.js` (fade on home only)
-- [ ] `latest-cars` + `slider-drag.js` (slider on home, grid on page)
+- [x] `about` + `heritage-fade.js` (home context; fade on home only)
+- [x] `latest-cars` + `slider-drag.js` (home context: slider; grid on the page later)
 - [ ] `live` + `live-videos.js` (home only, posts on Home)
 - [ ] `showroom` + `showroom-slider.js`
 - [ ] `hours`
