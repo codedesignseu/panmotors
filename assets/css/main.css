@@ -1,8 +1,8 @@
 /* ==========================================================================
    Pan Motors — main stylesheet
    1. Fonts  2. Tokens  3. Reset  4. Base type  5. Utilities
-   6. Motion  7. Header  8. Footer  9. Homepage sections  10. Page templates
-   11. Reduced motion
+   6. Motion  7. Header  8. Footer  9. Homepage sections  10. Inner pages
+   11. Page templates  12. Reduced motion
    Sections add their own blocks below as they are built.
    ========================================================================== */
 
@@ -703,6 +703,30 @@ p {
 	outline-offset: -2px;
 }
 
+/* Current page: underline shown, full opacity. WordPress sets aria-current on menu links. */
+.pm-nav__link[aria-current="page"] {
+	opacity: 1;
+}
+
+.pm-nav__link[aria-current="page"]::after {
+	transform: scaleX(1);
+}
+
+.pm-nav__contact[aria-current="page"] {
+	background: var(--paper);
+	color: var(--ink);
+	border-color: var(--paper);
+}
+
+.pm-menu__link[aria-current="page"] {
+	padding-left: 14px;
+	color: var(--accent);
+}
+
+.pm-footer a[aria-current="page"] {
+	color: var(--accent);
+}
+
 @media (max-width: 1080px) {
 	.pm-nav__links,
 	.pm-nav__contact {
@@ -936,7 +960,178 @@ p {
 	}
 }
 
-/* 10. Page templates (index, page, 404) */
+/* 10. Inner pages (D9): page hero, breadcrumb, intro, CTA band */
+
+.pm-page-hero {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	height: min(72vh, 720px);
+	min-height: 460px;
+	overflow: hidden;
+	background: var(--ink);
+}
+
+.pm-page-hero__media {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.pm-page-hero__img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transform: translate(-50%, -50%) scale(1.04);
+	filter: grayscale(1) contrast(1.06) brightness(.64);
+}
+
+.pm-page-hero__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(12, 11, 11, .55) 0%, rgba(12, 11, 11, .15) 38%, rgba(12, 11, 11, .92) 100%);
+}
+
+.pm-page-hero__copy {
+	position: relative;
+	width: 100%;
+	padding: 0 40px 56px;
+}
+
+.pm-breadcrumb {
+	margin-bottom: 30px;
+}
+
+.pm-breadcrumb__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 0;
+	font-size: 11px;
+	letter-spacing: .18em;
+	line-height: 1.5;
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+.pm-breadcrumb__item + .pm-breadcrumb__item::before {
+	content: '/';
+	margin: 0 12px;
+	opacity: .6;
+}
+
+.pm-page-hero__eyebrow {
+	margin-bottom: 22px;
+}
+
+.pm-page-hero__title {
+	max-width: 16ch;
+	font-size: clamp(48px, 7vw, 128px);
+	line-height: .9;
+	letter-spacing: -.01em;
+}
+
+.pm-page-hero__intro {
+	max-width: 46ch;
+	margin-top: 28px;
+	font-size: 16px;
+	line-height: 1.7;
+	opacity: .78;
+}
+
+.pm-page-intro {
+	padding-top: 88px;
+	padding-bottom: 24px;
+}
+
+.pm-page-intro__text {
+	max-width: 68ch;
+}
+
+.pm-page-intro__text p:first-child {
+	font-size: 18px;
+	opacity: .88;
+}
+
+/* Legal pages: editor content on paper. */
+.pm-page-body {
+	padding-top: 88px;
+	padding-bottom: 120px;
+}
+
+/* CTA band: design "Come And See" card, linking to Contact. */
+.pm-cta {
+	padding-top: 20px;
+	padding-bottom: 120px;
+}
+
+.pm-page-intro + .pm-cta,
+.pm-placeholder + .pm-cta {
+	margin-top: 88px;
+	padding-top: 120px;
+}
+
+.pm-cta__card {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 40px 64px;
+	padding: 72px 56px;
+	border-radius: var(--r);
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.pm-cta__copy {
+	max-width: 640px;
+}
+
+.pm-cta__title {
+	font-size: clamp(40px, 5vw, 80px);
+	line-height: .94;
+}
+
+.pm-cta__text {
+	max-width: 40ch;
+	margin-top: 24px;
+	font-size: 15px;
+	line-height: 1.8;
+	opacity: .66;
+}
+
+/* Temporary: where a section component will render. */
+.pm-placeholder {
+	padding-top: 56px;
+}
+
+.pm-placeholder__box {
+	display: grid;
+	place-items: center;
+	min-height: 240px;
+	border: 1px dashed var(--line-dark);
+	border-radius: var(--r);
+	opacity: .5;
+}
+
+@media (max-width: 880px) {
+	.pm-page-hero__copy {
+		padding: 0 20px 32px;
+	}
+
+	.pm-page-intro,
+	.pm-page-body {
+		padding-top: 56px;
+	}
+
+	.pm-cta__card {
+		padding: 40px 24px;
+	}
+}
+
+/* 11. Page templates (index, 404) */
 
 .pm-page {
 	min-height: 70vh;
@@ -1179,7 +1374,7 @@ p {
 	gap: 14px;
 }
 
-/* 11. Reduced motion: no reveals, no hero entrance, no video, static marquee. */
+/* 12. Reduced motion: no reveals, no hero entrance, no video, static marquee. */
 
 @media (prefers-reduced-motion: reduce) {
 	html {
