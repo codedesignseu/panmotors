@@ -31,5 +31,21 @@ panmotors_render_section(
 		'context' => 'home',
 	)
 );
+panmotors_render_section(
+	'template-parts/sections/about',
+	'heritage-fade',
+	array(
+		'page_id' => panmotors_page( 'about' ),
+		'context' => 'home',
+	)
+);
+panmotors_render_section(
+	'template-parts/sections/latest-cars',
+	'slider-drag',
+	array(
+		'page_id' => panmotors_page( 'latest' ),
+		'context' => 'home',
+	)
+);
 
 get_footer();
