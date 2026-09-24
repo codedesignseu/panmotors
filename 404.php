@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<main id="main" class="pm-404 pm-pad">
+<div class="pm-404 pm-pad">
 	<div class="pm-404__code" aria-hidden="true">404</div>
 	<p class="pm-eyebrow"><?php esc_html_e( 'Page not found', 'panmotors' ); ?></p>
 	<h1 class="pm-404__title pm-title"><?php esc_html_e( 'Off the Map', 'panmotors' ); ?></h1>
@@ -18,6 +18,6 @@ get_header();
 		</a>
 		<a class="pm-pill" href="<?php echo esc_url( home_url( '/#enquire' ) ); ?>"><?php esc_html_e( 'Contact us', 'panmotors' ); ?></a>
 	</div>
-</main>
+</div>
 <?php
 get_footer();

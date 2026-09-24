@@ -10,7 +10,7 @@ get_header();
 while ( have_posts() ) :
 	the_post();
 	?>
-	<main id="main" class="pm-page pm-light pm-pad">
+	<div class="pm-page pm-light pm-pad">
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<header class="pm-page__head">
 				<?php the_title( '<h1 class="pm-page__title">', '</h1>' ); ?>
@@ -31,7 +31,7 @@ while ( have_posts() ) :
 				</div>
 			</div>
 		</article>
-	</main>
+	</div>
 	<?php
 endwhile;
 

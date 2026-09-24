@@ -1,13 +1,11 @@
 <?php
 /**
- * Site header.
- *
- * Minimal shell for section 1. Nav, logo, menu, contact pill, burger and
- * mobile menu are built in section 3.
+ * Site header: skip link, fixed nav, mobile menu panel. Opens <main>.
  *
  * @package panmotors
  */
 
+$panmotors_contact_url = home_url( '/#enquire' );
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -16,5 +14,54 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
 <a class="pm-skip-link" href="#main"><?php esc_html_e( 'Skip to content', 'panmotors' ); ?></a>
+<?php wp_body_open(); ?>
+
+<header class="pm-header">
+	<nav class="pm-nav" aria-label="<?php esc_attr_e( 'Main', 'panmotors' ); ?>">
+		<?php panmotors_logo( 'pm-nav__logo' ); ?>
+
+		<?php
+		wp_nav_menu(
+			array(
+				'theme_location' => 'primary',
+				'container'      => false,
+				'menu_class'     => 'pm-nav__links pm-list-reset',
+				'depth'          => 1,
+				'fallback_cb'    => false,
+				'pm_link_class'  => 'pm-nav__link pm-underline',
+			)
+		);
+		?>
+
+		<button class="pm-burger" type="button" aria-expanded="false" aria-controls="pm-menu" data-menu-toggle>
+			<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'panmotors' ); ?></span>
+			<span class="pm-burger__line" aria-hidden="true"></span>
+			<span class="pm-burger__line" aria-hidden="true"></span>
+		</button>
+
+		<a class="pm-nav__contact" href="<?php echo esc_url( $panmotors_contact_url ); ?>"><?php esc_html_e( 'Contact', 'panmotors' ); ?></a>
+	</nav>
+
+	<div class="pm-menu" id="pm-menu" data-menu inert>
+		<?php
+		wp_nav_menu(
+			array(
+				'theme_location' => 'primary',
+				'container'      => false,
+				'menu_class'     => 'pm-menu__links pm-list-reset',
+				'depth'          => 1,
+				'fallback_cb'    => false,
+				'pm_link_class'  => 'pm-menu__link',
+				'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s' . sprintf(
+					'<li><a class="pm-menu__link" href="%s">%s</a></li>',
+					esc_url( $panmotors_contact_url ),
+					esc_html__( 'Contact', 'panmotors' )
+				) . '</ul>',
+			)
+		);
+		?>
+	</div>
+</header>
+
+<main id="main" tabindex="-1">

@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<main id="main" class="pm-page pm-pad">
+<div class="pm-page pm-pad">
 	<header class="pm-page__head">
 		<h1 class="pm-page__title">
 			<?php
@@ -56,6 +56,6 @@ get_header();
 			<p class="pm-prose"><?php esc_html_e( 'Nothing here yet.', 'panmotors' ); ?></p>
 		<?php endif; ?>
 	</div>
-</main>
+</div>
 <?php
 get_footer();
