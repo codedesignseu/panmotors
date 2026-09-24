@@ -191,7 +191,8 @@ These go into the WP media library, not the theme folder. Only the logo fallback
 - **D3. Instagram section.** Manual ACF repeater, no integration. Likes and comments optional.
 - **D4. Contact form.** Client installs a form plugin. Theme provides the visuals only (see section 10).
 - **D5. Content.** Place names are Paphos. Photos are placeholders the client swaps later. Copy leans into the premium boutique positioning, never dealership language ("stock", "inventory", "finance", "trade-in", prices).
-- **D6. Language.** Not confirmed. Build English only, with every theme string wrapped in translation functions so Greek can be added later with WPML or Polylang.
+- **D6. Language.** English only. No Greek version. Keep theme strings translation-ready.
+- **D8. Platform.** Latest stable WordPress and PHP.
 
 ## 9. SEO and GEO
 
