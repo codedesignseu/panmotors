@@ -1532,6 +1532,299 @@ p {
 	}
 }
 
+/* Come And See (home): dark card on paper, contact details and the form. */
+.pm-enquire {
+	padding-top: 20px;
+	padding-bottom: 120px;
+}
+
+.pm-enquire__card {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 64px;
+	padding: 72px 56px;
+	border-radius: var(--r);
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.pm-enquire__title {
+	margin: 0 0 24px;
+	font-size: clamp(40px, 5vw, 80px);
+	line-height: .94;
+}
+
+.pm-enquire__intro {
+	max-width: 40ch;
+	margin: 0 0 34px;
+	font-size: 15px;
+	line-height: 1.8;
+	opacity: .66;
+}
+
+.pm-enquire__details {
+	display: grid;
+	gap: 10px;
+	font-size: 13px;
+	letter-spacing: .1em;
+	opacity: .7;
+}
+
+.pm-enquire__details a:hover,
+.pm-enquire__details a:focus-visible {
+	color: var(--accent);
+}
+
+.pm-enquire__logo {
+	width: auto;
+	height: 54px;
+	margin-top: 18px;
+}
+
+@media (max-width: 880px) {
+	.pm-enquire__card {
+		gap: 38px;
+		padding: 40px 24px;
+	}
+}
+
+/*
+ * .pm-form: the form plugin's markup, styled to the design. Covers Contact Form 7
+ * (.wpcf7-*), Fluent Forms (.ff-*) and WPForms (.wpforms-*) plus the static fallback.
+ * Labels use a 50% colour, not opacity, so inputs nested inside a label (CF7's default
+ * template) are not dimmed.
+ */
+.pm-form form,
+.pm-form .ff-el-group-wrap {
+	display: grid;
+	align-content: start;
+	gap: 18px;
+	margin: 0;
+}
+
+.pm-form p,
+.pm-form .ff-el-group,
+.pm-form .wpforms-field,
+.pm-form .wpcf7-form > p {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+}
+
+.pm-form .wpforms-field-container,
+.pm-form .wpforms-submit-container {
+	display: grid;
+	gap: 18px;
+	padding: 0;
+}
+
+.pm-form label,
+.pm-form legend,
+.pm-form .ff-el-input--label label,
+.pm-form .wpforms-field-label {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	color: rgba(243, 242, 242, .5);
+	font-size: 10px;
+	font-weight: 400;
+	letter-spacing: .26em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-form .ff-el-is-required.asterisk-right label::after,
+.pm-form .wpforms-required-label {
+	color: var(--accent);
+}
+
+.pm-form input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="hidden"], [type="file"]),
+.pm-form textarea,
+.pm-form select {
+	width: 100%;
+	max-width: none;
+	height: auto;
+	margin: 0;
+	padding: 12px 0;
+	border: 0;
+	border-bottom: 1px solid rgba(243, 242, 242, .28);
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	color: var(--paper);
+	font-family: var(--font-body);
+	font-size: 16px;
+	letter-spacing: normal;
+	line-height: normal; /* Form controls don't inherit the page line height, as in the design. */
+	text-transform: none;
+	outline: none;
+	transition: border-color .35s;
+}
+
+.pm-form textarea {
+	min-height: 0;
+	resize: none;
+}
+
+.pm-form select option {
+	color: var(--ink);
+}
+
+/* Focus: the accent underline is the focus indicator, as in the design. */
+.pm-form input:focus,
+.pm-form textarea:focus,
+.pm-form select:focus {
+	border-bottom-color: var(--accent);
+	box-shadow: none;
+	outline: none;
+}
+
+.pm-form input::placeholder,
+.pm-form textarea::placeholder {
+	color: rgba(243, 242, 242, .4);
+	opacity: 1;
+}
+
+.pm-form [type="submit"],
+.pm-form button:not([type="button"]),
+.pm-form .wpcf7-submit,
+.pm-form .ff-btn-submit,
+.pm-form .wpforms-submit {
+	justify-self: start;
+	width: auto;
+	margin-top: 14px;
+	padding: 18px 34px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--accent);
+	box-shadow: none;
+	color: #fff;
+	font-family: var(--font-body);
+	font-size: 12px;
+	font-weight: 400;
+	letter-spacing: .2em;
+	line-height: normal;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background .6s var(--ease), color .6s, letter-spacing .6s, transform .6s;
+}
+
+.pm-form [type="submit"]:not(:disabled):is(:hover, :focus-visible),
+.pm-form .ff-btn-submit:not(:disabled):is(:hover, :focus-visible),
+.pm-form .wpforms-submit:not(:disabled):is(:hover, :focus-visible) {
+	background: var(--paper);
+	color: var(--ink);
+	letter-spacing: .28em;
+	transform: translateY(-3px);
+}
+
+.pm-form [type="submit"]:disabled {
+	cursor: not-allowed;
+}
+
+/* Loading: CF7 adds .submitting to the form, Fluent .disabled to the button, WPForms a spinner. */
+.pm-form .submitting [type="submit"],
+.pm-form .ff-btn-submit.disabled,
+.pm-form .ff-working .ff-btn-submit,
+.pm-form .wpforms-submit[disabled] {
+	opacity: .6;
+	pointer-events: none;
+}
+
+.pm-form .wpcf7-spinner,
+.pm-form .ff-loader,
+.pm-form .wpforms-submit-spinner {
+	width: 18px;
+	height: 18px;
+	margin: 0 0 0 14px;
+	border: 2px solid rgba(243, 242, 242, .6);
+	border-right-color: transparent;
+	border-radius: 50%;
+	background: none;
+	opacity: 1;
+	vertical-align: middle;
+	animation: pm-spin .8s linear infinite;
+}
+
+.pm-form .wpcf7-spinner::before {
+	display: none;
+}
+
+.pm-form form:not(.submitting) .wpcf7-spinner {
+	visibility: hidden;
+}
+
+@keyframes pm-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Validation. */
+.pm-form .wpcf7-not-valid,
+.pm-form .ff-el-is-error .ff-el-form-control,
+.pm-form input.wpforms-error,
+.pm-form textarea.wpforms-error,
+.pm-form [aria-invalid="true"] {
+	border-bottom-color: var(--accent);
+}
+
+.pm-form .wpcf7-not-valid-tip,
+.pm-form .ff-el-is-error .error,
+.pm-form .text-danger,
+.pm-form label.wpforms-error,
+.pm-form em.wpforms-error {
+	display: block;
+	margin-top: 8px;
+	color: var(--accent);
+	font-size: 11px;
+	font-style: normal;
+	letter-spacing: .1em;
+	text-transform: none;
+}
+
+/* Messages after sending. */
+.pm-form .wpcf7-response-output,
+.pm-form .ff-message-success,
+.pm-form .ff-errors-in-stack,
+.pm-form .wpforms-confirmation-container-full,
+.pm-form .wpforms-error-container {
+	margin: 18px 0 0;
+	padding: 16px 20px;
+	border: 1px solid rgba(243, 242, 242, .28);
+	border-radius: 12px;
+	background: transparent;
+	box-shadow: none;
+	color: var(--paper);
+	font-size: 13px;
+	letter-spacing: .04em;
+	line-height: 1.6;
+}
+
+.pm-form .invalid .wpcf7-response-output,
+.pm-form .failed .wpcf7-response-output,
+.pm-form .spam .wpcf7-response-output,
+.pm-form .ff-errors-in-stack,
+.pm-form .wpforms-error-container {
+	border-color: var(--accent);
+}
+
+.pm-form .sent .wpcf7-response-output,
+.pm-form .ff-message-success,
+.pm-form .wpforms-confirmation-container-full {
+	border-color: var(--paper);
+}
+
+.pm-form__admin-note {
+	margin: 0 0 18px;
+	padding: 10px 14px;
+	border: 1px dashed var(--accent);
+	border-radius: 12px;
+	color: var(--paper);
+	font-size: 12px;
+	letter-spacing: .04em;
+}
+
 /* 10. Inner pages (D9): page hero, breadcrumb, intro, CTA band */
 
 .pm-page-hero {
@@ -1996,6 +2289,13 @@ p {
 		justify-content: center;
 		gap: 10px 40px;
 		padding: 0 var(--pad-x);
+	}
+
+	.pm-form .wpcf7-spinner,
+	.pm-form .ff-loader,
+	.pm-form .wpforms-submit-spinner {
+		animation-duration: 2s !important;
+		animation-iteration-count: infinite !important;
 	}
 
 	.pm-marquee__list[aria-hidden="true"],
