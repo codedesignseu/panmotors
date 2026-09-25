@@ -227,7 +227,15 @@ $pm_options = array(
 	'other_profiles'         => array(),
 	'enquire_form_shortcode' => '',
 	'footer_tagline'         => 'Pan Motors — Paphos',
-	'footer_copyright'       => 'Pan Motors',
+	'footer_copyright'       => '© {year} Pan Motors',
+	'contact_button_label'   => 'Contact',
+	'marquee_separator'      => '—',
+	'notfound_code'          => '404',
+	'notfound_eyebrow'       => 'Page not found',
+	'notfound_title'         => 'Off the Map',
+	'notfound_text'          => 'The page you were looking for has moved or no longer exists. The cars are still where we left them.',
+	'notfound_home_label'    => 'Back to home',
+	'notfound_contact_label' => 'Contact us',
 );
 
 foreach ( $pm_options as $pm_name => $pm_value ) {
@@ -582,6 +590,35 @@ panmotors_seed_fields(
 		'hero_poster'    => $pm_media['red_night'],
 		'hero_cta_label' => 'View the cars',
 		'hero_cta_link'  => '', // Empty: links to the Featured Cars page.
+	)
+);
+
+// Section switches, homepage headings and the preview form texts (docs/editability.md).
+panmotors_seed_fields(
+	$pm_front_id,
+	array(
+		'home_show_marquee'   => 1,
+		'home_show_featured'  => 1,
+		'home_show_values'    => 1,
+		'home_show_about'     => 1,
+		'home_show_latest'    => 1,
+		'home_show_live'      => 1,
+		'home_show_showroom'  => 1,
+		'home_show_enquire'   => 1,
+		'home_featured_title' => 'Featured Cars',
+		'home_values_title'   => 'Our Values',
+		'home_about_title'    => 'About Pan Motors',
+		'home_latest_title'   => 'Latest Cars',
+		'home_showroom_title' => 'The Showroom',
+		'form_label_name'     => 'Name',
+		'form_hint_name'      => 'Full name',
+		'form_label_email'    => 'Email',
+		'form_hint_email'     => 'you@domain.com',
+		'form_label_phone'    => 'Phone',
+		'form_hint_phone'     => '+357',
+		'form_label_message'  => 'Message',
+		'form_hint_message'   => 'Tell us which car you are interested in.',
+		'form_button'         => 'Send message',
 	)
 );
 WP_CLI::log( "Homepage hero filled on page {$pm_front_id}." );
