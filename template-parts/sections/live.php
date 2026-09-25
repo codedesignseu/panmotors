@@ -2,7 +2,8 @@
 /**
  * Pan Motors Live (theme-map 4.8). Homepage only (D10): posts on Home, Instagram URL in options.
  *
- * Posts are entered by hand (no Instagram API). Video tiles load their src when they near the
+ * Posts are entered by hand (no Instagram API). Each tile's link name is its visible stats
+ * and caption plus hidden context ("Instagram post:", "opens in a new tab"). Video tiles load their src when they near the
  * viewport and play only while 35% visible (live-videos.js). Reduced motion: poster only.
  *
  * Args:
@@ -50,16 +51,12 @@ $panmotors_insta     = panmotors_option( 'instagram_url' );
 			$panmotors_comments = trim( (string) ( $panmotors_post['comments'] ?? '' ) );
 			$panmotors_image    = (int) ( $panmotors_post['image'] ?? 0 );
 			$panmotors_video    = 'video' === ( $panmotors_post['type'] ?? '' ) && ! empty( $panmotors_post['video'] ) ? wp_get_attachment_url( (int) $panmotors_post['video'] ) : '';
-			$panmotors_label    = sprintf(
-				/* translators: %s: post caption. */
-				__( '%s, Instagram post (opens in a new tab)', 'panmotors' ),
-				$panmotors_caption ? $panmotors_caption : __( 'Pan Motors', 'panmotors' )
-			);
 			?>
-			<a class="pm-post" href="<?php echo esc_url( $panmotors_post['url'] ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $panmotors_label ); ?>" data-zoom>
+			<a class="pm-post" href="<?php echo esc_url( $panmotors_post['url'] ); ?>" target="_blank" rel="noopener" data-zoom>
+				<span class="screen-reader-text"><?php esc_html_e( 'Instagram post:', 'panmotors' ); ?> </span>
 				<?php if ( $panmotors_video ) : ?>
 					<?php $panmotors_poster = $panmotors_image ? wp_get_attachment_image_url( $panmotors_image, 'pm-portrait' ) : ''; ?>
-					<video class="pm-post__media" muted loop playsinline preload="none" tabindex="-1" data-live-video data-src="<?php echo esc_url( $panmotors_video ); ?>"<?php echo $panmotors_poster ? ' poster="' . esc_url( $panmotors_poster ) . '"' : ''; ?>></video>
+					<video class="pm-post__media" muted loop playsinline preload="none" tabindex="-1" data-live-video data-src="<?php echo esc_url( $panmotors_video ); ?>"<?php echo $panmotors_poster ? ' data-poster="' . esc_url( $panmotors_poster ) . '"' : ''; ?>></video>
 				<?php elseif ( $panmotors_image ) : ?>
 					<?php
 					echo wp_get_attachment_image(
@@ -87,6 +84,7 @@ $panmotors_insta     = panmotors_option( 'instagram_url' );
 						<span class="pm-post__caption"><?php echo esc_html( $panmotors_caption ); ?></span>
 					<?php endif; ?>
 				</span>
+				<span class="screen-reader-text"> <?php esc_html_e( '(opens in a new tab)', 'panmotors' ); ?></span>
 			</a>
 		<?php endforeach; ?>
 	</div>
