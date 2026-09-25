@@ -53,7 +53,7 @@
 			"presets": []
 		},
 		"spacing": {
-			"blockGap": false,
+			"blockGap": null,
 			"customSpacingSize": false,
 			"defaultSpacingSizes": false,
 			"margin": false,

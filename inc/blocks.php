@@ -127,24 +127,21 @@ function panmotors_find_block( $post_id, $name ) {
 }
 
 /**
- * Read one field of a parsed ACF block outside its render (for <head>: preload, description).
+ * Raw saved value of one field of a parsed ACF block, outside its render (for <head>: the hero
+ * poster preload, the page description). Simple fields only: an image ID or a line of text.
  *
  * @param array|null $block Parsed block from panmotors_find_block().
  * @param string     $name  Field name.
- * @return mixed
+ * @return mixed Null when missing.
  */
 function panmotors_block_field( $block, $name ) {
-	if ( ! $block || ! function_exists( 'acf_prepare_block' ) ) {
-		return null;
+	$data = $block['attrs']['data'] ?? array();
+	if ( array_key_exists( $name, $data ) ) {
+		return $data[ $name ];
 	}
-	$prepared = acf_prepare_block( $block['attrs'] );
-	if ( ! $prepared ) {
-		return null;
-	}
-	acf_setup_meta( $prepared['data'], $prepared['id'], true );
-	$value = get_field( $name );
-	acf_reset_meta( $prepared['id'] );
-	return $value;
+	// Data saved by field key.
+	$key = $data[ '_' . $name ] ?? '';
+	return $key && array_key_exists( $key, $data ) ? $data[ $key ] : null;
 }
 
 /**
@@ -179,6 +176,22 @@ function panmotors_render_block( $part, $module, $args, $is_preview, $empty = ''
 		panmotors_use_module( $module );
 	}
 }
+
+/**
+ * pm/marquee has no fields, so its block data is empty. ACF 6.8 then reads a null array key while
+ * rendering it (a PHP 8.5 deprecation notice in the log). A placeholder entry that is not a field
+ * avoids that; nothing reads it.
+ *
+ * @param array $block Parsed block.
+ * @return array
+ */
+function panmotors_fieldless_block_data( $block ) {
+	if ( 'pm/marquee' === $block['blockName'] && empty( $block['attrs']['data'] ) ) {
+		$block['attrs']['data'] = array( 'pm' => 1 );
+	}
+	return $block;
+}
+add_filter( 'render_block_data', 'panmotors_fieldless_block_data' );
 
 /**
  * A hidden block (Hide on the block toolbar, WordPress 6.9+) is not rendered at all, so its
@@ -276,44 +289,73 @@ function panmotors_editor_script() {
 add_action( 'enqueue_block_editor_assets', 'panmotors_editor_script' );
 
 /**
- * theme.json makes WordPress print its global styles (preset variables, element and layout
- * rules). The design defines everything in main.css, so none of that reaches the front end.
+ * The front end keeps the styles it had before theme.json (docs/migration-blocks.md §4): this
+ * theme.json holds editor settings only. Core drops the classic-theme block styles once a theme
+ * has a theme.json, so they are enqueued here.
  */
 function panmotors_front_block_styles() {
-	wp_dequeue_style( 'global-styles' );
-	wp_dequeue_style( 'wp-block-library-theme' );
-	wp_dequeue_style( 'classic-theme-styles' );
-	if ( ! panmotors_has_core_blocks() ) {
-		wp_dequeue_style( 'wp-block-library' );
+	wp_enqueue_style( 'classic-theme-styles' );
+}
+// Same order as core: emoji styles, block library, classic theme styles, global styles, then
+// the theme's own stylesheet (priority 10).
+foreach ( array( 'wp_enqueue_emoji_styles', 'wp_common_block_scripts_and_styles', 'wp_enqueue_classic_theme_styles', 'wp_enqueue_global_styles' ) as $panmotors_hook ) {
+	if ( remove_action( 'wp_enqueue_scripts', $panmotors_hook ) ) {
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_classic_theme_styles' === $panmotors_hook ? 'panmotors_front_block_styles' : $panmotors_hook, 9 );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'panmotors_front_block_styles', 100 );
-remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
-remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
+unset( $panmotors_hook );
 
 /**
- * Whether the current page uses core blocks other than synced pattern references.
- *
- * @return bool
+ * Global styles as core prints them for a classic theme without theme.json: variables, presets
+ * and base layout styles only. With a theme.json core would add root alignment and block-gap
+ * rules for block themes (.wp-site-blocks, .is-layout-*), which this site never uses.
  */
-function panmotors_has_core_blocks() {
-	if ( ! is_singular() ) {
-		return false;
-	}
-	$content = (string) get_post_field( 'post_content', get_queried_object_id() );
-	return (bool) preg_match( '/<!-- wp:(?!block |pm\/)[a-z]/', $content );
-}
-
-/**
- * Section text is printed exactly as the client typed it, as before the blocks: no curly
- * quotes, smilies or other the_content rewriting on pages built from pm/* blocks.
- */
-function panmotors_content_filters() {
-	if ( ! is_singular() || false === strpos( (string) get_post_field( 'post_content', get_queried_object_id() ), '<!-- wp:pm/' ) ) {
+function panmotors_classic_global_styles() {
+	$styles = wp_styles();
+	if ( empty( $styles->registered['global-styles'] ) ) {
 		return;
 	}
-	remove_filter( 'the_content', 'wptexturize' );
-	remove_filter( 'the_content', 'convert_smilies', 20 );
-	remove_filter( 'the_content', 'capital_P_dangit', 11 );
+	$tree    = WP_Theme_JSON_Resolver::resolve_theme_file_uris( WP_Theme_JSON_Resolver::get_merged_data() );
+	$origins = array( 'default', 'theme', 'custom' );
+	$options = array( 'base_layout_styles' => true );
+
+	$styles->registered['global-styles']->extra['after'] = array(
+		$tree->get_stylesheet( array( 'variables' ), $origins, $options ) . $tree->get_stylesheet( array( 'styles', 'presets' ), $origins, $options ),
+	);
 }
-add_action( 'template_redirect', 'panmotors_content_filters' );
+add_action( 'wp_enqueue_scripts', 'panmotors_classic_global_styles', 20 );
+add_action( 'wp_footer', 'panmotors_classic_global_styles', 2 ); // Classic themes print global styles late (WP 6.9+).
+
+/**
+ * Print the current page's blocks. Used by front-page.php and page.php for pages built from pm/*
+ * blocks.
+ *
+ * Blocks render outside the_content, as the section templates did before D11: WordPress then
+ * gives section images the same loading, decoding and fetchpriority attributes as before, and the
+ * text is printed exactly as typed (no curly quotes or smilies). Core image blocks get their
+ * srcset and lazy loading from the content filter below.
+ */
+function panmotors_the_blocks() {
+	foreach ( parse_blocks( (string) get_the_content() ) as $block ) {
+		// The blank lines between blocks in the saved content are not printed.
+		if ( null === $block['blockName'] && '' === trim( $block['innerHTML'] ) ) {
+			continue;
+		}
+		echo render_block( $block ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Rendered blocks, escaped in each block.
+	}
+}
+
+/**
+ * Core image blocks: srcset, sizes and lazy loading, as the_content would add them.
+ *
+ * @param string $html  Rendered block.
+ * @param array  $block Parsed block.
+ * @return string
+ */
+function panmotors_core_image_tags( $html, $block ) {
+	if ( 'core/image' === $block['blockName'] && ! doing_filter( 'the_content' ) ) {
+		$html = wp_filter_content_tags( $html, 'the_content' );
+	}
+	return $html;
+}
+add_filter( 'render_block', 'panmotors_core_image_tags', 10, 2 );

@@ -16,6 +16,7 @@ const SECTIONS = { hero: '#top', marquee: '.pm-marquee', floor: '#floor', ways: 
 
 // Served HTML, before any JS runs. ?ver= values and nonces change on every edit, so they are masked.
 export const normalise = (s) => s
+  .replace(/\/themes\/panmotors-[a-z]+\//g, '/themes/panmotors/') // A baseline taken from a worktree theme folder.
   .replace(/([?&])ver=[^"'&\s]*/g, '$1ver=X')
   .replace(/("nonce"\s*:\s*")[^"]+"/g, '$1X"')
   .replace(/(name="_wpnonce" value=")[^"]+"/g, '$1X"');
@@ -27,6 +28,14 @@ const assets = (html) => [...html.matchAll(/<(link|script|style)\b[^>]*>/g)]
 export default async ({ page, sleep }) => {
   mkdirSync(OUT, { recursive: true });
   const out = {};
+  // Start from an empty browser cache: which srcset candidate the browser picks can depend on
+  // what is already cached, so every run starts from the same state.
+  await page.send('Network.enable');
+  await page.send('Network.clearBrowserCache');
+  // Then fill it with every image candidate, so each run sees the same, complete cache.
+  await page.size(1440, 900);
+  await page.go(URL_HOME);
+  out.warmed = await page.eval(`const urls = new Set(); for (const i of document.images) { if (i.getAttribute('src')) urls.add(i.src); (i.getAttribute('srcset') || '').split(',').forEach(c => { const u = c.trim().split(/\\s+/)[0]; if (u) urls.add(new URL(u, location.href).href); }); } await Promise.all([...urls].map(u => fetch(u).then(r => r.blob()).catch(() => 0))); return urls.size`);
 
   const html = normalise(await (await fetch(URL_HOME, { headers: { 'Cache-Control': 'no-cache' } })).text());
   const main = html.slice(html.indexOf('<main'), html.indexOf('</main>') + 7);
@@ -45,7 +54,12 @@ export default async ({ page, sleep }) => {
     await page.eval(`document.documentElement.style.scrollBehavior='auto'; const H=document.documentElement.scrollHeight; for (let y=0;y<H;y+=${Math.round(h * 0.6)}){ scrollTo(0,y); await new Promise(r=>setTimeout(r,200)); } scrollTo(0,0); await document.fonts.ready; await Promise.race([Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))), new Promise(r => setTimeout(r, 8000))]); return [...document.images].filter(i => !i.complete).length`);
     await sleep(2000);
     const full = await page.eval(`return document.documentElement.scrollHeight`);
-    const r = await page.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
+    // A full-page capture resizes the viewport, and images with sizes="auto" may pick a new
+    // candidate. The first capture triggers that; the second, after the images decode, is kept.
+    const capture = () => page.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
+    await capture();
+    await sleep(3000);
+    const r = await capture();
     writeFileSync(`${OUT}full-${w}.png`, Buffer.from(r.data, 'base64'));
     out.full[w] = full;
   }

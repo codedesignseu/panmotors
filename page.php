@@ -18,7 +18,7 @@ while ( have_posts() ) :
 		}
 		?>
 		<div class="pm-blocks">
-			<?php the_content(); ?>
+			<?php panmotors_the_blocks(); ?>
 		</div>
 		<?php
 	else :
