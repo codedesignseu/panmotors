@@ -47,5 +47,18 @@ panmotors_render_section(
 		'context' => 'home',
 	)
 );
+panmotors_render_section(
+	'template-parts/sections/live',
+	'live-videos',
+	array( 'page_id' => (int) get_option( 'page_on_front' ) )
+);
+panmotors_render_section(
+	'template-parts/sections/showroom',
+	'showroom-slider',
+	array(
+		'page_id' => panmotors_page( 'showroom' ),
+		'context' => 'home',
+	)
+);
 
 get_footer();
