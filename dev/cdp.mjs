@@ -54,7 +54,7 @@ const page = {
   async go(url) {
     const loaded = new Promise((r) => { const fn = (m) => { if (m.method === 'Page.loadEventFired') { listeners.splice(listeners.indexOf(fn), 1); r(); } }; listeners.push(fn); });
     await send('Page.navigate', { url });
-    await loaded;
+    await Promise.race([loaded, sleep(20000)]);
     await sleep(800);
   },
   async eval(expr) {
