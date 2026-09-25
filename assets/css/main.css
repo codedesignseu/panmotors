@@ -344,7 +344,7 @@ p {
 	font-family: var(--font-body);
 	font-size: 11px;
 	letter-spacing: .2em;
-	line-height: 1.2;
+	line-height: var(--lh);
 	text-transform: uppercase;
 	white-space: nowrap;
 	transition: background .4s, color .4s, border-color .4s;
@@ -1262,6 +1262,273 @@ p {
 @media (max-width: 880px) {
 	.pm-slide {
 		width: 84vw;
+	}
+}
+
+/* Pan Motors Live (home only) */
+.pm-live {
+	padding-top: 118px;
+	padding-bottom: 140px;
+	background: var(--ink);
+}
+
+.pm-live__head {
+	margin-bottom: 44px;
+}
+
+.pm-live__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 16px;
+	max-width: 1120px;
+	margin: 0 auto;
+}
+
+.pm-post {
+	position: relative;
+	display: block;
+	aspect-ratio: 4 / 5;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface-dark);
+	color: var(--paper);
+	transition: transform .9s var(--ease), box-shadow .9s ease;
+}
+
+.pm-post:hover,
+.pm-post:focus-visible {
+	transform: translateY(-8px);
+	box-shadow: 0 30px 70px rgba(0, 0, 0, .5);
+}
+
+.pm-post__media {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.pm-post__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(12, 11, 11, 0) 52%, rgba(12, 11, 11, .82) 100%);
+	pointer-events: none;
+}
+
+.pm-post__meta {
+	position: absolute;
+	left: 18px;
+	right: 18px;
+	bottom: 18px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 11px;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	pointer-events: none;
+}
+
+.pm-post__caption {
+	margin-left: auto;
+	opacity: .5;
+}
+
+@media (max-width: 880px) {
+	.pm-live {
+		padding-top: var(--pad-y);
+		padding-bottom: var(--pad-y);
+	}
+}
+
+/* Showroom (home): paper section, blurred copy of the current photo behind a radial wash. */
+.pm-showroom {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	padding: 120px 0 104px;
+	border-radius: var(--r) var(--r) 0 0;
+}
+
+.pm-showroom__backdrop {
+	position: absolute;
+	inset: -8%;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.pm-showroom__bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: blur(64px) saturate(.35) brightness(1.5) contrast(.55);
+	opacity: 0;
+	transform: scale(1.2);
+	transition: opacity .8s;
+}
+
+.pm-showroom__bg.is-active {
+	opacity: .5;
+}
+
+.pm-showroom__wash {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background: radial-gradient(120% 80% at 50% 40%, rgba(243, 242, 242, .55) 0%, rgba(243, 242, 242, .94) 72%);
+	pointer-events: none;
+}
+
+.pm-showroom__inner {
+	position: relative;
+	z-index: 2;
+}
+
+.pm-showroom__head {
+	margin-bottom: 52px;
+}
+
+.pm-showroom__stage {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: clamp(14px, 3vw, 40px);
+}
+
+.pm-showroom__arrow {
+	width: 60px;
+	height: 60px;
+	background: rgba(243, 242, 242, .5);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+}
+
+.pm-showroom__figure {
+	flex: 1 1 auto;
+	max-width: min(1080px, 76vw);
+	margin: 0;
+}
+
+.pm-showroom__photos {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface-dark);
+	box-shadow: 0 40px 110px rgba(12, 11, 11, .28);
+}
+
+.pm-showroom__photos:focus-visible {
+	outline-offset: 4px;
+}
+
+/* Two classes so this outranks the generic [data-zoom] img transition, which has no opacity. */
+.pm-showroom__photos .pm-showroom__photo {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0;
+	transition: opacity .75s ease, transform 1.5s var(--ease);
+}
+
+.pm-showroom__photos .pm-showroom__photo.is-active {
+	opacity: 1;
+}
+
+/* Colour and 4px top margin from the design system's figcaption rule. */
+.pm-showroom__caption {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 24px;
+	margin-top: 4px;
+	padding-top: 20px;
+	color: color-mix(in srgb, #201e1d 55%, transparent);
+	font-size: 11px;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+}
+
+.pm-showroom__caption-text {
+	opacity: .72;
+}
+
+.pm-showroom__count {
+	opacity: .48;
+}
+
+.pm-showroom__nav {
+	display: none;
+	justify-content: center;
+	gap: 12px;
+	padding-top: 22px;
+}
+
+.pm-showroom__nav-btn {
+	width: 52px;
+	height: 52px;
+	font-size: 17px;
+}
+
+/* Opening hours rows. */
+.pm-hours {
+	display: grid;
+	margin-top: 76px;
+	border-top: 1px solid var(--line-light);
+}
+
+.pm-hours__row {
+	display: grid;
+	grid-template-columns: 220px 1fr auto;
+	align-items: center;
+	gap: 28px;
+	padding: 26px 20px;
+	border-bottom: 1px solid var(--line-light);
+	transition: background .45s, color .45s, padding-left .45s;
+}
+
+.pm-hours__row:hover {
+	padding-left: 34px;
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.pm-hours__day,
+.pm-hours__note {
+	font-size: 11px;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+.pm-hours__time {
+	font-family: var(--font-display);
+	font-size: clamp(22px, 2vw, 30px);
+	line-height: 1.05;
+}
+
+@media (max-width: 880px) {
+	.pm-showroom__figure {
+		max-width: 100%;
+	}
+
+	.pm-showroom__arrow {
+		display: none;
+	}
+
+	.pm-showroom__nav {
+		display: flex;
+	}
+
+	.pm-hours__row {
+		grid-template-columns: 1fr;
+		gap: 6px;
+		padding: 20px 4px;
 	}
 }
 
