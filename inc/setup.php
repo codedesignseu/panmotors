@@ -47,6 +47,11 @@ function panmotors_setup() {
 	add_image_size( 'pm-showroom', 2160, 1350, true ); // Showroom, 16:10.
 	add_image_size( 'pm-portrait', 1080, 1350, true ); // About and Live tiles, 4:5.
 	add_image_size( 'pm-og', 1200, 630, true );        // Open Graph and Twitter share image.
+
+	// Half-size crops of the fixed ratios, so phones get a matching srcset candidate.
+	add_image_size( 'pm-wide-s', 980, 551, true );       // 16:9.
+	add_image_size( 'pm-showroom-s', 1080, 675, true );  // 16:10.
+	add_image_size( 'pm-portrait-s', 540, 675, true );   // 4:5.
 }
 add_action( 'after_setup_theme', 'panmotors_setup' );
 
@@ -67,3 +72,21 @@ function panmotors_js_class() {
 	echo "<script>document.documentElement.classList.add('pm-js');</script>\n";
 }
 add_action( 'wp_head', 'panmotors_js_class', 0 );
+
+/**
+ * Default meta description when no SEO plugin handles it (theme-map 9.7): the page's hero
+ * intro, falling back to the one-sentence business description from the options.
+ */
+function panmotors_meta_description() {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' ) || defined( 'SEOPRESS_VERSION' ) ) {
+		return;
+	}
+
+	$text = is_singular() && ! is_front_page() ? panmotors_field( 'page_intro', get_queried_object_id() ) : '';
+	$text = $text ? $text : panmotors_option( 'description' );
+
+	if ( $text ) {
+		printf( '<meta name="description" content="%s">' . "\n", esc_attr( wp_strip_all_tags( $text ) ) );
+	}
+}
+add_action( 'wp_head', 'panmotors_meta_description', 1 );
