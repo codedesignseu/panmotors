@@ -4,11 +4,11 @@
     "fields": [
         {
             "key": "field_pm_about_image",
-            "label": "Image",
+            "label": "Photo",
             "name": "about_image",
             "aria-label": "",
             "type": "image",
-            "instructions": "Portrait, 4:5. Also shown on the homepage.",
+            "instructions": "Shown on the homepage About section. Portrait (4:5), at least 1080 × 1350px. JPG or WebP, sRGB colour.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,12 +18,12 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": "",
-            "min_height": "",
+            "min_width": 1080,
+            "min_height": 1350,
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": "",
+            "max_size": 8,
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
@@ -33,7 +33,7 @@
             "name": "about_story",
             "aria-label": "",
             "type": "wysiwyg",
-            "instructions": "The long version. The one-sentence description from Pan Motors settings is printed first as the lead.",
+            "instructions": "The longer story for this page. The homepage shows the one-sentence description from Pan Motors settings instead.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -49,11 +49,11 @@
         },
         {
             "key": "field_pm_about_stats",
-            "label": "Stats",
+            "label": "Three highlights",
             "name": "about_stats",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "Shown in a row under the About text on the homepage. Three fit best.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -66,12 +66,12 @@
             "min": 0,
             "max": 4,
             "collapsed": "",
-            "button_label": "Add stat",
+            "button_label": "Add highlight",
             "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_pm_stat_value",
-                    "label": "Value",
+                    "label": "Word",
                     "name": "value",
                     "aria-label": "",
                     "type": "text",
@@ -83,16 +83,16 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 12,
+                    "placeholder": "Sales",
                     "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_about_stats"
                 },
                 {
                     "key": "field_pm_stat_label",
-                    "label": "Label",
+                    "label": "Line under it",
                     "name": "label",
                     "aria-label": "",
                     "type": "text",
@@ -104,9 +104,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 28,
+                    "placeholder": "Luxury and performance",
                     "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_about_stats"
@@ -119,7 +119,7 @@
             "name": "values",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Shown as the Our Values cards on the homepage. Three works best.",
+            "instructions": "The Our Values cards on the homepage. Three fit one row. Drag to reorder.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -129,7 +129,7 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 0,
+            "min": 1,
             "max": 6,
             "collapsed": "field_pm_value_title",
             "button_label": "Add value",
@@ -137,7 +137,7 @@
             "sub_fields": [
                 {
                     "key": "field_pm_value_index",
-                    "label": "Index label",
+                    "label": "Small label",
                     "name": "index",
                     "aria-label": "",
                     "type": "text",
@@ -149,9 +149,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
                     "placeholder": "01 — Keeping",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_values"
@@ -170,9 +170,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 24,
+                    "placeholder": "Kept Running",
                     "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_values"
@@ -183,7 +183,7 @@
                     "name": "body",
                     "aria-label": "",
                     "type": "textarea",
-                    "instructions": "Shown on the homepage card.",
+                    "instructions": "Shown on the homepage card. Up to 140 characters.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -191,20 +191,20 @@
                         "class": "",
                         "id": ""
                     },
-                    "rows": 3,
+                    "rows": 2,
                     "new_lines": "",
+                    "maxlength": 140,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "parent_repeater": "field_pm_values"
                 },
                 {
                     "key": "field_pm_value_detail",
-                    "label": "Detail",
+                    "label": "Longer text",
                     "name": "detail",
                     "aria-label": "",
                     "type": "wysiwyg",
-                    "instructions": "Longer text, for the About page.",
+                    "instructions": "For the About page.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -221,11 +221,11 @@
                 },
                 {
                     "key": "field_pm_value_image",
-                    "label": "Image",
+                    "label": "Photo",
                     "name": "image",
                     "aria-label": "",
                     "type": "image",
-                    "instructions": "Optional, for the About page.",
+                    "instructions": "Optional, for the About page. Landscape. JPG or WebP, sRGB colour.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -235,12 +235,12 @@
                     },
                     "return_format": "id",
                     "library": "all",
-                    "min_width": "",
+                    "min_width": 1200,
                     "min_height": "",
                     "min_size": "",
                     "max_width": "",
                     "max_height": "",
-                    "max_size": "",
+                    "max_size": 8,
                     "mime_types": "jpg, jpeg, png, webp, avif",
                     "preview_size": "medium",
                     "parent_repeater": "field_pm_values"
@@ -261,7 +261,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The marques list on this page comes from <strong>Pan Motors settings → Marques<\/strong>.",
+            "message": "The marques are edited in {settings} → Marques.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -287,5 +287,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

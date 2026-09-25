@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_pm_tab_hero",
-            "label": "Hero",
+            "label": "Top video",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -22,11 +22,11 @@
         },
         {
             "key": "field_pm_hero_eyebrow",
-            "label": "Eyebrow line",
+            "label": "Small red line",
             "name": "hero_eyebrow",
             "aria-label": "",
             "type": "text",
-            "instructions": "First part of the H1, shown small. Say who and where.",
+            "instructions": "Above the big title. Say who and where. Up to 60 characters.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -34,19 +34,19 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 60,
             "placeholder": "Pan Motors, luxury car boutique in Paphos, Cyprus",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_pm_hero_title",
-            "label": "Title",
+            "label": "Big title",
             "name": "hero_title",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "Second part of the H1. Each new line is a line break.",
+            "instructions": "Each new line starts a new line on the page. Up to 40 characters.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -56,8 +56,8 @@
             },
             "rows": 2,
             "new_lines": "",
+            "maxlength": 40,
             "default_value": "",
-            "maxlength": "",
             "placeholder": ""
         },
         {
@@ -66,7 +66,7 @@
             "name": "hero_video",
             "aria-label": "",
             "type": "file",
-            "instructions": "MP4, muted, about 10–20 seconds, under 8 MB.",
+            "instructions": "MP4, landscape, 10–20 seconds, under 8 MB. Plays silently. Leave empty to show only the photo.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -77,16 +77,16 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": "",
-            "mime_types": "mp4, webm"
+            "max_size": 10,
+            "mime_types": "mp4"
         },
         {
             "key": "field_pm_hero_poster",
-            "label": "Poster image",
+            "label": "Background photo",
             "name": "hero_poster",
             "aria-label": "",
             "type": "image",
-            "instructions": "Shown before the video plays and when motion is reduced. This is the LCP image: at least 2400px wide.",
+            "instructions": "Shown while the video loads and for visitors who turn off motion. Landscape, at least 2400px wide, JPG or WebP, sRGB colour.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -96,18 +96,18 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": "",
+            "min_width": 1920,
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": "",
+            "max_size": 8,
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
         {
             "key": "field_pm_hero_cta_label",
-            "label": "Button label",
+            "label": "Button text",
             "name": "hero_cta_label",
             "aria-label": "",
             "type": "text",
@@ -119,19 +119,19 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 24,
             "default_value": "View the cars",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_pm_hero_cta_link",
-            "label": "Button link",
+            "label": "Button goes to",
             "name": "hero_cta_link",
             "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty to link to the Featured Cars page.",
+            "type": "page_link",
+            "instructions": "Leave empty for the Featured Cars page.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -139,11 +139,376 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "allow_archives": 0,
+            "multiple": 0
+        },
+        {
+            "key": "field_pm_tab_marquee",
+            "label": "Marques strip",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_home_show_marquee",
+            "label": "Show this section",
+            "name": "home_show_marquee",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"the scrolling marques\" from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_msg_home_marquee",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The names and the separator are edited in {settings} → Marques.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_tab_featured",
+            "label": "Featured Cars",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_home_show_featured",
+            "label": "Show this section",
+            "name": "home_show_featured",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"Featured Cars\" from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_home_featured_title",
+            "label": "Heading",
+            "name": "home_featured_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section on the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Featured Cars",
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_pm_msg_home_featured",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The cars and the short intro are edited on the {edit:featured}.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_tab_values",
+            "label": "Our Values",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_home_show_values",
+            "label": "Show this section",
+            "name": "home_show_values",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"Our Values\" from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_home_values_title",
+            "label": "Heading",
+            "name": "home_values_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section on the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Our Values",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_home_values",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The value cards are edited on the {edit:about} → Our Values. Each card links to that page.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_tab_about",
+            "label": "About Pan Motors",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_home_show_about",
+            "label": "Show this section",
+            "name": "home_show_about",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"About Pan Motors\" from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_home_about_title",
+            "label": "Heading",
+            "name": "home_about_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section on the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "About Pan Motors",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_home_about",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The photo, the small red line and the three highlights are edited on the {edit:about}. The paragraph is the one-sentence description in {settings} → Business.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_tab_latest",
+            "label": "Latest Cars",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_home_show_latest",
+            "label": "Show this section",
+            "name": "home_show_latest",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"Latest Cars\" from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_home_latest_title",
+            "label": "Heading",
+            "name": "home_latest_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section on the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Latest Cars",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_home_latest",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The cars and the small red line are edited on the {edit:latest}.",
+            "new_lines": "wpautop",
+            "esc_html": 0
         },
         {
             "key": "field_pm_tab_live",
@@ -164,12 +529,12 @@
             "selected": 0
         },
         {
-            "key": "field_pm_msg_live",
-            "label": "Homepage only",
-            "name": "",
+            "key": "field_pm_home_show_live",
+            "label": "Show this section",
+            "name": "home_show_live",
             "aria-label": "",
-            "type": "message",
-            "instructions": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"Pan Motors Live\" from the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -177,13 +542,15 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Pan Motors Live appears on the homepage only. The Instagram link comes from <strong>Pan Motors settings → Profiles<\/strong>.",
-            "new_lines": "wpautop",
-            "esc_html": 0
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
         },
         {
             "key": "field_pm_live_eyebrow",
-            "label": "Eyebrow",
+            "label": "Small red line",
             "name": "live_eyebrow",
             "aria-label": "",
             "type": "text",
@@ -195,8 +562,8 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 30,
             "default_value": "Social",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -215,19 +582,19 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 30,
             "default_value": "Pan Motors Live",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_pm_live_cta_label",
-            "label": "Instagram button label",
+            "label": "Instagram button text",
             "name": "live_cta_label",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "Opens your Instagram (link in {settings} → Social).",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -235,8 +602,8 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 24,
             "default_value": "Follow the floor",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -247,7 +614,7 @@
             "name": "live_posts",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Entered by hand, no Instagram connection. Six posts fill the grid.",
+            "instructions": "Entered by hand. Six posts fill the grid. Drag to reorder.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -293,7 +660,7 @@
                     "name": "video",
                     "aria-label": "",
                     "type": "file",
-                    "instructions": "Vertical MP4, under 8 MB.",
+                    "instructions": "Vertical MP4 (9:16), under 8 MB. Plays silently while on screen.",
                     "required": 0,
                     "conditional_logic": [
                         [
@@ -312,17 +679,17 @@
                     "return_format": "id",
                     "library": "all",
                     "min_size": "",
-                    "max_size": "",
-                    "mime_types": "mp4, webm",
+                    "max_size": 8,
+                    "mime_types": "mp4",
                     "parent_repeater": "field_pm_live_posts"
                 },
                 {
                     "key": "field_pm_post_image",
-                    "label": "Image",
+                    "label": "Photo",
                     "name": "image",
                     "aria-label": "",
                     "type": "image",
-                    "instructions": "The photo, or the poster frame for a video.",
+                    "instructions": "The photo, or the still shown before a video plays. Portrait (4:5), at least 1080px wide. JPG or WebP, sRGB colour.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -332,23 +699,23 @@
                     },
                     "return_format": "id",
                     "library": "all",
-                    "min_width": "",
+                    "min_width": 1080,
                     "min_height": "",
                     "min_size": "",
                     "max_width": "",
                     "max_height": "",
-                    "max_size": "",
+                    "max_size": 8,
                     "mime_types": "jpg, jpeg, png, webp, avif",
                     "preview_size": "medium",
                     "parent_repeater": "field_pm_live_posts"
                 },
                 {
                     "key": "field_pm_post_url",
-                    "label": "Instagram post URL",
+                    "label": "Instagram link",
                     "name": "url",
                     "aria-label": "",
                     "type": "url",
-                    "instructions": "",
+                    "instructions": "The post this tile opens.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -374,8 +741,8 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 18,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -387,7 +754,7 @@
                     "name": "likes",
                     "aria-label": "",
                     "type": "text",
-                    "instructions": "Optional.",
+                    "instructions": "Optional, e.g. 24K.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -395,8 +762,8 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 6,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -416,8 +783,8 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 6,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -426,8 +793,8 @@
             ]
         },
         {
-            "key": "field_pm_tab_previews",
-            "label": "Section headings",
+            "key": "field_pm_tab_showroom",
+            "label": "The Showroom",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -444,12 +811,12 @@
             "selected": 0
         },
         {
-            "key": "field_pm_msg_previews",
-            "label": "Content comes from each page",
-            "name": "",
+            "key": "field_pm_home_show_showroom",
+            "label": "Show this section",
+            "name": "home_show_showroom",
             "aria-label": "",
-            "type": "message",
-            "instructions": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"The Showroom\" from the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -457,133 +824,35 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Featured Cars, Our Values, About, Latest Cars and Showroom show content from their pages (Our Values from the About page). Edit it there. Here you can only change the homepage heading.",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_pm_home_featured_title",
-            "label": "Featured Cars heading",
-            "name": "home_featured_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for the default.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_values_title",
-            "label": "Our Values heading",
-            "name": "home_values_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for the default.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_about_title",
-            "label": "About heading",
-            "name": "home_about_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for the default.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_home_latest_title",
-            "label": "Latest Cars heading",
-            "name": "home_latest_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for the default.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
         },
         {
             "key": "field_pm_home_showroom_title",
-            "label": "Showroom heading",
+            "label": "Heading",
             "name": "home_showroom_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "Leave empty for the default.",
+            "instructions": "The large heading of this section on the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
+            "maxlength": 30,
+            "default_value": "The Showroom",
             "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
-            "key": "field_pm_home_enquire_title",
-            "label": "Enquire heading",
-            "name": "home_enquire_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Leave empty for the default.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_msg_marquee",
-            "label": "Marquee",
+            "key": "field_pm_msg_home_showroom",
+            "label": "Content",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -595,9 +864,263 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The scrolling marque names come from <strong>Pan Motors settings → Marques<\/strong>.",
+            "message": "The photos, the small red line and the intro are edited on the {edit:showroom}. Opening hours are in {settings} → Opening hours.",
             "new_lines": "wpautop",
             "esc_html": 0
+        },
+        {
+            "key": "field_pm_tab_enquire",
+            "label": "Come And See",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_home_show_enquire",
+            "label": "Show this section",
+            "name": "home_show_enquire",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch off to hide \"Come And See\" from the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_msg_home_enquire",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The heading and intro are edited on the {edit:contact}. The address, phone numbers and email are in {settings} → Contact.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_msg_home_form",
+            "label": "Preview form",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Until the enquiry form plugin is connected, a preview form is shown with these texts. It does not send.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_form_label_name",
+            "label": "Name label",
+            "name": "form_label_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Name",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_hint_name",
+            "label": "Name hint",
+            "name": "form_hint_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "Full name",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_label_email",
+            "label": "Email label",
+            "name": "form_label_email",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Email",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_hint_email",
+            "label": "Email hint",
+            "name": "form_hint_email",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "you@domain.com",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_label_phone",
+            "label": "Phone label",
+            "name": "form_label_phone",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Phone",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_hint_phone",
+            "label": "Phone hint",
+            "name": "form_hint_phone",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "+357",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_label_message",
+            "label": "Message label",
+            "name": "form_label_message",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Message",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_hint_message",
+            "label": "Message hint",
+            "name": "form_hint_message",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 60,
+            "default_value": "Tell us which car you are interested in.",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_form_button",
+            "label": "Button text",
+            "name": "form_button",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Send message",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -616,10 +1139,10 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Homepage hero, Pan Motors Live and section headings. Other section content lives on each section page.",
+    "description": "Homepage: tabs in the same order as the page.",
     "show_in_rest": 0,
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

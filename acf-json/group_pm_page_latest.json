@@ -8,7 +8,7 @@
             "name": "latest_cars",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "The slider on the homepage, in this order. Drag to reorder.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,19 +18,19 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 0,
-            "max": 0,
+            "min": 1,
+            "max": 12,
             "collapsed": "field_pm_slide_caption",
             "button_label": "Add car",
             "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_pm_slide_image",
-                    "label": "Image",
+                    "label": "Photo",
                     "name": "image",
                     "aria-label": "",
                     "type": "image",
-                    "instructions": "Landscape, 16:9.",
+                    "instructions": "Landscape (16:9), at least 1960 × 1102px. JPG or WebP, sRGB colour.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -40,12 +40,12 @@
                     },
                     "return_format": "id",
                     "library": "all",
-                    "min_width": "",
-                    "min_height": "",
+                    "min_width": 1960,
+                    "min_height": 1102,
                     "min_size": "",
                     "max_width": "",
                     "max_height": "",
-                    "max_size": "",
+                    "max_size": 8,
                     "mime_types": "jpg, jpeg, png, webp, avif",
                     "preview_size": "medium",
                     "parent_repeater": "field_pm_latest_cars"
@@ -64,9 +64,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 40,
+                    "placeholder": "Bay four, morning light",
                     "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_latest_cars"
@@ -85,8 +85,8 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
                     "default_value": "Paphos",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -116,5 +116,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

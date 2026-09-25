@@ -8,7 +8,7 @@
             "name": "featured_cars",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Showcase only, no prices. The homepage shows the first four.",
+            "instructions": "Showcase only, no prices. The homepage shows the first four. Drag to reorder.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,7 +18,7 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 0,
+            "min": 1,
             "max": 12,
             "collapsed": "field_pm_car_model",
             "button_label": "Add car",
@@ -26,11 +26,11 @@
             "sub_fields": [
                 {
                     "key": "field_pm_car_image",
-                    "label": "Image",
+                    "label": "Photo",
                     "name": "image",
                     "aria-label": "",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "Portrait or square works best, at least 1400px wide. JPG or WebP, sRGB colour.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -40,12 +40,12 @@
                     },
                     "return_format": "id",
                     "library": "all",
-                    "min_width": "",
+                    "min_width": 1200,
                     "min_height": "",
                     "min_size": "",
                     "max_width": "",
                     "max_height": "",
-                    "max_size": "",
+                    "max_size": 8,
                     "mime_types": "jpg, jpeg, png, webp, avif",
                     "preview_size": "medium",
                     "parent_repeater": "field_pm_featured_cars"
@@ -64,9 +64,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
                     "placeholder": "Porsche",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_featured_cars"
@@ -85,9 +85,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 28,
                     "placeholder": "911 Carrera",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_featured_cars"
@@ -106,16 +106,16 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 12,
                     "placeholder": "No. 04",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_featured_cars"
                 },
                 {
                     "key": "field_pm_car_spec",
-                    "label": "Spec",
+                    "label": "Detail",
                     "name": "spec",
                     "aria-label": "",
                     "type": "text",
@@ -127,9 +127,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 22,
                     "placeholder": "Flat six",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_featured_cars"
@@ -148,9 +148,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 26,
                     "placeholder": "Kept in slate grey",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_featured_cars"
@@ -161,7 +161,7 @@
                     "name": "link",
                     "aria-label": "",
                     "type": "link",
-                    "instructions": "Optional. Tiles are showcase only by default.",
+                    "instructions": "Optional. Leave empty: the tile is a showcase only.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -196,5 +196,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

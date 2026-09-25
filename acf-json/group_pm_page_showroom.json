@@ -8,7 +8,7 @@
             "name": "showroom_photos",
             "aria-label": "",
             "type": "gallery",
-            "instructions": "Landscape, 16:10. The caption comes from each image's caption in the media library.",
+            "instructions": "The photo slider on the homepage. Landscape (16:10), at least 2160px wide, JPG or WebP, sRGB colour. The caption under each photo is the image's Caption in the media library.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,14 +18,14 @@
             },
             "return_format": "id",
             "library": "all",
-            "min": "",
-            "max": "",
-            "min_width": "",
+            "min": 1,
+            "max": 12,
+            "min_width": 1600,
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": "",
+            "max_size": 8,
             "mime_types": "jpg, jpeg, png, webp, avif",
             "insert": "append",
             "preview_size": "medium"
@@ -36,7 +36,7 @@
             "name": "getting_here",
             "aria-label": "",
             "type": "wysiwyg",
-            "instructions": "Directions from Paphos centre and Paphos airport, and parking. Plain, factual sentences.",
+            "instructions": "Directions from Paphos centre and Paphos airport, and where to park. For the Showroom page.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -64,7 +64,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Hours and address come from <strong>Pan Motors settings<\/strong>.",
+            "message": "Hours and the address are edited in {settings}.",
             "new_lines": "wpautop",
             "esc_html": 0
         }
@@ -90,5 +90,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

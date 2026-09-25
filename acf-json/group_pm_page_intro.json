@@ -1,39 +1,14 @@
 {
     "key": "group_pm_page_intro",
-    "title": "Page hero and intro",
+    "title": "Page top",
     "fields": [
         {
-            "key": "field_pm_page_hero_image",
-            "label": "Hero image",
-            "name": "page_hero_image",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Optional background, shown in grayscale. Landscape, at least 2400px wide.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "id",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpg, jpeg, png, webp, avif",
-            "preview_size": "medium"
-        },
-        {
             "key": "field_pm_page_eyebrow",
-            "label": "Eyebrow",
+            "label": "Small red line",
             "name": "page_eyebrow",
             "aria-label": "",
             "type": "text",
-            "instructions": "Small accent line above the title, e.g. \"Avenue 65, Mesoyi\".",
+            "instructions": "Above the page title, e.g. \"Avenue 65, Mesoyi\". On the homepage it also appears above this section's heading.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -41,19 +16,19 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 40,
             "default_value": "",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_pm_page_intro",
-            "label": "Hero intro",
+            "label": "Short intro",
             "name": "page_intro",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "One or two sentences under the title. Also used as the short intro on the homepage preview.",
+            "instructions": "One or two sentences under the page title. Featured Cars and Showroom also show it on the homepage. Up to 200 characters.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -63,17 +38,42 @@
             },
             "rows": 2,
             "new_lines": "",
-            "maxlength": 220,
+            "maxlength": 200,
             "default_value": "",
             "placeholder": ""
         },
         {
+            "key": "field_pm_page_hero_image",
+            "label": "Top image",
+            "name": "page_hero_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Optional background behind the page title, shown in black and white. Landscape, at least 2400px wide, JPG or WebP, sRGB colour.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1920,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_pm_page_body",
-            "label": "Intro text",
+            "label": "Opening text",
             "name": "page_body",
             "aria-label": "",
             "type": "wysiwyg",
-            "instructions": "Opening copy for this page, shown under the hero. Own text for this page, not copied from the homepage.",
+            "instructions": "The first paragraphs of this page, under the top image. Write it for this page, do not copy the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -132,10 +132,10 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Page hero and intro, shared by all section pages.",
+    "description": "Page title area, shared by the section pages.",
     "show_in_rest": 0,
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

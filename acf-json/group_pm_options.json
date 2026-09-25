@@ -22,7 +22,7 @@
         },
         {
             "key": "field_pm_msg_facts",
-            "label": "Single source of truth",
+            "label": "About these settings",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -34,17 +34,17 @@
                 "class": "",
                 "id": ""
             },
-            "message": "These facts feed the visible text, the footer and the JSON-LD. Keep them word for word identical to the Google Business Profile.",
+            "message": "These are the business facts used across the whole site: on the pages, in the footer and in the information Google reads. Keep them word for word the same as your Google Business Profile.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
         {
             "key": "field_pm_legal_name",
-            "label": "Legal name",
+            "label": "Company name (legal)",
             "name": "legal_name",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "As registered. Shown in the address on the homepage contact card.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -52,9 +52,9 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 60,
             "placeholder": "Pan Motors Ltd",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -64,7 +64,7 @@
             "name": "trading_name",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "The name customers know. Used for the logo text if no logo is uploaded.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -72,9 +72,9 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 40,
             "placeholder": "Pan Motors",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -84,7 +84,7 @@
             "name": "description",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "One factual sentence: who, what, where. Opens the About text, is the default meta description and the schema description.",
+            "instructions": "One factual sentence: who you are, what you do, where. Shown as the paragraph in the homepage About section and used by Google. Up to 200 characters.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -94,17 +94,17 @@
             },
             "rows": 2,
             "new_lines": "",
-            "maxlength": 220,
+            "maxlength": 200,
             "default_value": "",
             "placeholder": ""
         },
         {
             "key": "field_pm_founded_year",
-            "label": "Founded year",
+            "label": "Year founded",
             "name": "founded_year",
             "aria-label": "",
             "type": "number",
-            "instructions": "Optional.",
+            "instructions": "Optional. Used by Google only.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -121,8 +121,8 @@
             "append": ""
         },
         {
-            "key": "field_pm_tab_address",
-            "label": "Address",
+            "key": "field_pm_tab_contact",
+            "label": "Contact",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -140,7 +140,7 @@
         },
         {
             "key": "field_pm_street_address",
-            "label": "Street address",
+            "label": "Street",
             "name": "street_address",
             "aria-label": "",
             "type": "text",
@@ -152,15 +152,15 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 60,
             "placeholder": "Avenue 65",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_pm_locality",
-            "label": "Locality",
+            "label": "Area",
             "name": "locality",
             "aria-label": "",
             "type": "text",
@@ -172,9 +172,9 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 40,
             "placeholder": "Mesoyi",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -192,9 +192,9 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 40,
             "placeholder": "Paphos",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -212,9 +212,9 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 10,
             "placeholder": 8060,
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         },
@@ -224,7 +224,7 @@
             "name": "country",
             "aria-label": "",
             "type": "text",
-            "instructions": "Two-letter ISO code.",
+            "instructions": "Two letters, e.g. CY.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -232,19 +232,19 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "CY",
             "maxlength": 2,
+            "default_value": "CY",
             "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_pm_country_name",
-            "label": "Country name",
+            "label": "Country",
             "name": "country_name",
             "aria-label": "",
             "type": "text",
-            "instructions": "Shown in the visible address.",
+            "instructions": "Shown at the end of the address.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -252,11 +252,28 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 40,
             "default_value": "Cyprus",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_pm_map_url",
+            "label": "Google Maps link",
+            "name": "map_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "The link to your business on Google Maps.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/"
         },
         {
             "key": "field_pm_latitude",
@@ -264,7 +281,7 @@
             "name": "latitude",
             "aria-label": "",
             "type": "number",
-            "instructions": "From the Google Business Profile pin.",
+            "instructions": "From the Google Maps pin. Used by Google only.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -303,47 +320,12 @@
             "append": ""
         },
         {
-            "key": "field_pm_map_url",
-            "label": "Google Maps link",
-            "name": "map_url",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "Link to the business on Google Maps. Used for \"Get directions\" and schema hasMap.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "https:\/\/"
-        },
-        {
-            "key": "field_pm_tab_contact",
-            "label": "Contact",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
             "key": "field_pm_phones",
-            "label": "Phones",
+            "label": "Phone numbers",
             "name": "phones",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "Shown on the homepage contact card, each one tappable to call.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -354,9 +336,9 @@
             "layout": "table",
             "pagination": 0,
             "min": 1,
-            "max": 0,
+            "max": 4,
             "collapsed": "",
-            "button_label": "Add phone",
+            "button_label": "Add phone number",
             "rows_per_page": 20,
             "sub_fields": [
                 {
@@ -365,7 +347,7 @@
                     "name": "number",
                     "aria-label": "",
                     "type": "text",
-                    "instructions": "International format with spaces. The theme strips spaces for tel: links.",
+                    "instructions": "International format with spaces.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -373,9 +355,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 24,
                     "placeholder": "+357 99 000 000",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_phones"
@@ -386,7 +368,7 @@
                     "name": "label",
                     "aria-label": "",
                     "type": "text",
-                    "instructions": "Optional, e.g. Sales, Service.",
+                    "instructions": "Optional, for your own reference, e.g. Sales.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -394,8 +376,8 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -405,11 +387,11 @@
         },
         {
             "key": "field_pm_email",
-            "label": "Email",
+            "label": "Email address",
             "name": "email",
             "aria-label": "",
             "type": "email",
-            "instructions": "",
+            "instructions": "Shown on the homepage contact card.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -418,6 +400,26 @@
                 "id": ""
             },
             "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_contact_button_label",
+            "label": "Contact button text",
+            "name": "contact_button_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The round button at the top right and the last item of the mobile menu. Up to 16 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Contact",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -442,7 +444,7 @@
         },
         {
             "key": "field_pm_msg_hours",
-            "label": "Two sets of fields per row",
+            "label": "How opening hours work",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -454,7 +456,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Day, Time and Note are what visitors see. Days, Opens and Closes are for search engines (schema openingHoursSpecification). Keep them in step.",
+            "message": "Each row is one line in the hours list on the homepage. \"Day\", \"Time\" and \"Note\" are what visitors read. \"Open on\", \"Opens\" and \"Closes\" tell Google the same thing: keep both in step.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -474,15 +476,15 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 0,
-            "max": 0,
+            "min": 1,
+            "max": 10,
             "collapsed": "field_pm_hours_day",
             "button_label": "Add opening hours",
             "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_pm_hours_day",
-                    "label": "Day (display)",
+                    "label": "Day",
                     "name": "day",
                     "aria-label": "",
                     "type": "text",
@@ -494,16 +496,16 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 24,
                     "placeholder": "Monday — Friday",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_hours"
                 },
                 {
                     "key": "field_pm_hours_time",
-                    "label": "Time (display)",
+                    "label": "Time",
                     "name": "time",
                     "aria-label": "",
                     "type": "text",
@@ -515,9 +517,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
                     "placeholder": "08:00 — 13:00",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_hours"
@@ -536,16 +538,16 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
                     "placeholder": "Morning",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_hours"
                 },
                 {
                     "key": "field_pm_hours_days",
-                    "label": "Days",
+                    "label": "Open on",
                     "name": "days",
                     "aria-label": "",
                     "type": "checkbox",
@@ -637,7 +639,7 @@
             "name": "marques",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Feeds the homepage marquee and the schema brand list.",
+            "instructions": "The names scrolling across the homepage under the video. Drag to reorder.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -647,8 +649,8 @@
             },
             "layout": "table",
             "pagination": 0,
-            "min": 0,
-            "max": 0,
+            "min": 1,
+            "max": 20,
             "collapsed": "",
             "button_label": "Add marque",
             "rows_per_page": 20,
@@ -667,9 +669,9 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 20,
+                    "placeholder": "Porsche",
                     "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_marques"
@@ -677,8 +679,28 @@
             ]
         },
         {
-            "key": "field_pm_tab_profiles",
-            "label": "Profiles",
+            "key": "field_pm_marquee_separator",
+            "label": "Separator",
+            "name": "marquee_separator",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The mark shown between the names.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 3,
+            "default_value": "—",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_tab_social",
+            "label": "Social",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -700,7 +722,7 @@
             "name": "instagram_url",
             "aria-label": "",
             "type": "url",
-            "instructions": "",
+            "instructions": "Used by the \"Follow the floor\" button on the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -751,7 +773,7 @@
             "name": "other_profiles",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Any other official profiles. All profile URLs go into schema sameAs.",
+            "instructions": "Any other official profiles. Used by Google to connect them to your business.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -762,14 +784,14 @@
             "layout": "table",
             "pagination": 0,
             "min": 0,
-            "max": 0,
+            "max": 10,
             "collapsed": "",
             "button_label": "Add profile",
             "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_pm_profile_label",
-                    "label": "Label",
+                    "label": "Name",
                     "name": "label",
                     "aria-label": "",
                     "type": "text",
@@ -781,16 +803,16 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 30,
                     "placeholder": "YouTube",
                     "default_value": "",
-                    "maxlength": "",
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_pm_other_profiles"
                 },
                 {
                     "key": "field_pm_profile_url",
-                    "label": "URL",
+                    "label": "Link",
                     "name": "url",
                     "aria-label": "",
                     "type": "url",
@@ -809,8 +831,8 @@
             ]
         },
         {
-            "key": "field_pm_tab_form",
-            "label": "Enquiry form",
+            "key": "field_pm_tab_footer",
+            "label": "Footer",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -827,28 +849,48 @@
             "selected": 0
         },
         {
-            "key": "field_pm_enquire_form_shortcode",
-            "label": "Form shortcode",
-            "name": "enquire_form_shortcode",
+            "key": "field_pm_footer_tagline",
+            "label": "Footer line",
+            "name": "footer_tagline",
             "aria-label": "",
             "type": "text",
-            "instructions": "Shortcode from the form plugin. Leave empty to show the static preview form (it does not send).",
+            "instructions": "Next to the small logo at the bottom of every page.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
-            "placeholder": "[contact-form-7 id=\"123\"]",
-            "default_value": "",
-            "maxlength": "",
+            "maxlength": 40,
+            "default_value": "Pan Motors — Paphos",
+            "placeholder": "",
             "prepend": "",
             "append": ""
         },
         {
-            "key": "field_pm_tab_pages",
-            "label": "Site pages",
+            "key": "field_pm_footer_copyright",
+            "label": "Copyright",
+            "name": "footer_copyright",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Bottom right of every page. {year} becomes the current year automatically.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "© {year} Pan Motors",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_tab_notfound",
+            "label": "Page not found",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -865,8 +907,8 @@
             "selected": 0
         },
         {
-            "key": "field_pm_msg_pages",
-            "label": "Section pages",
+            "key": "field_pm_msg_notfound",
+            "label": "The \"page not found\" page",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -878,7 +920,165 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The theme links to these pages. Pick the page for each section; renaming or moving a page never breaks a link.",
+            "message": "Shown when someone opens a link that no longer exists.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_notfound_code",
+            "label": "Large number",
+            "name": "notfound_code",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 4,
+            "default_value": 404,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_notfound_eyebrow",
+            "label": "Small red line",
+            "name": "notfound_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "75",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "Page not found",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_notfound_title",
+            "label": "Heading",
+            "name": "notfound_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Off the Map",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_notfound_text",
+            "label": "Text",
+            "name": "notfound_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "default_value": "The page you were looking for has moved or no longer exists. The cars are still where we left them.",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_notfound_home_label",
+            "label": "Home button",
+            "name": "notfound_home_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Back to home",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_notfound_contact_label",
+            "label": "Contact button",
+            "name": "notfound_contact_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Contact us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_tab_technical",
+            "label": "Technical",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_msg_technical",
+            "label": "For the site administrator",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "message": "Only administrators see this tab. Changing these can break links or the enquiry form.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -896,6 +1096,7 @@
                 "class": "",
                 "id": ""
             },
+            "pm_admin_only": 1,
             "post_type": [
                 "page"
             ],
@@ -924,6 +1125,7 @@
                 "class": "",
                 "id": ""
             },
+            "pm_admin_only": 1,
             "post_type": [
                 "page"
             ],
@@ -952,6 +1154,7 @@
                 "class": "",
                 "id": ""
             },
+            "pm_admin_only": 1,
             "post_type": [
                 "page"
             ],
@@ -980,6 +1183,7 @@
                 "class": "",
                 "id": ""
             },
+            "pm_admin_only": 1,
             "post_type": [
                 "page"
             ],
@@ -1008,6 +1212,7 @@
                 "class": "",
                 "id": ""
             },
+            "pm_admin_only": 1,
             "post_type": [
                 "page"
             ],
@@ -1023,12 +1228,12 @@
             "bidirectional_target": []
         },
         {
-            "key": "field_pm_tab_footer",
-            "label": "Footer",
-            "name": "",
+            "key": "field_pm_enquire_form_shortcode",
+            "label": "Enquiry form shortcode",
+            "name": "enquire_form_shortcode",
             "aria-label": "",
-            "type": "tab",
-            "instructions": "",
+            "type": "text",
+            "instructions": "From the form plugin. Empty: a preview form is shown that does not send.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1036,47 +1241,10 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_footer_tagline",
-            "label": "Footer tagline",
-            "name": "footer_tagline",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Pan Motors — Paphos",
-            "default_value": "",
+            "pm_admin_only": 1,
             "maxlength": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_footer_copyright",
-            "label": "Copyright holder",
-            "name": "footer_copyright",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Shown as \"© {current year} {holder}\".",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "placeholder": "Pan Motors",
+            "placeholder": "[contact-form-7 id=\"123\"]",
             "default_value": "",
-            "maxlength": "",
             "prepend": "",
             "append": ""
         }
@@ -1102,5 +1270,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }

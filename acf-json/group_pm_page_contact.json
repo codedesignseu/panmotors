@@ -3,8 +3,8 @@
     "title": "Contact",
     "fields": [
         {
-            "key": "field_pm_tab_enquire",
-            "label": "Enquire card",
+            "key": "field_pm_tab_contact_card",
+            "label": "Contact card",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -26,7 +26,7 @@
             "name": "enquire_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "The heading of the dark contact card, on this page and the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -34,8 +34,8 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 30,
             "default_value": "Come And See",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -46,7 +46,7 @@
             "name": "enquire_intro",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "",
+            "instructions": "Under the heading. Up to 160 characters.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -56,13 +56,13 @@
             },
             "rows": 2,
             "new_lines": "",
+            "maxlength": 160,
             "default_value": "",
-            "maxlength": "",
             "placeholder": ""
         },
         {
             "key": "field_pm_msg_enquire_contact",
-            "label": "Contact details and form",
+            "label": "Contact details",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -74,12 +74,12 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Address, phones, email, hours and the form shortcode come from <strong>Pan Motors settings<\/strong>.",
+            "message": "Address, phone numbers and email are edited in {settings} → Contact.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
         {
-            "key": "field_pm_tab_faq",
+            "key": "field_pm_tab_contact_faq",
             "label": "Questions",
             "name": "",
             "aria-label": "",
@@ -110,8 +110,8 @@
                 "class": "",
                 "id": ""
             },
+            "maxlength": 30,
             "default_value": "Questions",
-            "maxlength": "",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -133,7 +133,7 @@
             "layout": "block",
             "pagination": 0,
             "min": 0,
-            "max": 0,
+            "max": 20,
             "collapsed": "field_pm_faq_question",
             "button_label": "Add question",
             "rows_per_page": 20,
@@ -152,8 +152,8 @@
                         "class": "",
                         "id": ""
                     },
+                    "maxlength": 120,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -165,7 +165,7 @@
                     "name": "answer",
                     "aria-label": "",
                     "type": "textarea",
-                    "instructions": "One to three plain sentences. Fact first. Also used in FAQPage schema.",
+                    "instructions": "One to three plain sentences, the answer first. Google reads these too.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -175,8 +175,8 @@
                     },
                     "rows": 3,
                     "new_lines": "",
+                    "maxlength": 500,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "parent_repeater": "field_pm_faqs"
                 }
@@ -204,5 +204,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790264095
+    "modified": 1790342678
 }
