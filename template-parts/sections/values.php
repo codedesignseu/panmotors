@@ -17,10 +17,12 @@ if ( ! $panmotors_values ) {
 }
 
 $panmotors_url   = get_permalink( $panmotors_page_id );
-$panmotors_title = panmotors_field( 'home_values_title', (int) get_option( 'page_on_front' ), __( 'Our Values', 'panmotors' ) );
+$panmotors_title = panmotors_field( 'home_values_title', (int) get_option( 'page_on_front' ) );
 ?>
 <section id="ways" class="pm-values pm-pad pm-pad-y" aria-labelledby="values-title">
-	<h2 class="pm-title pm-values__title" id="values-title" data-rise><?php echo esc_html( $panmotors_title ); ?></h2>
+	<?php if ( $panmotors_title ) : ?>
+		<h2 class="pm-title pm-values__title" id="values-title" data-rise><?php echo esc_html( $panmotors_title ); ?></h2>
+	<?php endif; ?>
 
 	<div class="pm-values__grid">
 		<?php foreach ( $panmotors_values as $panmotors_value ) : ?>

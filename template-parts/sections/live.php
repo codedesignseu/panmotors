@@ -23,7 +23,7 @@ if ( ! $panmotors_posts ) {
 }
 
 $panmotors_eyebrow   = panmotors_field( 'live_eyebrow', $panmotors_page_id );
-$panmotors_title     = panmotors_field( 'live_title', $panmotors_page_id, __( 'Pan Motors Live', 'panmotors' ) );
+$panmotors_title     = panmotors_field( 'live_title', $panmotors_page_id );
 $panmotors_cta_label = panmotors_field( 'live_cta_label', $panmotors_page_id );
 $panmotors_insta     = panmotors_option( 'instagram_url' );
 ?>
@@ -33,7 +33,9 @@ $panmotors_insta     = panmotors_option( 'instagram_url' );
 			<?php if ( $panmotors_eyebrow ) : ?>
 				<p class="pm-eyebrow"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
 			<?php endif; ?>
-			<h2 class="pm-title" id="live-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php if ( $panmotors_title ) : ?>
+				<h2 class="pm-title" id="live-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php endif; ?>
 		</div>
 		<?php if ( $panmotors_insta && $panmotors_cta_label ) : ?>
 			<a class="pm-pill" href="<?php echo esc_url( $panmotors_insta ); ?>" target="_blank" rel="noopener">

@@ -1,7 +1,7 @@
 <?php
 /**
  * Come And See (theme-map 4.10). Heading and intro from the Contact page, contact details and
- * the form shortcode from the options.
+ * the form shortcode from the options, preview-form texts from the Home page.
  *
  * The form plugin renders inside .pm-form and handles submissions (D4). Without a shortcode the
  * design's static form is shown for layout only: its submit button is disabled, so it never
@@ -15,11 +15,7 @@
  */
 
 $panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
-$panmotors_title   = panmotors_field(
-	'home_enquire_title',
-	(int) get_option( 'page_on_front' ),
-	panmotors_field( 'enquire_title', $panmotors_page_id, __( 'Come And See', 'panmotors' ) )
-);
+$panmotors_title   = panmotors_field( 'enquire_title', $panmotors_page_id );
 $panmotors_intro   = panmotors_field( 'enquire_intro', $panmotors_page_id );
 $panmotors_address = implode(
 	', ',
@@ -37,11 +33,20 @@ $panmotors_phones  = array_filter( array_map( static fn( $row ) => trim( (string
 $panmotors_email   = panmotors_option( 'email' );
 $panmotors_site    = wp_parse_url( home_url( '/' ), PHP_URL_HOST );
 $panmotors_form    = trim( (string) panmotors_option( 'enquire_form_shortcode', '' ) );
+$panmotors_front   = (int) get_option( 'page_on_front' );
+$panmotors_fields  = array(
+	'name'    => array( 'text', 'name' ),
+	'email'   => array( 'email', 'email' ),
+	'phone'   => array( 'tel', 'tel' ),
+	'message' => array( 'textarea', '' ),
+);
 ?>
-<section id="enquire" class="pm-enquire pm-light pm-pad" aria-labelledby="enquire-title">
+<section id="enquire" class="pm-enquire pm-light pm-pad"<?php echo $panmotors_title ? ' aria-labelledby="enquire-title"' : ''; ?>>
 	<div class="pm-enquire__card" data-rise>
 		<div class="pm-enquire__info">
-			<h2 class="pm-enquire__title" id="enquire-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php if ( $panmotors_title ) : ?>
+				<h2 class="pm-enquire__title" id="enquire-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php endif; ?>
 			<?php if ( $panmotors_intro ) : ?>
 				<p class="pm-enquire__intro"><?php echo esc_html( $panmotors_intro ); ?></p>
 			<?php endif; ?>
@@ -78,26 +83,30 @@ $panmotors_form    = trim( (string) panmotors_option( 'enquire_form_shortcode', 
 				<?php echo do_shortcode( $panmotors_form ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Form plugin output. ?>
 			<?php else : ?>
 				<?php if ( current_user_can( 'edit_theme_options' ) ) : ?>
-					<p class="pm-form__admin-note"><?php esc_html_e( 'Form plugin shortcode not set. Add it in Pan Motors settings → Enquiry form. This preview form does not send.', 'panmotors' ); ?></p>
+					<p class="pm-form__admin-note"><?php esc_html_e( 'Form plugin shortcode not set. Add it in Pan Motors settings → Technical. This preview form does not send.', 'panmotors' ); ?></p>
 				<?php endif; ?>
 				<form class="pm-form__static" action="#" method="post" aria-label="<?php esc_attr_e( 'Enquiry form (preview, not connected)', 'panmotors' ); ?>" onsubmit="return false">
-					<p class="pm-form__field">
-						<label for="pm-enquire-name"><?php esc_html_e( 'Name', 'panmotors' ); ?></label>
-						<input id="pm-enquire-name" name="name" type="text" autocomplete="name" placeholder="<?php esc_attr_e( 'Full name', 'panmotors' ); ?>">
-					</p>
-					<p class="pm-form__field">
-						<label for="pm-enquire-email"><?php esc_html_e( 'Email', 'panmotors' ); ?></label>
-						<input id="pm-enquire-email" name="email" type="email" autocomplete="email" placeholder="<?php esc_attr_e( 'you@domain.com', 'panmotors' ); ?>">
-					</p>
-					<p class="pm-form__field">
-						<label for="pm-enquire-phone"><?php esc_html_e( 'Phone', 'panmotors' ); ?></label>
-						<input id="pm-enquire-phone" name="phone" type="tel" autocomplete="tel" placeholder="+357">
-					</p>
-					<p class="pm-form__field">
-						<label for="pm-enquire-message"><?php esc_html_e( 'Message', 'panmotors' ); ?></label>
-						<textarea id="pm-enquire-message" name="message" rows="3" placeholder="<?php esc_attr_e( 'Tell us which car you are interested in.', 'panmotors' ); ?>"></textarea>
-					</p>
-					<button type="submit" disabled><?php esc_html_e( 'Send message', 'panmotors' ); ?></button>
+					<?php foreach ( $panmotors_fields as $panmotors_key => list( $panmotors_type, $panmotors_auto ) ) : ?>
+						<?php
+						$panmotors_label = panmotors_field( 'form_label_' . $panmotors_key, $panmotors_front );
+						$panmotors_hint  = (string) panmotors_field( 'form_hint_' . $panmotors_key, $panmotors_front, '' );
+						$panmotors_fid   = 'pm-enquire-' . $panmotors_key;
+						if ( ! $panmotors_label ) {
+							continue;
+						}
+						?>
+						<p class="pm-form__field">
+							<label for="<?php echo esc_attr( $panmotors_fid ); ?>"><?php echo esc_html( $panmotors_label ); ?></label>
+							<?php if ( 'textarea' === $panmotors_type ) : ?>
+								<textarea id="<?php echo esc_attr( $panmotors_fid ); ?>" name="<?php echo esc_attr( $panmotors_key ); ?>" rows="3" placeholder="<?php echo esc_attr( $panmotors_hint ); ?>"></textarea>
+							<?php else : ?>
+								<input id="<?php echo esc_attr( $panmotors_fid ); ?>" name="<?php echo esc_attr( $panmotors_key ); ?>" type="<?php echo esc_attr( $panmotors_type ); ?>" autocomplete="<?php echo esc_attr( $panmotors_auto ); ?>" placeholder="<?php echo esc_attr( $panmotors_hint ); ?>">
+							<?php endif; ?>
+						</p>
+					<?php endforeach; ?>
+					<?php if ( panmotors_field( 'form_button', $panmotors_front ) ) : ?>
+						<button type="submit" disabled><?php echo esc_html( panmotors_field( 'form_button', $panmotors_front ) ); ?></button>
+					<?php endif; ?>
 				</form>
 			<?php endif; ?>
 		</div>

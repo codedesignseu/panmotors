@@ -8,6 +8,7 @@
 $panmotors_contact_id  = panmotors_page( 'contact' );
 $panmotors_contact_url = $panmotors_contact_id ? get_permalink( $panmotors_contact_id ) : home_url( '/' );
 $panmotors_contact_cur = $panmotors_contact_id && is_page( $panmotors_contact_id ) ? ' aria-current="page"' : '';
+$panmotors_contact_txt = panmotors_option( 'contact_button_label', '' );
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -42,7 +43,9 @@ $panmotors_contact_cur = $panmotors_contact_id && is_page( $panmotors_contact_id
 			<span class="pm-burger__line" aria-hidden="true"></span>
 		</button>
 
-		<a class="pm-nav__contact" href="<?php echo esc_url( $panmotors_contact_url ); ?>"<?php echo $panmotors_contact_cur; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed string. ?>><?php esc_html_e( 'Contact', 'panmotors' ); ?></a>
+		<?php if ( $panmotors_contact_txt ) : ?>
+			<a class="pm-nav__contact" href="<?php echo esc_url( $panmotors_contact_url ); ?>"<?php echo $panmotors_contact_cur; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed string. ?>><?php echo esc_html( $panmotors_contact_txt ); ?></a>
+		<?php endif; ?>
 	</nav>
 
 	<div class="pm-menu" id="pm-menu" data-menu inert>
@@ -56,16 +59,16 @@ $panmotors_contact_cur = $panmotors_contact_id && is_page( $panmotors_contact_id
 				'fallback_cb'    => false,
 				'pm_link_class'  => 'pm-menu__link',
 				// Contact is appended as the last item. items_wrap runs through sprintf(), so % is doubled.
-				'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s' . str_replace(
+				'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s' . ( $panmotors_contact_txt ? str_replace(
 					'%',
 					'%%',
 					sprintf(
 						'<li><a class="pm-menu__link" href="%s"%s>%s</a></li>',
 						esc_url( $panmotors_contact_url ),
 						$panmotors_contact_cur,
-						esc_html__( 'Contact', 'panmotors' )
+						esc_html( $panmotors_contact_txt )
 					)
-				) . '</ul>',
+				) : '' ) . '</ul>',
 			)
 		);
 		?>

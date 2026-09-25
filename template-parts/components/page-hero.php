@@ -16,7 +16,7 @@ $panmotors_intro    = panmotors_field( 'page_intro', $panmotors_id );
 // Breadcrumb: Home, then any parent pages, then this page.
 $panmotors_crumbs = array(
 	array(
-		'label' => __( 'Home', 'panmotors' ),
+		'label' => get_the_title( (int) get_option( 'page_on_front' ) ),
 		'url'   => home_url( '/' ),
 	),
 );

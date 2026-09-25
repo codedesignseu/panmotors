@@ -22,6 +22,7 @@ if ( ! $panmotors_marques ) {
 	return;
 }
 
+$panmotors_sep   = (string) panmotors_option( 'marquee_separator', '' );
 $panmotors_names = array();
 while ( count( $panmotors_names ) < 6 ) {
 	$panmotors_names = array_merge( $panmotors_names, $panmotors_marques );
@@ -37,7 +38,9 @@ while ( count( $panmotors_names ) < 6 ) {
 					$panmotors_hide = ! $panmotors_copy && $panmotors_i >= count( $panmotors_marques );
 					?>
 					<li class="pm-marquee__item"<?php echo $panmotors_hide ? ' aria-hidden="true"' : ''; ?>><?php echo esc_html( $panmotors_name ); ?></li>
-					<li class="pm-marquee__item pm-marquee__dash" aria-hidden="true">&mdash;</li>
+					<?php if ( '' !== $panmotors_sep ) : ?>
+						<li class="pm-marquee__item pm-marquee__dash" aria-hidden="true"><?php echo esc_html( $panmotors_sep ); ?></li>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			</ul>
 		<?php endforeach; ?>

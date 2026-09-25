@@ -6,7 +6,8 @@
  */
 
 $panmotors_tagline = panmotors_option( 'footer_tagline' );
-$panmotors_holder  = panmotors_option( 'footer_copyright', panmotors_option( 'trading_name', get_bloginfo( 'name' ) ) );
+// "{year}" in the copyright text becomes the current year.
+$panmotors_copy    = str_replace( '{year}', wp_date( 'Y' ), (string) panmotors_option( 'footer_copyright', '' ) );
 ?>
 </main>
 
@@ -14,7 +15,7 @@ $panmotors_holder  = panmotors_option( 'footer_copyright', panmotors_option( 'tr
 	<div class="pm-footer__row">
 		<p class="pm-footer__brand">
 			<?php panmotors_logo_image( 'pm-footer__logo', '', '62px' ); // 34px tall. ?>
-			<?php echo esc_html( $panmotors_tagline ?? '' ); ?>
+			<?php echo esc_html( (string) $panmotors_tagline ); ?>
 		</p>
 
 		<?php
@@ -31,7 +32,9 @@ $panmotors_holder  = panmotors_option( 'footer_copyright', panmotors_option( 'tr
 		);
 		?>
 
-		<p class="pm-footer__copy">&copy; <?php echo esc_html( wp_date( 'Y' ) . ' ' . $panmotors_holder ); ?></p>
+		<?php if ( $panmotors_copy ) : ?>
+			<p class="pm-footer__copy"><?php echo esc_html( $panmotors_copy ); ?></p>
+		<?php endif; ?>
 	</div>
 </footer>
 
