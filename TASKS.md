@@ -35,9 +35,9 @@ Tick each task when it is done and checked in the browser.
 - [x] `values` (home context; values live on the About page)
 - [x] `about` + `heritage-fade.js` (home context; fade on home only)
 - [x] `latest-cars` + `slider-drag.js` (home context: slider; grid on the page later)
-- [ ] `live` + `live-videos.js` (home only, posts on Home)
-- [ ] `showroom` + `showroom-slider.js`
-- [ ] `hours`
+- [x] `live` + `live-videos.js` (home only, posts on Home)
+- [x] `showroom` + `showroom-slider.js` (home context)
+- [x] `hours` (used in the home Showroom section)
 - [ ] `faq` with `details`/`summary` (Contact page)
 - [ ] `enquire` card + `.pm-form` styles for plugin forms + static fallback form
 - [ ] `cta-band`
