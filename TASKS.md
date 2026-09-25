@@ -38,9 +38,8 @@ Tick each task when it is done and checked in the browser.
 - [x] `live` + `live-videos.js` (home only, posts on Home)
 - [x] `showroom` + `showroom-slider.js` (home context)
 - [x] `hours` (used in the home Showroom section)
-- [ ] `faq` with `details`/`summary` (Contact page)
-- [ ] `enquire` card + `.pm-form` styles for plugin forms + static fallback form
-- [ ] `cta-band`
+- [x] `enquire` card + `.pm-form` styles for plugin forms + static fallback form (home context)
+- [ ] `cta-band` (inner pages only; basic version in place, final styling with the inner page design)
 - [x] `reveal.js` (wired to each section as it is built)
 
 ## 5. SEO, GEO and extra pages
