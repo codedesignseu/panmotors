@@ -55,7 +55,7 @@ function panmotors_acf_options_page() {
 			'page_title' => __( 'Pan Motors settings', 'panmotors' ),
 			'menu_title' => __( 'Pan Motors', 'panmotors' ),
 			'menu_slug'  => 'panmotors-settings',
-			'capability' => 'edit_theme_options',
+			'capability' => 'edit_others_pages', // Editors (the client) can use it; the Technical tab is admin-only.
 			'position'   => 59,
 			'icon_url'   => 'dashicons-store',
 			'redirect'   => false,
@@ -113,3 +113,69 @@ function panmotors_front_page_hide_editor() {
 	}
 }
 add_action( 'load-post.php', 'panmotors_front_page_hide_editor' );
+
+/**
+ * Hide fields marked pm_admin_only (the Technical tab: page mapping, form shortcode) from
+ * anyone who is not an administrator. Hidden fields are not submitted, so their values stay.
+ *
+ * @param array $field Field.
+ * @return array|false
+ */
+function panmotors_acf_admin_only( $field ) {
+	if ( ! empty( $field['pm_admin_only'] ) && ! current_user_can( 'manage_options' ) ) {
+		return false;
+	}
+	return $field;
+}
+add_filter( 'acf/prepare_field', 'panmotors_acf_admin_only' );
+
+/**
+ * Turn {settings} and {edit:featured|about|latest|showroom|contact} in field messages and
+ * instructions into links, so the client can jump to where that content is edited.
+ *
+ * @param array $field Field.
+ * @return array
+ */
+function panmotors_acf_edit_links( $field ) {
+	foreach ( array( 'message', 'instructions' ) as $key ) {
+		if ( empty( $field[ $key ] ) || false === strpos( $field[ $key ], '{' ) ) {
+			continue;
+		}
+
+		$field[ $key ] = str_replace(
+			'{settings}',
+			sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=panmotors-settings' ) ), esc_html__( 'Pan Motors settings', 'panmotors' ) ),
+			$field[ $key ]
+		);
+
+		$field[ $key ] = preg_replace_callback(
+			'/\{edit:([a-z]+)\}/',
+			static function ( $m ) {
+				$id = panmotors_page( $m[1] );
+				if ( ! $id ) {
+					return esc_html__( 'its page', 'panmotors' );
+				}
+				/* translators: %s: page title. */
+				$label = sprintf( __( '%s page', 'panmotors' ), get_the_title( $id ) );
+				return sprintf( '<a href="%s">%s</a>', esc_url( get_edit_post_link( $id ) ), esc_html( $label ) );
+			},
+			$field[ $key ]
+		);
+	}
+	return $field;
+}
+add_filter( 'acf/prepare_field', 'panmotors_acf_edit_links', 20 );
+
+/**
+ * Whether a homepage section is switched on ("Show this section"). Missing value = on.
+ *
+ * @param string $key Section key, e.g. 'featured'.
+ * @return bool
+ */
+function panmotors_section_on( $key ) {
+	if ( ! function_exists( 'get_field' ) ) {
+		return true;
+	}
+	$value = get_field( 'home_show_' . $key, (int) get_option( 'page_on_front' ) );
+	return null === $value || (bool) $value;
+}
