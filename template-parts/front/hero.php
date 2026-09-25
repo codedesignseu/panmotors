@@ -3,8 +3,9 @@
  * Hero: background video (always muted) over the poster image, one H1 (eyebrow + title), CTA.
  *
  * The poster is a real <img> (the LCP element, preloaded in <head>). The video sits on top
- * and fades in once it plays. hero-video.js starts playback, so reduced-motion visitors and
- * no-JS visitors get the poster only.
+ * and fades in once it plays. hero-video.js starts playback after the load event, so reduced-motion
+ * and no-JS visitors get the poster only. preload="none": the <img> poster covers the wait, and the
+ * video download never competes with the first paint.
  *
  * @package panmotors
  */
@@ -41,7 +42,7 @@ if ( ! $panmotors_title && ! $panmotors_eyebrow ) {
 
 		if ( $panmotors_video_url ) :
 			?>
-			<video class="pm-hero__video" src="<?php echo esc_url( $panmotors_video_url ); ?>" muted loop playsinline preload="metadata" tabindex="-1"></video>
+			<video class="pm-hero__video" src="<?php echo esc_url( $panmotors_video_url ); ?>" muted loop playsinline preload="none" tabindex="-1"></video>
 		<?php endif; ?>
 	</div>
 	<div class="pm-hero__shade" aria-hidden="true"></div>

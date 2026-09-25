@@ -3,7 +3,8 @@
  *
  * Hooks: [data-hero-video] section with a <video>.
  * Reduced motion: never plays (poster only), and stops if the setting changes mid-visit.
- * Pauses while the hero is off screen.
+ * Pauses while the hero is off screen. Playback starts after the load event, so the video
+ * download never competes with the first paint (it fades in over the poster anyway).
  */
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -17,10 +18,11 @@ function initHeroVideo() {
 	}
 
 	let inView = true;
+	let ready = document.readyState === 'complete';
 	video.muted = true;
 
 	const play = () => {
-		if (REDUCED.matches || !inView) {
+		if (REDUCED.matches || !inView || !ready) {
 			return;
 		}
 		const attempt = video.play();
@@ -37,6 +39,13 @@ function initHeroVideo() {
 	video.addEventListener('playing', () => video.classList.add('is-playing'));
 
 	REDUCED.addEventListener('change', (event) => (event.matches ? stop() : play()));
+
+	if (!ready) {
+		window.addEventListener('load', () => {
+			ready = true;
+			play();
+		}, { once: true });
+	}
 
 	new IntersectionObserver(([entry]) => {
 		inView = entry.isIntersecting;

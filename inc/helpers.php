@@ -64,8 +64,10 @@ function panmotors_tel( $number ) {
  * @param string      $class CSS class for the <img>.
  * @param string|null $alt   Alt text. Null keeps the media library alt, '' marks it decorative.
  * @param string      $sizes Rendered width for the sizes attribute, e.g. '84px'.
+ * @param bool        $high  fetchpriority="high" (the header logo is the LCP element: the
+ *                           full-viewport hero image is ignored by Chrome's LCP).
  */
-function panmotors_logo_image( $class, $alt = null, $sizes = '100px' ) {
+function panmotors_logo_image( $class, $alt = null, $sizes = '100px', $high = false ) {
 	$logo_id = (int) get_theme_mod( 'custom_logo' );
 	if ( ! $logo_id ) {
 		return;
@@ -76,6 +78,9 @@ function panmotors_logo_image( $class, $alt = null, $sizes = '100px' ) {
 		'sizes'   => $sizes,
 		'loading' => false,
 	);
+	if ( $high ) {
+		$attr['fetchpriority'] = 'high';
+	}
 	if ( null !== $alt ) {
 		$attr['alt'] = $alt;
 	}
@@ -96,7 +101,7 @@ function panmotors_logo( $class ) {
 	printf( '<a class="%s" href="%s" rel="home">', esc_attr( $class ), esc_url( home_url( '/' ) ) );
 
 	if ( get_theme_mod( 'custom_logo' ) ) {
-		panmotors_logo_image( $class . '-img', $name, '84px' ); // 46px tall.
+		panmotors_logo_image( $class . '-img', $name, '84px', true ); // 46px tall.
 	} else {
 		echo '<span class="' . esc_attr( $class ) . '-text">' . esc_html( $name ) . '</span>';
 	}

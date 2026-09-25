@@ -47,7 +47,7 @@ $panmotors_arrow = static function ( $dir, $class ) {
 				array(
 					'class'   => 'pm-showroom__bg' . ( 0 === $panmotors_i ? ' is-active' : '' ),
 					'alt'     => '',
-					'sizes'   => '768px',
+					'sizes'   => '400px', // Blurred 64px: resolution is wasted here.
 					'loading' => 0 === $panmotors_i ? 'eager' : 'lazy',
 				)
 			);
