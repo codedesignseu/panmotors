@@ -60,5 +60,13 @@ panmotors_render_section(
 		'context' => 'home',
 	)
 );
+panmotors_render_section(
+	'template-parts/sections/enquire',
+	'',
+	array(
+		'page_id' => panmotors_page( 'contact' ),
+		'context' => 'home',
+	)
+);
 
 get_footer();
