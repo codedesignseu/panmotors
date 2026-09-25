@@ -1,0 +1,93 @@
+<?php
+/**
+ * Pan Motors Live (theme-map 4.8). Homepage only (D10): posts on Home, Instagram URL in options.
+ *
+ * Posts are entered by hand (no Instagram API). Video tiles load their src when they near the
+ * viewport and play only while 35% visible (live-videos.js). Reduced motion: poster only.
+ *
+ * Args:
+ * - page_id (int) The page holding the live fields (the front page).
+ *
+ * @package panmotors
+ */
+
+$panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
+$panmotors_posts   = array_filter(
+	$panmotors_page_id ? panmotors_rows( 'live_posts', $panmotors_page_id ) : array(),
+	static fn( $row ) => ! empty( $row['url'] ) && ( ! empty( $row['image'] ) || ! empty( $row['video'] ) )
+);
+
+if ( ! $panmotors_posts ) {
+	return;
+}
+
+$panmotors_eyebrow   = panmotors_field( 'live_eyebrow', $panmotors_page_id );
+$panmotors_title     = panmotors_field( 'live_title', $panmotors_page_id, __( 'Pan Motors Live', 'panmotors' ) );
+$panmotors_cta_label = panmotors_field( 'live_cta_label', $panmotors_page_id );
+$panmotors_insta     = panmotors_option( 'instagram_url' );
+?>
+<section id="live" class="pm-live pm-pad" aria-labelledby="live-title">
+	<div class="pm-section-head pm-live__head" data-rise>
+		<div>
+			<?php if ( $panmotors_eyebrow ) : ?>
+				<p class="pm-eyebrow"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
+			<?php endif; ?>
+			<h2 class="pm-title" id="live-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+		</div>
+		<?php if ( $panmotors_insta && $panmotors_cta_label ) : ?>
+			<a class="pm-pill" href="<?php echo esc_url( $panmotors_insta ); ?>" target="_blank" rel="noopener">
+				<?php echo esc_html( $panmotors_cta_label ); ?>
+				<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'panmotors' ); ?></span>
+			</a>
+		<?php endif; ?>
+	</div>
+
+	<div class="pm-live__grid">
+		<?php foreach ( $panmotors_posts as $panmotors_post ) : ?>
+			<?php
+			$panmotors_caption  = trim( (string) ( $panmotors_post['caption'] ?? '' ) );
+			$panmotors_likes    = trim( (string) ( $panmotors_post['likes'] ?? '' ) );
+			$panmotors_comments = trim( (string) ( $panmotors_post['comments'] ?? '' ) );
+			$panmotors_image    = (int) ( $panmotors_post['image'] ?? 0 );
+			$panmotors_video    = 'video' === ( $panmotors_post['type'] ?? '' ) && ! empty( $panmotors_post['video'] ) ? wp_get_attachment_url( (int) $panmotors_post['video'] ) : '';
+			$panmotors_label    = sprintf(
+				/* translators: %s: post caption. */
+				__( '%s, Instagram post (opens in a new tab)', 'panmotors' ),
+				$panmotors_caption ? $panmotors_caption : __( 'Pan Motors', 'panmotors' )
+			);
+			?>
+			<a class="pm-post" href="<?php echo esc_url( $panmotors_post['url'] ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $panmotors_label ); ?>" data-zoom>
+				<?php if ( $panmotors_video ) : ?>
+					<?php $panmotors_poster = $panmotors_image ? wp_get_attachment_image_url( $panmotors_image, 'pm-portrait' ) : ''; ?>
+					<video class="pm-post__media" muted loop playsinline preload="none" tabindex="-1" data-live-video data-src="<?php echo esc_url( $panmotors_video ); ?>"<?php echo $panmotors_poster ? ' poster="' . esc_url( $panmotors_poster ) . '"' : ''; ?>></video>
+				<?php elseif ( $panmotors_image ) : ?>
+					<?php
+					echo wp_get_attachment_image(
+						$panmotors_image,
+						'pm-portrait',
+						false,
+						array(
+							'class'   => 'pm-post__media',
+							'alt'     => '',
+							'sizes'   => '(max-width: 700px) calc(100vw - 40px), 363px',
+							'loading' => 'lazy',
+						)
+					);
+					?>
+				<?php endif; ?>
+				<span class="pm-post__shade" aria-hidden="true"></span>
+				<span class="pm-post__meta">
+					<?php if ( $panmotors_likes ) : ?>
+						<span><span aria-hidden="true">&#9829;</span> <?php echo esc_html( $panmotors_likes ); ?><span class="screen-reader-text"> <?php esc_html_e( 'likes', 'panmotors' ); ?></span></span>
+					<?php endif; ?>
+					<?php if ( $panmotors_comments ) : ?>
+						<span><span aria-hidden="true">&#9998;</span> <?php echo esc_html( $panmotors_comments ); ?><span class="screen-reader-text"> <?php esc_html_e( 'comments', 'panmotors' ); ?></span></span>
+					<?php endif; ?>
+					<?php if ( $panmotors_caption ) : ?>
+						<span class="pm-post__caption"><?php echo esc_html( $panmotors_caption ); ?></span>
+					<?php endif; ?>
+				</span>
+			</a>
+		<?php endforeach; ?>
+	</div>
+</section>
