@@ -13,6 +13,22 @@
 	font-family: var(--font-body);
 }
 
+/* The page title (menus, breadcrumb, browser tab): a small label above the blocks, not part of
+   the design. On inner pages the big H1 comes from the Page top block. */
+.editor-styles-wrapper .editor-post-title {
+	max-width: none;
+	margin: 0;
+	padding: 18px var(--pad-x);
+	border-bottom: 1px solid var(--line-dark);
+	font-family: var(--font-body);
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	opacity: .7;
+}
+
 /* pm/* blocks are full-bleed sections, as on the site. */
 .editor-styles-wrapper .is-root-container > .wp-block[data-type^="pm/"],
 .editor-styles-wrapper .wp-block[data-type="core/block"],
@@ -91,10 +107,4 @@
 	letter-spacing: .04em;
 	text-align: center;
 	opacity: .7;
-}
-
-/* Hidden blocks (Hide on the block toolbar) stay visible here, dimmed, so they can be found. */
-.editor-styles-wrapper .wp-block[data-type^="pm/"].is-hidden,
-.editor-styles-wrapper .wp-block[data-type^="pm/"][aria-hidden="true"] {
-	opacity: .35;
 }

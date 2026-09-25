@@ -131,7 +131,8 @@ function panmotors_cars_column( $column, $post_id ) {
 	} elseif ( 'pm_featured' === $column ) {
 		echo get_field( 'featured', $post_id ) ? '<span class="pm-admin-featured">' . esc_html__( 'Featured', 'panmotors' ) . '</span>' : '<span aria-hidden="true">—</span>';
 	} elseif ( 'pm_order' === $column ) {
-		echo esc_html( (string) get_post_field( 'menu_order', $post_id ) );
+		// The order only applies to the Featured Cars row.
+		echo get_field( 'featured', $post_id ) ? esc_html( (string) get_post_field( 'menu_order', $post_id ) ) : '<span aria-hidden="true">—</span>';
 	}
 }
 add_action( 'manage_pm_car_posts_custom_column', 'panmotors_cars_column', 10, 2 );

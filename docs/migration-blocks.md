@@ -1,6 +1,6 @@
 # Migration plan: Gutenberg + ACF Blocks (D11)
 
-Status: plan, 25 Sep 2026. No block code until approved. Architecture: [`blocks.md`](blocks.md). This file is the how and the order.
+Status: done, 26 Sep 2026 (plan approved 25 Sep). Outcome and deviations from the plan in §12. Architecture: [`blocks.md`](blocks.md). This file is the how and the order.
 
 Goal: every page is built from blocks, no page reads content from another page, and the homepage looks and behaves exactly as it does now (the current design match of `_design/index.html`).
 
@@ -181,3 +181,29 @@ Proof after steps 3, 5 and 6 (`dev/tests/diff.mjs` against the baseline):
 1. Restore the five pages from Trash now, only to take the baseline (§10 step 1)? Without it the "before" is only the design comparison, which is weaker.
 2. Car photo as an ACF image field (minimum size enforced) instead of the featured image. Recommended.
 3. The per-section "Show this section" switches go away: removing the block hides the section. OK?
+
+## 12. Outcome (26 Sep 2026)
+
+Decisions from the review: restore the five pages (done, owned by user 1, after a `dev/.cache/` DB backup); car photo as an ACF image field with the size enforced, Cars list with photo and Featured columns; hiding sections with WordPress's own **Hide** (block visibility, core since 6.9, present in 7.1.2) instead of a theme toggle.
+
+What differs from the plan above, and why:
+- **Rendering.** `front-page.php` and `page.php` print the blocks with `panmotors_the_blocks()` (parse and render each top-level block), not `the_content()`. Inside `the_content` WordPress leaves image attributes to `wp_filter_content_tags()`, which reorders them, and blank lines between blocks reach the HTML. Rendering outside it gives byte-identical section HTML, as the templates did. Core image blocks still get srcset through a `render_block` filter.
+- **theme.json and the front end.** Instead of dequeuing core styles, the front end keeps exactly what it had: core's classic-theme block styles are enqueued again (core drops them for themes with a `theme.json`), global styles are rebuilt the way core builds them for a classic theme without `theme.json` (no root alignment or block-gap rules), `spacing.blockGap` is `null`, and the enqueue order is core's.
+- **Hidden blocks** are skipped in `pre_render_block`, so a hidden section loads no JS.
+- **Inner pages** keep their content, moved into blocks (Page top, paragraphs, the section block, Call to action; Contact: Come And See and Questions). Values `detail`/`image` and `about_story` became plain paragraphs or were dropped until the About page is designed.
+- **Seed** refuses to run without `--user=1` or with uncommitted `acf-json`; pages that already have pm/* blocks are kept unless `PM_SEED_REBUILD=1`; block markup is saved with `wp_slash()` (otherwise `\n` in JSON attributes is lost).
+- **ACF 6.8 + PHP 8.5**: a field-less block (`pm/marquee`) made ACF read a null array key (deprecation notice). `render_block_data` gives it a placeholder data entry.
+- **Snapshots** start from a cleared, then fully warmed browser cache and keep the second of two full-page captures, so two runs of the same page match. The baseline was retaken this way from the pre-migration state (commit 279c9e6 in a worktree theme folder, DB backup), then the migrated site was restored.
+
+Diff, baseline vs migrated Home (`node dev/tests/diff.mjs before after`):
+
+| Check | Result |
+|---|---|
+| `<main>` HTML | identical (right after the seed it differed only by a `\r` in the hero title: the old value had been saved by a browser form with CRLF, the seed writes `\n`; once the block is saved from the editor it is CRLF again) |
+| `<head>` and footer assets (tags, order, inline CSS) | identical |
+| Full-page pixels, reduced motion, 1440 and 390 | 1440: 0 differing pixels. 390: 0 differing by more than 3/255; between 0 and about 1,100 pixels differ by 1–3/255 from run to run inside scaled photos (GPU resampling), as between two runs of the baseline itself |
+| Section tops and heights, 1440 / 1080 / 880 / 390 | all equal |
+| Keyboard (37 focus stops), reduced motion, reveal, LCP, hero preload, heading outline, JS modules | same |
+| Console, PHP log | clean |
+
+Editor check: see `editability.md` → How this was tested.

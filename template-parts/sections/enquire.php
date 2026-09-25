@@ -84,7 +84,7 @@ $panmotors_fields  = array(
 			<?php if ( $panmotors_form ) : ?>
 				<?php echo do_shortcode( $panmotors_form ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Form plugin output. ?>
 			<?php else : ?>
-				<?php if ( current_user_can( 'edit_theme_options' ) ) : ?>
+				<?php if ( current_user_can( 'manage_options' ) ) : ?>
 					<p class="pm-form__admin-note"><?php esc_html_e( 'Form plugin shortcode not set. Add it in Pan Motors settings → Technical. This preview form does not send.', 'panmotors' ); ?></p>
 				<?php endif; ?>
 				<form class="pm-form__static" action="#" method="post" aria-label="<?php esc_attr_e( 'Enquiry form (preview, not connected)', 'panmotors' ); ?>" onsubmit="return false">

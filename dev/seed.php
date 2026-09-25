@@ -988,5 +988,6 @@ update_option( 'permalink_structure', '/%postname%/' );
 flush_rewrite_rules( false );
 set_theme_mod( 'custom_logo', $pm_media['logo'] );
 update_option( 'panmotors_demo_content', gmdate( 'c' ), false );
+wp_get_theme()->delete_pattern_cache(); // Pick up new files in patterns/.
 
 WP_CLI::success( 'Demo content seeded.' );

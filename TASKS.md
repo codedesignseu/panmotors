@@ -45,17 +45,17 @@ Tick each task when it is done and checked in the browser.
 - [x] `reveal.js` (wired to each section as it is built)
 
 ## 4b. Blocks migration (D11, `docs/migration-blocks.md`)
-- [ ] Cause of the lost sections found and documented (migration-blocks §0)
-- [ ] DB backup, baseline snapshot of Home (HTML, head assets, screenshots 1440/390, section heights) via `dev/tests/snapshot.mjs`
-- [ ] Cars post type `pm_car` + Car field group + seeded cars
-- [ ] `inc/blocks.php`, `theme.json`, allowed blocks, editor CSS and JS; Home still identical
-- [ ] Blocks: `pm/hero`, `pm/marquee`, `pm/featured-cars`, `pm/values`, `pm/about`, `pm/latest-cars`, `pm/live`, `pm/showroom`, `pm/enquire`
-- [ ] Synced pattern "Our Values", "Homepage (full design)" pattern, hero lock on Home
-- [ ] Seed builds Home as block markup; `front-page.php` and `page.php` output `the_content()`
-- [ ] `dev/tests/diff.mjs`: Home identical to the baseline (HTML, head, pixels, heights, JS behaviour)
-- [ ] Old model removed: `templates/`, per-page field groups, `panmotors_page()` content lookups, section switches
-- [ ] Editor tests rewritten for blocks (test user deleted with `--reassign=1`), `editability.md` rewritten
-- [ ] `pm/faq`, `pm/page-hero`, `pm/cta-band`
+- [x] Cause of the lost sections found and documented (migration-blocks §0)
+- [x] DB backup, baseline snapshot of Home (HTML, head assets, screenshots 1440/390, section heights) via `dev/tests/snapshot.mjs`
+- [x] Cars post type `pm_car` + Car field group + seeded cars
+- [x] `inc/blocks.php`, `theme.json`, allowed blocks, editor CSS and JS; Home still identical
+- [x] Blocks: `pm/hero`, `pm/marquee`, `pm/featured-cars`, `pm/values`, `pm/about`, `pm/latest-cars`, `pm/live`, `pm/showroom`, `pm/enquire`
+- [x] Synced pattern "Our Values", "Homepage (full design)" pattern, hero lock on Home
+- [x] Seed builds Home as block markup; `front-page.php` and `page.php` print the blocks (`panmotors_the_blocks()`)
+- [x] `dev/tests/diff.mjs`: Home identical to the baseline (HTML, head, pixels, heights, JS behaviour)
+- [x] Old model removed: `templates/`, per-page field groups, `panmotors_page()` content lookups, section switches (core Hide instead), orphaned field data
+- [x] Editor tests rewritten for blocks (test user deleted with `--reassign=1`), `editability.md` rewritten
+- [x] `pm/faq`, `pm/page-hero`, `pm/cta-band` (placeholder look until the inner pages are designed)
 
 ## 5. SEO, GEO and extra pages
 - [ ] `inc/schema.php`: JSON-LD graph from options (AutoDealer, WebSite, WebPage, FAQPage)

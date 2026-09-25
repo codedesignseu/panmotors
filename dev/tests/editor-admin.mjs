@@ -28,20 +28,16 @@ export default async ({ page, sleep, shot }) => {
   const oh = await page.eval(`return document.documentElement.scrollHeight`);
   await page.size(1440, Math.min(oh, 1400));
   out.optionsShot = await shot('editor-options');
-  // Home edit screen.
+  // Home opens in the block editor (D11); editing itself is covered by editor-blocks.mjs.
   await page.size(1440, 900);
-  const front = await page.eval(`return 0`);
   await page.go('http://panmotors.local/wp-admin/post.php?post=6&action=edit');
-  await sleep(800);
-  out.homeTabs = await page.eval(`return [...document.querySelectorAll('#acf-group_pm_front_page .acf-tab-button')].map(a=>a.textContent.trim())`);
-  out.homeEditor = await page.eval(`return !!document.querySelector('#postdivrich, .block-editor')`);
-  out.homeLinks = await page.eval(`return [...document.querySelectorAll('#acf-group_pm_front_page .acf-field-message a')].map(a=>a.textContent.trim() + ' → ' + a.getAttribute('href').replace('http://panmotors.local/wp-admin/',''))`);
-  await page.eval(`document.querySelectorAll('.notice').forEach(n=>n.remove()); [...document.querySelectorAll('#acf-group_pm_front_page .acf-tab-button')].find(a=>a.textContent.trim()==='Top video').click(); document.getElementById('acf-group_pm_front_page').scrollIntoView(); scrollBy(0,-40); return 1`);
-  await sleep(400);
-  out.homeShot = await shot('editor-home');
-  // Featured tab for a second view.
-  await page.eval(`[...document.querySelectorAll('#acf-group_pm_front_page .acf-tab-button')].find(a=>a.textContent.trim()==='Pan Motors Live').click(); document.getElementById('acf-group_pm_front_page').scrollIntoView(); scrollBy(0,-40); return 1`);
-  await sleep(400);
-  out.homeLiveShot = await shot('editor-home-live');
+  await sleep(4000);
+  out.homeBlockEditor = await page.eval(`return !!document.querySelector('.block-editor, .edit-post-layout, .editor-editor-interface')`);
+  // Cars and the synced patterns list are reachable.
+  for (const p of ['edit.php?post_type=pm_car', 'post-new.php?post_type=pm_car', 'edit.php?post_type=wp_block']) {
+    await page.go(A + p);
+    out.reachable ??= {};
+    out.reachable[p] = await page.eval(`return location.pathname.replace('/wp-admin/','') + location.search + ' | ' + document.title.slice(0, 40)`);
+  }
   return out;
 };

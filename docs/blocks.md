@@ -57,7 +57,7 @@ Use WordPress synced patterns. The seed creates a synced pattern "Our Values" co
 - `theme.json` (classic theme, settings only): no custom colours, gradients, font sizes, spacing or typography controls, no layout controls, no font library, no Openverse, no block directory. The design stays intact whatever the client does.
 - Allowed blocks: all `pm/*`, the core text blocks listed above, and synced patterns.
 - Block patterns for quick starts: "Homepage (full design)" and one pattern per inner page once designed.
-- Lock the hero block on Home against removal and moving. Other blocks stay free (client can hide a section by removing it, or reorder).
+- Lock the hero block on Home against removal and moving. Other blocks stay free: the client reorders them, removes them, or hides one without losing its content with the block toolbar's **Hide** (core since WordPress 6.9; a hidden block prints nothing and loads no script).
 - Every block has a clear title, icon, one-line description and an example preview in the inserter.
 - Editor role: unchanged from the editability session (edits pages, cars, patterns, options except Technical, menus, media, logo).
 

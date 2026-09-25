@@ -2,9 +2,9 @@
 /**
  * wp-admin for the client, who logs in as an Editor.
  *
- * Editors edit the pages, the Pan Motors settings (not the Technical tab), menus, the logo
- * (Customizer → Site Identity) and media. They cannot reach theme files, plugins or users,
- * and the unused Posts and Comments screens are hidden.
+ * Editors edit the pages (block editor), Cars, the synced patterns, the Pan Motors settings (not
+ * the Technical tab), menus, the logo (Customizer → Site Identity) and media. They cannot reach
+ * theme files, plugins, users or the Site Editor, and the unused Posts and Comments screens are hidden.
  *
  * @package panmotors
  */
@@ -48,8 +48,8 @@ function panmotors_editor_role_caps_remove() {
 add_action( 'switch_theme', 'panmotors_editor_role_caps_remove' );
 
 /**
- * Hide Posts and Comments (the site has no blog), and the Themes, Patterns and Fonts screens
- * that come with menu access, for the client.
+ * Hide Posts and Comments (the site has no blog), and the Themes, Site Editor and Fonts screens
+ * that come with menu access, for the client. Synced patterns stay reachable from the editor.
  */
 function panmotors_client_menus() {
 	if ( ! panmotors_is_client() ) {
@@ -60,6 +60,7 @@ function panmotors_client_menus() {
 	remove_submenu_page( 'themes.php', 'themes.php' );
 	remove_submenu_page( 'themes.php', 'widgets.php' );
 	remove_submenu_page( 'themes.php', 'site-editor.php?p=/pattern' );
+	remove_submenu_page( 'themes.php', 'site-editor.php' ); // "Design", added once the theme has a theme.json.
 	remove_submenu_page( 'themes.php', 'font-library.php' );
 }
 add_action( 'admin_menu', 'panmotors_client_menus', 999 );
