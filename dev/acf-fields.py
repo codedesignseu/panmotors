@@ -163,6 +163,9 @@ def group(key, title, fields, location, order=0, desc='', hide=None):
         'active': True,
         'description': desc,
         'show_in_rest': 0,
+        'display_title': '',
+        'allow_ai_access': False,
+        'ai_description': '',
         'modified': NOW,
     }
 
@@ -465,7 +468,7 @@ if __name__ == '__main__':
     for g in GROUPS:
         walk(g['fields'])
         with open(os.path.join(OUT, g['key'] + '.json'), 'w') as fh:
-            json.dump(g, fh, indent=4, ensure_ascii=False)
-            fh.write('\n')
+            # ACF's saved format: slashes escaped, so a seed run does not rewrite the files.
+            fh.write(json.dumps(g, indent=4, ensure_ascii=False).replace('/', '\\/') + '\n')
     dupes = {k for k in keys if keys.count(k) > 1}
     print('groups', len(GROUPS), 'fields', len(keys), 'dupes', dupes or 'none')

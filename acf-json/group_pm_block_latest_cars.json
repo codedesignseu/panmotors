@@ -70,7 +70,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "pm/latest-cars"
+                "value": "pm\/latest-cars"
             }
         ]
     ],
@@ -83,5 +83,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790371793
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790371872
 }

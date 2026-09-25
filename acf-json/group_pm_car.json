@@ -222,5 +222,8 @@
     "active": true,
     "description": "Showcase only, no prices. The name in the list is set from marque and model.",
     "show_in_rest": 0,
-    "modified": 1790371793
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790371872
 }

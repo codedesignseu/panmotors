@@ -140,7 +140,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "pm/values"
+                "value": "pm\/values"
             }
         ]
     ],
@@ -153,5 +153,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790371793
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790371872
 }

@@ -134,7 +134,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "pm/featured-cars"
+                "value": "pm\/featured-cars"
             }
         ]
     ],
@@ -147,5 +147,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790371793
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790371872
 }
