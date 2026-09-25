@@ -1,22 +1,23 @@
 <?php
 /**
- * Come And See (theme-map 4.10). Heading and intro from the Contact page, contact details and
- * the form shortcode from the options, preview-form texts from the Home page.
+ * Come And See (theme-map 4.10). Heading, intro and preview-form texts from the block, contact
+ * details and the form shortcode from the options.
  *
  * The form plugin renders inside .pm-form and handles submissions (D4). Without a shortcode the
  * design's static form is shown for layout only: its submit button is disabled, so it never
  * pretends to send, and admins see a note.
  *
- * Args:
- * - page_id (int)    Contact page.
- * - context (string) 'home' (built) or 'page' (after the Contact page is designed).
+ * Args (from blocks/enquire/render.php):
+ * - title  (string) Heading.
+ * - intro  (string) Intro.
+ * - form   (array)  Preview form texts per field (name, email, phone, message): label, hint.
+ * - button (string) Preview form button text.
  *
  * @package panmotors
  */
 
-$panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
-$panmotors_title   = panmotors_field( 'enquire_title', $panmotors_page_id );
-$panmotors_intro   = panmotors_field( 'enquire_intro', $panmotors_page_id );
+$panmotors_title   = (string) ( $args['title'] ?? '' );
+$panmotors_intro   = (string) ( $args['intro'] ?? '' );
 $panmotors_address = implode(
 	', ',
 	array_filter(
@@ -33,7 +34,8 @@ $panmotors_phones  = array_filter( array_map( static fn( $row ) => trim( (string
 $panmotors_email   = panmotors_option( 'email' );
 $panmotors_site    = wp_parse_url( home_url( '/' ), PHP_URL_HOST );
 $panmotors_form    = trim( (string) panmotors_option( 'enquire_form_shortcode', '' ) );
-$panmotors_front   = (int) get_option( 'page_on_front' );
+$panmotors_texts   = (array) ( $args['form'] ?? array() );
+$panmotors_button  = (string) ( $args['button'] ?? '' );
 $panmotors_fields  = array(
 	'name'    => array( 'text', 'name' ),
 	'email'   => array( 'email', 'email' ),
@@ -88,8 +90,8 @@ $panmotors_fields  = array(
 				<form class="pm-form__static" action="#" method="post" aria-label="<?php esc_attr_e( 'Enquiry form (preview, not connected)', 'panmotors' ); ?>" onsubmit="return false">
 					<?php foreach ( $panmotors_fields as $panmotors_key => list( $panmotors_type, $panmotors_auto ) ) : ?>
 						<?php
-						$panmotors_label = panmotors_field( 'form_label_' . $panmotors_key, $panmotors_front );
-						$panmotors_hint  = (string) panmotors_field( 'form_hint_' . $panmotors_key, $panmotors_front, '' );
+						$panmotors_label = (string) ( $panmotors_texts[ $panmotors_key ]['label'] ?? '' );
+						$panmotors_hint  = (string) ( $panmotors_texts[ $panmotors_key ]['hint'] ?? '' );
 						$panmotors_fid   = 'pm-enquire-' . $panmotors_key;
 						if ( ! $panmotors_label ) {
 							continue;
@@ -104,8 +106,8 @@ $panmotors_fields  = array(
 							<?php endif; ?>
 						</p>
 					<?php endforeach; ?>
-					<?php if ( panmotors_field( 'form_button', $panmotors_front ) ) : ?>
-						<button type="submit" disabled><?php echo esc_html( panmotors_field( 'form_button', $panmotors_front ) ); ?></button>
+					<?php if ( $panmotors_button ) : ?>
+						<button type="submit" disabled><?php echo esc_html( $panmotors_button ); ?></button>
 					<?php endif; ?>
 				</form>
 			<?php endif; ?>

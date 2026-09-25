@@ -1,0 +1,194 @@
+{
+    "key": "group_pm_block_about",
+    "title": "Block: About Pan Motors",
+    "fields": [
+        {
+            "key": "field_pm_about_image",
+            "label": "Photo",
+            "name": "about_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Portrait (4:5), at least 1080 × 1350px. JPG or WebP, sRGB colour.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1080,
+            "min_height": 1350,
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_about_eyebrow",
+            "label": "Small red line",
+            "name": "about_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_about_title",
+            "label": "Heading",
+            "name": "about_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "About Pan Motors",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_block_about",
+            "label": "Paragraph",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The paragraph is the one-sentence description in {settings} → Business.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_about_stats",
+            "label": "Three highlights",
+            "name": "about_stats",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Shown in a row under the paragraph. Three fit best.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 4,
+            "collapsed": "",
+            "button_label": "Add highlight",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pm_stat_value",
+                    "label": "Word",
+                    "name": "value",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 12,
+                    "placeholder": "Sales",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_about_stats"
+                },
+                {
+                    "key": "field_pm_stat_label",
+                    "label": "Line under it",
+                    "name": "label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "60",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 28,
+                    "placeholder": "Luxury and performance",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_about_stats"
+                }
+            ]
+        },
+        {
+            "key": "field_pm_about_fade",
+            "label": "Scroll colour fade",
+            "name": "about_fade",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "The background turns from black to white while scrolling past.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "On",
+            "ui_off_text": "Off"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/about"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

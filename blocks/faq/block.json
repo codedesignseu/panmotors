@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pm/faq",
+	"title": "Questions",
+	"category": "panmotors",
+	"icon": "editor-help",
+	"description": "Questions and answers that open on click. Google reads these too.",
+	"textdomain": "panmotors",
+	"supports": {
+		"align": false,
+		"anchor": false,
+		"customClassName": false,
+		"className": false,
+		"html": false,
+		"mode": false,
+		"multiple": true,
+		"renaming": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3
+	}
+}

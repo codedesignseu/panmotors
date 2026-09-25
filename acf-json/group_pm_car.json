@@ -1,0 +1,226 @@
+{
+    "key": "group_pm_car",
+    "title": "Car",
+    "fields": [
+        {
+            "key": "field_pm_car_image",
+            "label": "Photo",
+            "name": "image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Landscape, at least 1960 × 1102px. JPG or WebP, sRGB colour. Keep the car in the centre: Featured Cars crops it tall, Latest Cars shows it 16:9.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1960,
+            "min_height": 1102,
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_car_marque",
+            "label": "Marque",
+            "name": "marque",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "placeholder": "Porsche",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_model",
+            "label": "Model",
+            "name": "model_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 28,
+            "placeholder": "911 Carrera",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_ref",
+            "label": "Reference",
+            "name": "ref_no",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 12,
+            "placeholder": "No. 04",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_spec",
+            "label": "Detail",
+            "name": "spec",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 22,
+            "placeholder": "Flat six",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_note",
+            "label": "Note",
+            "name": "note",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 26,
+            "placeholder": "Kept in slate grey",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_link",
+            "label": "Link",
+            "name": "link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Optional. Leave empty: the Featured Cars tile is a showcase only.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_pm_slide_caption",
+            "label": "Slider caption",
+            "name": "caption",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Under the photo in Latest Cars.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "placeholder": "Bay four, morning light",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_slide_place",
+            "label": "Place",
+            "name": "place",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Right of the caption in Latest Cars.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Paphos",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_featured",
+            "label": "Featured",
+            "name": "featured",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Shown in Featured Cars (in the order set under Page attributes → Order). Latest Cars shows the newest cars by date.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Yes",
+            "ui_off_text": "No"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "pm_car"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Showcase only, no prices. The name in the list is set from marque and model.",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

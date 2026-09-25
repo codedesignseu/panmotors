@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pm/live",
+	"title": "Pan Motors Live",
+	"category": "panmotors",
+	"icon": "instagram",
+	"description": "A grid of Instagram posts, videos and photos, entered by hand.",
+	"textdomain": "panmotors",
+	"supports": {
+		"align": false,
+		"anchor": false,
+		"customClassName": false,
+		"className": false,
+		"html": false,
+		"mode": false,
+		"multiple": true,
+		"renaming": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3
+	}
+}

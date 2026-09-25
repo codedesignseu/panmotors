@@ -5,7 +5,7 @@
  * @package panmotors
  */
 
-$panmotors_contact_id  = panmotors_page( 'contact' );
+$panmotors_contact_id  = panmotors_contact_page();
 $panmotors_contact_url = $panmotors_contact_id ? get_permalink( $panmotors_contact_id ) : home_url( '/' );
 $panmotors_contact_cur = $panmotors_contact_id && is_page( $panmotors_contact_id ) ? ' aria-current="page"' : '';
 $panmotors_contact_txt = panmotors_option( 'contact_button_label', '' );

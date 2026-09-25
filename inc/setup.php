@@ -82,7 +82,7 @@ function panmotors_meta_description() {
 		return;
 	}
 
-	$text = is_singular() && ! is_front_page() ? panmotors_field( 'page_intro', get_queried_object_id() ) : '';
+	$text = is_singular() && ! is_front_page() ? panmotors_block_field( panmotors_find_block( get_queried_object_id(), 'pm/page-hero' ), 'page_intro' ) : '';
 	$text = $text ? $text : panmotors_option( 'description' );
 
 	if ( $text ) {

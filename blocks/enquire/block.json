@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pm/enquire",
+	"title": "Come And See",
+	"category": "panmotors",
+	"icon": "email",
+	"description": "Contact card with address, phone numbers, email and the enquiry form.",
+	"textdomain": "panmotors",
+	"supports": {
+		"align": false,
+		"anchor": false,
+		"customClassName": false,
+		"className": false,
+		"html": false,
+		"mode": false,
+		"multiple": false,
+		"renaming": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3
+	}
+}

@@ -1,0 +1,269 @@
+{
+    "key": "group_pm_block_live",
+    "title": "Block: Pan Motors Live",
+    "fields": [
+        {
+            "key": "field_pm_live_eyebrow",
+            "label": "Small red line",
+            "name": "live_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Social",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_live_title",
+            "label": "Heading",
+            "name": "live_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Pan Motors Live",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_live_cta_label",
+            "label": "Instagram button text",
+            "name": "live_cta_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Opens your Instagram (link in {settings} → Social).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Follow the floor",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_live_posts",
+            "label": "Posts",
+            "name": "live_posts",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entered by hand. Six posts fill the grid. Drag to reorder.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 9,
+            "collapsed": "field_pm_post_caption",
+            "button_label": "Add post",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pm_post_type",
+                    "label": "Type",
+                    "name": "type",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "video": "Video",
+                        "photo": "Photo"
+                    },
+                    "default_value": "video",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "layout": "horizontal",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_video",
+                    "label": "Video",
+                    "name": "video",
+                    "aria-label": "",
+                    "type": "file",
+                    "instructions": "Vertical MP4 (9:16), under 8 MB. Plays silently while on screen.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_pm_post_type",
+                                "operator": "==",
+                                "value": "video"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": 8,
+                    "mime_types": "mp4",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_image",
+                    "label": "Photo",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "The photo, or the still shown before a video plays. Portrait (4:5), at least 1080px wide. JPG or WebP, sRGB colour.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": 1080,
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": 8,
+                    "mime_types": "jpg, jpeg, png, webp, avif",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_url",
+                    "label": "Instagram link",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "The post this tile opens.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "https://",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_caption",
+                    "label": "Caption",
+                    "name": "caption",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 18,
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_likes",
+                    "label": "Likes",
+                    "name": "likes",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Optional, e.g. 24K.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 6,
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_live_posts"
+                },
+                {
+                    "key": "field_pm_post_comments",
+                    "label": "Comments",
+                    "name": "comments",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Optional.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 6,
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_live_posts"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/live"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

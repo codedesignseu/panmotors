@@ -3,7 +3,7 @@
  * Car tile: showcase only (D1). No link unless the optional link field is set.
  *
  * Args:
- * - car (array) One featured_cars row: image, marque, model_name, ref_no, spec, note, link.
+ * - car (array) One car from panmotors_cars(): image, marque, model_name, ref_no, spec, note, link.
  *
  * @package panmotors
  */

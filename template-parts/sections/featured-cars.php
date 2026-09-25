@@ -1,29 +1,23 @@
 <?php
 /**
- * Featured Cars section (theme-map 4.4). Content from the Featured Cars page.
+ * Featured Cars section (theme-map 4.4). Cars from the Cars post type (D11).
  *
- * Args:
- * - page_id (int)    Featured Cars page.
- * - context (string) 'home' (built) or 'page' (after the inner page is designed).
- * - limit   (int)    Max tiles. Home shows 4.
+ * Args (from blocks/featured-cars/render.php):
+ * - title (string)  Heading.
+ * - intro (string)  Short intro.
+ * - cars  (array[]) Rows from panmotors_cars(), in display order.
  *
  * @package panmotors
  */
 
-$panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
-$panmotors_limit   = (int) ( $args['limit'] ?? 0 );
-$panmotors_cars    = $panmotors_page_id ? panmotors_rows( 'featured_cars', $panmotors_page_id ) : array();
-
-if ( $panmotors_limit ) {
-	$panmotors_cars = array_slice( $panmotors_cars, 0, $panmotors_limit );
-}
+$panmotors_cars = (array) ( $args['cars'] ?? array() );
 
 if ( ! $panmotors_cars ) {
 	return;
 }
 
-$panmotors_title = panmotors_field( 'home_featured_title', (int) get_option( 'page_on_front' ), get_the_title( $panmotors_page_id ) );
-$panmotors_intro = panmotors_field( 'page_intro', $panmotors_page_id );
+$panmotors_title = (string) ( $args['title'] ?? '' );
+$panmotors_intro = (string) ( $args['intro'] ?? '' );
 ?>
 <section id="floor" class="pm-featured pm-pad" aria-labelledby="featured-title">
 	<div class="pm-section-head" data-rise>

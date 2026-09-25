@@ -1,27 +1,25 @@
 <?php
 /**
- * Showroom section (theme-map 4.9). Photos from the Showroom page, hours from the options.
+ * Showroom section (theme-map 4.9). Photos from the block, hours from the options.
  *
  * Every photo is in the HTML, stacked; showroom-slider.js crossfades by toggling .is-active
  * on the photo and on its blurred background copy. Captions come from the media library.
  *
- * Args:
- * - page_id (int)    Showroom page.
- * - context (string) 'home' (built) or 'page' (after the Showroom page is designed).
+ * Args (from blocks/showroom/render.php): eyebrow, title, intro, photos (attachment IDs),
+ * hours (bool, show the opening hours).
  *
  * @package panmotors
  */
 
-$panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
-$panmotors_photos  = array_values( array_filter( array_map( 'intval', $panmotors_page_id ? panmotors_rows( 'showroom_photos', $panmotors_page_id ) : array() ) ) );
+$panmotors_photos = array_values( array_filter( array_map( 'intval', (array) ( $args['photos'] ?? array() ) ) ) );
 
 if ( ! $panmotors_photos ) {
 	return;
 }
 
-$panmotors_eyebrow = panmotors_field( 'page_eyebrow', $panmotors_page_id );
-$panmotors_title   = panmotors_field( 'home_showroom_title', (int) get_option( 'page_on_front' ), get_the_title( $panmotors_page_id ) );
-$panmotors_intro   = panmotors_field( 'page_intro', $panmotors_page_id );
+$panmotors_eyebrow = (string) ( $args['eyebrow'] ?? '' );
+$panmotors_title   = (string) ( $args['title'] ?? '' );
+$panmotors_intro   = (string) ( $args['intro'] ?? '' );
 $panmotors_total   = count( $panmotors_photos );
 $panmotors_multi   = $panmotors_total > 1;
 $panmotors_first   = (string) wp_get_attachment_caption( $panmotors_photos[0] );
@@ -120,6 +118,10 @@ $panmotors_arrow = static function ( $dir, $class ) {
 			?>
 		</div>
 
-		<?php get_template_part( 'template-parts/sections/hours' ); ?>
+		<?php
+		if ( ! empty( $args['hours'] ) ) {
+			get_template_part( 'template-parts/sections/hours' );
+		}
+		?>
 	</div>
 </section>

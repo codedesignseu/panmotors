@@ -1,33 +1,29 @@
 <?php
 /**
- * About section (theme-map 4.6). Image and stats from the About page, paragraph from the options.
+ * About section (theme-map 4.6). Photo, heading and stats from the block, paragraph from the options.
  *
- * On home the paragraph is the one-sentence description only (the longer story is for the
- * About page). The background fades ink → paper while scrolling (heritage-fade.js).
+ * The paragraph is the one-sentence description. With the fade on, the background turns
+ * ink → paper while scrolling (heritage-fade.js).
  *
- * Args:
- * - page_id (int)    About page.
- * - context (string) 'home' (built) or 'page' (after the About page is designed).
+ * Args (from blocks/about/render.php): image, eyebrow, title, text, stats (rows: value, label), fade.
  *
  * @package panmotors
  */
 
-$panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
-
-if ( ! $panmotors_page_id ) {
-	return;
-}
-
-$panmotors_image   = (int) panmotors_field( 'about_image', $panmotors_page_id, 0 );
-$panmotors_eyebrow = panmotors_field( 'page_eyebrow', $panmotors_page_id );
-$panmotors_title   = panmotors_field( 'home_about_title', (int) get_option( 'page_on_front' ), get_the_title( $panmotors_page_id ) );
-$panmotors_text    = panmotors_option( 'description' );
+$panmotors_image   = (int) ( $args['image'] ?? 0 );
+$panmotors_eyebrow = (string) ( $args['eyebrow'] ?? '' );
+$panmotors_title   = (string) ( $args['title'] ?? '' );
+$panmotors_text    = (string) ( $args['text'] ?? '' );
 $panmotors_stats   = array_filter(
-	panmotors_rows( 'about_stats', $panmotors_page_id ),
+	(array) ( $args['stats'] ?? array() ),
 	static fn( $row ) => '' !== trim( (string) ( $row['value'] ?? '' ) )
 );
+
+if ( ! $panmotors_title && ! $panmotors_image ) {
+	return;
+}
 ?>
-<section id="heritage" class="pm-about pm-pad pm-pad-y" aria-labelledby="about-title" data-heritage-fade>
+<section id="heritage" class="pm-about pm-pad pm-pad-y" aria-labelledby="about-title"<?php echo ! empty( $args['fade'] ) ? ' data-heritage-fade' : ''; ?>>
 	<div class="pm-about__grid">
 		<?php if ( $panmotors_image ) : ?>
 			<div class="pm-media pm-about__media" data-rise-l data-zoom>

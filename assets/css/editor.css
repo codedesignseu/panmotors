@@ -1,0 +1,100 @@
+/*
+ * Block editor canvas (D11). Loaded with main.css inside the editor iframe only
+ * (inc/blocks.php → enqueue_block_assets). The front end never loads this file.
+ *
+ * Blocks preview with the real markup and main.css. Here: pm/* blocks run full width, the
+ * core text blocks sit in a readable column, and motion is still (no JS modules run here).
+ */
+
+/* Canvas: the site's ink background and body type. */
+.editor-styles-wrapper {
+	background: var(--ink);
+	color: var(--paper);
+	font-family: var(--font-body);
+}
+
+/* pm/* blocks are full-bleed sections, as on the site. */
+.editor-styles-wrapper .is-root-container > .wp-block[data-type^="pm/"],
+.editor-styles-wrapper .wp-block[data-type="core/block"],
+.editor-styles-wrapper .wp-block[data-type="core/block"] .wp-block[data-type^="pm/"] {
+	max-width: none;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.editor-styles-wrapper .is-root-container {
+	padding: 0;
+}
+
+/* Core text blocks: a readable column like .pm-blocks on the site. */
+.editor-styles-wrapper .is-root-container > .wp-block:not([data-type^="pm/"], [data-type="core/block"]) {
+	max-width: 72ch;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: var(--pad-x);
+	padding-left: var(--pad-x);
+	line-height: 1.8;
+}
+
+/* Hero: steady height in the canvas. */
+.editor-styles-wrapper .pm-hero {
+	height: min(100vh, 900px);
+	min-height: 560px;
+}
+
+/* No entrance animations, reveals or scroll fades: content shows as it settles on the site. */
+.editor-styles-wrapper [data-hero-in],
+.editor-styles-wrapper [data-rise],
+.editor-styles-wrapper [data-rise-l] {
+	animation: none !important;
+	opacity: 1 !important;
+	transform: none !important;
+	filter: none !important;
+}
+
+/* Marquee holds still. */
+.editor-styles-wrapper .pm-marquee__track {
+	animation-play-state: paused;
+}
+
+/* About: the dark state (the scroll fade runs on the site). */
+.editor-styles-wrapper .pm-about {
+	--fade: 0;
+	--tfade: 0;
+}
+
+/* Sliders show their first slide; the track can still be scrolled sideways. */
+.editor-styles-wrapper .pm-latest__viewport {
+	overflow-x: auto;
+}
+
+.editor-styles-wrapper .pm-latest button,
+.editor-styles-wrapper .pm-showroom button {
+	pointer-events: none;
+}
+
+/* Links in a preview are not followed; clicks select the block. */
+.editor-styles-wrapper .wp-block[data-type^="pm/"] a {
+	cursor: default;
+}
+
+/* An empty block: a visible, selectable placeholder. */
+.pm-block-empty {
+	display: grid;
+	place-items: center;
+	min-height: 160px;
+	margin: 24px var(--pad-x);
+	padding: 24px;
+	border: 1px dashed var(--line-dark);
+	border-radius: var(--r);
+	font-size: 13px;
+	letter-spacing: .04em;
+	text-align: center;
+	opacity: .7;
+}
+
+/* Hidden blocks (Hide on the block toolbar) stay visible here, dimmed, so they can be found. */
+.editor-styles-wrapper .wp-block[data-type^="pm/"].is-hidden,
+.editor-styles-wrapper .wp-block[data-type^="pm/"][aria-hidden="true"] {
+	opacity: .35;
+}

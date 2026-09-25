@@ -2,16 +2,22 @@
 /**
  * Inner page hero: breadcrumb, eyebrow, H1 (the page title), intro, optional background image.
  *
+ * Used by the pm/page-hero block, and by page.php (title only) on pages without that block.
+ *
  * Args:
- * - page_id (int) Page to read. Defaults to the current post.
+ * - page_id (int)    Page whose title is the H1. Defaults to the current post.
+ * - eyebrow (string) Small red line.
+ * - intro   (string) Short intro.
+ * - image   (int)    Background image attachment ID.
  *
  * @package panmotors
  */
 
-$panmotors_id       = (int) ( $args['page_id'] ?? get_the_ID() );
-$panmotors_image_id = (int) panmotors_field( 'page_hero_image', $panmotors_id, 0 );
-$panmotors_eyebrow  = panmotors_field( 'page_eyebrow', $panmotors_id );
-$panmotors_intro    = panmotors_field( 'page_intro', $panmotors_id );
+$panmotors_id       = (int) ( $args['page_id'] ?? 0 );
+$panmotors_id       = $panmotors_id ? $panmotors_id : (int) get_the_ID();
+$panmotors_image_id = (int) ( $args['image'] ?? 0 );
+$panmotors_eyebrow  = (string) ( $args['eyebrow'] ?? '' );
+$panmotors_intro    = (string) ( $args['intro'] ?? '' );
 
 // Breadcrumb: Home, then any parent pages, then this page.
 $panmotors_crumbs = array(

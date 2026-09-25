@@ -6,6 +6,8 @@
  * is hidden from assistive tech. Each copy holds at least six names so short lists
  * still fill the width.
  *
+ * Args: none (blocks/marquee/render.php).
+ *
  * @package panmotors
  */
 

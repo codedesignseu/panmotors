@@ -1,0 +1,87 @@
+{
+    "key": "group_pm_block_latest_cars",
+    "title": "Block: Latest Cars",
+    "fields": [
+        {
+            "key": "field_pm_latest_eyebrow",
+            "label": "Small red line",
+            "name": "latest_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_latest_title",
+            "label": "Heading",
+            "name": "latest_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Latest Cars",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_latest_limit",
+            "label": "How many",
+            "name": "latest_limit",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "The newest cars by date, from {cars}.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "min": 1,
+            "max": 12,
+            "default_value": 6,
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/latest-cars"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

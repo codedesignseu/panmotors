@@ -5,18 +5,20 @@
  * The poster is a real <img> (the LCP element, preloaded in <head>). The video sits on top
  * and fades in once it plays. hero-video.js starts playback after the load event, so reduced-motion
  * and no-JS visitors get the poster only. preload="none": the <img> poster covers the wait, and the
- * video download never competes with the first paint.
+ * video download never competes with the first paint. In the editor preview there is no video.
+ *
+ * Args (from blocks/hero/render.php): eyebrow, title, poster (attachment ID), video_url,
+ * cta_label, cta_link, preview.
  *
  * @package panmotors
  */
 
-$panmotors_eyebrow   = panmotors_field( 'hero_eyebrow' );
-$panmotors_title     = panmotors_field( 'hero_title' );
-$panmotors_poster_id = (int) panmotors_field( 'hero_poster', false, 0 );
-$panmotors_video_id  = (int) panmotors_field( 'hero_video', false, 0 );
-$panmotors_video_url = $panmotors_video_id ? wp_get_attachment_url( $panmotors_video_id ) : '';
-$panmotors_cta_label = panmotors_field( 'hero_cta_label' );
-$panmotors_cta_link  = panmotors_field( 'hero_cta_link', false, panmotors_page_url( 'featured' ) );
+$panmotors_eyebrow   = (string) ( $args['eyebrow'] ?? '' );
+$panmotors_title     = (string) ( $args['title'] ?? '' );
+$panmotors_poster_id = (int) ( $args['poster'] ?? 0 );
+$panmotors_video_url = empty( $args['preview'] ) ? (string) ( $args['video_url'] ?? '' ) : '';
+$panmotors_cta_label = (string) ( $args['cta_label'] ?? '' );
+$panmotors_cta_link  = (string) ( $args['cta_link'] ?? '' );
 
 if ( ! $panmotors_title && ! $panmotors_eyebrow ) {
 	return;

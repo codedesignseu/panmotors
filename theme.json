@@ -1,0 +1,95 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": false,
+		"useRootPaddingAwareAlignments": false,
+		"background": {
+			"backgroundImage": false,
+			"backgroundSize": false
+		},
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"color": {
+			"background": false,
+			"custom": false,
+			"customDuotone": false,
+			"customGradient": false,
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"duotone": [],
+			"gradients": [],
+			"link": false,
+			"palette": [],
+			"text": false,
+			"button": false,
+			"caption": false,
+			"heading": false
+		},
+		"dimensions": {
+			"aspectRatio": false,
+			"defaultAspectRatios": false,
+			"minHeight": false
+		},
+		"layout": {
+			"allowEditing": false,
+			"allowCustomContentAndWideSize": false
+		},
+		"lightbox": {
+			"enabled": false,
+			"allowEditing": false
+		},
+		"position": {
+			"fixed": false,
+			"sticky": false
+		},
+		"shadow": {
+			"defaultPresets": false,
+			"presets": []
+		},
+		"spacing": {
+			"blockGap": false,
+			"customSpacingSize": false,
+			"defaultSpacingSizes": false,
+			"margin": false,
+			"padding": false,
+			"spacingSizes": [],
+			"units": []
+		},
+		"typography": {
+			"customFontSize": false,
+			"defaultFontSizes": false,
+			"dropCap": false,
+			"fluid": false,
+			"fontFamilies": [],
+			"fontSizes": [],
+			"fontStyle": false,
+			"fontWeight": false,
+			"letterSpacing": false,
+			"lineHeight": false,
+			"textAlign": false,
+			"textColumns": false,
+			"textDecoration": false,
+			"textTransform": false,
+			"writingMode": false
+		},
+		"blocks": {
+			"core/button": {
+				"border": {
+					"radius": false
+				}
+			},
+			"core/image": {
+				"lightbox": {
+					"enabled": false,
+					"allowEditing": false
+				}
+			}
+		}
+	}
+}

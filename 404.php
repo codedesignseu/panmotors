@@ -31,8 +31,8 @@ $panmotors_contact = panmotors_option( 'notfound_contact_label' );
 				<?php echo esc_html( $panmotors_home ); ?> <span aria-hidden="true">&rarr;</span>
 			</a>
 		<?php endif; ?>
-		<?php if ( $panmotors_contact && panmotors_page_url( 'contact' ) ) : ?>
-			<a class="pm-pill" href="<?php echo esc_url( panmotors_page_url( 'contact' ) ); ?>"><?php echo esc_html( $panmotors_contact ); ?></a>
+		<?php if ( $panmotors_contact && panmotors_contact_page() ) : ?>
+			<a class="pm-pill" href="<?php echo esc_url( get_permalink( panmotors_contact_page() ) ); ?>"><?php echo esc_html( $panmotors_contact ); ?></a>
 		<?php endif; ?>
 	</div>
 </div>

@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pm/values",
+	"title": "Our Values",
+	"category": "panmotors",
+	"icon": "heart",
+	"description": "Three cards with a short label, title and text.",
+	"textdomain": "panmotors",
+	"supports": {
+		"align": false,
+		"anchor": false,
+		"customClassName": false,
+		"className": false,
+		"html": false,
+		"mode": false,
+		"multiple": true,
+		"renaming": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3
+	}
+}

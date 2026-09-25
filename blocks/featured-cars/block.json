@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pm/featured-cars",
+	"title": "Featured Cars",
+	"category": "panmotors",
+	"icon": "car",
+	"description": "A row of car tiles: the cars marked Featured, or cars you pick.",
+	"textdomain": "panmotors",
+	"supports": {
+		"align": false,
+		"anchor": false,
+		"customClassName": false,
+		"className": false,
+		"html": false,
+		"mode": false,
+		"multiple": true,
+		"renaming": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3
+	}
+}

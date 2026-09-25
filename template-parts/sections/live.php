@@ -5,16 +5,16 @@
  * Posts are entered by hand (no Instagram API). Each tile's link name is its visible stats
  * and caption plus hidden context ("Instagram post:", "opens in a new tab"). Video tiles load their src when they near the
  * viewport and play only while 35% visible (live-videos.js). Reduced motion: poster only.
+ * Editor preview: the still photo instead of the video.
  *
- * Args:
- * - page_id (int) The page holding the live fields (the front page).
+ * Args (from blocks/live/render.php): eyebrow, title, cta_label, posts (rows: type, video,
+ * image, url, caption, likes, comments), preview.
  *
  * @package panmotors
  */
 
-$panmotors_page_id = (int) ( $args['page_id'] ?? 0 );
-$panmotors_posts   = array_filter(
-	$panmotors_page_id ? panmotors_rows( 'live_posts', $panmotors_page_id ) : array(),
+$panmotors_posts = array_filter(
+	(array) ( $args['posts'] ?? array() ),
 	static fn( $row ) => ! empty( $row['url'] ) && ( ! empty( $row['image'] ) || ! empty( $row['video'] ) )
 );
 
@@ -22,10 +22,11 @@ if ( ! $panmotors_posts ) {
 	return;
 }
 
-$panmotors_eyebrow   = panmotors_field( 'live_eyebrow', $panmotors_page_id );
-$panmotors_title     = panmotors_field( 'live_title', $panmotors_page_id );
-$panmotors_cta_label = panmotors_field( 'live_cta_label', $panmotors_page_id );
+$panmotors_eyebrow   = (string) ( $args['eyebrow'] ?? '' );
+$panmotors_title     = (string) ( $args['title'] ?? '' );
+$panmotors_cta_label = (string) ( $args['cta_label'] ?? '' );
 $panmotors_insta     = panmotors_option( 'instagram_url' );
+$panmotors_preview   = ! empty( $args['preview'] );
 ?>
 <section id="live" class="pm-live pm-pad" aria-labelledby="live-title">
 	<div class="pm-section-head pm-live__head" data-rise>
@@ -52,7 +53,7 @@ $panmotors_insta     = panmotors_option( 'instagram_url' );
 			$panmotors_likes    = trim( (string) ( $panmotors_post['likes'] ?? '' ) );
 			$panmotors_comments = trim( (string) ( $panmotors_post['comments'] ?? '' ) );
 			$panmotors_image    = (int) ( $panmotors_post['image'] ?? 0 );
-			$panmotors_video    = 'video' === ( $panmotors_post['type'] ?? '' ) && ! empty( $panmotors_post['video'] ) ? wp_get_attachment_url( (int) $panmotors_post['video'] ) : '';
+			$panmotors_video    = ! $panmotors_preview && 'video' === ( $panmotors_post['type'] ?? '' ) && ! empty( $panmotors_post['video'] ) ? wp_get_attachment_url( (int) $panmotors_post['video'] ) : '';
 			?>
 			<a class="pm-post" href="<?php echo esc_url( $panmotors_post['url'] ); ?>" target="_blank" rel="noopener" data-zoom>
 				<span class="screen-reader-text"><?php esc_html_e( 'Instagram post:', 'panmotors' ); ?> </span>

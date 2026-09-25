@@ -1,14 +1,32 @@
 {
-    "key": "group_pm_page_intro",
-    "title": "Page top",
+    "key": "group_pm_block_page_hero",
+    "title": "Block: Page top",
     "fields": [
+        {
+            "key": "field_pm_msg_block_page_hero",
+            "label": "Title",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The big title is the page title.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
         {
             "key": "field_pm_page_eyebrow",
             "label": "Small red line",
             "name": "page_eyebrow",
             "aria-label": "",
             "type": "text",
-            "instructions": "Above the page title, e.g. \"Avenue 65, Mesoyi\". On the homepage it also appears above this section's heading.",
+            "instructions": "Above the page title, e.g. \"Avenue 65, Mesoyi\".",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -28,7 +46,7 @@
             "name": "page_intro",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "One or two sentences under the page title. Featured Cars and Showroom also show it on the homepage. Up to 200 characters.",
+            "instructions": "One or two sentences under the page title. Also used as the page description for Google. Up to 200 characters.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -66,62 +84,14 @@
             "max_size": 8,
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
-        },
-        {
-            "key": "field_pm_page_body",
-            "label": "Opening text",
-            "name": "page_body",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "The first paragraphs of this page, under the top image. Write it for this page, do not copy the homepage.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "visual",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
         }
     ],
     "location": [
         [
             {
-                "param": "page_template",
+                "param": "block",
                 "operator": "==",
-                "value": "templates\/page-featured-cars.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-about.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-latest-cars.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-showroom.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-contact.php"
+                "value": "pm/page-hero"
             }
         ]
     ],
@@ -132,10 +102,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Page title area, shared by the section pages.",
+    "description": "",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790342678
+    "modified": 1790371793
 }

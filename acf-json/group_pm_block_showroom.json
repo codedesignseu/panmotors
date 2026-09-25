@@ -1,0 +1,133 @@
+{
+    "key": "group_pm_block_showroom",
+    "title": "Block: The Showroom",
+    "fields": [
+        {
+            "key": "field_pm_showroom_eyebrow",
+            "label": "Small red line",
+            "name": "showroom_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the heading, e.g. \"Avenue 65, Mesoyi\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_showroom_title",
+            "label": "Heading",
+            "name": "showroom_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "The Showroom",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_showroom_intro",
+            "label": "Intro",
+            "name": "showroom_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "One or two sentences next to the heading. Up to 200 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 200,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_showroom_photos",
+            "label": "Photos",
+            "name": "showroom_photos",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Landscape (16:10), at least 2160px wide, JPG or WebP, sRGB colour. The caption under each photo is the image's Caption in the media library.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": 1,
+            "max": 12,
+            "min_width": 1600,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "insert": "append",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_showroom_hours",
+            "label": "Opening hours",
+            "name": "showroom_hours",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "The opening hours from {settings} under the photos.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/showroom"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

@@ -1,101 +1,7 @@
 {
-    "key": "group_pm_page_contact",
-    "title": "Contact",
+    "key": "group_pm_block_faq",
+    "title": "Block: Questions",
     "fields": [
-        {
-            "key": "field_pm_tab_contact_card",
-            "label": "Contact card",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_pm_enquire_title",
-            "label": "Heading",
-            "name": "enquire_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "The heading of the dark contact card, on this page and the homepage.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "maxlength": 30,
-            "default_value": "Come And See",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_pm_enquire_intro",
-            "label": "Intro",
-            "name": "enquire_intro",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Under the heading. Up to 160 characters.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "new_lines": "",
-            "maxlength": 160,
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_pm_msg_enquire_contact",
-            "label": "Contact details",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "Address, phone numbers and email are edited in {settings} → Contact.",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_pm_tab_contact_faq",
-            "label": "Questions",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
         {
             "key": "field_pm_faq_title",
             "label": "Heading",
@@ -186,13 +92,13 @@
     "location": [
         [
             {
-                "param": "page_template",
+                "param": "block",
                 "operator": "==",
-                "value": "templates\/page-contact.php"
+                "value": "pm/faq"
             }
         ]
     ],
-    "menu_order": 1,
+    "menu_order": 0,
     "position": "normal",
     "style": "default",
     "label_placement": "top",
@@ -201,8 +107,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790342678
+    "modified": 1790371793
 }

@@ -1,0 +1,151 @@
+{
+    "key": "group_pm_block_featured_cars",
+    "title": "Block: Featured Cars",
+    "fields": [
+        {
+            "key": "field_pm_featured_title",
+            "label": "Heading",
+            "name": "featured_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Featured Cars",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_featured_intro",
+            "label": "Short intro",
+            "name": "featured_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "One or two sentences next to the heading. Up to 200 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 200,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_featured_source",
+            "label": "Which cars",
+            "name": "featured_source",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Cars are added and edited under {cars}. Showcase only, no prices.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "featured": "Cars marked Featured",
+                "pick": "Pick cars"
+            },
+            "default_value": "featured",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_pm_featured_pick",
+            "label": "Cars",
+            "name": "featured_pick",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Choose the cars and drag them into order.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_featured_source",
+                        "operator": "==",
+                        "value": "pick"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "pm_car"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": 12,
+            "elements": [
+                "featured_image"
+            ],
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_featured_limit",
+            "label": "How many",
+            "name": "featured_limit",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Four fill one row.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "min": 1,
+            "max": 12,
+            "default_value": 4,
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/featured-cars"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

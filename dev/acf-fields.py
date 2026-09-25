@@ -10,8 +10,10 @@ Editor rules (docs/editability.md):
 - Images and videos state the recommended size and format; minimums protect the layout.
 - Text that breaks the layout when too long gets a character limit.
 - Fields marked pm_admin_only are hidden from non-administrators (inc/acf.php).
-- Messages may use {edit:featured|about|latest|showroom|contact} and {settings} tokens, which
-  inc/acf.php turns into links to that page's edit screen or to Pan Motors settings.
+- Messages and instructions may use {settings} and {cars} tokens, which inc/acf.php turns into
+  links to Pan Motors settings and to the Cars list.
+- Blocks (D11, docs/blocks.md): one field group per pm/* block, located by block name. A field that
+  is the same as before keeps its key, so labels, limits and saved values carry over.
 """
 import json
 import os
@@ -113,8 +115,9 @@ def link(key, label, name=None, **kw):
 
 
 def page_link(key, label, name=None, **kw):
+    kw.setdefault('allow_null', 1)
     return base(key, label, name or key, 'page_link', post_type=['page'], post_status=['publish'], taxonomy='',
-                allow_null=1, allow_archives=0, multiple=0, **kw)
+                allow_archives=0, multiple=0, **kw)
 
 
 def wysiwyg(key, label, name=None, **kw):
@@ -255,122 +258,57 @@ options = group('options', 'Pan Motors settings', [
     tab('technical', 'Technical', admin_only=True),
     message('technical', 'For the site administrator',
             'Only administrators see this tab. Changing these can break links or the enquiry form.', admin_only=True),
-    page_field('page_featured', 'Featured Cars page', width='50', admin_only=True),
-    page_field('page_about', 'About page', width='50', admin_only=True),
-    page_field('page_latest', 'Latest Cars page', width='50', admin_only=True),
-    page_field('page_showroom', 'Showroom page', width='50', admin_only=True),
-    page_field('page_contact', 'Contact page', width='50', admin_only=True),
+    page_field('page_contact', 'Contact button goes to', width='50', admin_only=True,
+               instructions='The page opened by the Contact button (header, mobile menu, page not found). Empty: the button is hidden.'),
     text('enquire_form_shortcode', 'Enquiry form shortcode', placeholder='[contact-form-7 id="123"]', admin_only=True,
          instructions='From the form plugin. Empty: a preview form is shown that does not send.'),
 ], [[{'param': 'options_page', 'operator': '==', 'value': 'panmotors-settings'}]])
 
 
-# ---------------------------------------------------------------- Section pages (page templates)
-def tpl(name):
-    return [{'param': 'page_template', 'operator': '==', 'value': 'templates/page-' + name + '.php'}]
+# ---------------------------------------------------------------- Cars (pm_car, data store only)
+def relationship(key, label, post_type, name=None, **kw):
+    return base(key, label, name or key, 'relationship', post_type=post_type, post_status=['publish'], taxonomy='',
+                filters=['search'], return_format='id', min=kw.pop('min', ''), max=kw.pop('max', ''),
+                elements=['featured_image'], bidirectional=0, bidirectional_target=[], **kw)
 
 
-TEMPLATES = ['featured-cars', 'about', 'latest-cars', 'showroom', 'contact']
-
-page_intro = group('page_intro', 'Page top', [
-    text('page_eyebrow', 'Small red line', maxlength=40,
-         instructions='Above the page title, e.g. "Avenue 65, Mesoyi". On the homepage it also appears above this section\'s heading.'),
-    textarea('page_intro', 'Short intro', rows=2, maxlength=200,
-             instructions='One or two sentences under the page title. Featured Cars and Showroom also show it on the homepage. Up to 200 characters.'),
-    image('page_hero_image', 'Top image', min_width=1920,
-          instructions='Optional background behind the page title, shown in black and white. Landscape, at least 2400px wide, ' + IMG_FORMAT),
-    wysiwyg('page_body', 'Opening text',
-            instructions='The first paragraphs of this page, under the top image. Write it for this page, do not copy the homepage.'),
-], [tpl(t) for t in TEMPLATES], order=0, desc='Page title area, shared by the section pages.')
-
-featured = group('page_featured', 'Featured Cars', [
-    repeater('featured_cars', 'Cars', [
-        image('car_image', 'Photo', name='image', required=1, min_width=1200,
-              instructions='Portrait or square works best, at least 1400px wide. ' + IMG_FORMAT),
-        text('car_marque', 'Marque', name='marque', required=1, width='50', maxlength=20, placeholder='Porsche'),
-        text('car_model', 'Model', name='model_name', required=1, width='50', maxlength=28, placeholder='911 Carrera'),
-        text('car_ref', 'Reference', name='ref_no', width='33', maxlength=12, placeholder='No. 04'),
-        text('car_spec', 'Detail', name='spec', width='33', maxlength=22, placeholder='Flat six'),
-        text('car_note', 'Note', name='note', width='34', maxlength=26, placeholder='Kept in slate grey'),
-        link('car_link', 'Link', name='link', instructions='Optional. Leave empty: the tile is a showcase only.'),
-    ], min=1, max=12, button='Add car', collapsed='car_model',
-        instructions='Showcase only, no prices. The homepage shows the first four. Drag to reorder.'),
-], [tpl('featured-cars')], order=1)
-
-about = group('page_about', 'About', [
-    image('about_image', 'Photo', min_width=1080, min_height=1350,
-          instructions='Shown on the homepage About section. Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT),
-    wysiwyg('about_story', 'Story',
-            instructions='The longer story for this page. The homepage shows the one-sentence description from Pan Motors settings instead.'),
-    repeater('about_stats', 'Three highlights', [
-        text('stat_value', 'Word', name='value', required=1, width='40', maxlength=12, placeholder='Sales'),
-        text('stat_label', 'Line under it', name='label', width='60', maxlength=28, placeholder='Luxury and performance'),
-    ], min=0, max=4, button='Add highlight', layout='table',
-        instructions='Shown in a row under the About text on the homepage. Three fit best.'),
-    repeater('values', 'Our Values', [
-        text('value_index', 'Small label', name='index', width='30', maxlength=20, placeholder='01 — Keeping'),
-        text('value_title', 'Title', name='title', required=1, width='70', maxlength=24, placeholder='Kept Running'),
-        textarea('value_body', 'Short text', name='body', rows=2, maxlength=140,
-                 instructions='Shown on the homepage card. Up to 140 characters.'),
-        wysiwyg('value_detail', 'Longer text', name='detail', instructions='For the About page.'),
-        image('value_image', 'Photo', name='image', min_width=1200, instructions='Optional, for the About page. Landscape. ' + IMG_FORMAT),
-    ], min=1, max=6, button='Add value', collapsed='value_title',
-        instructions='The Our Values cards on the homepage. Three fit one row. Drag to reorder.'),
-    message('about_marques', 'Marques', 'The marques are edited in {settings} → Marques.'),
-], [tpl('about')], order=1)
-
-latest = group('page_latest', 'Latest Cars', [
-    repeater('latest_cars', 'Cars', [
-        image('slide_image', 'Photo', name='image', required=1, min_width=1960, min_height=1102,
-              instructions='Landscape (16:9), at least 1960 × 1102px. ' + IMG_FORMAT),
-        text('slide_caption', 'Caption', name='caption', width='60', maxlength=40, placeholder='Bay four, morning light'),
-        text('slide_place', 'Place', name='place', width='40', default_value='Paphos', maxlength=20),
-    ], min=1, max=12, button='Add car', collapsed='slide_caption',
-        instructions='The slider on the homepage, in this order. Drag to reorder.'),
-], [tpl('latest-cars')], order=1)
-
-showroom = group('page_showroom', 'Showroom', [
-    gallery('showroom_photos', 'Photos', min=1, max=12, min_width=1600,
-            instructions='The photo slider on the homepage. Landscape (16:10), at least 2160px wide, ' + IMG_FORMAT +
-                         ' The caption under each photo is the image\'s Caption in the media library.'),
-    wysiwyg('getting_here', 'Getting here',
-            instructions='Directions from Paphos centre and Paphos airport, and where to park. For the Showroom page.'),
-    message('showroom_hours', 'Opening hours and address', 'Hours and the address are edited in {settings}.'),
-], [tpl('showroom')], order=1)
-
-contact = group('page_contact', 'Contact', [
-    tab('contact_card', 'Contact card'),
-    text('enquire_title', 'Heading', default_value='Come And See', maxlength=30,
-         instructions='The heading of the dark contact card, on this page and the homepage.'),
-    textarea('enquire_intro', 'Intro', rows=2, maxlength=160,
-             instructions='Under the heading. Up to 160 characters.'),
-    message('enquire_contact', 'Contact details', 'Address, phone numbers and email are edited in {settings} → Contact.'),
-    tab('contact_faq', 'Questions'),
-    text('faq_title', 'Heading', default_value='Questions', maxlength=30),
-    repeater('faqs', 'Questions', [
-        text('faq_question', 'Question', name='question', required=1, maxlength=120),
-        textarea('faq_answer', 'Answer', name='answer', rows=3, required=1, maxlength=500,
-                 instructions='One to three plain sentences, the answer first. Google reads these too.'),
-    ], min=0, max=20, button='Add question', collapsed='faq_question'),
-], [tpl('contact')], order=1)
+def true_false(key, label, name=None, default=1, on='On', off='Off', **kw):
+    return base(key, label, name or key, 'true_false', message='', default_value=default, ui=1,
+                ui_on_text=on, ui_off_text=off, **kw)
 
 
-# ---------------------------------------------------------------- Homepage: tabs in page order
-def section_tab(key, label, show_label, heading_default='', note=''):
-    fields = [
-        tab(key, label),
-        toggle('home_show_' + key, 'Show this section', 'Switch off to hide "' + show_label + '" from the homepage.'),
-    ]
-    if heading_default is not None:
-        fields.append(text('home_%s_title' % key, 'Heading', maxlength=30, default_value=heading_default,
-                           instructions='The large heading of this section on the homepage.'))
-    if note:
-        fields.append(message('home_' + key, 'Content', note))
-    return fields
+car = group('car', 'Car', [
+    image('car_image', 'Photo', name='image', required=1, min_width=1960, min_height=1102,
+          instructions='Landscape, at least 1960 × 1102px. ' + IMG_FORMAT + ' Keep the car in the centre: '
+                       'Featured Cars crops it tall, Latest Cars shows it 16:9.'),
+    text('car_marque', 'Marque', name='marque', required=1, width='50', maxlength=20, placeholder='Porsche'),
+    text('car_model', 'Model', name='model_name', required=1, width='50', maxlength=28, placeholder='911 Carrera'),
+    text('car_ref', 'Reference', name='ref_no', width='33', maxlength=12, placeholder='No. 04'),
+    text('car_spec', 'Detail', name='spec', width='33', maxlength=22, placeholder='Flat six'),
+    text('car_note', 'Note', name='note', width='34', maxlength=26, placeholder='Kept in slate grey'),
+    link('car_link', 'Link', name='link', instructions='Optional. Leave empty: the Featured Cars tile is a showcase only.'),
+    text('slide_caption', 'Slider caption', name='caption', width='60', maxlength=40, placeholder='Bay four, morning light',
+         instructions='Under the photo in Latest Cars.'),
+    text('slide_place', 'Place', name='place', width='40', default_value='Paphos', maxlength=20,
+         instructions='Right of the caption in Latest Cars.'),
+    true_false('car_featured', 'Featured', name='featured', default=0, on='Yes', off='No',
+               instructions='Shown in Featured Cars (in the order set under Page attributes → Order). '
+                            'Latest Cars shows the newest cars by date.'),
+], [[{'param': 'post_type', 'operator': '==', 'value': 'pm_car'}]],
+    desc='Showcase only, no prices. The name in the list is set from marque and model.')
 
 
-front = group('front_page', 'Homepage', [
-    tab('hero', 'Top video'),
+# ---------------------------------------------------------------- Blocks (D11): one group per pm/* block
+def block_group(name, title, fields):
+    return group('block_' + name.replace('-', '_'), 'Block: ' + title, fields,
+                 [[{'param': 'block', 'operator': '==', 'value': 'pm/' + name}]])
+
+
+def heading(key, default):
+    return text(key, 'Heading', maxlength=30, default_value=default, instructions='The large heading of this section.')
+
+
+b_hero = block_group('hero', 'Top video', [
     text('hero_eyebrow', 'Small red line', required=1, maxlength=60,
          placeholder='Pan Motors, luxury car boutique in Paphos, Cyprus',
          instructions='Above the big title. Say who and where. Up to 60 characters.'),
@@ -381,21 +319,62 @@ front = group('front_page', 'Homepage', [
     image('hero_poster', 'Background photo', required=1, min_width=1920,
           instructions='Shown while the video loads and for visitors who turn off motion. Landscape, at least 2400px wide, ' + IMG_FORMAT),
     text('hero_cta_label', 'Button text', width='50', default_value='View the cars', maxlength=24),
-    page_link('hero_cta_link', 'Button goes to', width='50', instructions='Leave empty for the Featured Cars page.'),
+    page_link('hero_cta_link', 'Button goes to', width='50', required=1, allow_null=0,
+              instructions='The page the button opens, e.g. Featured Cars.'),
+])
 
-    *section_tab('marquee', 'Marques strip', 'the scrolling marques', heading_default=None,
-                 note='The names and the separator are edited in {settings} → Marques.'),
-    *section_tab('featured', 'Featured Cars', 'Featured Cars', 'Featured Cars',
-                 'The cars and the short intro are edited on the {edit:featured}.'),
-    *section_tab('values', 'Our Values', 'Our Values', 'Our Values',
-                 'The value cards are edited on the {edit:about} → Our Values. Each card links to that page.'),
-    *section_tab('about', 'About Pan Motors', 'About Pan Motors', 'About Pan Motors',
-                 'The photo, the small red line and the three highlights are edited on the {edit:about}. '
-                 'The paragraph is the one-sentence description in {settings} → Business.'),
-    *section_tab('latest', 'Latest Cars', 'Latest Cars', 'Latest Cars',
-                 'The cars and the small red line are edited on the {edit:latest}.'),
-    tab('live', 'Pan Motors Live'),
-    toggle('home_show_live', 'Show this section', 'Switch off to hide "Pan Motors Live" from the homepage.'),
+b_marquee = block_group('marquee', 'Marques strip', [
+    message('block_marquee', 'Content', 'The names and the separator are edited in {settings} → Marques.'),
+])
+
+b_featured = block_group('featured-cars', 'Featured Cars', [
+    heading('featured_title', 'Featured Cars'),
+    textarea('featured_intro', 'Short intro', rows=2, maxlength=200,
+             instructions='One or two sentences next to the heading. Up to 200 characters.'),
+    button_group('featured_source', 'Which cars', {'featured': 'Cars marked Featured', 'pick': 'Pick cars'}, 'featured',
+                 instructions='Cars are added and edited under {cars}. Showcase only, no prices.'),
+    relationship('featured_pick', 'Cars', ['pm_car'], max=12,
+                 instructions='Choose the cars and drag them into order.',
+                 conditional_logic=[[{'field': 'field_pm_featured_source', 'operator': '==', 'value': 'pick'}]]),
+    number('featured_limit', 'How many', width='33', min=1, max=12, default_value=4,
+           instructions='Four fill one row.'),
+])
+
+b_values = block_group('values', 'Our Values', [
+    heading('values_title', 'Our Values'),
+    page_link('values_link', 'Cards go to', instructions='The page each card opens, e.g. About Pan Motors. Empty: the cards are not links.'),
+    repeater('values', 'Values', [
+        text('value_index', 'Small label', name='index', width='30', maxlength=20, placeholder='01 — Keeping'),
+        text('value_title', 'Title', name='title', required=1, width='70', maxlength=24, placeholder='Kept Running'),
+        textarea('value_body', 'Short text', name='body', rows=2, maxlength=140,
+                 instructions='Up to 140 characters.'),
+    ], min=1, max=6, button='Add value', collapsed='value_title',
+        instructions='Three fit one row. Drag to reorder.'),
+])
+
+b_about = block_group('about', 'About Pan Motors', [
+    image('about_image', 'Photo', min_width=1080, min_height=1350,
+          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT),
+    text('about_eyebrow', 'Small red line', maxlength=40, instructions='Above the heading.'),
+    heading('about_title', 'About Pan Motors'),
+    message('block_about', 'Paragraph', 'The paragraph is the one-sentence description in {settings} → Business.'),
+    repeater('about_stats', 'Three highlights', [
+        text('stat_value', 'Word', name='value', required=1, width='40', maxlength=12, placeholder='Sales'),
+        text('stat_label', 'Line under it', name='label', width='60', maxlength=28, placeholder='Luxury and performance'),
+    ], min=0, max=4, button='Add highlight', layout='table',
+        instructions='Shown in a row under the paragraph. Three fit best.'),
+    true_false('about_fade', 'Scroll colour fade', default=1,
+               instructions='The background turns from black to white while scrolling past.'),
+])
+
+b_latest = block_group('latest-cars', 'Latest Cars', [
+    text('latest_eyebrow', 'Small red line', maxlength=40, instructions='Above the heading.'),
+    heading('latest_title', 'Latest Cars'),
+    number('latest_limit', 'How many', width='33', min=1, max=12, default_value=6,
+           instructions='The newest cars by date, from {cars}.'),
+])
+
+b_live = block_group('live', 'Pan Motors Live', [
     text('live_eyebrow', 'Small red line', width='33', default_value='Social', maxlength=30),
     text('live_title', 'Heading', width='33', default_value='Pan Motors Live', maxlength=30),
     text('live_cta_label', 'Instagram button text', width='34', default_value='Follow the floor', maxlength=24,
@@ -413,13 +392,26 @@ front = group('front_page', 'Homepage', [
         text('post_comments', 'Comments', name='comments', width='25', maxlength=6, instructions='Optional.'),
     ], min=0, max=9, button='Add post', collapsed='post_caption',
         instructions='Entered by hand. Six posts fill the grid. Drag to reorder.'),
-    *section_tab('showroom', 'The Showroom', 'The Showroom', 'The Showroom',
-                 'The photos, the small red line and the intro are edited on the {edit:showroom}. '
-                 'Opening hours are in {settings} → Opening hours.'),
-    tab('enquire', 'Come And See'),
-    toggle('home_show_enquire', 'Show this section', 'Switch off to hide "Come And See" from the homepage.'),
-    message('home_enquire', 'Content',
-            'The heading and intro are edited on the {edit:contact}. The address, phone numbers and email are in {settings} → Contact.'),
+])
+
+b_showroom = block_group('showroom', 'The Showroom', [
+    text('showroom_eyebrow', 'Small red line', maxlength=40, instructions='Above the heading, e.g. "Avenue 65, Mesoyi".'),
+    heading('showroom_title', 'The Showroom'),
+    textarea('showroom_intro', 'Intro', rows=2, maxlength=200,
+             instructions='One or two sentences next to the heading. Up to 200 characters.'),
+    gallery('showroom_photos', 'Photos', min=1, max=12, min_width=1600,
+            instructions='Landscape (16:10), at least 2160px wide, ' + IMG_FORMAT +
+                         ' The caption under each photo is the image\'s Caption in the media library.'),
+    true_false('showroom_hours', 'Opening hours', default=1, on='Shown', off='Hidden',
+               instructions='The opening hours from {settings} under the photos.'),
+])
+
+b_enquire = block_group('enquire', 'Come And See', [
+    text('enquire_title', 'Heading', default_value='Come And See', maxlength=30,
+         instructions='The heading of the dark contact card.'),
+    textarea('enquire_intro', 'Intro', rows=2, maxlength=160,
+             instructions='Under the heading. Up to 160 characters.'),
+    message('enquire_contact', 'Contact details', 'Address, phone numbers and email are edited in {settings} → Contact.'),
     message('home_form', 'Preview form',
             'Until the enquiry form plugin is connected, a preview form is shown with these texts. It does not send.'),
     text('form_label_name', 'Name label', width='50', default_value='Name', maxlength=20),
@@ -431,10 +423,36 @@ front = group('front_page', 'Homepage', [
     text('form_label_message', 'Message label', width='50', default_value='Message', maxlength=20),
     text('form_hint_message', 'Message hint', width='50', default_value='Tell us which car you are interested in.', maxlength=60),
     text('form_button', 'Button text', width='50', default_value='Send message', maxlength=24),
-], [[{'param': 'page_type', 'operator': '==', 'value': 'front_page'}]],
-    desc='Homepage: tabs in the same order as the page.')
+])
 
-GROUPS = (options, front, page_intro, featured, about, latest, showroom, contact)
+b_faq = block_group('faq', 'Questions', [
+    text('faq_title', 'Heading', default_value='Questions', maxlength=30),
+    repeater('faqs', 'Questions', [
+        text('faq_question', 'Question', name='question', required=1, maxlength=120),
+        textarea('faq_answer', 'Answer', name='answer', rows=3, required=1, maxlength=500,
+                 instructions='One to three plain sentences, the answer first. Google reads these too.'),
+    ], min=0, max=20, button='Add question', collapsed='faq_question'),
+])
+
+b_page_hero = block_group('page-hero', 'Page top', [
+    message('block_page_hero', 'Title', 'The big title is the page title.'),
+    text('page_eyebrow', 'Small red line', maxlength=40, instructions='Above the page title, e.g. "Avenue 65, Mesoyi".'),
+    textarea('page_intro', 'Short intro', rows=2, maxlength=200,
+             instructions='One or two sentences under the page title. Also used as the page description for Google. Up to 200 characters.'),
+    image('page_hero_image', 'Top image', min_width=1920,
+          instructions='Optional background behind the page title, shown in black and white. Landscape, at least 2400px wide, ' + IMG_FORMAT),
+])
+
+b_cta = block_group('cta-band', 'Call to action', [
+    text('cta_title', 'Heading', default_value='Come and see', maxlength=30),
+    textarea('cta_text', 'Text', rows=2, maxlength=160,
+             default_value='Call, write, or walk in during showroom hours. Someone from the family will answer.'),
+    text('cta_label', 'Button text', width='50', default_value='Contact us', maxlength=24),
+    page_link('cta_link', 'Button goes to', width='50', required=1, allow_null=0, instructions='Usually the Contact page.'),
+])
+
+GROUPS = (options, car, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+          b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':
     keys = []

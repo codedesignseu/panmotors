@@ -1,0 +1,155 @@
+{
+    "key": "group_pm_block_hero",
+    "title": "Block: Top video",
+    "fields": [
+        {
+            "key": "field_pm_hero_eyebrow",
+            "label": "Small red line",
+            "name": "hero_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the big title. Say who and where. Up to 60 characters.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 60,
+            "placeholder": "Pan Motors, luxury car boutique in Paphos, Cyprus",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_hero_title",
+            "label": "Big title",
+            "name": "hero_title",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Each new line starts a new line on the page. Up to 40 characters.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_hero_video",
+            "label": "Background video",
+            "name": "hero_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "MP4, landscape, 10–20 seconds, under 8 MB. Plays silently. Leave empty to show only the photo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": 10,
+            "mime_types": "mp4"
+        },
+        {
+            "key": "field_pm_hero_poster",
+            "label": "Background photo",
+            "name": "hero_poster",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Shown while the video loads and for visitors who turn off motion. Landscape, at least 2400px wide, JPG or WebP, sRGB colour.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1920,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_hero_cta_label",
+            "label": "Button text",
+            "name": "hero_cta_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "View the cars",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_hero_cta_link",
+            "label": "Button goes to",
+            "name": "hero_cta_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "The page the button opens, e.g. Featured Cars.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

@@ -1,30 +1,29 @@
 <?php
 /**
- * CTA band: dark card on a paper band, linking to the Contact page. Not used on Contact itself.
+ * CTA band: dark card on a paper band with a button, usually to the Contact page.
+ * Final styling waits for the inner-page design (D10).
  *
- * Args (all optional):
- * - title (string) Heading. Default "Come and see".
- * - text  (string) One line under the heading.
- * - label (string) Button label. Default "Contact us".
- * - url   (string) Button link. Default the Contact page.
+ * Args (from blocks/cta-band/render.php): title, text, label, url. No url or label: nothing is shown.
  *
  * @package panmotors
  */
 
-$panmotors_url = $args['url'] ?? panmotors_page_url( 'contact' );
+$panmotors_url   = (string) ( $args['url'] ?? '' );
+$panmotors_label = (string) ( $args['label'] ?? '' );
 
-if ( ! $panmotors_url ) {
+if ( ! $panmotors_url || ! $panmotors_label ) {
 	return;
 }
 
-$panmotors_title = $args['title'] ?? __( 'Come and see', 'panmotors' );
-$panmotors_text  = $args['text'] ?? __( 'Call, write, or walk in during showroom hours. Someone from the family will answer.', 'panmotors' );
-$panmotors_label = $args['label'] ?? __( 'Contact us', 'panmotors' );
+$panmotors_title = (string) ( $args['title'] ?? '' );
+$panmotors_text  = (string) ( $args['text'] ?? '' );
 ?>
-<section class="pm-cta pm-light pm-pad" aria-labelledby="cta-title">
+<section class="pm-cta pm-light pm-pad"<?php echo $panmotors_title ? ' aria-labelledby="cta-title"' : ''; ?>>
 	<div class="pm-cta__card">
 		<div class="pm-cta__copy">
-			<h2 class="pm-cta__title" id="cta-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php if ( $panmotors_title ) : ?>
+				<h2 class="pm-cta__title" id="cta-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php endif; ?>
 			<?php if ( $panmotors_text ) : ?>
 				<p class="pm-cta__text"><?php echo esc_html( $panmotors_text ); ?></p>
 			<?php endif; ?>

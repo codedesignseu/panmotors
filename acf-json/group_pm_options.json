@@ -213,7 +213,7 @@
                 "id": ""
             },
             "maxlength": 10,
-            "placeholder": 8060,
+            "placeholder": "8060",
             "default_value": "",
             "prepend": "",
             "append": ""
@@ -273,7 +273,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_latitude",
@@ -731,7 +731,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_facebook_url",
@@ -748,7 +748,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_google_business_url",
@@ -765,7 +765,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/"
+            "placeholder": "https://"
         },
         {
             "key": "field_pm_other_profiles",
@@ -825,7 +825,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https:\/\/",
+                    "placeholder": "https://",
                     "parent_repeater": "field_pm_other_profiles"
                 }
             ]
@@ -939,7 +939,7 @@
                 "id": ""
             },
             "maxlength": 4,
-            "default_value": 404,
+            "default_value": "404",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -1083,128 +1083,12 @@
             "esc_html": 0
         },
         {
-            "key": "field_pm_page_featured",
-            "label": "Featured Cars page",
-            "name": "page_featured",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "pm_admin_only": 1,
-            "post_type": [
-                "page"
-            ],
-            "post_status": [
-                "publish"
-            ],
-            "taxonomy": "",
-            "return_format": "id",
-            "multiple": 0,
-            "allow_null": 1,
-            "bidirectional": 0,
-            "ui": 1,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_pm_page_about",
-            "label": "About page",
-            "name": "page_about",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "pm_admin_only": 1,
-            "post_type": [
-                "page"
-            ],
-            "post_status": [
-                "publish"
-            ],
-            "taxonomy": "",
-            "return_format": "id",
-            "multiple": 0,
-            "allow_null": 1,
-            "bidirectional": 0,
-            "ui": 1,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_pm_page_latest",
-            "label": "Latest Cars page",
-            "name": "page_latest",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "pm_admin_only": 1,
-            "post_type": [
-                "page"
-            ],
-            "post_status": [
-                "publish"
-            ],
-            "taxonomy": "",
-            "return_format": "id",
-            "multiple": 0,
-            "allow_null": 1,
-            "bidirectional": 0,
-            "ui": 1,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_pm_page_showroom",
-            "label": "Showroom page",
-            "name": "page_showroom",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "pm_admin_only": 1,
-            "post_type": [
-                "page"
-            ],
-            "post_status": [
-                "publish"
-            ],
-            "taxonomy": "",
-            "return_format": "id",
-            "multiple": 0,
-            "allow_null": 1,
-            "bidirectional": 0,
-            "ui": 1,
-            "bidirectional_target": []
-        },
-        {
             "key": "field_pm_page_contact",
-            "label": "Contact page",
+            "label": "Contact button goes to",
             "name": "page_contact",
             "aria-label": "",
             "type": "post_object",
-            "instructions": "",
+            "instructions": "The page opened by the Contact button (header, mobile menu, page not found). Empty: the button is hidden.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1267,8 +1151,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "modified": 1790342678
+    "modified": 1790371793
 }

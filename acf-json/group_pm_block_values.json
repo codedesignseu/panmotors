@@ -1,0 +1,157 @@
+{
+    "key": "group_pm_block_values",
+    "title": "Block: Our Values",
+    "fields": [
+        {
+            "key": "field_pm_values_title",
+            "label": "Heading",
+            "name": "values_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Our Values",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_values_link",
+            "label": "Cards go to",
+            "name": "values_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "The page each card opens, e.g. About Pan Motors. Empty: the cards are not links.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        },
+        {
+            "key": "field_pm_values",
+            "label": "Values",
+            "name": "values",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Three fit one row. Drag to reorder.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 1,
+            "max": 6,
+            "collapsed": "field_pm_value_title",
+            "button_label": "Add value",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pm_value_index",
+                    "label": "Small label",
+                    "name": "index",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 20,
+                    "placeholder": "01 — Keeping",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_values"
+                },
+                {
+                    "key": "field_pm_value_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 24,
+                    "placeholder": "Kept Running",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_values"
+                },
+                {
+                    "key": "field_pm_value_body",
+                    "label": "Short text",
+                    "name": "body",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Up to 140 characters.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 2,
+                    "new_lines": "",
+                    "maxlength": 140,
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_pm_values"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm/values"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790371793
+}

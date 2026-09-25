@@ -81,40 +81,6 @@ function panmotors_acf_missing_notice() {
 add_action( 'admin_notices', 'panmotors_acf_missing_notice' );
 
 /**
- * Whether a post is the static front page.
- *
- * @param int|WP_Post|null $post Post.
- * @return bool
- */
-function panmotors_is_front_page_post( $post ) {
-	$post = get_post( $post );
-	return $post && 'page' === get_option( 'show_on_front' ) && (int) get_option( 'page_on_front' ) === $post->ID;
-}
-
-/**
- * The homepage is built from ACF fields only. Use the classic screen there so the fields fill the page.
- *
- * @param bool    $use_block_editor Whether to use the block editor.
- * @param WP_Post $post             Post being edited.
- * @return bool
- */
-function panmotors_front_page_block_editor( $use_block_editor, $post ) {
-	return panmotors_is_front_page_post( $post ) ? false : $use_block_editor;
-}
-add_filter( 'use_block_editor_for_post', 'panmotors_front_page_block_editor', 10, 2 );
-
-/**
- * Hide the content editor on the front page edit screen. Its content is never shown.
- */
-function panmotors_front_page_hide_editor() {
-	$post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	if ( $post_id && panmotors_is_front_page_post( $post_id ) ) {
-		remove_post_type_support( 'page', 'editor' );
-	}
-}
-add_action( 'load-post.php', 'panmotors_front_page_hide_editor' );
-
-/**
  * Hide fields marked pm_admin_only (the Technical tab: page mapping, form shortcode) from
  * anyone who is not an administrator. Hidden fields are not submitted, so their values stay.
  *
@@ -130,52 +96,25 @@ function panmotors_acf_admin_only( $field ) {
 add_filter( 'acf/prepare_field', 'panmotors_acf_admin_only' );
 
 /**
- * Turn {settings} and {edit:featured|about|latest|showroom|contact} in field messages and
- * instructions into links, so the client can jump to where that content is edited.
+ * Turn {settings} and {cars} in field messages and instructions into links, so the client can
+ * jump to where that content is edited.
  *
  * @param array $field Field.
  * @return array
  */
 function panmotors_acf_edit_links( $field ) {
+	$links = array(
+		'{settings}' => array( 'admin.php?page=panmotors-settings', __( 'Pan Motors settings', 'panmotors' ) ),
+		'{cars}'     => array( 'edit.php?post_type=pm_car', __( 'Cars', 'panmotors' ) ),
+	);
 	foreach ( array( 'message', 'instructions' ) as $key ) {
 		if ( empty( $field[ $key ] ) || false === strpos( $field[ $key ], '{' ) ) {
 			continue;
 		}
-
-		$field[ $key ] = str_replace(
-			'{settings}',
-			sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=panmotors-settings' ) ), esc_html__( 'Pan Motors settings', 'panmotors' ) ),
-			$field[ $key ]
-		);
-
-		$field[ $key ] = preg_replace_callback(
-			'/\{edit:([a-z]+)\}/',
-			static function ( $m ) {
-				$id = panmotors_page( $m[1] );
-				if ( ! $id ) {
-					return esc_html__( 'its page', 'panmotors' );
-				}
-				/* translators: %s: page title. */
-				$label = sprintf( __( '%s page', 'panmotors' ), get_the_title( $id ) );
-				return sprintf( '<a href="%s">%s</a>', esc_url( get_edit_post_link( $id ) ), esc_html( $label ) );
-			},
-			$field[ $key ]
-		);
+		foreach ( $links as $token => list( $path, $label ) ) {
+			$field[ $key ] = str_replace( $token, sprintf( '<a href="%s">%s</a>', esc_url( admin_url( $path ) ), esc_html( $label ) ), $field[ $key ] );
+		}
 	}
 	return $field;
 }
 add_filter( 'acf/prepare_field', 'panmotors_acf_edit_links', 20 );
-
-/**
- * Whether a homepage section is switched on ("Show this section"). Missing value = on.
- *
- * @param string $key Section key, e.g. 'featured'.
- * @return bool
- */
-function panmotors_section_on( $key ) {
-	if ( ! function_exists( 'get_field' ) ) {
-		return true;
-	}
-	$value = get_field( 'home_show_' . $key, (int) get_option( 'page_on_front' ) );
-	return null === $value || (bool) $value;
-}

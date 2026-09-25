@@ -126,114 +126,23 @@ function panmotors_menu_link_class( $atts, $item, $args ) {
 add_filter( 'nav_menu_link_attributes', 'panmotors_menu_link_class', 10, 3 );
 
 /**
- * Render a template part, and load its JS module only if it printed something.
- *
- * @param string $part   Template part path, e.g. 'template-parts/front/hero' or 'template-parts/sections/values'.
- * @param string $module JS module name, or '' for none.
- * @param array  $args   Arguments for the template part.
- */
-function panmotors_render_section( $part, $module = '', $args = array() ) {
-	ob_start();
-	get_template_part( $part, null, $args );
-	$html = trim( (string) ob_get_clean() );
-
-	if ( '' === $html ) {
-		return;
-	}
-
-	echo $html . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in the template part.
-
-	if ( $module ) {
-		panmotors_use_module( $module );
-	}
-}
-
-/**
- * Homepage hero poster attachment ID, or 0.
+ * Homepage hero poster attachment ID, or 0. Read from the front page's pm/hero block, for the
+ * preload in <head> (before the block renders).
  *
  * @return int
  */
 function panmotors_hero_poster_id() {
-	$front_id = (int) get_option( 'page_on_front' );
-	return $front_id ? (int) panmotors_field( 'hero_poster', $front_id, 0 ) : 0;
+	$hero = panmotors_find_block( (int) get_option( 'page_on_front' ), 'pm/hero' );
+	return (int) panmotors_block_field( $hero, 'hero_poster' );
 }
 
 /**
- * Section page keys and their options field (Pan Motors settings → Site pages).
+ * The Contact page (Pan Motors settings → Technical → Contact button goes to), if published.
+ * Used only as a link target: the contact pill, the mobile menu and the 404 page.
  *
- * @return array<string, string>
+ * @return int Page ID, or 0.
  */
-function panmotors_page_keys() {
-	return array(
-		'featured' => 'page_featured',
-		'about'    => 'page_about',
-		'latest'   => 'page_latest',
-		'showroom' => 'page_showroom',
-		'contact'  => 'page_contact',
-	);
-}
-
-/**
- * ID of a section page, as mapped in the options. Never looked up by slug.
- *
- * @param string $key One of the panmotors_page_keys() keys, e.g. 'featured'.
- * @return int Page ID, or 0 when unmapped or not published.
- */
-function panmotors_page( $key ) {
-	$keys = panmotors_page_keys();
-	if ( ! isset( $keys[ $key ] ) ) {
-		return 0;
-	}
-
-	$id = (int) panmotors_option( $keys[ $key ], 0 );
-
+function panmotors_contact_page() {
+	$id = (int) panmotors_option( 'page_contact', 0 );
 	return ( $id && 'publish' === get_post_status( $id ) ) ? $id : 0;
-}
-
-/**
- * Permalink of a section page, or '' when unmapped.
- *
- * @param string $key Page key, e.g. 'contact'.
- * @return string
- */
-function panmotors_page_url( $key ) {
-	$id = panmotors_page( $key );
-	return $id ? (string) get_permalink( $id ) : '';
-}
-
-/**
- * Render an inner section page: page hero, intro text, the section, CTA band.
- *
- * Used by the page templates in templates/. The section argument is a callback so each
- * template decides what goes in the middle.
- *
- * @param callable   $section Prints the page's section content.
- * @param array|null $cta     cta-band args, or null for no CTA band (Contact).
- */
-function panmotors_inner_page( callable $section, ?array $cta = array() ) {
-	get_header();
-
-	while ( have_posts() ) {
-		the_post();
-		get_template_part( 'template-parts/components/page-hero' );
-		get_template_part( 'template-parts/components/page-intro' );
-		$section();
-		if ( null !== $cta ) {
-			get_template_part( 'template-parts/components/cta-band', null, $cta );
-		}
-	}
-
-	get_footer();
-}
-
-/**
- * Print the temporary section placeholder.
- *
- * @param string $label Section name.
- * @return callable
- */
-function panmotors_placeholder( $label ) {
-	return static function () use ( $label ) {
-		get_template_part( 'template-parts/components/section-placeholder', null, array( 'label' => $label ) );
-	};
 }
