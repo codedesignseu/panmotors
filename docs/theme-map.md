@@ -1,5 +1,7 @@
 # Pan Motors theme map
 
+> **Content architecture (D11, 25 Sep 2026).** Pages are built from Gutenberg + ACF Blocks, see [`blocks.md`](blocks.md). Where this file names ACF fields on the front page or template parts per section, the fields now live in the matching `pm/*` block (same names and limits), cars in the Cars post type.
+>
 > **Multi-page site (D9, 24 Sep 2026).** [`pages.md`](pages.md) supersedes every part of this file that assumes one page with anchor links (`#floor`, `#ways`, `#enquire` …). Sections 3, 4, 9.1, 9.4 and 9.8 are marked where that applies. Everything else here (tokens, design details, entity facts, schema rules, media, CWV) still stands.
 
 Source: Claude Design export in `_design/` (index.html, support.js, image-slot.js, _ds/, uploads/).
@@ -190,10 +192,10 @@ Expected in `_design/uploads/` (copy the whole export folder in, including the i
 
 These go into the WP media library, not the theme folder. Only the logo fallback and fonts live in the theme. Output all images with `wp_get_attachment_image()` so `srcset`, `sizes` and lazy loading come for free. Hero image and poster get `fetchpriority="high"` and no lazy loading.
 
-## 8. Decisions (settled 24 Sep 2026)
+## 8. Decisions (settled 24–25 Sep 2026)
 
-- **D1. Car pages.** None. Boutique brand site, not a listing site. No CPT, no single or archive templates.
-- **D2. Latest Cars source.** Manual ACF repeater.
+- **D1. Car pages.** None. Boutique brand site, not a listing site. No single or archive templates, no car URLs. (D11 adds a non-public `pm_car` data store; D1 still stands.)
+- **D2. Latest Cars source.** Manual ACF repeater. Superseded by D11: the newest entries in Cars.
 - **D3. Instagram section.** Manual ACF repeater, no integration. Likes and comments optional.
 - **D4. Contact form.** Client installs a form plugin. Theme provides the visuals only (see section 10).
 - **D5. Content.** Place names are Paphos. Photos are placeholders the client swaps later. Copy leans into the premium boutique positioning, never dealership language ("stock", "inventory", "finance", "trade-in", prices).
@@ -202,6 +204,7 @@ These go into the WP media library, not the theme folder. Only the logo fallback
 - **D8. Platform.** Latest stable WordPress and PHP.
 - **D9. Multi-page site.** Each primary menu item is its own page with its own template. Content lives on its section's page and home shows previews. See `pages.md`.
 - **D10. Review changes.** No Our Values or Live pages: values live on About, Live is home-only. Primary menu: Featured Cars, About Pan Motors, Latest Cars, Showroom. No hero sound button, no footer address line. Homepage matches the design exactly; inner pages wait for their own design. See `pages.md`.
+- **D11. Gutenberg + ACF Blocks (25 Sep 2026).** Every page, Home included, is a list of blocks edited in the block editor with a live preview. Sections are ACF Blocks (`pm/hero`, `pm/marquee`, `pm/featured-cars`, `pm/values`, `pm/about`, `pm/latest-cars`, `pm/live`, `pm/showroom`, `pm/enquire`, `pm/faq`, `pm/page-hero`, `pm/cta-band`) plus a few core text blocks. No page reads content from another page: shared content lives in Options, the non-public Cars post type (`pm_car`, no URLs, D1 stands) or synced patterns ("Our Values"). Page templates, per-page field groups and `panmotors_page()` content lookups are removed; no page template lock is needed because there are no page templates (the hero block is locked on Home instead). `theme.json` holds editor settings only and locks out custom colours, type, spacing and layout. The front end does not change. Supersedes the content model of D9 (`pages.md` §2, §3, §6). See `blocks.md` and `migration-blocks.md`.
 
 ## 9. SEO and GEO
 

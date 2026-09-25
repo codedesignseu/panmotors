@@ -1,4 +1,6 @@
-# Page architecture (D9, revised by D10)
+# Page architecture (D9, revised by D10 and D11)
+
+> **D11 (25 Sep 2026): content architecture is [`blocks.md`](blocks.md).** Every page is built from Gutenberg + ACF Blocks. Sections 2, 3 and 6 below (content read from other pages, per-page field groups, page templates, "Site pages" lookups, section components with `page_id`) are superseded. The sitemap and menus (§1, minus the page template column), inner page layout (§4) and SEO rules (§5) still apply. Migration: [`migration-blocks.md`](migration-blocks.md).
 
 Decision 24 Sep 2026: Pan Motors is a multi-page site.
 
@@ -8,7 +10,7 @@ Decision 24 Sep 2026: Pan Motors is a multi-page site.
 
 ## 1. Sitemap
 
-| Page | Slug | Page template | Menu |
+| Page | Slug | Page template (superseded by D11: all pages are blocks) | Menu |
 |---|---|---|---|
 | Home | `/` | `front-page.php` | logo |
 | Featured Cars | `/featured-cars/` | `templates/page-featured-cars.php` | primary |
@@ -24,9 +26,11 @@ Menus:
 - Footer: Featured Cars, Showroom, Contact, Privacy Policy, Cookie Policy.
 - The current page gets `aria-current="page"` and a visible active state (underline shown, full opacity).
 
-The theme never finds these pages by slug. A "Site pages" tab on the options page holds one Page Link / Post Object field per section page (`page_featured`, `page_about`, `page_latest`, `page_showroom`, `page_contact`). Helper: `panmotors_page( 'featured' )` returns the ID, `panmotors_page_url( 'featured' )` the permalink. The client can rename or move pages without breaking links.
+*Superseded by D11:* only the Contact page stays mapped in Options, as a link target for the contact pill and the 404 page. The theme never finds these pages by slug. A "Site pages" tab on the options page holds one Page Link / Post Object field per section page (`page_featured`, `page_about`, `page_latest`, `page_showroom`, `page_contact`). Helper: `panmotors_page( 'featured' )` returns the ID, `panmotors_page_url( 'featured' )` the permalink. The client can rename or move pages without breaking links.
 
 ## 2. One source for every piece of content
+
+> **Superseded by D11.** Content lives in each page's blocks, Options, Cars or synced patterns. See `blocks.md` §3.
 
 Each section's content lives on its own page and is edited there. The homepage reads it from that page. Nothing is entered twice.
 
@@ -44,6 +48,8 @@ Each section's content lives on its own page and is edited there. The homepage r
 Home page field group keeps: the hero fields, the Live section (eyebrow, title, Instagram pill label, posts), and per section an optional override for the home heading. No link labels: the design has no "view all" links.
 
 ## 3. Components
+
+> **Superseded by D11.** Sections are ACF Blocks (`pm/*`). The views in `template-parts/sections/` stay and get their data as args from each block's `render.php`.
 
 Every section becomes a reusable component in `template-parts/sections/`, called with arguments:
 
@@ -88,6 +94,8 @@ Per page:
 - Add the pages to `llms.txt` with one line each.
 
 ## 6. Changes to work already done
+
+> **Superseded by D11.** Historical record of the D9/D10 changes. The per-page model built here is replaced, see `migration-blocks.md` §7.
 
 - **Content model (section 2)**: split the Home field group into per-page field groups located by page template. Add the "Site pages" tab to options. Move the demo content to the pages. Update `acf-json/` and `dev/seed.php` (create the pages, assign templates, fill fields, map them in options).
 - **D10**: remove the Our Values and Live pages, templates, field groups and Site pages fields; values to About, live to Home; primary menu without them; hero sound button and footer address line removed.

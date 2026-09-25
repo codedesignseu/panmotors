@@ -2,6 +2,8 @@
 
 Tick each task when it is done and checked in the browser.
 
+> **D11 (25 Sep 2026):** content moves to Gutenberg + ACF Blocks, see `docs/blocks.md`. Section 4b is the migration, in the order of `docs/migration-blocks.md` §10. Ticked items in sections 2 and 4 describe the old per-page model; their front end stays, their content source changes in 4b.
+
 ## 0. Setup (you)
 - [x] LocalWP site `panmotors.local`, WP_DEBUG on, ACF Pro installed
 - [x] `wp-content/themes/panmotors/` created and set up as a git repo
@@ -42,12 +44,25 @@ Tick each task when it is done and checked in the browser.
 - [ ] `cta-band` (inner pages only; basic version in place, final styling with the inner page design)
 - [x] `reveal.js` (wired to each section as it is built)
 
+## 4b. Blocks migration (D11, `docs/migration-blocks.md`)
+- [ ] Cause of the lost sections found and documented (migration-blocks §0)
+- [ ] DB backup, baseline snapshot of Home (HTML, head assets, screenshots 1440/390, section heights) via `dev/tests/snapshot.mjs`
+- [ ] Cars post type `pm_car` + Car field group + seeded cars
+- [ ] `inc/blocks.php`, `theme.json`, allowed blocks, editor CSS and JS; Home still identical
+- [ ] Blocks: `pm/hero`, `pm/marquee`, `pm/featured-cars`, `pm/values`, `pm/about`, `pm/latest-cars`, `pm/live`, `pm/showroom`, `pm/enquire`
+- [ ] Synced pattern "Our Values", "Homepage (full design)" pattern, hero lock on Home
+- [ ] Seed builds Home as block markup; `front-page.php` and `page.php` output `the_content()`
+- [ ] `dev/tests/diff.mjs`: Home identical to the baseline (HTML, head, pixels, heights, JS behaviour)
+- [ ] Old model removed: `templates/`, per-page field groups, `panmotors_page()` content lookups, section switches
+- [ ] Editor tests rewritten for blocks (test user deleted with `--reassign=1`), `editability.md` rewritten
+- [ ] `pm/faq`, `pm/page-hero`, `pm/cta-band`
+
 ## 5. SEO, GEO and extra pages
 - [ ] `inc/schema.php`: JSON-LD graph from options (AutoDealer, WebSite, WebPage, FAQPage)
 - [ ] Skip link, `lang`, landmarks, heading outline checked
 - [x] Preload hero poster and main fonts
 - [ ] robots.txt rules and optional `llms.txt`
-- [ ] Inner pages (D9, `pages.md` §4): page hero with breadcrumb, intro, section component, CTA band
+- [ ] Inner pages (D9, `pages.md` §4), built from blocks (D11): `pm/page-hero`, core text blocks, section blocks, `pm/cta-band`
   - [ ] Featured Cars
   - [ ] About (with Our Values)
   - [ ] Latest Cars
