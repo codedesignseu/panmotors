@@ -36,7 +36,7 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/page-hero` | block fields | inner pages, design to be agreed |
 | `pm/cta-band` | block fields | inner pages, design to be agreed |
 
-Inner pages may also use a small set of core blocks for plain text: heading, paragraph, list, image, quote, buttons. Everything else from core is hidden.
+Inner pages may also use a small set of core blocks for plain text: heading, paragraph, list, image, quote, buttons, and embeds limited to YouTube, Vimeo and Instagram (other providers, and embeds that cannot load, print as a plain link). Everything else from core is hidden. Core blocks, shortcodes, embeds and plugins filtering `the_content` run through the normal content pipeline; pm/* sections are rendered outside it so their HTML matches the design exactly (`panmotors_the_blocks()`).
 
 ### Cars: one place, used everywhere
 A non-public post type `pm_car` ("Cars" in wp-admin). It is a data store only: `public => false`, `show_ui => true`, no single pages, no archive, not in sitemaps, no URLs. D1 (no car pages) stands.

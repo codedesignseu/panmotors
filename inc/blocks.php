@@ -25,7 +25,13 @@ const PANMOTORS_CORE_BLOCKS = array(
 	'core/quote',
 	'core/buttons',
 	'core/button',
+	'core/embed', // YouTube, Vimeo and Instagram only (editor.js, panmotors_embed_providers()).
 );
+
+/**
+ * Embed providers the client may use.
+ */
+const PANMOTORS_EMBED_HOSTS = array( 'youtube.com', 'youtu.be', 'vimeo.com', 'instagram.com' );
 
 /**
  * Register every block in blocks/.
@@ -178,15 +184,16 @@ function panmotors_render_block( $part, $module, $args, $is_preview, $empty = ''
 }
 
 /**
- * pm/marquee has no fields, so its block data is empty. ACF 6.8 then reads a null array key while
- * rendering it (a PHP 8.5 deprecation notice in the log). A placeholder entry that is not a field
- * avoids that; nothing reads it.
+ * A pm/* block with empty data (pm/marquee has no fields; any block freshly inserted from the
+ * inserter or a pattern) makes ACF 6.8 read a null array key while rendering it (a PHP 8.5
+ * deprecation notice in the log). A placeholder entry that is not a field avoids that; nothing
+ * reads it.
  *
  * @param array $block Parsed block.
  * @return array
  */
 function panmotors_fieldless_block_data( $block ) {
-	if ( 'pm/marquee' === $block['blockName'] && empty( $block['attrs']['data'] ) ) {
+	if ( 0 === strpos( (string) $block['blockName'], 'pm/' ) && empty( $block['attrs']['data'] ) ) {
 		$block['attrs']['data'] = array( 'pm' => 1 );
 	}
 	return $block;
@@ -325,6 +332,36 @@ function panmotors_classic_global_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'panmotors_classic_global_styles', 20 );
 add_action( 'wp_footer', 'panmotors_classic_global_styles', 2 ); // Classic themes print global styles late (WP 6.9+).
+
+/**
+ * Embeds from other providers (pasted into the code editor, or older content) print as a plain
+ * link instead of a third-party player. So does an embed WordPress cannot load: Instagram has no
+ * oEmbed provider in core without an Instagram/Meta oEmbed plugin, and a removed video returns
+ * nothing. The link keeps the embed's figure, so it sits in the text column.
+ *
+ * @param string $html  Rendered block.
+ * @param array  $block Parsed block.
+ * @return string
+ */
+function panmotors_embed_providers( $html, $block ) {
+	if ( 'core/embed' !== $block['blockName'] ) {
+		return $html;
+	}
+	$url  = (string) ( $block['attrs']['url'] ?? '' );
+	$host = preg_replace( '/^www\./', '', (string) wp_parse_url( $url, PHP_URL_HOST ) );
+	$link = $url ? '<p><a href="' . esc_url( $url ) . '">' . esc_html( $url ) . '</a></p>' : '';
+	foreach ( PANMOTORS_EMBED_HOSTS as $allowed ) {
+		if ( $host === $allowed || str_ends_with( $host, '.' . $allowed ) ) {
+			// Not loaded: the wrapper still holds the bare URL.
+			if ( $url && false === strpos( $html, '<iframe' ) && false === strpos( $html, '<blockquote' ) ) {
+				return preg_replace( '#(<div class="wp-block-embed__wrapper">).*?(</div>)#s', '$1' . $link . '$2', $html, 1 );
+			}
+			return $html;
+		}
+	}
+	return $link;
+}
+add_filter( 'render_block', 'panmotors_embed_providers', 10, 2 );
 
 /**
  * Print the current page's blocks. Used by front-page.php and page.php for pages built from pm/*

@@ -26,8 +26,13 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Reorder sections | Drag the block, use the ↑ ↓ arrows in its toolbar, or the List view. The Top video on Home is locked: it cannot be moved or removed. |
 | Remove a section | Block toolbar → ⋮ → Delete. It can be added back from the inserter (+), "Pan Motors" category. |
 | Add plain text on an inner page | Heading, Paragraph, List, Image, Quote and Buttons are available. Nothing else from core (no columns, colours, spacing or fonts: `theme.json` switches those off). |
+| Add a video | Inserter → YouTube Embed or Vimeo Embed, then paste the video's link (pasting a YouTube or Vimeo link into an empty paragraph works too). The video fills the text column and keeps 16:9 on every screen. Instagram links show as a plain link: WordPress cannot embed Instagram without an Instagram/Meta oEmbed plugin. Links from other sites (X, TikTok…) also show as plain links. |
 | Start a page from the design | Inserter → Patterns → Pan Motors → "Homepage (full design)": all homepage blocks in order, empty. |
 | Undo a change | Undo in the toolbar, or Page → Revisions (each save is a revision). |
+
+## Handover note: plugins
+
+- Plugins that add share buttons or related posts to the bottom of pages should be switched off for the Home page. Every page, Home included, goes through WordPress's normal content filters, so such plugins reach the homepage too.
 
 ## Header and mobile menu
 
@@ -90,7 +95,7 @@ Unchanged: Settings → Footer (footer line, copyright with `{year}`), Settings 
 
 - Blocks preview with the front-end markup and CSS (`main.css` + `editor.css` in the editor canvas). In the editor: no entrance or scroll animations, videos show their photo, the marquee holds still, sliders show their first slide, the About section stays dark. An empty block shows a dashed placeholder saying what to fill. The page title sits as a small label above the blocks.
 - Labels and instructions are written for the client: what the field is, where it shows, how long. Image and video fields state size and format; minimum sizes protect the layout (car photos ≥ 1960 × 1102px). Text that breaks the layout has a character limit.
-- Text formats: bold, italic, link. Core block styles the design doesn't have (outline buttons, rounded images, plain quotes) are removed. No Openverse, block directory, remote patterns, or code editor for the client.
+- Text formats: bold, italic, link. Core block styles the design doesn't have (outline buttons, rounded images, plain quotes) are removed. Embeds: YouTube and Vimeo in the inserter (Instagram links become embed blocks when pasted, and print as links). No Openverse, block directory, remote patterns, or code editor for the client.
 - Messages link to where shared content is edited ({settings} → Pan Motors settings, {cars} → Cars).
 
 ## Client role (Editor)
