@@ -330,32 +330,56 @@ add_action( 'wp_footer', 'panmotors_classic_global_styles', 2 ); // Classic them
  * Print the current page's blocks. Used by front-page.php and page.php for pages built from pm/*
  * blocks.
  *
- * Blocks render outside the_content, as the section templates did before D11: WordPress then
- * gives section images the same loading, decoding and fetchpriority attributes as before, and the
- * text is printed exactly as typed (no curly quotes or smilies). Core image blocks get their
- * srcset and lazy loading from the content filter below.
+ * pm/* sections render outside the_content, as the section templates did before D11: their
+ * images keep the attributes WordPress gives template images, and their text is printed exactly
+ * as typed. Everything else (core text blocks, embeds, shortcodes, plugins that filter the
+ * content) goes through the normal the_content pipeline, once for the whole page. The sections
+ * wait in HTML comment placeholders, which the content filters leave alone, and are put back
+ * after.
  */
 function panmotors_the_blocks() {
+	$sections = array();
+	$content  = '';
 	foreach ( parse_blocks( (string) get_the_content() ) as $block ) {
 		// The blank lines between blocks in the saved content are not printed.
 		if ( null === $block['blockName'] && '' === trim( $block['innerHTML'] ) ) {
 			continue;
 		}
-		echo render_block( $block ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Rendered blocks, escaped in each block.
+		if ( panmotors_is_section_block( $block ) ) {
+			$placeholder              = '<!--pm-section-' . count( $sections ) . '-->';
+			$sections[ $placeholder ] = render_block( $block );
+			$content                 .= $placeholder;
+		} else {
+			$content .= serialize_block( $block );
+		}
 	}
+
+	// Block content never gets automatic paragraphs (do_blocks() skips them the same way); the
+	// placeholders alone are not recognised as blocks, so wpautop is taken off for this call.
+	$autop = has_filter( 'the_content', 'wpautop' );
+	if ( false !== $autop ) {
+		remove_filter( 'the_content', 'wpautop', $autop );
+	}
+	$html = apply_filters( 'the_content', $content );
+	if ( false !== $autop ) {
+		add_filter( 'the_content', 'wpautop', $autop );
+	}
+
+	echo strtr( $html, $sections ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Rendered blocks and filtered content.
 }
 
 /**
- * Core image blocks: srcset, sizes and lazy loading, as the_content would add them.
+ * Whether a top-level block is a section: a pm/* block, or a synced pattern that holds one.
  *
- * @param string $html  Rendered block.
- * @param array  $block Parsed block.
- * @return string
+ * @param array $block Parsed block.
+ * @return bool
  */
-function panmotors_core_image_tags( $html, $block ) {
-	if ( 'core/image' === $block['blockName'] && ! doing_filter( 'the_content' ) ) {
-		$html = wp_filter_content_tags( $html, 'the_content' );
+function panmotors_is_section_block( $block ) {
+	if ( 0 === strpos( (string) $block['blockName'], 'pm/' ) ) {
+		return true;
 	}
-	return $html;
+	if ( 'core/block' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) ) {
+		return false !== strpos( (string) get_post_field( 'post_content', (int) $block['attrs']['ref'] ), '<!-- wp:pm/' );
+	}
+	return false;
 }
-add_filter( 'render_block', 'panmotors_core_image_tags', 10, 2 );
