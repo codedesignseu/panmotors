@@ -9,7 +9,8 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Screen | What |
 |---|---|
 | **Pages → Home** (block editor) | The homepage sections as blocks, in page order: Top video, Marques strip, Featured Cars, Our Values, About Pan Motors, Latest Cars, Pan Motors Live, The Showroom, Come And See. Each block shows the real section; its fields are in the sidebar (Block tab). |
-| **Pages → Featured Cars / About Pan Motors / Latest Cars / The Showroom / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until the inner pages are designed (D10). |
+| **Pages → About Pan Motors** | Built as `_design/v2/about.html` (D12): Page header, Story, What We Do, Our Values (light section), Photo call to action. |
+| **Pages → Featured Cars / Latest Cars / The Showroom / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until their v2 build (D12 steps 4–6; Latest Cars undecided). |
 | **Cars** | Every showcase car once: photo, marque, model, reference, detail, note, optional link, slider caption, place, Featured, order. Featured Cars and Latest Cars read from here. |
 | **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, **Our Values** (the values shown on Home and About; D12), Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
 | **Appearance → Menus** | Primary menu (header + mobile menu), Footer menu. |
@@ -76,7 +77,20 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | | Form | Settings → Technical → Enquiry form shortcode (admin) |
 | | "Form plugin shortcode not set" | admin notice (administrators only, translation-ready) |
 
-## Inner pages (placeholders until designed)
+## About (D12)
+
+| Element | Where |
+|---|---|
+| Small red line, title (H1, line breaks kept), intro, photo, black and white or colour, brightness | Page header block, Photo style (the intro is also the page's meta description without an SEO plugin; the photo's alt text from the media library) |
+| Our story: small red line, heading, photo | Story block |
+| First story paragraph | Story block → First paragraph; empty: Settings → Business → One-sentence description |
+| Further paragraphs | Story block → More paragraphs (bold, italic, links) |
+| What We Do: heading; per tile label, title, text, photo (2–4 tiles) | What We Do block |
+| Our Values | Our Values block, Light section (heading, intro); the values in Settings → Our Values |
+| See The Showroom card: small red line, heading, photo, two buttons (text and page) | Photo call to action block |
+| Footer colour | Page settings → Footer style (Auto: light, the last section is light) |
+
+## Other inner pages (placeholders until their v2 build)
 
 | Element | Where |
 |---|---|

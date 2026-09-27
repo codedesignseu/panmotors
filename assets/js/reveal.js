@@ -34,6 +34,8 @@ function initReveal() {
 
 	items.forEach((el, i) => {
 		el.style.animationDelay = `${(i % 3) * 90}ms`;
+		// Once revealed, drop the animation so hover transforms (card lift) apply.
+		el.addEventListener('animationend', () => el.classList.add('in-done'), { once: true });
 		observer.observe(el);
 	});
 }

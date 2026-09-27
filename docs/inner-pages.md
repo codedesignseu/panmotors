@@ -109,6 +109,8 @@ Blocks in order:
 
 ---
 
+As built (27 Sep 2026): exactly as v2 at 1440 (same page height, 4384px); the Story's first paragraph is the Options description, so its copy differs from v2 by design. The header zoom (1.14 → 1.02, 3.2s), the tile growth (317 / 698 / 317px at 1440 when hovering the middle tile) and the value card lift measure the same as the v2 export. To make the lift work, reveal.js now drops a reveal animation once it has finished (`.in-done`): its held `transform: none` blocked hover transforms. Existing About content was moved to this layout by `dev/migrations/2026-09-27-about-v2.php`.
+
 ## 6. Featured Cars (`_design/v2/cars.html`)
 
 ### 6.1 Car data (pm_car)

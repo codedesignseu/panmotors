@@ -84,3 +84,30 @@ function panmotors_hero_preload() {
 	);
 }
 add_action( 'wp_head', 'panmotors_hero_preload', 1 );
+
+/**
+ * Preload the photo of a page's Page header (Photo style). It is the LCP image of that page. Uses
+ * the same srcset and sizes as the <img> in template-parts/sections/page-header.php.
+ */
+function panmotors_page_header_preload() {
+	if ( ! is_page() || is_front_page() ) {
+		return;
+	}
+
+	$header = panmotors_find_block( get_queried_object_id(), 'pm/page-header' );
+	if ( 'image' !== panmotors_block_field( $header, 'header_style' ) ) {
+		return;
+	}
+	$image_id = (int) panmotors_block_field( $header, 'header_image' );
+	$src      = $image_id ? wp_get_attachment_image_src( $image_id, 'pm-hero' ) : false;
+	if ( ! $src ) {
+		return;
+	}
+
+	printf(
+		'<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="100vw" fetchpriority="high">' . "\n",
+		esc_url( $src[0] ),
+		esc_attr( (string) wp_get_attachment_image_srcset( $image_id, 'pm-hero' ) )
+	);
+}
+add_action( 'wp_head', 'panmotors_page_header_preload', 1 );

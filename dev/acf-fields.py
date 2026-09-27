@@ -599,8 +599,8 @@ b_story = block_group('story', 'Story', [
 b_services = block_group('services', 'What We Do', [
     heading('services_title', 'What We Do'),
     repeater('services', 'Services', [
-        text('service_index', 'Small red label', name='index', width='30', maxlength=20, placeholder='01 — Sales'),
-        text('service_title', 'Title', name='title', required=1, width='70', maxlength=20, placeholder='Sales'),
+        text('service_index', 'Small red label', name='index', maxlength=20, placeholder='01 — Sales'),
+        text('service_title', 'Title', name='title', required=1, maxlength=20, placeholder='Sales'),
         textarea('service_body', 'Short text', name='body', rows=2, maxlength=110, instructions='Up to 110 characters.'),
         image('service_image', 'Photo', name='image', min_width=1200,
               instructions='At least 1200px wide, the subject in the centre: the tile is tall and narrow until '

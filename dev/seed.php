@@ -461,16 +461,6 @@ $pm_cta = panmotors_seed_block(
 	)
 );
 
-// Our Values (D12): the values live in Options; About shows the light section.
-$pm_values_light = panmotors_seed_block(
-	'pm/values',
-	array(
-		'values_style' => 'light',
-		'values_title' => 'Our Values',
-		'values_intro' => 'Four things we hold to with every car and every client.',
-	)
-);
-
 $pm_about_block = panmotors_seed_block(
 	'pm/about',
 	array(
@@ -549,20 +539,6 @@ $pm_pages = array(
 						'featured_limit'  => 12,
 					)
 				),
-				$pm_cta,
-			)
-		)
-	),
-	'about'    => panmotors_seed_block_page(
-		'about',
-		'About Pan Motors',
-		implode(
-			"\n\n",
-			array(
-				$pm_hero( 'Mesoyi, Paphos', 'Sales, service and a boutique under one roof on Avenue 65.', $pm_media['sr_night'] ),
-				panmotors_seed_paragraphs( '<p>Sales, service and a boutique sit under one roof, so a car is prepared, presented and looked after by the same people who sold it.</p><p>DRAFT: [Client to add the family story: when Pan Motors started, who runs it today, and how the building on Avenue 65 came to be.]</p>' ),
-				$pm_about_block,
-				$pm_values_light,
 				$pm_cta,
 			)
 		)
@@ -649,6 +625,8 @@ $pm_pages = array(
 			)
 		)
 	),
+	// After Showroom and Contact, which its call to action links to (D12, _design/v2/about.html).
+	'about'    => panmotors_seed_block_page( 'about', 'About Pan Motors', panmotors_demo_about_content() ),
 );
 
 // The Contact button (header, mobile menu, 404) links here, unless already set.

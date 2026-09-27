@@ -33,7 +33,11 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/showroom` | block fields (photos gallery, eyebrow, heading, intro) + Options hours | option: show hours |
 | `pm/enquire` | block fields (heading, intro) + Options contact + form shortcode | |
 | `pm/faq` | block fields (questions repeater) | outputs FAQPage schema when present |
-| `pm/page-hero` | block fields | inner pages, design to be agreed |
+| `pm/page-hero` | block fields | inner pages not yet rebuilt; replaced by `pm/page-header` (D12) |
+| `pm/page-header` | block fields | D12: the page's H1, Photo or Text style (`inner-pages.md` §2.3) |
+| `pm/story` | block fields + Options description (first paragraph when empty) | D12, About |
+| `pm/services` | block fields (repeater, 2–4 tiles) | D12, About ("What We Do") |
+| `pm/cta-image` | block fields | D12, About and Showroom |
 | `pm/cta-band` | block fields | inner pages, design to be agreed |
 
 Inner pages may also use a small set of core blocks for plain text: heading, paragraph, list, image, quote, buttons, and embeds limited to YouTube, Vimeo and Instagram (other providers, and embeds that cannot load, print as a plain link). Everything else from core is hidden. Core blocks, shortcodes, embeds and plugins filtering `the_content` run through the normal content pipeline; pm/* sections are rendered outside it so their HTML matches the design exactly (`panmotors_the_blocks()`).
@@ -67,7 +71,7 @@ Each block's JS module loads only when that block renders (keep `panmotors_use_m
 
 ## 6. SEO and GEO
 
-No change to the rules in `theme-map.md` §9. Blocks render server-side, so the HTML is the same. The homepage H1 lives in `pm/hero`. Inner pages get their H1 from `pm/page-hero` (or the page title when there is none). FAQ schema comes from `pm/faq`.
+No change to the rules in `theme-map.md` §9. Blocks render server-side, so the HTML is the same. The homepage H1 lives in `pm/hero`. Inner pages get their H1 from `pm/page-header` (D12) or `pm/page-hero` (or the page title when there is neither). FAQ schema comes from `pm/faq`.
 
 ## 7. Safety rules
 

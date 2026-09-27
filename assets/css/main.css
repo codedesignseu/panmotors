@@ -2,7 +2,7 @@
    Pan Motors — main stylesheet
    1. Fonts  2. Tokens  3. Reset  4. Base type  5. Utilities
    6. Motion  7. Header  8. Footer  9. Homepage sections  10. Inner pages
-   11. Page templates  12. Reduced motion
+   11. Page templates  11b. Inner page blocks (D12)  12. Reduced motion
    Sections add their own blocks below as they are built.
    ========================================================================== */
 
@@ -516,6 +516,14 @@ p {
 
 .pm-js [data-rise-l].in {
 	animation: pm-rise-l 1.1s var(--ease) forwards;
+}
+
+/* Revealed: the finished animation is dropped (reveal.js), so its held transform no longer blocks
+   hover transforms such as the lift of the light value cards. */
+.pm-js [data-rise].in-done,
+.pm-js [data-rise-l].in-done {
+	opacity: 1;
+	animation: none;
 }
 
 [data-hero-in] {
@@ -2388,6 +2396,320 @@ p {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 14px;
+}
+
+/* 11b. Inner page blocks (D12, docs/inner-pages.md, _design/v2/) */
+
+/* Page header: the page's H1. Photo style: full-bleed photo that settles from a slow zoom, copy at
+   the bottom. Text style: the title on the dark page. */
+@keyframes pm-hero-zoom {
+	from { transform: scale(1.14); }
+	to { transform: scale(1.02); }
+}
+
+.pm-page-header__copy {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.pm-page-header__eyebrow {
+	margin-bottom: 26px;
+}
+
+.pm-page-header__title {
+	font-size: calc(clamp(56px, 10vw, 184px) * var(--h-scale));
+}
+
+.pm-page-header__intro {
+	max-width: 360px;
+	margin: 0;
+	font-size: calc(var(--fs-body) * .9375);
+	line-height: 1.75;
+	opacity: .66;
+}
+
+.pm-page-header--text {
+	padding: 190px var(--pad-x) 72px;
+}
+
+.pm-page-header--image {
+	position: relative;
+	height: 92vh;
+	min-height: 640px;
+	overflow: hidden;
+}
+
+.pm-page-header__media {
+	position: absolute;
+	inset: 0;
+	animation: pm-hero-zoom 3.2s var(--ease) both;
+}
+
+.pm-page-header__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: brightness(var(--pm-brightness, .62));
+}
+
+.pm-page-header--grayscale .pm-page-header__img {
+	filter: grayscale(1) contrast(1.06) brightness(var(--pm-brightness, .6));
+}
+
+.pm-page-header__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .5) 0%, rgb(var(--ink-rgb) / .1) 40%, rgb(var(--ink-rgb) / .94) 100%);
+}
+
+.pm-page-header--image .pm-page-header__copy {
+	position: absolute;
+	right: var(--pad-x);
+	bottom: 56px;
+	left: var(--pad-x);
+}
+
+.pm-page-header--image .pm-page-header__title {
+	font-size: calc(clamp(56px, 9.4vw, 176px) * var(--h-scale));
+}
+
+.pm-page-header--image .pm-page-header__intro {
+	opacity: .72;
+}
+
+@media (max-width: 880px) {
+	.pm-page-header--image {
+		height: 88svh;
+		min-height: 520px;
+	}
+
+	.pm-page-header--image .pm-page-header__copy {
+		bottom: 32px;
+	}
+}
+
+/* Story: copy left, 4:5 photo right (stacks when narrow). */
+.pm-story {
+	padding-top: 140px;
+	padding-bottom: 140px;
+}
+
+.pm-story__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+	align-items: center;
+	gap: clamp(40px, 6vw, 96px);
+}
+
+.pm-story__eyebrow {
+	margin-bottom: 26px;
+}
+
+.pm-story__title {
+	margin-bottom: 34px;
+	font-size: calc(clamp(40px, 5.4vw, 88px) * var(--h-scale));
+	line-height: .94;
+}
+
+.pm-story__text p {
+	max-width: 48ch;
+	margin: 0 0 22px;
+	font-size: var(--fs-body);
+	line-height: 1.8;
+	opacity: .74;
+}
+
+.pm-story__text p:last-child {
+	margin-bottom: 0;
+}
+
+.pm-story__text a {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+
+.pm-story__media {
+	aspect-ratio: 4 / 5;
+}
+
+@media (max-width: 880px) {
+	.pm-story {
+		padding-top: var(--pad-y);
+		padding-bottom: var(--pad-y);
+	}
+}
+
+/* What We Do: photo tiles in a row; the hovered tile grows to 2.2 and its photo zooms. */
+.pm-services {
+	padding-bottom: 140px;
+}
+
+.pm-services__title {
+	margin-bottom: 54px;
+}
+
+.pm-services__tiles {
+	display: flex;
+	gap: 14px;
+}
+
+.pm-service {
+	position: relative;
+	flex: 1 1 0;
+	min-width: 0;
+	height: clamp(440px, 42vw, 600px);
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface);
+	transition: flex-grow 1.05s var(--ease), box-shadow .9s ease;
+}
+
+.pm-service:hover {
+	flex-grow: 2.2;
+	box-shadow: 0 34px 90px color-mix(in srgb, var(--shadow) 55%, transparent);
+}
+
+.pm-service__media {
+	position: absolute;
+	inset: 0;
+}
+
+.pm-service__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .1) 30%, rgb(var(--ink-rgb) / .9) 100%);
+	pointer-events: none;
+}
+
+.pm-service__copy {
+	position: absolute;
+	right: 26px;
+	bottom: 28px;
+	left: 26px;
+	pointer-events: none;
+}
+
+.pm-service__index {
+	margin: 0 0 12px;
+	color: var(--accent);
+	font-size: 10px;
+	letter-spacing: .28em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-service__title {
+	margin-bottom: 14px;
+	font-size: calc(clamp(32px, 3vw, 48px) * var(--h-scale));
+	line-height: 1;
+}
+
+.pm-service__body {
+	max-width: 36ch;
+	margin: 0;
+	font-size: calc(var(--fs-body) * .875);
+	line-height: 1.7;
+	opacity: .72;
+}
+
+@media (max-width: 880px) {
+	.pm-services__tiles {
+		flex-direction: column;
+	}
+
+	.pm-service {
+		flex: none;
+		height: 88vw;
+		max-height: 480px;
+	}
+}
+
+/* Photo call to action: dark photo card on a paper section. Inside the card the text is light, so
+   the light-section colours are set back. */
+.pm-cta-image {
+	padding-bottom: 120px;
+}
+
+.pm-cta-image__card {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	padding: clamp(80px, 11vw, 160px) clamp(28px, 5vw, 72px);
+	border-radius: var(--r);
+	background: var(--surface);
+	color: var(--paper);
+}
+
+.pm-cta-image__media {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+}
+
+.pm-cta-image__media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: grayscale(1) brightness(.55);
+}
+
+.pm-cta-image__shade {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(90deg, rgb(var(--ink-rgb) / .85) 0%, rgb(var(--ink-rgb) / .3) 70%);
+}
+
+.pm-cta-image .pm-cta-image__eyebrow {
+	margin-bottom: 24px;
+	color: var(--accent);
+}
+
+.pm-cta-image__title {
+	margin-bottom: 40px;
+	font-size: calc(clamp(44px, 7vw, 120px) * var(--h-scale));
+	line-height: .9;
+}
+
+.pm-cta-image__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.pm-cta-image .pm-pill--solid:hover,
+.pm-cta-image .pm-pill--solid:focus-visible {
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.pm-pill__arrow {
+	font-size: 16px;
+}
+
+.pm-cta-image .pm-cta-image__outline {
+	padding: 18px 30px;
+	border-color: color-mix(in srgb, var(--paper) 50%, transparent);
+	color: var(--paper);
+	font-size: 12px;
+	transition-duration: .5s;
+}
+
+.pm-cta-image .pm-cta-image__outline:hover,
+.pm-cta-image .pm-cta-image__outline:focus-visible {
+	background: var(--paper);
+	color: var(--ink);
+	border-color: var(--paper);
+}
+
+@media (max-width: 880px) {
+	.pm-cta-image__card {
+		padding: 56px 24px;
+	}
 }
 
 /* 12. Reduced motion: no reveals, no hero entrance, no video, static marquee. */

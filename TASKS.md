@@ -61,7 +61,7 @@ Tick each task when it is done and checked in the browser.
 One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 1080, 880 and 390px, check every field in the block editor, heading outline, keyboard, reduced motion, clean debug.log and console, and the homepage baseline diff (only the §4 changes may differ).
 - [x] 1. Global design settings (§1): Design tab, tokens, fonts, contrast warning; zero-change diff at the defaults
 - [x] 2. Our Values to Options + homepage updates (§3, §4) + nav active state + footer auto style (§2.1, §2.2)
-- [ ] 3. About (§5), including `pm/page-header`, `pm/story`, `pm/services`, `pm/cta-image`
+- [x] 3. About (§5), including `pm/page-header`, `pm/story`, `pm/services`, `pm/cta-image`
 - [ ] 4. Featured Cars (§6)
 - [ ] 5. Showroom (§7)
 - [ ] 6. Contact (§8)

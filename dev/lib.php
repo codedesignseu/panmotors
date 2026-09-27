@@ -222,3 +222,87 @@ function panmotors_seed_paragraphs( $html ) {
 	return implode( "\n\n", array_map( static fn( $p ) => "<!-- wp:paragraph -->\n<p>{$p}</p>\n<!-- /wp:paragraph -->", $m[1] ) );
 }
 
+
+/**
+ * About page as block markup (D12, _design/v2/about.html): page header (photo), story, What We Do,
+ * Our Values (light section), photo call to action. Used by the seed and by the migration that
+ * brings an existing About page to this layout. Photos are the seed's imports; links go to the
+ * Showroom and Contact pages.
+ *
+ * @return string
+ */
+function panmotors_demo_about_content() {
+	return implode(
+		"\n\n",
+		array(
+			panmotors_seed_block(
+				'pm/page-header',
+				array(
+					'header_style'      => 'image',
+					'header_eyebrow'    => 'About — Mesoyi, Paphos',
+					'header_title'      => "About\nPan Motors",
+					'header_intro'      => 'Luxury in Motion. A family-run car house on Avenue 65.',
+					'header_image'      => panmotors_dev_media( 'DSC08440-copy-Large.jpg' ),
+					'header_filter'     => 'grayscale',
+					'header_brightness' => 60,
+				)
+			),
+			panmotors_seed_block(
+				'pm/story',
+				array(
+					'story_eyebrow' => 'Our story',
+					'story_title'   => "One Roof,\nOne Family",
+					'story_lead'    => '', // The one-sentence description from the options.
+					'story_text'    => '<p>Sales, service and a boutique sit under one roof, so a car is prepared, presented and looked after by the same people who sold it.</p><p>Every car on the floor is chosen, inspected and prepared in house before it is shown.</p>',
+					'story_image'   => panmotors_dev_media( 'IMG_6844-scaled.jpg' ),
+				)
+			),
+			panmotors_seed_block(
+				'pm/services',
+				array(
+					'services_title' => 'What We Do',
+					'services'       => array(
+						array(
+							'index' => '01 — Sales',
+							'title' => 'Sales',
+							'body'  => 'Luxury and performance cars, chosen and prepared before they reach the floor.',
+							'image' => panmotors_dev_media( 'black-porsche-911-luxury-sports-car-with-glossy-reflections-studio-lighting-generative-ai.jpg' ),
+						),
+						array(
+							'index' => '02 — Service',
+							'title' => 'Service',
+							'body'  => 'Aftercare in house, by the people who know the car.',
+							'image' => panmotors_dev_media( 'DSC08476-copy-Large.jpg' ),
+						),
+						array(
+							'index' => '03 — Boutique',
+							'title' => 'Boutique',
+							'body'  => 'Parts, accessories and details for the car and the driver.',
+							'image' => panmotors_dev_media( 'sleek-black-sports-car-dramatic-lighting.jpg' ),
+						),
+					),
+				)
+			),
+			panmotors_seed_block(
+				'pm/values',
+				array(
+					'values_style' => 'light',
+					'values_title' => 'Our Values',
+					'values_intro' => 'Four things we hold to with every car and every client.',
+				)
+			),
+			panmotors_seed_block(
+				'pm/cta-image',
+				array(
+					'ctai_eyebrow' => 'Avenue 65, Mesoyi',
+					'ctai_title'   => "See The\nShowroom",
+					'ctai_image'   => panmotors_dev_media( 'DSC04357-copy-scaled.jpg' ),
+					'ctai_label'   => 'Visit the showroom',
+					'ctai_link'    => panmotors_dev_page( 'showroom' ),
+					'ctai_label_2' => 'Book a visit',
+					'ctai_link_2'  => panmotors_dev_page( 'contact' ),
+				)
+			),
+		)
+	);
+}
