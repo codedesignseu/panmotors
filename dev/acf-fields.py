@@ -217,6 +217,9 @@ options = group('options', 'Pan Motors settings', [
              instructions='One factual sentence: who you are, what you do, where. Shown as the paragraph in '
                           'the homepage About section and used by Google. Up to 200 characters.'),
     number('founded_year', 'Year founded', width='50', min=1900, max=2100, instructions='Optional. Used by Google only.'),
+    gallery('business_photos', 'Business photos', max=3, min_width=1200,
+            instructions='Up to three photos of the showroom for Google and AI search (not shown on the site). '
+                         'Landscape, at least 1200px wide, ' + IMG_FORMAT + ' Empty: no photos are given.'),
 
     tab('contact', 'Contact'),
     text('street_address', 'Street', required=1, width='50', maxlength=60, placeholder='Avenue 65'),
@@ -367,6 +370,11 @@ options = group('options', 'Pan Motors settings', [
                instructions='The page opened by the Contact button (header, mobile menu, page not found). Empty: the button is hidden.'),
     text('enquire_form_shortcode', 'Enquiry form shortcode', placeholder='[contact-form-7 id="123"]', admin_only=True,
          instructions='From the form plugin. Empty: a preview form is shown that does not send.'),
+    true_false('allow_ai_crawlers', 'Allow AI crawlers', default=1, on='Allowed', off='Blocked', admin_only=True, width='50',
+               instructions='GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and Google-Extended may read the site (robots.txt). '
+                            'Off: they are asked not to. Search engines are not affected.'),
+    true_false('llms_txt', 'llms.txt', default=1, on='On', off='Off', admin_only=True, width='50',
+               instructions='A plain-text summary for AI tools at /llms.txt: business facts, hours and the menu pages.'),
     true_false('design_editors', 'Editors can change the design', default=0, on='Yes', off='No', admin_only=True,
                instructions='Shows the Design tab to Editors. Off: only administrators see it.'),
 ], [[{'param': 'options_page', 'operator': '==', 'value': 'panmotors-settings'}]])
@@ -576,6 +584,10 @@ b_cta = block_group('cta-band', 'Call to action', [
 ])
 
 page_settings = group('page', 'Page settings', [
+    select('schema_type', 'Type for search engines', {'auto': 'Automatic', 'web': 'Web page', 'about': 'About page',
+                                                      'contact': 'Contact page'}, 'auto',
+           instructions='How Google and AI search read this page. Automatic: Contact page for the page the Contact button '
+                        'opens, else Web page.'),
     button_group('footer_style', 'Footer style', {'auto': 'Auto', 'dark': 'Dark', 'light': 'Light'}, 'auto',
                  instructions='Auto: the footer takes the colour of the last section on the page.'),
 ], [[{'param': 'post_type', 'operator': '==', 'value': 'page'}]], order=10)

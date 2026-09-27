@@ -121,6 +121,34 @@
             "append": ""
         },
         {
+            "key": "field_pm_business_photos",
+            "label": "Business photos",
+            "name": "business_photos",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Up to three photos of the showroom for Google and AI search (not shown on the site). Landscape, at least 1200px wide, JPG or WebP, sRGB colour. Empty: no photos are given.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": "",
+            "max": 3,
+            "min_width": 1200,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "insert": "append",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_pm_tab_contact",
             "label": "Contact",
             "name": "",
@@ -1820,6 +1848,48 @@
             "append": ""
         },
         {
+            "key": "field_pm_allow_ai_crawlers",
+            "label": "Allow AI crawlers",
+            "name": "allow_ai_crawlers",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and Google-Extended may read the site (robots.txt). Off: they are asked not to. Search engines are not affected.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Allowed",
+            "ui_off_text": "Blocked"
+        },
+        {
+            "key": "field_pm_llms_txt",
+            "label": "llms.txt",
+            "name": "llms_txt",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "A plain-text summary for AI tools at \/llms.txt: business facts, hours and the menu pages.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "On",
+            "ui_off_text": "Off"
+        },
+        {
             "key": "field_pm_design_editors",
             "label": "Editors can change the design",
             "name": "design_editors",
@@ -1862,5 +1932,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790529639
+    "modified": 1790536614
 }

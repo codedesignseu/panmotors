@@ -3,6 +3,38 @@
     "title": "Page settings",
     "fields": [
         {
+            "key": "field_pm_schema_type",
+            "label": "Type for search engines",
+            "name": "schema_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "How Google and AI search read this page. Automatic: Contact page for the page the Contact button opens, else Web page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "auto": "Automatic",
+                "web": "Web page",
+                "about": "About page",
+                "contact": "Contact page"
+            },
+            "default_value": "auto",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
             "key": "field_pm_footer_style",
             "label": "Footer style",
             "name": "footer_style",
@@ -48,5 +80,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1790536614
 }
