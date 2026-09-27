@@ -630,7 +630,12 @@ b_cta_image = block_group('cta-image', 'Photo call to action', [
     textarea('ctai_title', 'Heading', rows=2, width='50', maxlength=30,
              instructions='Each new line starts a new line on the page. Up to 30 characters.'),
     image('ctai_image', 'Background photo', min_width=1920,
-          instructions='Landscape, at least 2400px wide. Shown in black and white, darkened. ' + IMG_FORMAT),
+          instructions='Landscape, at least 2400px wide, darkened behind the heading. ' + IMG_FORMAT),
+    button_group('ctai_filter', 'Photo colour', {'grayscale': 'Black and white', 'none': 'Colour'}, 'grayscale', width='33'),
+    range_field('ctai_brightness', 'Photo brightness', 55, 40, 70, append='%', width='33',
+                instructions='About uses 55%, Showroom 50%.'),
+    button_group('ctai_size', 'Card height', {'tall': 'Tall', 'standard': 'Standard'}, 'tall', width='34',
+                 instructions='Tall: About. Standard: a little less space above and below the heading (Showroom).'),
     text('ctai_label', 'Main button text', width='50', maxlength=26, placeholder='Visit the showroom',
          instructions='The light button. An arrow is added.'),
     page_link('ctai_link', 'Main button goes to', width='50'),
@@ -661,7 +666,26 @@ b_cars_grid = block_group('cars-grid', 'Cars grid', [
          instructions='Before each car\'s number, e.g. "No. 01".'),
 ])
 
-GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+b_photo_slider = block_group('photo-slider', 'Photo slider', [
+    text('slider_title', 'Heading', width='50', default_value='Inside', maxlength=30),
+    text('slider_hint', 'Hint', width='50', default_value='Drag or use arrows', maxlength=30,
+         instructions='Right of the caption under the photo.'),
+    gallery('slider_photos', 'Photos', min=1, max=12, min_width=1600,
+            instructions='Landscape (16:10), at least 2160px wide, ' + IMG_FORMAT +
+                         ' The caption under each photo is the image\'s Caption in the media library; its alt text '
+                         'describes it for screen readers. Drag to reorder.'),
+])
+
+b_visit = block_group('visit', 'Visit', [
+    message('block_visit', 'Hours and address', 'The opening hours, address, phone numbers, email and map link come from '
+                                                 '{settings} (Opening hours and Contact), so they match the rest of the site.'),
+    text('visit_hours_label', 'Small red line, hours', width='50', default_value='Opening hours', maxlength=30),
+    text('visit_find_label', 'Small red line, address', width='50', default_value='Find us', maxlength=30),
+    text('visit_directions_label', 'Directions button', width='50', default_value='Get directions', maxlength=24,
+         instructions='Opens the Google Maps link from {settings}. An arrow is added. Empty: no button.'),
+])
+
+GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':

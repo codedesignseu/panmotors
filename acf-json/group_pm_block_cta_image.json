@@ -48,7 +48,7 @@
             "name": "ctai_image",
             "aria-label": "",
             "type": "image",
-            "instructions": "Landscape, at least 2400px wide. Shown in black and white, darkened. JPG or WebP, sRGB colour.",
+            "instructions": "Landscape, at least 2400px wide, darkened behind the heading. JPG or WebP, sRGB colour.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -66,6 +66,73 @@
             "max_size": 8,
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_ctai_filter",
+            "label": "Photo colour",
+            "name": "ctai_filter",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "grayscale": "Black and white",
+                "none": "Colour"
+            },
+            "default_value": "grayscale",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_pm_ctai_brightness",
+            "label": "Photo brightness",
+            "name": "ctai_brightness",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "About uses 55%, Showroom 50%.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 55,
+            "min": 40,
+            "max": 70,
+            "step": 1,
+            "prepend": "",
+            "append": "%"
+        },
+        {
+            "key": "field_pm_ctai_size",
+            "label": "Card height",
+            "name": "ctai_size",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Tall: About. Standard: a little less space above and below the heading (Showroom).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "tall": "Tall",
+                "standard": "Standard"
+            },
+            "default_value": "tall",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_pm_ctai_label",
@@ -179,5 +246,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790515812
+    "modified": 1790525817
 }

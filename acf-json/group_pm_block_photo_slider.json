@@ -1,0 +1,96 @@
+{
+    "key": "group_pm_block_photo_slider",
+    "title": "Block: Photo slider",
+    "fields": [
+        {
+            "key": "field_pm_slider_title",
+            "label": "Heading",
+            "name": "slider_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Inside",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_slider_hint",
+            "label": "Hint",
+            "name": "slider_hint",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Right of the caption under the photo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Drag or use arrows",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_slider_photos",
+            "label": "Photos",
+            "name": "slider_photos",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Landscape (16:10), at least 2160px wide, JPG or WebP, sRGB colour. The caption under each photo is the image's Caption in the media library; its alt text describes it for screen readers. Drag to reorder.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": 1,
+            "max": 12,
+            "min_width": 1600,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "insert": "append",
+            "preview_size": "medium"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/photo-slider"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790525817
+}
