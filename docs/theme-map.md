@@ -264,7 +264,7 @@ The About paragraph must open with the one-sentence description. The address blo
 
 ### 9.3 Structured data (JSON-LD)
 
-Theme outputs one `@graph` in `wp_head` on the front page, built from options. Nothing hardcoded.
+Theme outputs one `@graph` in `wp_head` on every page (`inc/schema.php`, built 27 Sep 2026), from options and the page. Nothing hardcoded; empty values are left out. The image list comes from Options → Business → Business photos (up to 3), never from another page. `dev/tests/schema.mjs` writes each page's graph to `dev/.cache/schema/` and checks it.
 
 - `AutoDealer` (the correct schema.org LocalBusiness subtype for a car business. It is never shown to visitors, so it does not conflict with the boutique positioning). `@id` = `https://panmotors.com/#business`. Fields: name, legalName, description, url, logo, image (3 showroom photos), telephone, email, address (`PostalAddress`), geo (`GeoCoordinates`), hasMap, openingHoursSpecification, sameAs, brand (one `Brand` per marque), areaServed (Paphos, Cyprus).
 - `WebSite` with `@id` `#website`, publisher → `#business`.
@@ -311,7 +311,8 @@ Answers: 1 to 3 plain sentences, the fact first. No marketing lead-ins.
 - XML sitemap from the SEO plugin.
 - Canonical to `https://panmotors.com/`.
 - robots.txt allows search and AI crawlers (Googlebot, Bingbot, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended). Confirm with the client that they are fine with AI crawlers.
-- Optional `llms.txt` at the root with the entity facts and page list. Cheap to add, low but non-zero value.
+- `llms.txt` at the root (rewrite rule, `inc/crawl.php`) with the entity facts, hours and the menu pages; Technical switch, on by default.
+- robots.txt through the `robots_txt` filter: AI crawlers allowed unless Technical → Allow AI crawlers is off; one Sitemap line (the SEO plugin's index when active, else `wp-sitemap.xml`). The core sitemap lists pages only.
 - Meta description default from the one-sentence description. OG and Twitter image: absolute URL to a 1200x630 showroom photo.
 
 ### 9.8 Pages (decision D7)

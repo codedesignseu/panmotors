@@ -642,6 +642,11 @@ $pm_pages = array(
 	'about'    => panmotors_seed_block_page( 'about', 'About Pan Motors', panmotors_demo_about_content() ),
 );
 
+// About is an AboutPage for search engines, unless its type was set already.
+if ( $pm_pages['about'] && ! metadata_exists( 'post', $pm_pages['about'], 'schema_type' ) ) {
+	update_field( 'field_pm_schema_type', 'about', $pm_pages['about'] );
+}
+
 // The Contact button (header, mobile menu, 404) links here, unless already set.
 if ( $pm_reset || ! get_option( 'options_page_contact' ) ) {
 	update_field( 'field_pm_page_contact', $pm_pages['contact'], 'option' );

@@ -78,19 +78,13 @@ add_action( 'wp_head', 'panmotors_js_class', 0 );
  * intro, falling back to the one-sentence business description from the options.
  */
 function panmotors_meta_description() {
-	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' ) || defined( 'SEOPRESS_VERSION' ) ) {
+	if ( panmotors_seo_plugin_active() ) {
 		return;
 	}
 
-	$text = '';
-	if ( is_singular() && ! is_front_page() ) {
-		$text = panmotors_block_field( panmotors_find_block( get_queried_object_id(), 'pm/page-header' ), 'header_intro' );
-		$text = $text ? $text : panmotors_block_field( panmotors_find_block( get_queried_object_id(), 'pm/page-hero' ), 'page_intro' );
-	}
-	$text = $text ? $text : panmotors_option( 'description' );
-
+	$text = panmotors_page_description( ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0 );
 	if ( $text ) {
-		printf( '<meta name="description" content="%s">' . "\n", esc_attr( wp_strip_all_tags( $text ) ) );
+		printf( '<meta name="description" content="%s">' . "\n", esc_attr( $text ) );
 	}
 }
 add_action( 'wp_head', 'panmotors_meta_description', 1 );

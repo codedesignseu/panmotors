@@ -33,7 +33,7 @@ panmotors/
   index.php  page.php  404.php  theme.json (settings only)
   blocks/<name>/   block.json + render.php per ACF block (pm/hero … pm/cta-band, D11)
   patterns/        block patterns (Homepage full design)
-  inc/        setup.php enqueue.php acf.php design.php blocks.php cars.php admin.php schema.php helpers.php
+  inc/        setup.php enqueue.php acf.php design.php blocks.php cars.php admin.php schema.php crawl.php helpers.php
   template-parts/front/       hero and marquee views
   template-parts/sections/    section views, data passed as args by the block render.php
   template-parts/components/  page-hero.php cta-band.php car-tile.php etc.

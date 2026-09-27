@@ -170,3 +170,16 @@ With a test Editor created for the run and deleted afterwards with `--reassign=1
 - `dev/tests/editor-caps.php`: 14 capability checks, all pass (pages, Cars, synced patterns, settings, menus, logo, media; no theme files, themes, plugins, users, options or field groups).
 - `dev/tests/editor-admin.mjs`: wp-admin menus (Dashboard, Media, Pages, Cars, Pan Motors, Appearance, Profile, Tools), blocked screens, Technical tab hidden, Home opens in the block editor, Cars and Patterns reachable.
 - `dev/tests/editor-blocks.mjs`: on Home, all nine blocks preview with the same text as the site; one field per block typed into the sidebar (the 7 blocks with fields), saved, shown on the site, restored; Featured Cars moved below Our Values and back; Latest Cars hidden (section and `slider-drag.js` gone) and shown again; the Our Values pattern edited once and shown on Home and About; a car added under Cars (Featured, order 0) appeared as tile 1 of Featured Cars and slide 1 of Latest Cars, then was deleted and disappeared. The hero reports `canRemove=false canMove=false`.
+
+## Search and AI (TASKS §5)
+
+| Element | Where |
+|---|---|
+| Business facts in the JSON-LD and llms.txt | Settings → Business, Contact, Opening hours, Marques, Social (the same fields as the visible text) |
+| Photos for Google and AI search (not shown on the site) | Settings → Business → Business photos (up to 3) |
+| Map position (JSON-LD `geo`) | Settings → Contact → Latitude and Longitude (both, or neither is used) |
+| AI crawlers in robots.txt | Settings → Technical → Allow AI crawlers (admin) |
+| /llms.txt on or off | Settings → Technical → llms.txt (admin) |
+| A page's type for search engines (About page, Contact page) | Page settings → Type for search engines |
+| Meta description without an SEO plugin | the page header intro; Home: the one-sentence description |
+

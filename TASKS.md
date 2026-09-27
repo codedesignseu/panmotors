@@ -66,19 +66,14 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] 5. Showroom (§7)
 - [x] 6. Contact (§8)
 
-## 5. SEO, GEO and extra pages
-- [ ] `inc/schema.php`: JSON-LD graph from options (AutoDealer, WebSite, WebPage, FAQPage)
-- [ ] Skip link, `lang`, landmarks, heading outline checked
-- [x] Preload hero poster and main fonts
-- [ ] robots.txt rules and optional `llms.txt`
-- [ ] Inner pages (D9, `pages.md` §4), built from blocks (D11): `pm/page-hero`, core text blocks, section blocks, `pm/cta-band`
-  - [ ] Featured Cars
-  - [ ] About (with Our Values)
-  - [ ] Latest Cars
-  - [ ] Showroom (with "Getting here")
-  - [ ] Contact (enquire, hours, map link, FAQ, no CTA band)
-  - [ ] Privacy and Cookie policy on `page.php`
-- [ ] BreadcrumbList and per-page WebPage in the JSON-LD graph
+## 5. SEO and GEO
+- [x] `inc/schema.php`: one JSON-LD `@graph` on every page from Options and the page (AutoDealer, WebSite, WebPage / AboutPage / ContactPage, BreadcrumbList on inner pages, FAQPage from `pm/faq`); empty values left out; no Car, Product or Offer
+- [x] SEO plugin coordination: Yoast and Rank Math schema switched off by their filters (one business entity); theme meta description only without an SEO plugin
+- [x] robots.txt through the `robots_txt` filter (AI crawlers allowed, Technical switch to block them), one Sitemap line; core sitemap: pages only
+- [x] `/llms.txt` (rewrite rule, Technical switch)
+- [x] Skip link, `lang`, landmarks, heading outline checked (`dev/tests/schema.mjs`)
+- [x] Preload hero poster and main fonts (only the fonts chosen in Design)
+- [x] Inner pages built from blocks (D11) as the v2 design (D12, section 4c): Featured Cars, About, Showroom, Contact; Latest Cars kept as a placeholder (design undecided); Privacy and Cookie policy on `page.php`
 
 ## 6. Finish
 - [ ] Escaping review across all templates
