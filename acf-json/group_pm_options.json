@@ -213,7 +213,7 @@
                 "id": ""
             },
             "maxlength": 10,
-            "placeholder": "8060",
+            "placeholder": 8060,
             "default_value": "",
             "prepend": "",
             "append": ""
@@ -1062,7 +1062,7 @@
                 "id": ""
             },
             "maxlength": 4,
-            "default_value": "404",
+            "default_value": 404,
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -1222,7 +1222,10 @@
             "pm_design": 1,
             "default_value": "#0c0b0b",
             "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_pm_color_paper",
@@ -1241,7 +1244,10 @@
             "pm_design": 1,
             "default_value": "#f3f2f2",
             "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_pm_color_accent",
@@ -1260,7 +1266,10 @@
             "pm_design": 1,
             "default_value": "#ec3013",
             "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_pm_color_surface",
@@ -1279,7 +1288,10 @@
             "pm_design": 1,
             "default_value": "#161514",
             "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_pm_msg_contrast",
@@ -1330,7 +1342,9 @@
             "ajax": 0,
             "placeholder": "",
             "allow_custom": 0,
-            "search_placeholder": ""
+            "search_placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_pm_font_body",
@@ -1362,7 +1376,9 @@
             "ajax": 0,
             "placeholder": "",
             "allow_custom": 0,
-            "search_placeholder": ""
+            "search_placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_pm_font_heading_regular",
@@ -1826,5 +1842,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790512967
+    "modified": 1790513177
 }

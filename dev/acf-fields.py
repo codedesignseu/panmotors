@@ -137,12 +137,12 @@ def page_field(key, label, name=None, **kw):
 
 def color(key, label, default, name=None, **kw):
     return base(key, label, name or key, 'color_picker', default_value=default, enable_opacity=0,
-                return_format='string', **kw)
+                return_format='string', custom_palette_source='', palette_colors='', show_color_wheel=True, **kw)
 
 
 def select(key, label, choices, default, name=None, **kw):
     return base(key, label, name or key, 'select', choices=choices, default_value=default, return_format='value',
-                multiple=0, allow_null=0, ui=0, ajax=0, placeholder='', allow_custom=0, search_placeholder='', **kw)
+                multiple=0, allow_null=0, ui=0, ajax=0, placeholder='', allow_custom=0, search_placeholder='', create_options=0, save_options=0, **kw)
 
 
 def range_field(key, label, default, min, max, step=1, append='', name=None, **kw):
@@ -222,7 +222,7 @@ options = group('options', 'Pan Motors settings', [
     text('street_address', 'Street', required=1, width='50', maxlength=60, placeholder='Avenue 65'),
     text('locality', 'Area', width='50', maxlength=40, placeholder='Mesoyi'),
     text('city', 'City', required=1, width='33', maxlength=40, placeholder='Paphos'),
-    text('postcode', 'Postcode', required=1, width='33', maxlength=10, placeholder='8060'),
+    text('postcode', 'Postcode', required=1, width='33', maxlength=10, placeholder=8060),
     text('country', 'Country code', required=1, width='33', default_value='CY', maxlength=2,
          instructions='Two letters, e.g. CY.'),
     text('country_name', 'Country', width='50', default_value='Cyprus', maxlength=40,
@@ -292,7 +292,7 @@ options = group('options', 'Pan Motors settings', [
 
     tab('notfound', 'Page not found'),
     message('notfound', 'The "page not found" page', 'Shown when someone opens a link that no longer exists.'),
-    text('notfound_code', 'Large number', width='25', default_value='404', maxlength=4),
+    text('notfound_code', 'Large number', width='25', default_value=404, maxlength=4),
     text('notfound_eyebrow', 'Small red line', width='75', default_value='Page not found', maxlength=40),
     text('notfound_title', 'Heading', default_value='Off the Map', maxlength=30),
     textarea('notfound_text', 'Text', rows=2, maxlength=160,
