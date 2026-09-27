@@ -3,7 +3,8 @@
  *
  * Hooks: [data-menu-toggle] (button with aria-controls) and the panel it controls.
  * Closes on Escape, link click, and when the viewport grows past 1080px.
- * Locks page scroll and makes <main> and the footer inert while open, so focus stays in the menu.
+ * Locks page scroll and makes the skip link, <main> and the footer inert while open, so focus
+ * stays in the menu.
  * Motion is handled in CSS (reduced motion included).
  */
 
@@ -18,7 +19,8 @@ function initMenu() {
 	}
 
 	const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
-	const outside = [document.querySelector('main'), document.querySelector('body > footer')].filter(Boolean);
+	// Everything the open menu covers, the skip link included (it points into <main>).
+	const outside = [document.querySelector('.pm-skip-link'), document.querySelector('main'), document.querySelector('body > footer')].filter(Boolean);
 	const setOutsideInert = (value) => outside.forEach((el) => { el.inert = value; });
 
 	const open = () => {

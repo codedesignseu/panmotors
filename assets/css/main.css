@@ -737,6 +737,7 @@ p {
 }
 
 .pm-footer a[aria-current="page"] {
+	opacity: 1;
 	color: var(--accent-text-light);
 }
 
@@ -784,7 +785,15 @@ p {
 	justify-content: space-between;
 	gap: 32px;
 	padding-top: 34px;
-	border-top: 1px solid var(--line-light);
+	/* --line-light at the .62 the row's text is shown at. */
+	border-top: 1px solid color-mix(in srgb, var(--ink) 11.18431373%, transparent);
+}
+
+/* Footer text at .62, set on each part rather than the row, so the current page and a hovered or
+   focused link can show at full strength: the accent at .62 is below 4.5 : 1 on both backgrounds. */
+.pm-footer__brand,
+.pm-footer__copy,
+.pm-footer__links a {
 	opacity: .62;
 }
 
@@ -813,12 +822,13 @@ p {
 
 .pm-footer a:hover,
 .pm-footer a:focus-visible {
+	opacity: 1;
 	color: var(--accent-text-light);
 }
 
 /* Dark footer (Footer style, inner-pages §2.2): on the ink page, main logo as it is. */
 .pm-footer--dark .pm-footer__row {
-	border-top-color: color-mix(in srgb, var(--paper) 16.07843137%, transparent);
+	border-top-color: color-mix(in srgb, var(--paper) 9.96862745%, transparent);
 }
 
 .pm-footer--dark .pm-footer__logo {
@@ -1096,7 +1106,7 @@ p {
 
 .pm-values__grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 	gap: 14px;
 }
 
@@ -1223,7 +1233,7 @@ p {
 
 .pm-about__grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
 	align-items: center;
 	gap: 48px;
 }
@@ -1367,7 +1377,7 @@ p {
 
 .pm-live__grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
 	gap: 16px;
 	max-width: 1120px;
 	margin: 0 auto;
@@ -1716,7 +1726,7 @@ p {
 
 .pm-enquire__card {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
 	gap: 64px;
 	padding: 72px 56px;
 	border-radius: var(--r);
@@ -1959,8 +1969,18 @@ p {
 	text-transform: none;
 }
 
-/* Messages after sending. */
-.pm-form .wpcf7-response-output,
+/* On the Contact card (--surface) the accent is under 4.5 : 1 at this size; a touch of paper
+   lifts it. */
+.pm-contact-form__card .pm-form .wpcf7-not-valid-tip,
+.pm-contact-form__card .pm-form .ff-el-is-error .error,
+.pm-contact-form__card .pm-form .text-danger,
+.pm-contact-form__card .pm-form label.wpforms-error,
+.pm-contact-form__card .pm-form em.wpforms-error {
+	color: color-mix(in srgb, var(--accent) 85%, var(--paper));
+}
+
+/* Messages after sending. (.wpcf7 form: CF7's own rule for the box is .wpcf7 form …) */
+.pm-form .wpcf7 form .wpcf7-response-output,
 .pm-form .ff-message-success,
 .pm-form .ff-errors-in-stack,
 .pm-form .wpforms-confirmation-container-full,
@@ -1977,15 +1997,20 @@ p {
 	line-height: 1.6;
 }
 
-.pm-form .invalid .wpcf7-response-output,
-.pm-form .failed .wpcf7-response-output,
-.pm-form .spam .wpcf7-response-output,
+/* CF7's own rules (.wpcf7 form.invalid .wpcf7-response-output) are more specific than
+   .pm-form .invalid …, hence the extra .wpcf7 form. */
+.pm-form .wpcf7 form.invalid .wpcf7-response-output,
+.pm-form .wpcf7 form.unaccepted .wpcf7-response-output,
+.pm-form .wpcf7 form.payment-required .wpcf7-response-output,
+.pm-form .wpcf7 form.failed .wpcf7-response-output,
+.pm-form .wpcf7 form.aborted .wpcf7-response-output,
+.pm-form .wpcf7 form.spam .wpcf7-response-output,
 .pm-form .ff-errors-in-stack,
 .pm-form .wpforms-error-container {
 	border-color: var(--accent);
 }
 
-.pm-form .sent .wpcf7-response-output,
+.pm-form .wpcf7 form.sent .wpcf7-response-output,
 .pm-form .ff-message-success,
 .pm-form .wpforms-confirmation-container-full {
 	border-color: var(--paper);
@@ -2856,6 +2881,11 @@ p {
 .pm-cars__count {
 	margin-left: 6px;
 	opacity: .5;
+}
+
+/* On the selected (paper) pill, .5 is 3.6 : 1; .6 reaches 4.5 : 1. */
+.pm-cars__filter[aria-pressed="true"] .pm-cars__count {
+	opacity: .6;
 }
 
 .pm-cars__grid {
