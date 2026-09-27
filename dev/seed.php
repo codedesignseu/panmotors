@@ -4,27 +4,31 @@
  *
  * Run from Local's site shell, in the theme folder, as the administrator (user 1), after
  * committing acf-json/:
- *   wp eval-file dev/seed.php --user=1
+ *   wp --require=dev/seed-command.php panmotors seed --user=1
+ *   wp eval-file dev/seed.php --user=1            (the same, without the command)
+ *
+ * Safe by default: it only creates what is missing. It never overwrites or deletes existing
+ * pages, field values, options, cars, menus or media, and never recreates demo content the client
+ * deleted (registry: option panmotors_seed_created). It exports the database to dev/.cache/db/
+ * before writing anything.
+ *
+ *   wp --require=dev/seed-command.php panmotors seed --user=1 --reset-demo
+ * overwrites the demo content (items flagged _pm_demo) with the seed's version. It refuses to run
+ * when WP_ENVIRONMENT_TYPE is production.
+ *
+ * Structural changes to existing content (a block added to a page, data moved) are one-off
+ * scripts in dev/migrations/, never the seed.
  *
  * What it does (D11, docs/blocks.md):
- * - Imports _design/uploads into the media library with descriptive file names,
- *   titles, alt text and captions (theme-map 9.5).
  * - Updates the database copies of the field groups from acf-json, so they are editable in wp-admin,
  *   and removes the database copies of pm groups whose JSON is gone.
- * - Fills the Pan Motors options page with the business facts from the design.
- * - Creates the six demo cars (Cars post type) and fills Options → Our Values (D12). Replaces the
- *   "Our Values" synced pattern it created earlier (D11) with the pm/values block on each page
- *   that used it, then deletes that pattern.
- * - Writes the section pages and Home as block markup. A page that already has pm/* blocks is
- *   left alone (the client's layout); PM_SEED_REBUILD=1 rewrites them anyway.
- * - Removes the per-page field data of the old model from those pages.
- * - Creates the Primary and Footer menus with page links and assigns them.
- * - Sets a static front page, the site title and the custom logo.
+ * - Imports _design/uploads into the media library with descriptive file names, titles, alt text
+ *   and captions (theme-map 9.5).
+ * - Fills the Pan Motors options that were never saved with the business facts from the design.
+ * - Creates the demo cars, the pages as block markup, Home, the legal pages and the menus.
+ * - Sets a static front page, the site title, pretty permalinks and the custom logo, where unset.
  *
  * Copy marked DRAFT is for the client to confirm or replace.
- *
- * Safe to re-run: media is matched on the original file name, cars on a seed key.
- * It never deletes pages, users, patterns or field groups it did not create.
  * Everything it creates is flagged with the `_pm_demo` meta / `panmotors_demo_content` option
  * so it can be found and removed before launch.
  *
@@ -39,6 +43,13 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 // user without --reassign trashes their pages (docs/migration-blocks.md §0).
 if ( 1 !== get_current_user_id() ) {
 	WP_CLI::error( 'Run the seed as the administrator: wp eval-file dev/seed.php --user=1' );
+}
+
+require_once __DIR__ . '/lib.php';
+
+$pm_reset = panmotors_seed_reset();
+if ( $pm_reset && 'production' === wp_get_environment_type() ) {
+	WP_CLI::error( '--reset-demo overwrites content and never runs on production (WP_ENVIRONMENT_TYPE).' );
 }
 
 // The seed imports acf-json into the database; only from committed files.
@@ -61,6 +72,9 @@ if ( ! is_dir( PANMOTORS_SEED_SRC ) ) {
 	WP_CLI::error( 'Missing _design/uploads. Copy the Claude Design export into _design/ first.' );
 }
 
+panmotors_dev_backup( $pm_reset ? 'seed-reset' : 'seed' );
+WP_CLI::log( $pm_reset ? 'Mode: --reset-demo, demo content is overwritten.' : 'Mode: create what is missing, keep everything else.' );
+
 /*
  * ------------------------------------------------------------------
  * 1. Field groups: update the database copies from acf-json, so wp-admin matches the repo.
@@ -68,6 +82,8 @@ if ( ! is_dir( PANMOTORS_SEED_SRC ) ) {
  */
 // Update in place: with the existing ID, ACF also removes fields that are no longer in the JSON.
 // Never acf_delete_field_group() here, it deletes the acf-json file too.
+// ACF would also write each imported group back to acf-json with a new timestamp: not during the seed.
+acf_update_setting( 'json', false );
 foreach ( glob( get_template_directory() . '/acf-json/group_*.json' ) as $pm_json ) {
 	$pm_group = json_decode( file_get_contents( $pm_json ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	if ( ! $pm_group ) {
@@ -78,6 +94,7 @@ foreach ( glob( get_template_directory() . '/acf-json/group_*.json' ) as $pm_jso
 	acf_import_field_group( $pm_group );
 	WP_CLI::log( "Field group: {$pm_group['title']}" );
 }
+acf_update_setting( 'json', true );
 
 // Remove database groups whose JSON is gone (D11: the per-page and Home groups).
 // Their JSON file no longer exists, so acf_delete_field_group() has nothing else to delete.
@@ -95,29 +112,27 @@ foreach ( get_posts( array( 'post_type' => 'acf-field-group', 'post_status' => '
  */
 
 /**
- * Import one file from _design/uploads, or return the existing attachment.
+ * Import one file from _design/uploads, or return the existing attachment. Title, caption and alt
+ * are written when the file is imported, and again only with --reset-demo.
  *
  * @param string $original Original file name in _design/uploads.
  * @param string $filename New, descriptive file name.
  * @param string $title    Attachment title.
  * @param string $alt      Alt text (images only).
  * @param string $caption  Attachment caption.
- * @return int Attachment ID.
+ * @return int Attachment ID, or 0 when the client deleted it.
  */
 function panmotors_seed_media( $original, $filename, $title, $alt = '', $caption = '' ) {
-	$existing = get_posts(
-		array(
-			'post_type'      => 'attachment',
-			'post_status'    => 'inherit',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-			'meta_key'       => '_pm_seed_source', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_value'     => $original, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-		)
-	);
+	$id  = panmotors_dev_media( $original );
+	$key = 'media:' . $original;
 
-	if ( $existing ) {
-		$id = (int) $existing[0];
+	if ( $id ) {
+		panmotors_seed_created( $key, true );
+		if ( ! panmotors_seed_reset() ) {
+			return $id;
+		}
+	} elseif ( panmotors_seed_created( $key ) && ! panmotors_seed_reset() ) {
+		return 0; // Deleted by the client: not imported again.
 	} else {
 		$tmp = wp_tempnam( $filename );
 		copy( PANMOTORS_SEED_SRC . $original, $tmp );
@@ -137,6 +152,7 @@ function panmotors_seed_media( $original, $filename, $title, $alt = '', $caption
 
 		update_post_meta( $id, '_pm_seed_source', $original );
 		update_post_meta( $id, '_pm_demo', 1 );
+		panmotors_seed_created( $key, true );
 		WP_CLI::log( "Imported {$original} as {$filename}" );
 	}
 
@@ -279,10 +295,16 @@ $pm_options = array(
 	'notfound_contact_label' => 'Contact us',
 );
 
+// Only options that were never saved: a field the client emptied stays empty.
+$pm_filled = 0;
 foreach ( $pm_options as $pm_name => $pm_value ) {
+	if ( ! $pm_reset && null !== get_option( 'options_' . $pm_name, null ) ) {
+		continue;
+	}
 	update_field( 'field_pm_' . $pm_name, $pm_value, 'option' );
+	++$pm_filled;
 }
-WP_CLI::log( 'Options page filled.' );
+WP_CLI::log( "Options: {$pm_filled} filled." );
 
 /*
  * ------------------------------------------------------------------
@@ -290,178 +312,76 @@ WP_CLI::log( 'Options page filled.' );
  * ------------------------------------------------------------------
  */
 
-/**
- * ACF block data for a pm/* block, from field names. Field keys come from the block's field
- * group (acf-json), so seed data never repeats them. Repeaters are flattened the way ACF stores
- * them: rows_0_sub, and the row count under the repeater name.
- *
- * @param string $block  Block name, e.g. 'pm/hero'.
- * @param array  $values Field name => value.
- * @return array Block attributes.
- */
-function panmotors_seed_block_attrs( $block, $values ) {
-	$group  = 'group_pm_block_' . str_replace( '-', '_', substr( $block, 3 ) );
-	$fields = array();
-	foreach ( acf_get_fields( $group ) as $field ) {
-		$fields[ $field['name'] ] = $field;
-	}
-
-	$data    = array();
-	$flatten = static function ( $prefix, $field, $value ) use ( &$data, &$flatten ) {
-		if ( 'repeater' === $field['type'] ) {
-			$subs = array_column( $field['sub_fields'], null, 'name' );
-			foreach ( array_values( (array) $value ) as $i => $row ) {
-				foreach ( $row as $name => $sub_value ) {
-					if ( isset( $subs[ $name ] ) ) {
-						$flatten( "{$prefix}_{$i}_{$name}", $subs[ $name ], $sub_value );
-					}
-				}
-			}
-			$data[ $prefix ]       = count( (array) $value );
-			$data[ '_' . $prefix ] = $field['key'];
-			return;
-		}
-		$data[ $prefix ]       = is_array( $value ) ? array_map( 'strval', $value ) : $value;
-		$data[ '_' . $prefix ] = $field['key'];
-	};
-
-	foreach ( $values as $name => $value ) {
-		if ( ! isset( $fields[ $name ] ) ) {
-			WP_CLI::error( "Seed: no field '{$name}' in block {$block}." );
-		}
-		$flatten( $name, $fields[ $name ], $value );
-	}
-
-	return array(
-		'name' => $block,
-		'data' => $data,
-		'mode' => 'preview',
-	);
-}
+// Block markup helpers (panmotors_seed_block() and friends) are in dev/lib.php.
 
 /**
- * One pm/* block as markup.
- *
- * @param string $block  Block name.
- * @param array  $values Field name => value.
- * @param array  $extra  Extra attributes (e.g. lock).
- * @return string
- */
-function panmotors_seed_block( $block, $values = array(), $extra = array() ) {
-	return serialize_block(
-		array(
-			'blockName'    => $block,
-			'attrs'        => array_merge( panmotors_seed_block_attrs( $block, $values ), $extra ),
-			'innerBlocks'  => array(),
-			'innerHTML'    => '',
-			'innerContent' => array(),
-		)
-	);
-}
-
-/**
- * Core paragraphs as block markup, from simple HTML paragraphs.
- *
- * @param string $html One or more <p> elements.
- * @return string
- */
-function panmotors_seed_paragraphs( $html ) {
-	preg_match_all( '#<p>(.*?)</p>#s', $html, $m );
-	return implode( "\n\n", array_map( static fn( $p ) => "<!-- wp:paragraph -->\n<p>{$p}</p>\n<!-- /wp:paragraph -->", $m[1] ) );
-}
-
-/**
- * A published page built from blocks. Created when missing. Its content is written only while it
- * has no pm/* blocks yet (or PM_SEED_REBUILD=1), so the client's own layout is kept. Never deletes.
+ * A published page built from blocks. Created when missing (and not deleted by the client before).
+ * An existing page is left as it is; --reset-demo rewrites a demo page's content.
  *
  * @param string $slug    Page slug.
  * @param string $title   Page title.
  * @param string $content Block markup.
- * @return int
+ * @return int Page ID, or 0 when the client deleted it.
  */
 function panmotors_seed_block_page( $slug, $title, $content ) {
-	$page = get_page_by_path( $slug );
-	if ( ! $page ) {
-		$id = wp_insert_post(
-			array(
-				'post_type'    => 'page',
-				'post_status'  => 'publish',
-				'post_title'   => $title,
-				'post_name'    => $slug,
-				'post_content' => wp_slash( $content ), // Keep JSON escapes (\n) in block attributes.
-			)
-		);
-		update_post_meta( $id, '_pm_demo', 1 );
-		WP_CLI::log( "Created page /{$slug}/" );
-	} else {
-		$id = $page->ID;
-		if ( false === strpos( $page->post_content, '<!-- wp:pm/' ) || getenv( 'PM_SEED_REBUILD' ) ) {
-			wp_update_post(
-				array(
-					'ID'           => $id,
-					'post_content' => wp_slash( $content ),
-				)
-			);
-			WP_CLI::log( "Page /{$slug}/: written as blocks." );
-		}
-	}
-	update_post_meta( $id, '_wp_page_template', 'default' );
-	return (int) $id;
+	return panmotors_seed_page( $slug, $title, $content );
 }
 
 /**
- * Delete post meta left by the field-group era (D9 page fields, Home fields). Only these keys.
- *
- * @param int $post_id Post ID.
- */
-function panmotors_seed_forget_page_fields( $post_id ) {
-	$old = array( 'page_eyebrow', 'page_intro', 'page_hero_image', 'page_body', 'featured_cars', 'about_image', 'about_story', 'about_stats', 'values', 'latest_cars', 'showroom_photos', 'getting_here', 'enquire_title', 'enquire_intro', 'faq_title', 'faqs', 'hero_', 'live_', 'home_', 'form_' );
-	foreach ( array_keys( get_post_meta( $post_id ) ) as $key ) {
-		$bare = ltrim( $key, '_' );
-		foreach ( $old as $prefix ) {
-			if ( $bare === $prefix || str_starts_with( $bare, rtrim( $prefix, '_' ) . '_' ) || ( str_ends_with( $prefix, '_' ) && str_starts_with( $bare, $prefix ) ) ) {
-				delete_post_meta( $post_id, $key );
-				break;
-			}
-		}
-	}
-}
-
-/**
- * Create or update a published page and return its ID (legal pages, plain editor content).
+ * A published page. Created when missing and not deleted by the client before; an existing page
+ * is left as it is. --reset-demo rewrites the title and content of a demo page.
  *
  * @param string $slug     Page slug.
- * @param string $title    Page title (the H1).
- * @param string $content  Post content.
- * @param int    $existing Existing page ID to reuse, if any.
- * @return int
+ * @param string $title    Page title (the H1 when the page has no page header).
+ * @param string $content  Post content (block markup or plain HTML).
+ * @param int    $existing Existing page ID to use, if any (WordPress's own privacy page).
+ * @return int Page ID, or 0 when the client deleted it.
  */
 function panmotors_seed_page( $slug, $title, $content = '', $existing = 0 ) {
 	$page = $existing ? get_post( $existing ) : get_page_by_path( $slug );
-	$data = array(
-		'post_type'    => 'page',
-		'post_status'  => 'publish',
-		'post_title'   => $title,
-		'post_name'    => $slug,
-		'post_content' => $content,
-	);
+	$page = ( $page && 'trash' !== $page->post_status ) ? $page : null;
+	$key  = 'page:' . $slug;
 
 	if ( $page ) {
-		$data['ID'] = $page->ID;
-		$id         = wp_update_post( $data );
-	} else {
-		$id = wp_insert_post( $data );
+		panmotors_seed_created( $key, true );
+		if ( panmotors_seed_reset() && get_post_meta( $page->ID, '_pm_demo', true ) ) {
+			wp_update_post(
+				array(
+					'ID'           => $page->ID,
+					'post_title'   => $title,
+					'post_content' => wp_slash( $content ), // Keep JSON escapes (\n) in block attributes.
+				)
+			);
+			WP_CLI::log( "Page /{$slug}/: reset to the demo content." );
+		}
+		return (int) $page->ID;
 	}
 
+	if ( panmotors_seed_created( $key ) && ! panmotors_seed_reset() ) {
+		WP_CLI::log( "Page /{$slug}/: deleted by the client, not created again." );
+		return 0;
+	}
+
+	$id = (int) wp_insert_post(
+		array(
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_title'   => $title,
+			'post_name'    => $slug,
+			'post_content' => wp_slash( $content ),
+		)
+	);
 	update_post_meta( $id, '_wp_page_template', 'default' );
 	update_post_meta( $id, '_pm_demo', 1 );
-
-	return (int) $id;
+	panmotors_seed_created( $key, true );
+	WP_CLI::log( "Page /{$slug}/: created." );
+	return $id;
 }
 
 /*
  * ------------------------------------------------------------------
- * 5. Cars (pm_car). Matched on _pm_seed_key so re-runs update, never duplicate.
+ * 5. Cars (pm_car). Matched on _pm_seed_key: created when missing, never duplicated; an
+ *    existing car is only rewritten with --reset-demo.
  *    Dates set the Latest Cars order (newest first); Featured cars in menu_order.
  * ------------------------------------------------------------------
  */
@@ -485,7 +405,16 @@ foreach ( $pm_cars as $pm_key => list( $pm_marque, $pm_model, $pm_ref, $pm_spec,
 			'fields'         => 'ids',
 		)
 	);
-	$pm_car  = array(
+	$pm_car_key = 'car:' . $pm_key;
+	if ( $pm_found ) {
+		panmotors_seed_created( $pm_car_key, true );
+		if ( ! $pm_reset ) {
+			continue;
+		}
+	} elseif ( panmotors_seed_created( $pm_car_key ) && ! $pm_reset ) {
+		continue; // Deleted by the client.
+	}
+	$pm_car = array(
 		'post_type'   => 'pm_car',
 		'post_status' => 'publish',
 		'post_title'  => "{$pm_marque} {$pm_model}",
@@ -495,7 +424,8 @@ foreach ( $pm_cars as $pm_key => list( $pm_marque, $pm_model, $pm_ref, $pm_spec,
 	if ( $pm_found ) {
 		$pm_car['ID'] = $pm_found[0];
 	}
-	$pm_car_id = wp_insert_post( $pm_car );
+	$pm_car_id = (int) ( isset( $pm_car['ID'] ) ? wp_update_post( $pm_car ) : wp_insert_post( $pm_car ) );
+	panmotors_seed_created( $pm_car_key, true );
 	update_post_meta( $pm_car_id, '_pm_seed_key', $pm_key );
 	update_post_meta( $pm_car_id, '_pm_demo', 1 );
 	foreach ( array(
@@ -513,7 +443,7 @@ foreach ( $pm_cars as $pm_key => list( $pm_marque, $pm_model, $pm_ref, $pm_spec,
 		update_field( 'field_pm_' . $pm_field, $pm_value, $pm_car_id );
 	}
 }
-WP_CLI::log( 'Cars: ' . count( $pm_cars ) . '.' );
+WP_CLI::log( 'Cars: ' . count( $pm_cars ) . ' in the seed, missing ones created.' );
 
 /*
  * ------------------------------------------------------------------
@@ -531,16 +461,7 @@ $pm_cta = panmotors_seed_block(
 	)
 );
 
-// Our Values (D12): the values live in Options; Home shows dark cards linking to About, About the
-// light section.
-$pm_values_dark  = panmotors_seed_block(
-	'pm/values',
-	array(
-		'values_style' => 'dark',
-		'values_title' => 'Our Values',
-		'values_link'  => get_page_by_path( 'about' ) ? get_page_by_path( 'about' )->ID : 0,
-	)
-);
+// Our Values (D12): the values live in Options; About shows the light section.
 $pm_values_light = panmotors_seed_block(
 	'pm/values',
 	array(
@@ -601,45 +522,6 @@ $pm_enquire_block = panmotors_seed_block(
 		'form_button'        => 'Send message',
 	)
 );
-
-// The "Our Values" synced pattern (D11) is replaced by the pm/values block, which reads Options
-// (D12). Each page that used the pattern gets the block in its place (dark cards on Home, the light
-// section elsewhere), then the pattern is deleted. Only the pattern this seed created (seed key).
-$pm_pattern = get_posts(
-	array(
-		'post_type'      => 'wp_block',
-		'post_status'    => 'any',
-		'meta_key'       => '_pm_seed_key', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-		'meta_value'     => 'values', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-		'posts_per_page' => 1,
-		'fields'         => 'ids',
-	)
-);
-if ( $pm_pattern ) {
-	$pm_ref_pattern = '/<!-- wp:block \{"ref":' . (int) $pm_pattern[0] . '[,}][^>]*\/-->/';
-	$pm_referers = get_posts(
-		array(
-			'post_type'      => array( 'page', 'wp_block' ),
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-		)
-	);
-	foreach ( $pm_referers as $pm_page ) {
-		if ( ! preg_match( $pm_ref_pattern, $pm_page->post_content ) ) {
-			continue;
-		}
-		$pm_block = (int) get_option( 'page_on_front' ) === $pm_page->ID ? $pm_values_dark : $pm_values_light;
-		wp_update_post(
-			array(
-				'ID'           => $pm_page->ID,
-				'post_content' => wp_slash( preg_replace_callback( $pm_ref_pattern, static fn() => $pm_block, $pm_page->post_content ) ),
-			)
-		);
-		WP_CLI::log( "Page {$pm_page->ID}: Our Values pattern replaced by the pm/values block." );
-	}
-	wp_delete_post( (int) $pm_pattern[0], true );
-	WP_CLI::log( "Synced pattern Our Values ({$pm_pattern[0]}) deleted." );
-}
 
 $pm_hero = static fn( $eyebrow, $intro, $image ) => panmotors_seed_block(
 	'pm/page-hero',
@@ -769,34 +651,34 @@ $pm_pages = array(
 	),
 );
 
-// The Contact button (header, mobile menu, 404) links here. The only page mapping left (D11).
-update_field( 'field_pm_page_contact', $pm_pages['contact'], 'option' );
-foreach ( array( 'page_featured', 'page_about', 'page_latest', 'page_showroom', 'page_values', 'page_live' ) as $pm_gone ) {
-	delete_option( "options_{$pm_gone}" );
-	delete_option( "_options_{$pm_gone}" );
+// The Contact button (header, mobile menu, 404) links here, unless already set.
+if ( $pm_reset || ! get_option( 'options_page_contact' ) ) {
+	update_field( 'field_pm_page_contact', $pm_pages['contact'], 'option' );
 }
 
-// Legal pages on page.php. WordPress's own privacy page is reused if it exists.
+// Legal pages on page.php, created only when missing. WordPress's own privacy page is reused if it
+// exists (its own draft text is then kept).
 $pm_legal_draft = '<p>DRAFT: [Client to supply the %s. The text below this line is a placeholder.]</p><h2>Who we are</h2><p>Pan Motors Ltd, Avenue 65, Mesoyi, Paphos 8060, Cyprus.</p>';
 $pm_privacy_id  = panmotors_seed_page( 'privacy-policy', 'Privacy Policy', sprintf( $pm_legal_draft, 'privacy policy' ), (int) get_option( 'wp_page_for_privacy_policy' ) );
 $pm_cookie_id   = panmotors_seed_page( 'cookie-policy', 'Cookie Policy', sprintf( $pm_legal_draft, 'cookie policy' ) );
-update_option( 'wp_page_for_privacy_policy', $pm_privacy_id );
+if ( $pm_privacy_id && ! get_option( 'wp_page_for_privacy_policy' ) ) {
+	update_option( 'wp_page_for_privacy_policy', $pm_privacy_id );
+}
 
 /*
  * ------------------------------------------------------------------
  * 7. Home: the full design as blocks. The hero cannot be moved or removed.
  * ------------------------------------------------------------------
  */
-$pm_home = get_posts(
+// Home's Our Values: dark cards linking to About (created above).
+$pm_values_dark  = panmotors_seed_block(
+	'pm/values',
 	array(
-		'post_type'      => 'page',
-		'title'          => 'Home',
-		'post_status'    => 'any',
-		'posts_per_page' => 1,
-		'fields'         => 'ids',
+		'values_style' => 'dark',
+		'values_title' => 'Our Values',
+		'values_link'  => $pm_pages['about'],
 	)
 );
-
 $pm_home_content = implode(
 	"\n\n",
 	array(
@@ -908,59 +790,49 @@ $pm_home_content = implode(
 	)
 );
 
-$pm_front = array(
-	'post_type'    => 'page',
-	'post_title'   => 'Home',
-	'post_status'  => 'publish',
-	'post_content' => wp_slash( $pm_home_content ),
-);
-if ( $pm_home ) {
-	$pm_front['ID'] = (int) $pm_home[0];
-	// Keep the client's own layout once Home is built from blocks. PM_SEED_REBUILD=1 rewrites it.
-	if ( false !== strpos( get_post_field( 'post_content', $pm_home[0] ), '<!-- wp:pm/' ) && ! getenv( 'PM_SEED_REBUILD' ) ) {
-		unset( $pm_front['post_content'] );
-	}
+// Home: created when missing (found by the front page setting, else by title). An existing Home is
+// never rewritten, except a demo Home with --reset-demo.
+$pm_front_id = (int) get_option( 'page_on_front' );
+if ( ! $pm_front_id || ! get_post( $pm_front_id ) || 'trash' === get_post_status( $pm_front_id ) ) {
+	$pm_home     = get_posts(
+		array(
+			'post_type'      => 'page',
+			'title'          => 'Home',
+			'post_status'    => array( 'publish', 'draft', 'private' ),
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+		)
+	);
+	$pm_front_id = $pm_home ? (int) $pm_home[0] : 0;
 }
-// wp_update_post() for an existing Home: wp_insert_post() with an ID and no post_content saves
-// empty content, which is what the "keep the client's layout" branch above leaves out.
-$pm_front_id = (int) ( isset( $pm_front['ID'] ) ? wp_update_post( $pm_front ) : wp_insert_post( $pm_front ) );
-update_option( 'show_on_front', 'page' );
-update_option( 'page_on_front', $pm_front_id );
-update_post_meta( $pm_front_id, '_pm_demo', 1 );
-update_post_meta( $pm_front_id, '_wp_page_template', 'default' );
-WP_CLI::log( "Home: page {$pm_front_id}, built from blocks." );
-
-// Existing Home (not rebuilt): the "All featured cars" button (D12) is added to its first Featured
-// Cars block, once. A block that already has the button field, even empty, is left as it is.
-$pm_home_blocks = parse_blocks( get_post_field( 'post_content', $pm_front_id ) );
-foreach ( $pm_home_blocks as &$pm_block ) {
-	if ( 'pm/featured-cars' !== $pm_block['blockName'] ) {
-		continue;
-	}
-	if ( ! array_key_exists( 'featured_more_label', $pm_block['attrs']['data'] ?? array() ) ) {
-		$pm_more = panmotors_seed_block_attrs(
-			'pm/featured-cars',
-			array(
-				'featured_more_label' => 'All featured cars',
-				'featured_more_link'  => $pm_pages['featured'],
-			)
-		);
-		$pm_block['attrs']['data'] = array_merge( (array) ( $pm_block['attrs']['data'] ?? array() ), $pm_more['data'] );
+if ( $pm_front_id ) {
+	panmotors_seed_created( 'page:home', true );
+	if ( $pm_reset && get_post_meta( $pm_front_id, '_pm_demo', true ) ) {
 		wp_update_post(
 			array(
 				'ID'           => $pm_front_id,
-				'post_content' => wp_slash( serialize_blocks( $pm_home_blocks ) ),
+				'post_content' => wp_slash( $pm_home_content ),
 			)
 		);
-		WP_CLI::log( 'Home: "All featured cars" button added to Featured Cars.' );
+		WP_CLI::log( "Home: page {$pm_front_id}, reset to the demo content." );
 	}
-	break;
+} elseif ( ! panmotors_seed_created( 'page:home' ) || $pm_reset ) {
+	$pm_front_id = (int) wp_insert_post(
+		array(
+			'post_type'    => 'page',
+			'post_title'   => 'Home',
+			'post_status'  => 'publish',
+			'post_content' => wp_slash( $pm_home_content ),
+		)
+	);
+	update_post_meta( $pm_front_id, '_pm_demo', 1 );
+	update_post_meta( $pm_front_id, '_wp_page_template', 'default' );
+	panmotors_seed_created( 'page:home', true );
+	WP_CLI::log( "Home: page {$pm_front_id}, created from blocks." );
 }
-unset( $pm_block );
-
-// Field data from the per-page model is no longer read by anything (D11).
-foreach ( array_merge( array_values( $pm_pages ), array( $pm_front_id ) ) as $pm_page_id ) {
-	panmotors_seed_forget_page_fields( $pm_page_id );
+if ( $pm_front_id && ( $pm_reset || 'page' !== get_option( 'show_on_front' ) || ! get_post( (int) get_option( 'page_on_front' ) ) ) ) {
+	update_option( 'show_on_front', 'page' );
+	update_option( 'page_on_front', $pm_front_id );
 }
 
 /*
@@ -970,14 +842,18 @@ foreach ( array_merge( array_values( $pm_pages ), array( $pm_front_id ) ) as $pm
  */
 
 /**
- * Create or rebuild a menu of page links and return its ID.
+ * Create a menu of page links when it is missing and return its ID. An existing menu is left as it
+ * is; --reset-demo rebuilds it.
  *
  * @param string $name  Menu name.
  * @param array  $links Label => page ID.
  * @return int
  */
 function panmotors_seed_menu( $name, $links ) {
-	$menu    = wp_get_nav_menu_object( $name );
+	$menu = wp_get_nav_menu_object( $name );
+	if ( $menu && ! panmotors_seed_reset() ) {
+		return (int) $menu->term_id;
+	}
 	$menu_id = $menu ? (int) $menu->term_id : (int) wp_create_nav_menu( $name );
 
 	foreach ( (array) wp_get_nav_menu_items( $menu_id ) as $item ) {
@@ -985,7 +861,7 @@ function panmotors_seed_menu( $name, $links ) {
 	}
 
 	$position = 0;
-	foreach ( $links as $label => $page_id ) {
+	foreach ( array_filter( $links ) as $label => $page_id ) {
 		wp_update_nav_menu_item(
 			$menu_id,
 			0,
@@ -1004,40 +880,51 @@ function panmotors_seed_menu( $name, $links ) {
 	return $menu_id;
 }
 
-set_theme_mod(
-	'nav_menu_locations',
-	array(
-		'primary' => panmotors_seed_menu(
-			'Primary',
-			array(
-				'Featured Cars'    => $pm_pages['featured'],
-				'About Pan Motors' => $pm_pages['about'],
-				'Latest Cars'      => $pm_pages['latest'],
-				'Showroom'         => $pm_pages['showroom'],
-			)
-		),
-		'footer'  => panmotors_seed_menu(
-			'Footer',
-			array(
-				'Featured Cars'  => $pm_pages['featured'],
-				'Showroom'       => $pm_pages['showroom'],
-				'Contact'        => $pm_pages['contact'],
-				'Privacy Policy' => $pm_privacy_id,
-				'Cookie Policy'  => $pm_cookie_id,
-			)
-		),
-	)
+$pm_menus = array(
+	'primary' => panmotors_seed_menu(
+		'Primary',
+		array(
+			'Featured Cars'    => $pm_pages['featured'],
+			'About Pan Motors' => $pm_pages['about'],
+			'Latest Cars'      => $pm_pages['latest'],
+			'Showroom'         => $pm_pages['showroom'],
+		)
+	),
+	'footer'  => panmotors_seed_menu(
+		'Footer',
+		array(
+			'Featured Cars'  => $pm_pages['featured'],
+			'Showroom'       => $pm_pages['showroom'],
+			'Contact'        => $pm_pages['contact'],
+			'Privacy Policy' => $pm_privacy_id,
+			'Cookie Policy'  => $pm_cookie_id,
+		)
+	),
 );
+// Only locations that have no menu yet.
+$pm_locations = (array) get_theme_mod( 'nav_menu_locations', array() );
+foreach ( $pm_menus as $pm_location => $pm_menu_id ) {
+	if ( $pm_reset || empty( $pm_locations[ $pm_location ] ) ) {
+		$pm_locations[ $pm_location ] = $pm_menu_id;
+	}
+}
+set_theme_mod( 'nav_menu_locations', $pm_locations );
 
 /*
  * ------------------------------------------------------------------
  * 9. Site settings.
  * ------------------------------------------------------------------
  */
-update_option( 'blogname', 'Pan Motors' );
-update_option( 'permalink_structure', '/%postname%/' );
-flush_rewrite_rules( false );
-set_theme_mod( 'custom_logo', $pm_media['logo'] );
+if ( $pm_reset || in_array( get_option( 'blogname' ), array( '', 'My WordPress Blog', 'My WordPress Website' ), true ) ) {
+	update_option( 'blogname', 'Pan Motors' );
+}
+if ( $pm_reset || ! get_option( 'permalink_structure' ) ) {
+	update_option( 'permalink_structure', '/%postname%/' );
+	flush_rewrite_rules( false );
+}
+if ( $pm_media['logo'] && ( $pm_reset || ! get_theme_mod( 'custom_logo' ) ) ) {
+	set_theme_mod( 'custom_logo', $pm_media['logo'] );
+}
 update_option( 'panmotors_demo_content', gmdate( 'c' ), false );
 wp_get_theme()->delete_pattern_cache(); // Pick up new files in patterns/.
 

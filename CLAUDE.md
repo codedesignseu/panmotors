@@ -76,5 +76,9 @@ panmotors/
 - Check the PHP error log is clean (`WP_DEBUG` on locally).
 - Check the heading outline (one H1, no skipped levels) after every section.
 - Commit after each finished task with a clear message.
-- Dev scripts never own content: run the seed with `--user=1`, and delete any test user with `wp user delete <login> --reassign=1` (without it WordPress trashes that user's pages, which is how Home lost five sections on 25 Sep 2026).
+- Dev scripts never own content: run the seed and migrations with `--user=1`, and delete any test user with `wp user delete <login> --reassign=1` (without it WordPress trashes that user's pages, which is how Home lost five sections on 25 Sep 2026).
+- The seed is safe to run on real content: `wp --require=dev/seed-command.php panmotors seed --user=1` (or `wp eval-file dev/seed.php --user=1`). It only creates what is missing and never overwrites or deletes existing pages, field values, options, cars, menus or media; demo content the client deleted is not recreated (registry option `panmotors_seed_created`). It exports the database to `dev/.cache/db/` before every run (the newest 20 are kept).
+- `--reset-demo` overwrites demo content (flagged `_pm_demo`) with the seed's version. It refuses to run when `WP_ENVIRONMENT_TYPE` is production. Use it only on purpose, never to apply a change.
+- Structural changes to existing content (a block added to or replaced on a page, data moved between fields) are one-off scripts in `dev/migrations/`, named `YYYY-MM-DD-what.php` and run with `wp eval-file dev/migrations/<file> --user=1`. Each changes only what it must, exports the database first (`panmotors_migration_begin()` in `dev/lib.php`) and runs once (option `panmotors_migrations`). Update the seed too, so a fresh install gets the same result.
+- Commit `acf-json/` before running the seed (it refuses otherwise). The seed imports the field groups into the database without rewriting the JSON files.
 - Stop and ask when a decision in theme-map.md section 8 is still open and the task depends on it.
