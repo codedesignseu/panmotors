@@ -30,6 +30,8 @@ Every hardcoded colour in `main.css` is converted to these tokens. Transparent v
 
 As built (27 Sep 2026): flat colours use `color-mix()` with the design's 8-bit alpha (e.g. 14.11764706% for .14), so the defaults draw pixel for pixel as before. Gradient stops use `rgb(var(--ink-rgb) / a)` with channel tokens printed by `inc/design.php`, because gradients with `color-mix()` stops render on a different path in Chrome (every overlay changed by 1–3/255). Fixed tokens that are not settings: `--on-accent` (#fff), `--ink-soft` (caption ink), `--shadow` (#000).
 
+Accessibility (27 Sep 2026): the design's accent on paper is 3.76 : 1, below AA for small text. `--accent-text-light` is derived from `--accent` in `inc/design.php`: the accent mixed towards the dark colour (or black) in 1% steps until it reaches 4.5 : 1 on `--paper` (default `#d32c12`, 4.54 : 1). It is used only for small text on light backgrounds: eyebrows in `.pm-light` sections and the light footer's link hover and current page. Buttons, large text and everything on dark backgrounds keep `--accent`. The Design tab's contrast check lists accent on paper with the shade it uses.
+
 ### 1.2 Typography
 - **Heading font** and **Body font**: a select from a bundled, self-hosted set (latin + latin-ext woff2, OFL licensed):
   - Headings: Bodoni Moda (default), Playfair Display, Cormorant Garamond, DM Serif Display

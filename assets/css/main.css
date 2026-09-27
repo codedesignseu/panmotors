@@ -26,6 +26,11 @@
 	--ink: #0c0b0b;
 	--paper: #f3f2f2;
 	--accent: #ec3013;
+	/* Accent for small text (eyebrows, labels, footer links) on light backgrounds: the accent
+	   darkened just enough to reach WCAG AA 4.5 : 1 on --paper. inc/design.php works it out from
+	   the saved accent; this is the value for the default one. Buttons, large text and everything
+	   on dark backgrounds keep --accent. */
+	--accent-text-light: #d32c12;
 	--surface: #161514;
 	/* The same two colours as channels, for gradient stops. */
 	--ink-rgb: 12 11 11;
@@ -289,6 +294,13 @@ p {
 	margin-bottom: 54px;
 }
 
+/* Intro with a button under it (Featured Cars on the homepage, v2). */
+.pm-section-head__aside {
+	display: grid;
+	justify-items: start;
+	gap: 22px;
+}
+
 .pm-lede {
 	max-width: 340px;
 	font-size: calc(var(--fs-body) * .875);
@@ -331,6 +343,10 @@ p {
 	border-color: var(--paper);
 }
 
+.pm-light .pm-eyebrow {
+	color: var(--accent-text-light);
+}
+
 .pm-light .pm-pill {
 	border-color: color-mix(in srgb, var(--ink) 27.84313725%, transparent);
 	color: var(--ink);
@@ -341,6 +357,13 @@ p {
 	background: var(--ink);
 	color: var(--paper);
 	border-color: var(--ink);
+}
+
+/* Smaller outlined pill (v2 "All featured cars"). */
+.pm-pill--small {
+	display: inline-block;
+	padding: 13px 24px;
+	transition-duration: .5s;
 }
 
 /* Solid pill: paper by default, accent on hover, lifts and widens. */
@@ -687,13 +710,11 @@ p {
 	outline-offset: -2px;
 }
 
-/* Current page: underline shown, full opacity. WordPress sets aria-current on menu links. */
+/* Current page: accent at full opacity (v2). WordPress sets aria-current on menu links. On the
+   Contact page the Contact pill shows filled. */
 .pm-nav__link[aria-current="page"] {
 	opacity: 1;
-}
-
-.pm-nav__link[aria-current="page"]::after {
-	transform: scaleX(1);
+	color: var(--accent);
 }
 
 .pm-nav__contact[aria-current="page"] {
@@ -708,6 +729,10 @@ p {
 }
 
 .pm-footer a[aria-current="page"] {
+	color: var(--accent-text-light);
+}
+
+.pm-footer--dark a[aria-current="page"] {
 	color: var(--accent);
 }
 
@@ -780,6 +805,20 @@ p {
 
 .pm-footer a:hover,
 .pm-footer a:focus-visible {
+	color: var(--accent-text-light);
+}
+
+/* Dark footer (Footer style, inner-pages §2.2): on the ink page, main logo as it is. */
+.pm-footer--dark .pm-footer__row {
+	border-top-color: color-mix(in srgb, var(--paper) 16.07843137%, transparent);
+}
+
+.pm-footer--dark .pm-footer__logo {
+	filter: none;
+}
+
+.pm-footer--dark a:hover,
+.pm-footer--dark a:focus-visible {
 	color: var(--accent);
 }
 
@@ -1049,8 +1088,15 @@ p {
 
 .pm-values__grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 	gap: 14px;
+}
+
+/* Between phone and wide screens four cards would break 3 + 1 with cramped titles: two by two. */
+@media (min-width: 641px) and (max-width: 1180px) {
+	.pm-values__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 .pm-value {
@@ -1106,6 +1152,55 @@ p {
 	font-size: calc(var(--fs-body) * .875);
 	line-height: 1.75;
 	opacity: .68;
+}
+
+/* Our Values, light section (About, v2): paper panel with rounded top, heading and intro, cards
+   with an ink hairline that invert to ink and lift on hover. Not links. */
+.pm-values--light {
+	padding-top: 140px;
+	padding-bottom: 140px;
+	border-radius: var(--r) var(--r) 0 0;
+}
+
+.pm-values--light .pm-lede {
+	opacity: .62;
+}
+
+.pm-values--light .pm-value {
+	min-height: 320px;
+	padding: 40px 32px 34px;
+	border-color: color-mix(in srgb, var(--ink) 16.07843137%, transparent);
+	color: var(--ink);
+}
+
+.pm-values--light .pm-value:hover {
+	background: var(--ink);
+	color: var(--paper);
+	border-color: var(--ink);
+	transform: translateY(-8px);
+	box-shadow: 0 30px 70px color-mix(in srgb, var(--ink) 30.19607843%, transparent);
+}
+
+.pm-values--light .pm-value__top {
+	padding-bottom: 20px;
+	opacity: 1;
+}
+
+.pm-values--light .pm-value__title {
+	margin: 38px 0 16px;
+	font-size: calc(clamp(30px, 2.8vw, 40px) * var(--h-scale));
+}
+
+.pm-values--light .pm-value__body {
+	max-width: none;
+	opacity: .7;
+}
+
+@media (max-width: 880px) {
+	.pm-values--light {
+		padding-top: var(--pad-y);
+		padding-bottom: var(--pad-y);
+	}
 }
 
 /* About (home): background blends ink → paper while scrolling (heritage-fade.js). */

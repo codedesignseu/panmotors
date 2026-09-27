@@ -18,6 +18,8 @@ panmotors_render_block(
 	array(
 		'title' => get_field( 'featured_title' ),
 		'intro' => get_field( 'featured_intro' ),
+		'more'  => get_field( 'featured_more_label' ),
+		'link'  => get_field( 'featured_more_link' ),
 		'cars'  => panmotors_cars(
 			array(
 				'mode'  => $panmotors_pick ? 'pick' : 'featured',

@@ -15,6 +15,9 @@ class H(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith('/design/'):
             self.path = self.path[len('/design'):]
+            # The second export (_design/v2/) uses the same photos as the first.
+            if self.path.startswith('/v2/uploads/'):
+                self.path = self.path[len('/v2'):]
             return super().do_GET()
         if self.path == '/rig':
             b = b'<!doctype html><title>rig</title><body></body>'

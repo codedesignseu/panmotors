@@ -49,7 +49,7 @@ panmotors/
 - The client logs in as an Editor (`inc/admin.php`): pages, Pan Motors settings (not the Technical tab; the Design tab only when Technical → "Editors can change the design" is on), menus, logo and media only.
 - No page reads content from another page (D11). A section's content lives in its block; shared content lives in Options, the Cars post type or a synced pattern. Deleting a page never breaks another page. Pages are never looked up by slug.
 - Links go to pages, never to homepage anchors.
-- The homepage matches `_design/index.html` exactly. Add nothing to it that the design does not have. Inner pages stay placeholders until they are designed (D10).
+- The homepage matches `_design/index.html` exactly, except the D12 changes from `_design/v2/index.html` (Our Values from Options, the "All featured cars" pill; inner-pages §4). Add nothing to it that the designs do not have. Inner pages stay placeholders until they are designed (D10).
 - Escape all output: `esc_html`, `esc_attr`, `esc_url`, `wp_kses_post` for rich text.
 - Every ACF read handles empty values. A missing field hides its element, it never prints an empty tag or a PHP notice.
 - Images via `wp_get_attachment_image()` with proper `sizes`. Register image sizes in `inc/setup.php`. Hero and poster load eagerly with `fetchpriority="high"`, everything else lazy.

@@ -5,7 +5,7 @@
  * Categories: panmotors
  * Post Types: page
  * Keywords: home, homepage, design
- * Description: The homepage sections in design order. Fill each block in the sidebar; Our Values can be swapped for the synced pattern.
+ * Description: The homepage sections in design order. Fill each block in the sidebar; the values themselves come from Pan Motors settings → Our Values.
  * Viewport Width: 1440
  *
  * @package panmotors

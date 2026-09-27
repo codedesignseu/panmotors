@@ -386,9 +386,19 @@ function panmotors_the_blocks() {
 			$placeholder              = '<!--pm-section-' . count( $sections ) . '-->';
 			$sections[ $placeholder ] = render_block( $block );
 			$content                 .= $placeholder;
+			if ( '' !== trim( $sections[ $placeholder ] ) ) {
+				$tone = panmotors_html_tone( $sections[ $placeholder ] );
+			}
 		} else {
 			$content .= serialize_block( $block );
+			// Core text blocks sit on the dark page. Hidden ones print nothing.
+			if ( false !== ( $block['attrs']['metadata']['blockVisibility'] ?? null ) ) {
+				$tone = 'dark';
+			}
 		}
+	}
+	if ( isset( $tone ) ) {
+		panmotors_last_block_tone( $tone );
 	}
 
 	// Block content never gets automatic paragraphs (do_blocks() skips them the same way); the
@@ -419,4 +429,46 @@ function panmotors_is_section_block( $block ) {
 		return false !== strpos( (string) get_post_field( 'post_content', (int) $block['attrs']['ref'] ), '<!-- wp:pm/' );
 	}
 	return false;
+}
+
+/**
+ * Background of the last block printed on the page, for the footer's Auto style (inner-pages
+ * §2.2). Set by panmotors_the_blocks().
+ *
+ * @param string|null $tone Set the tone ('light' or 'dark'); null to read it.
+ * @return string '' until a page's blocks have printed.
+ */
+function panmotors_last_block_tone( $tone = null ) {
+	static $last = '';
+	if ( null !== $tone ) {
+		$last = $tone;
+	}
+	return $last;
+}
+
+/**
+ * Background of a rendered section: 'light' when its outer element is a paper section (class
+ * pm-light, or the About block with its scroll fade, which ends on paper), else 'dark'.
+ *
+ * @param string $html Rendered block.
+ * @return string
+ */
+function panmotors_html_tone( $html ) {
+	$tag = preg_match( '/^\s*<[a-z][^>]*>/i', $html, $m ) ? $m[0] : '';
+	return ( preg_match( '/\bclass="[^"]*\bpm-light\b/', $tag ) || false !== strpos( $tag, 'data-heritage-fade' ) ) ? 'light' : 'dark';
+}
+
+/**
+ * Footer style of the current page: the page's Footer style setting, or for Auto the background
+ * of the last visible block. Pages without blocks (legal pages, 404) keep the light footer.
+ *
+ * @return string 'light' or 'dark'.
+ */
+function panmotors_footer_tone() {
+	$style = is_page() ? (string) panmotors_field( 'footer_style', get_queried_object_id(), 'auto' ) : 'auto';
+	if ( in_array( $style, array( 'light', 'dark' ), true ) ) {
+		return $style;
+	}
+	$tone = panmotors_last_block_tone();
+	return $tone ? $tone : 'light';
 }

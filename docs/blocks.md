@@ -26,7 +26,7 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/hero` | block fields (eyebrow, title, video, poster, CTA label and link) | homepage only |
 | `pm/marquee` | Options → Marques | no fields, separator from Options |
 | `pm/featured-cars` | Cars (see below) | fields: heading, intro, which cars (all featured / pick), limit |
-| `pm/values` | block fields (repeater) | used as a synced pattern on Home and About |
+| `pm/values` | Options → Our Values (D12) + block fields (style, heading, intro, link) | Dark cards (Home) or Light section (About) |
 | `pm/about` | block fields (image, eyebrow, heading, stats) + Options description | option: "Scroll colour fade" on/off |
 | `pm/latest-cars` | Cars | fields: eyebrow, heading, number of cars |
 | `pm/live` | block fields (posts repeater) + Options Instagram URL | |
@@ -48,7 +48,7 @@ Fields: image (featured image), marque, model name, reference no., spec, note, s
 - The client adds a car once and it appears wherever it should.
 
 ### Sections repeated on several pages
-Use WordPress synced patterns. The seed creates a synced pattern "Our Values" containing `pm/values` and inserts it on Home and later on About. Editing it once updates both pages.
+Content shared by several pages lives in Options. Our Values was a synced pattern (D11); since D12 the values are in Options → Our Values and `pm/values` sets only the look, so Home (dark cards) and About (light section) show the same values in two styles. The seed replaced the pattern with the block on both pages and deleted it. Synced patterns stay available to the client.
 
 ## 4. Editor experience
 

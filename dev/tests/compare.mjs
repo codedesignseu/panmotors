@@ -1,9 +1,10 @@
 // Side by side: WordPress vs the design, per section and width. Needs dev/compare-proxy.py running.
 // Usage: SECTIONS=live,showroom WIDTHS=1440,390 node dev/cdp.mjs dev/tests/compare.mjs
+// DESIGN=v2/index.html compares with the second export (_design/v2/).
 import { readFileSync } from 'node:fs';
 const SECTIONS = (process.env.SECTIONS || 'live,showroom').split(',');
 const WIDTHS = (process.env.WIDTHS || '1440,390').split(',').map(Number);
-const SITES = { wp: 'http://panmotors.local/', design: 'http://127.0.0.1:8766/design/index.html' };
+const SITES = { wp: 'http://panmotors.local/', design: 'http://127.0.0.1:8766/design/' + (process.env.DESIGN || 'index.html') };
 export default async ({ page, sleep, shot }) => {
   const files = [];
   for (const w of WIDTHS) {

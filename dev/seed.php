@@ -12,7 +12,9 @@
  * - Updates the database copies of the field groups from acf-json, so they are editable in wp-admin,
  *   and removes the database copies of pm groups whose JSON is gone.
  * - Fills the Pan Motors options page with the business facts from the design.
- * - Creates the six demo cars (Cars post type) and the "Our Values" synced pattern.
+ * - Creates the six demo cars (Cars post type) and fills Options → Our Values (D12). Replaces the
+ *   "Our Values" synced pattern it created earlier (D11) with the pm/values block on each page
+ *   that used it, then deletes that pattern.
  * - Writes the section pages and Home as block markup. A page that already has pm/* blocks is
  *   left alone (the client's layout); PM_SEED_REBUILD=1 rewrites them anyway.
  * - Removes the per-page field data of the old model from those pages.
@@ -21,7 +23,7 @@
  *
  * Copy marked DRAFT is for the client to confirm or replace.
  *
- * Safe to re-run: media is matched on the original file name, cars and the pattern on a seed key.
+ * Safe to re-run: media is matched on the original file name, cars on a seed key.
  * It never deletes pages, users, patterns or field groups it did not create.
  * Everything it creates is flagged with the `_pm_demo` meta / `panmotors_demo_content` option
  * so it can be found and removed before launch.
@@ -244,6 +246,29 @@ $pm_options = array(
 	'enquire_form_shortcode' => '',
 	'footer_tagline'         => 'Pan Motors — Paphos',
 	'footer_copyright'       => '© {year} Pan Motors',
+	// Our Values (D12): one set for Home and About, from _design/v2/about.html.
+	'values'                 => array(
+		array(
+			'index' => '01',
+			'title' => 'Chosen',
+			'body'  => 'We only show cars we would drive ourselves. Each one is selected, not stocked.',
+		),
+		array(
+			'index' => '02',
+			'title' => 'Transparent',
+			'body'  => 'Full history, clear paperwork and straight answers on every car.',
+		),
+		array(
+			'index' => '03',
+			'title' => 'Looked After',
+			'body'  => 'Service and care continue long after the car leaves the showroom.',
+		),
+		array(
+			'index' => '04',
+			'title' => 'Personal',
+			'body'  => 'A family business. You deal with the same people from first visit to handover.',
+		),
+	),
 	'contact_button_label'   => 'Contact',
 	'marquee_separator'      => '—',
 	'notfound_code'          => '404',
@@ -506,28 +531,22 @@ $pm_cta = panmotors_seed_block(
 	)
 );
 
-$pm_values_block = panmotors_seed_block(
+// Our Values (D12): the values live in Options; Home shows dark cards linking to About, About the
+// light section.
+$pm_values_dark  = panmotors_seed_block(
 	'pm/values',
 	array(
+		'values_style' => 'dark',
 		'values_title' => 'Our Values',
 		'values_link'  => get_page_by_path( 'about' ) ? get_page_by_path( 'about' )->ID : 0,
-		'values'       => array(
-			array(
-				'index' => '01 — Keeping',
-				'title' => 'Kept Running',
-				'body'  => 'Climate bay, battery care, a circulation drive every month. Nothing in the collection sits still for long.',
-			),
-			array(
-				'index' => '02 — Record',
-				'title' => 'Written Down',
-				'body'  => 'Every service, every owner, every road. The file matters as much as the car it belongs to.',
-			),
-			array(
-				'index' => '03 — Showing',
-				'title' => 'Shown Rarely',
-				'body'  => 'One guest at a time, by appointment, with the doors closed and the lights low.',
-			),
-		),
+	)
+);
+$pm_values_light = panmotors_seed_block(
+	'pm/values',
+	array(
+		'values_style' => 'light',
+		'values_title' => 'Our Values',
+		'values_intro' => 'Four things we hold to with every car and every client.',
 	)
 );
 
@@ -583,7 +602,9 @@ $pm_enquire_block = panmotors_seed_block(
 	)
 );
 
-// Synced pattern "Our Values": one source for Home and About.
+// The "Our Values" synced pattern (D11) is replaced by the pm/values block, which reads Options
+// (D12). Each page that used the pattern gets the block in its place (dark cards on Home, the light
+// section elsewhere), then the pattern is deleted. Only the pattern this seed created (seed key).
 $pm_pattern = get_posts(
 	array(
 		'post_type'      => 'wp_block',
@@ -594,33 +615,31 @@ $pm_pattern = get_posts(
 		'fields'         => 'ids',
 	)
 );
-$pm_pattern_post = array(
-	'post_type'    => 'wp_block',
-	'post_status'  => 'publish',
-	'post_title'   => 'Our Values',
-	'post_content' => wp_slash( $pm_values_block ),
-);
 if ( $pm_pattern ) {
-	$pm_pattern_post['ID'] = $pm_pattern[0];
-	// The client may have edited the pattern: only write it while it has no values block.
-	if ( false !== strpos( get_post_field( 'post_content', $pm_pattern[0] ), '<!-- wp:pm/values' ) && ! getenv( 'PM_SEED_REBUILD' ) ) {
-		unset( $pm_pattern_post['post_content'] );
+	$pm_ref_pattern = '/<!-- wp:block \{"ref":' . (int) $pm_pattern[0] . '[,}][^>]*\/-->/';
+	$pm_referers = get_posts(
+		array(
+			'post_type'      => array( 'page', 'wp_block' ),
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+		)
+	);
+	foreach ( $pm_referers as $pm_page ) {
+		if ( ! preg_match( $pm_ref_pattern, $pm_page->post_content ) ) {
+			continue;
+		}
+		$pm_block = (int) get_option( 'page_on_front' ) === $pm_page->ID ? $pm_values_dark : $pm_values_light;
+		wp_update_post(
+			array(
+				'ID'           => $pm_page->ID,
+				'post_content' => wp_slash( preg_replace_callback( $pm_ref_pattern, static fn() => $pm_block, $pm_page->post_content ) ),
+			)
+		);
+		WP_CLI::log( "Page {$pm_page->ID}: Our Values pattern replaced by the pm/values block." );
 	}
+	wp_delete_post( (int) $pm_pattern[0], true );
+	WP_CLI::log( "Synced pattern Our Values ({$pm_pattern[0]}) deleted." );
 }
-$pm_pattern_id = (int) wp_insert_post( $pm_pattern_post );
-update_post_meta( $pm_pattern_id, '_pm_seed_key', 'values' );
-update_post_meta( $pm_pattern_id, '_pm_demo', 1 );
-delete_post_meta( $pm_pattern_id, 'wp_pattern_sync_status' ); // Absent = synced.
-$pm_values_ref = serialize_block(
-	array(
-		'blockName'    => 'core/block',
-		'attrs'        => array( 'ref' => $pm_pattern_id ),
-		'innerBlocks'  => array(),
-		'innerHTML'    => '',
-		'innerContent' => array(),
-	)
-);
-WP_CLI::log( "Synced pattern Our Values: {$pm_pattern_id}." );
 
 $pm_hero = static fn( $eyebrow, $intro, $image ) => panmotors_seed_block(
 	'pm/page-hero',
@@ -661,7 +680,7 @@ $pm_pages = array(
 				$pm_hero( 'Mesoyi, Paphos', 'Sales, service and a boutique under one roof on Avenue 65.', $pm_media['sr_night'] ),
 				panmotors_seed_paragraphs( '<p>Sales, service and a boutique sit under one roof, so a car is prepared, presented and looked after by the same people who sold it.</p><p>DRAFT: [Client to add the family story: when Pan Motors started, who runs it today, and how the building on Avenue 65 came to be.]</p>' ),
 				$pm_about_block,
-				$pm_values_ref,
+				$pm_values_light,
 				$pm_cta,
 			)
 		)
@@ -806,9 +825,11 @@ $pm_home_content = implode(
 				'featured_intro'  => 'A rotating selection of luxury and performance cars, prepared and presented in our Paphos showroom.',
 				'featured_source' => 'featured',
 				'featured_limit'  => 4,
+				'featured_more_label' => 'All featured cars',
+				'featured_more_link'  => $pm_pages['featured'],
 			)
 		),
-		$pm_values_ref,
+		$pm_values_dark,
 		$pm_about_block,
 		panmotors_seed_block(
 			'pm/latest-cars',
@@ -900,12 +921,42 @@ if ( $pm_home ) {
 		unset( $pm_front['post_content'] );
 	}
 }
-$pm_front_id = (int) wp_insert_post( $pm_front );
+// wp_update_post() for an existing Home: wp_insert_post() with an ID and no post_content saves
+// empty content, which is what the "keep the client's layout" branch above leaves out.
+$pm_front_id = (int) ( isset( $pm_front['ID'] ) ? wp_update_post( $pm_front ) : wp_insert_post( $pm_front ) );
 update_option( 'show_on_front', 'page' );
 update_option( 'page_on_front', $pm_front_id );
 update_post_meta( $pm_front_id, '_pm_demo', 1 );
 update_post_meta( $pm_front_id, '_wp_page_template', 'default' );
 WP_CLI::log( "Home: page {$pm_front_id}, built from blocks." );
+
+// Existing Home (not rebuilt): the "All featured cars" button (D12) is added to its first Featured
+// Cars block, once. A block that already has the button field, even empty, is left as it is.
+$pm_home_blocks = parse_blocks( get_post_field( 'post_content', $pm_front_id ) );
+foreach ( $pm_home_blocks as &$pm_block ) {
+	if ( 'pm/featured-cars' !== $pm_block['blockName'] ) {
+		continue;
+	}
+	if ( ! array_key_exists( 'featured_more_label', $pm_block['attrs']['data'] ?? array() ) ) {
+		$pm_more = panmotors_seed_block_attrs(
+			'pm/featured-cars',
+			array(
+				'featured_more_label' => 'All featured cars',
+				'featured_more_link'  => $pm_pages['featured'],
+			)
+		);
+		$pm_block['attrs']['data'] = array_merge( (array) ( $pm_block['attrs']['data'] ?? array() ), $pm_more['data'] );
+		wp_update_post(
+			array(
+				'ID'           => $pm_front_id,
+				'post_content' => wp_slash( serialize_blocks( $pm_home_blocks ) ),
+			)
+		);
+		WP_CLI::log( 'Home: "All featured cars" button added to Featured Cars.' );
+	}
+	break;
+}
+unset( $pm_block );
 
 // Field data from the per-page model is no longer read by anything (D11).
 foreach ( array_merge( array_values( $pm_pages ), array( $pm_front_id ) ) as $pm_page_id ) {

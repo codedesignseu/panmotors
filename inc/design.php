@@ -190,6 +190,7 @@ function panmotors_design_css() {
 		'--paper'        => $d['paper'],
 		'--accent'       => $d['accent'],
 		'--surface'      => $d['surface'],
+		'--accent-text-light' => panmotors_accent_text_light( $d['accent'], $d['paper'], $d['ink'] ),
 		'--ink-rgb'      => panmotors_hex_channels( $d['ink'] ),
 		'--paper-rgb'    => panmotors_hex_channels( $d['paper'] ),
 		'--r'            => $d['radius'] . 'px',
@@ -233,6 +234,32 @@ function panmotors_preload_fonts() {
 }
 
 /**
+ * Accent for small text on light backgrounds (--accent-text-light): the accent mixed with the dark
+ * colour (or black, if the dark colour is too light) in 1% steps until it reaches WCAG AA 4.5 : 1
+ * on the light colour. An accent that already passes is used as it is.
+ *
+ * @param string $accent #rrggbb.
+ * @param string $paper  #rrggbb background.
+ * @param string $ink    #rrggbb to darken towards.
+ * @return string #rrggbb.
+ */
+function panmotors_accent_text_light( $accent, $paper, $ink ) {
+	$target = panmotors_contrast( $ink, $paper ) >= 4.5 ? $ink : '#000000';
+	$a      = array_map( 'hexdec', str_split( ltrim( $accent, '#' ), 2 ) );
+	$b      = array_map( 'hexdec', str_split( ltrim( $target, '#' ), 2 ) );
+	for ( $step = 0; $step <= 100; $step++ ) {
+		$mix = '#';
+		foreach ( array( 0, 1, 2 ) as $i ) {
+			$mix .= sprintf( '%02x', (int) round( $a[ $i ] + ( $b[ $i ] - $a[ $i ] ) * $step / 100 ) );
+		}
+		if ( panmotors_contrast( $mix, $paper ) >= 4.5 ) {
+			return $mix;
+		}
+	}
+	return $target;
+}
+
+/**
  * WCAG 2 contrast ratio of two #rrggbb colours.
  *
  * @param string $a Colour.
@@ -273,6 +300,17 @@ function panmotors_contrast_checks() {
 			'pass'  => $ratio >= 4.5,
 		);
 	}
+
+	// Accent on the light colour: small text there uses a darker shade that passes, so a low ratio
+	// here is information, not a failure (buttons and large text keep the accent).
+	$ratio = panmotors_contrast( $d['accent'], $d['paper'] );
+	$shade = panmotors_accent_text_light( $d['accent'], $d['paper'], $d['ink'] );
+	$checks[] = array(
+		'label' => __( 'Accent on the light colour', 'panmotors' ),
+		'ratio' => $ratio,
+		'pass'  => $ratio >= 4.5 || panmotors_contrast( $shade, $d['paper'] ) >= 4.5,
+		'shade' => $ratio >= 4.5 ? '' : $shade,
+	);
 	return $checks;
 }
 
@@ -342,11 +380,19 @@ function panmotors_acf_design_messages( $field ) {
 				$check['pass'] ? '<span aria-hidden="true">✓</span>' : '<span aria-hidden="true" style="color:#b32d2e">✗</span>',
 				esc_html( $check['label'] ),
 				esc_html(
-					$check['pass']
+					! empty( $check['shade'] )
+						? sprintf(
+							/* translators: 1: contrast ratio, e.g. 3.75. 2: colour, e.g. #d42b11. 3: contrast ratio. */
+							__( '%1$s : 1, below 4.5 : 1 for small text. Small red text on light sections uses a darker shade automatically (%2$s, %3$s : 1); buttons and large text keep the accent.', 'panmotors' ),
+							number_format_i18n( $check['ratio'], 2 ),
+							$check['shade'],
+							number_format_i18n( panmotors_contrast( $check['shade'], panmotors_design()['paper'] ), 2 )
+						)
+						: ( $check['pass']
 						/* translators: %s: contrast ratio, e.g. 4.69 */
 						? sprintf( __( '%s : 1, easy to read', 'panmotors' ), number_format_i18n( $check['ratio'], 2 ) )
 						/* translators: %s: contrast ratio, e.g. 3.1 */
-						: sprintf( __( '%s : 1, too low (needs 4.5 : 1): small text will be hard to read', 'panmotors' ), number_format_i18n( $check['ratio'], 2 ) )
+						: sprintf( __( '%s : 1, too low (needs 4.5 : 1): small text will be hard to read', 'panmotors' ), number_format_i18n( $check['ratio'], 2 ) ) )
 				)
 			);
 		}

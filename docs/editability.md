@@ -8,11 +8,10 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 
 | Screen | What |
 |---|---|
-| **Pages → Home** (block editor) | The homepage sections as blocks, in page order: Top video, Marques strip, Featured Cars, Our Values (synced pattern), About Pan Motors, Latest Cars, Pan Motors Live, The Showroom, Come And See. Each block shows the real section; its fields are in the sidebar (Block tab). |
+| **Pages → Home** (block editor) | The homepage sections as blocks, in page order: Top video, Marques strip, Featured Cars, Our Values, About Pan Motors, Latest Cars, Pan Motors Live, The Showroom, Come And See. Each block shows the real section; its fields are in the sidebar (Block tab). |
 | **Pages → Featured Cars / About Pan Motors / Latest Cars / The Showroom / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until the inner pages are designed (D10). |
 | **Cars** | Every showcase car once: photo, marque, model, reference, detail, note, optional link, slider caption, place, Featured, order. Featured Cars and Latest Cars read from here. |
-| **Patterns → Our Values** (or "Edit original" on the block) | The Our Values cards, shared by Home and About. Edit once, both pages change. |
-| **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
+| **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, **Our Values** (the values shown on Home and About; D12), Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
 | **Appearance → Menus** | Primary menu (header + mobile menu), Footer menu. |
 | **Appearance → Customise → Site Identity** | Logo (header, contact card, footer). |
 | **Media** | Images and videos; photo captions (Showroom slider) come from each image's Caption. |
@@ -43,6 +42,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Menu links | Appearance → Menus → Primary |
 | Contact button (header) and last mobile-menu item: text | Settings → Contact → Contact button text |
 | Contact button: link | Settings → Technical → Contact button goes to (admin). Empty or unpublished page: the button hides. |
+| Current page | The menu link of the page being viewed shows in the accent colour; on the Contact page the Contact button shows filled (automatic) |
 | "Skip to content", "Menu" | theme string (screen-reader / keyboard only) |
 
 ## Homepage (blocks on Pages → Home)
@@ -54,10 +54,11 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | | Button text, Button goes to | block fields (page picker, required) |
 | | ↓ arrow | decorative icon (aria-hidden) |
 | Marques strip | Names, separator | Settings → Marques (the block has no fields) |
-| Featured Cars | Heading, short intro | block fields |
+| Featured Cars | Heading, short intro, "All featured cars" button text and page (empty: no button) | block fields |
 | | Which cars | block field: Cars marked Featured (in their order) or Pick cars (drag to order); How many (4 fill a row) |
 | | Cars (photo, marque, model, reference, detail, note, optional link) | Cars |
-| Our Values | Heading, Cards go to (page), values (small label, title, short text) | Our Values synced pattern |
+| Our Values | Style (Dark cards on Home, Light section on About), heading, short intro (light), Cards go to (dark) | block fields |
+| | Values (small label, title, short text) | Settings → Our Values (one set for every page) |
 | | → arrow | decorative icon (aria-hidden) |
 | About Pan Motors | Photo, small red line, heading, three highlights, scroll colour fade on/off | block fields |
 | | Paragraph | Settings → Business → One-sentence description |
@@ -89,6 +90,8 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 
 ## Footer and 404
 
+Footer colour: each page's **Page settings → Footer style** (sidebar of the page editor): Auto (the colour of the last visible section on the page), Dark or Light. Light inverts the logo, or uses Design → Logo for light backgrounds.
+
 Unchanged: Settings → Footer (footer line, copyright with `{year}`), Settings → Page not found (all texts and button labels). The 404 Contact button uses Settings → Technical → Contact button goes to.
 
 ## Editor experience
@@ -100,7 +103,7 @@ Unchanged: Settings → Footer (footer line, copyright with `{year}`), Settings 
 
 ## Client role (Editor)
 
-- Can: edit all pages in the block editor, Cars, synced patterns, Pan Motors settings (not Technical), Appearance → Menus, Customise → Site Identity (logo) and Menus, Media.
+- Can: edit all pages in the block editor, Cars, synced patterns, Pan Motors settings (including Our Values) (not Technical), Appearance → Menus, Customise → Site Identity (logo) and Menus, Media.
 - Cannot: theme files, themes, plugins, users, WordPress settings, ACF field groups, Additional CSS, the homepage setting, the Site Editor ("Design").
 - Hidden: Posts, Comments, Themes, Design, Fonts (menus, toolbar and direct URLs).
 - `inc/admin.php` adds `edit_theme_options` to the Editor role while the theme is active and removes it on theme switch.
