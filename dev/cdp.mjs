@@ -4,6 +4,8 @@
 // The script default-exports async ({ page, sleep, shot }) => result, printed as JSON.
 // Headless pages count as visible, so IntersectionObserver, rAF and muted autoplay behave
 // like a real foreground tab. Screenshots go to dev/.cache/shots/ (git-ignored).
+// Rendering runs on the CPU in a fixed colour profile, without partial or checker-imaged
+// raster, so the same page gives the same pixels on every run (dev/tests/snapshot.mjs).
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
 
@@ -15,7 +17,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 mkdirSync(CACHE + 'chrome-profile', { recursive: true });
 const proc = spawn(CHROME, [
   '--headless=new', `--remote-debugging-port=${PORT}`, `--user-data-dir=${CACHE}chrome-profile`,
-  '--autoplay-policy=no-user-gesture-required', '--hide-scrollbars', '--window-size=1440,900', 'about:blank',
+  '--autoplay-policy=no-user-gesture-required', '--hide-scrollbars', '--window-size=1440,900',
+  '--disable-gpu', '--force-color-profile=srgb', '--disable-partial-raster', '--disable-checker-imaging', '--disable-lcd-text',
+  'about:blank',
 ], { stdio: 'ignore' });
 
 let ws, id = 0;

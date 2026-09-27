@@ -1,9 +1,21 @@
-_design
-docs
-TASKS.md
-CLAUDE.md
-.git
-.gitignore
-.distignore
+# Files left out of the production theme (dev/build-zip.sh). Paths starting with / are relative
+# to the theme root; the others match at any depth.
+/_design
+/dev
+/docs
+/.git
+/.gitignore
+/.distignore
+/.claude
+/TASKS.md
+/CLAUDE.md
+node_modules
+vendor
+composer.json
+composer.lock
+phpcs.xml
+phpcs.xml.dist
+.cache
 .DS_Store
-dev
+*.log
+*.zip

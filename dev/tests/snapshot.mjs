@@ -1,15 +1,17 @@
 // Snapshot of the homepage for before/after comparisons (docs/migration-blocks.md §10).
 // Usage: LABEL=before node dev/cdp.mjs dev/tests/snapshot.mjs   → dev/.cache/snapshots/<LABEL>/
 // Another page: PAGE=about/ LABEL=about-before ... (its sections are listed in page order; the
-// homepage-only reduced-motion check is skipped).
-// EAGER=1 loads and decodes every image before the full-page captures: needed for Featured Cars,
-// whose lazy card photos are not always loaded otherwise. It changes which file sizes="auto" picks,
-// so compare EAGER runs only with EAGER runs.
+// homepage-only reduced-motion check is skipped). Every page at once: node dev/tests/snapshot-all.mjs <label>.
 // Then: node dev/tests/diff.mjs before after
 //
 // Saves: the served <main> HTML and the list of assets in the whole document (normalised),
-// full-page PNGs at 1440 and 390 with reduced motion (deterministic: no video, marquee or fades),
-// section tops and heights at 1440/1080/880/390, and the keyboard, reduced-motion, reveal and LCP results.
+// full-page PNGs at 1440 and 390 with reduced motion, section tops and heights at
+// 1440/1080/880/390, and the keyboard, reduced-motion, reveal and LCP results.
+//
+// The PNGs are deterministic: two runs of unchanged code give 0 differing pixels. Before each
+// capture settle() loads every image eagerly and waits for its decode(), waits for
+// document.fonts.ready, pauses every video on its poster, and finishes (or, when infinite,
+// cancels) every animation and transition; dev/cdp.mjs renders without the GPU.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import keyboard from './keyboard.mjs';
 import reducedMotion from './reduced-motion.mjs';
@@ -30,6 +32,27 @@ export const normalise = (s) => s
 const assets = (html) => [...html.matchAll(/<(link|script|style)\b[^>]*>/g)]
   .map((m) => m[0].replace(/\s+/g, ' '))
   .filter((t) => !/rel=["'](shortlink|EditURI|alternate|https:\/\/api\.w\.org\/)["']/.test(t));
+
+// Puts the page in a fixed visual state for a capture (see the header).
+export const SETTLE = `
+  if (!document.getElementById('pm-snapshot-still')) {
+    const st = document.createElement('style');
+    st.id = 'pm-snapshot-still';
+    st.textContent = '*,*::before,*::after{transition-duration:0s!important;transition-delay:0s!important;animation-delay:0s!important;caret-color:transparent!important}';
+    document.head.append(st);
+  }
+  document.documentElement.style.scrollBehavior = 'auto';
+  for (const v of document.querySelectorAll('video')) { v.autoplay = false; v.pause(); if (v.currentSrc || v.getAttribute('src')) v.load(); }
+  for (const i of document.images) i.loading = 'eager';
+  await document.fonts.ready;
+  await Promise.race([
+    Promise.all([...document.images].map((i) => (i.complete ? Promise.resolve() : new Promise((r) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); })).then(() => i.decode()).catch(() => 0))),
+    new Promise((r) => setTimeout(r, 15000)),
+  ]);
+  for (const a of document.getAnimations()) { if (a.effect?.getComputedTiming().endTime === Infinity) a.cancel(); else a.finish(); }
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  return [...document.images].filter((i) => !i.complete).length;
+`;
 
 export default async ({ page, sleep }) => {
   mkdirSync(OUT, { recursive: true });
@@ -57,14 +80,16 @@ export default async ({ page, sleep }) => {
     await page.size(w, h);
     await page.media(true);
     await page.go(URL_HOME);
-    await page.eval(`document.documentElement.style.scrollBehavior='auto'; const H=document.documentElement.scrollHeight; for (let y=0;y<H;y+=${Math.round(h * 0.6)}){ scrollTo(0,y); await new Promise(r=>setTimeout(r,200)); } scrollTo(0,0); await document.fonts.ready; ${process.env.EAGER ? `for (const i of document.images) i.loading = 'eager';` : ''} await Promise.race([Promise.all([...document.images].map(i => i.complete ? ${process.env.EAGER ? 'i.decode().catch(() => 0)' : '0'} : new Promise(r => { i.onload = i.onerror = r; }))), new Promise(r => setTimeout(r, 8000))]); return [...document.images].filter(i => !i.complete).length`);
+    await page.eval(`document.documentElement.style.scrollBehavior='auto'; const H=document.documentElement.scrollHeight; for (let y=0;y<H;y+=${Math.round(h * 0.6)}){ scrollTo(0,y); await new Promise(r=>setTimeout(r,200)); } scrollTo(0,0); return 1`);
+    out.notLoaded = await page.eval(SETTLE);
     await sleep(2000);
     const full = await page.eval(`return document.documentElement.scrollHeight`);
     // A full-page capture resizes the viewport, and images with sizes="auto" may pick a new
-    // candidate. The first capture triggers that; the second, after the images decode, is kept.
+    // candidate. The first capture triggers that; settle again, then keep the second.
     const capture = () => page.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
     await capture();
-    await sleep(3000);
+    await page.eval(SETTLE);
+    await sleep(1500);
     const r = await capture();
     writeFileSync(`${OUT}full-${w}.png`, Buffer.from(r.data, 'base64'));
     out.full[w] = full;

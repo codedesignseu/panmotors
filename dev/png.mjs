@@ -3,8 +3,8 @@
 import { inflateSync, deflateSync } from 'node:zlib';
 import { readFileSync, writeFileSync } from 'node:fs';
 
-export function readPng(file) {
-  const buf = readFileSync(file);
+export function readPng(file) { // A path or a Buffer.
+  const buf = Buffer.isBuffer(file) ? file : readFileSync(file);
   let pos = 8, width = 0, height = 0, type = 0;
   const idat = [];
   while (pos < buf.length) {

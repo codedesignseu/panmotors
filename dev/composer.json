@@ -1,0 +1,20 @@
+{
+	"name": "codedesigns/panmotors-dev",
+	"description": "Development-only tools for the Pan Motors theme (PHPCS with the WordPress Coding Standards). Not deployed.",
+	"type": "project",
+	"license": "proprietary",
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.1",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"lint": "phpcs --standard=phpcs.xml.dist",
+		"fix": "phpcbf --standard=phpcs.xml.dist"
+	}
+}

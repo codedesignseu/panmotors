@@ -1,5 +1,6 @@
 // Tabs through the homepage and records every focus stop, in order, and whether it has a
 // visible focus indicator (outline, box-shadow, background or border change vs. unfocused).
+// "top" is the layout position (offsetTop chain), which reveal transforms still in flight don't move.
 export default async ({ page, sleep }) => {
   await page.size(Number(process.env.W || 1440), 900);
   await page.media(false);
@@ -18,7 +19,10 @@ export default async ({ page, sleep }) => {
       const sec = el.closest('section,header,footer,nav')?.id || el.closest('section,header,footer,nav')?.className.split(' ')[0] || '';
       const visible = r.width > 0 && r.height > 0;
       const indicator = (cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) ? 'outline ' + cs.outlineColor : (cs.boxShadow !== 'none' ? 'shadow' : (el.matches(':focus-visible') ? 'focus-visible(style)' : 'NONE'));
-      return { tag: el.tagName.toLowerCase(), name, sec, top: Math.round(r.top + scrollY), visible, fv: el.matches(':focus-visible'), indicator, bg: cs.backgroundColor, border: cs.borderBottomColor };
+      let top = 0;
+      for (let n = el; n; n = n.offsetParent) top += n.offsetTop;
+      if (getComputedStyle(el).position === 'fixed') top = Math.round(r.top);
+      return { tag: el.tagName.toLowerCase(), name, sec, top, visible, fv: el.matches(':focus-visible'), indicator, bg: cs.backgroundColor, border: cs.borderBottomColor };
     `);
     if (!s) break;
     if (stops.length && stops[0].name === s.name && stops[0].tag === s.tag && i > 5) break;
