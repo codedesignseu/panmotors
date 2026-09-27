@@ -36,7 +36,7 @@ From the page `<style>` and the `_ds` stylesheet. The page overrides most of the
   --ink: #0c0b0b;          /* page background */
   --paper: #f3f2f2;        /* text on dark, light sections */
   --accent: #ec3013;       /* eyebrows, hovers, submit button */
-  --surface-dark: #161514; /* image tile background */
+  --surface: #161514;      /* image tile background (was --surface-dark; renamed for D12) */
   --r: 24px;               /* corner radius (design prop "cornerRadius", 0-48) */
   --font-display: 'Bodoni Moda', serif;   /* 400, 500, italic 400 */
   --font-body: 'Archivo', sans-serif;     /* 300, 400, 500, 600 */
@@ -45,6 +45,8 @@ From the page `<style>` and the `_ds` stylesheet. The page overrides most of the
   --line-light: rgba(12,11,11,.18);
 }
 ```
+
+D12: these are now the defaults of Pan Motors → Design, printed after `main.css` by `inc/design.php` with the heading scale (`--h-scale`), body size (`--fs-body`) and logo heights (`--logo-h`, `--logo-h-m`). Transparent variants are `color-mix()` of the tokens; see `docs/inner-pages.md` §1.
 
 Keep from `_ds/styles.css`: `box-sizing` reset, `img { display:block; max-width:100% }`, `figure { margin:0 }`, `:focus-visible` outline in accent. Drop the rest (buttons, cards, tables, dialog, the `h1-h6` 800 weight). The page sets every heading to weight 400 inline, so the theme sets heading styles explicitly.
 
@@ -205,6 +207,7 @@ These go into the WP media library, not the theme folder. Only the logo fallback
 - **D9. Multi-page site.** Each primary menu item is its own page with its own template. Content lives on its section's page and home shows previews. See `pages.md`.
 - **D10. Review changes.** No Our Values or Live pages: values live on About, Live is home-only. Primary menu: Featured Cars, About Pan Motors, Latest Cars, Showroom. No hero sound button, no footer address line. Homepage matches the design exactly; inner pages wait for their own design. See `pages.md`.
 - **D11. Gutenberg + ACF Blocks (25 Sep 2026).** Every page, Home included, is a list of blocks edited in the block editor with a live preview. Sections are ACF Blocks (`pm/hero`, `pm/marquee`, `pm/featured-cars`, `pm/values`, `pm/about`, `pm/latest-cars`, `pm/live`, `pm/showroom`, `pm/enquire`, `pm/faq`, `pm/page-hero`, `pm/cta-band`) plus a few core text blocks. No page reads content from another page: shared content lives in Options, the non-public Cars post type (`pm_car`, no URLs, D1 stands) or synced patterns ("Our Values"). Page templates, per-page field groups and `panmotors_page()` content lookups are removed; no page template lock is needed because there are no page templates (the hero block is locked on Home instead). `theme.json` holds editor settings only and locks out custom colours, type, spacing and layout. The front end does not change. Supersedes the content model of D9 (`pages.md` §2, §3, §6). See `blocks.md` and `migration-blocks.md`.
+- **D12. Inner pages and global design settings (27 Sep 2026).** The second Claude Design export (`_design/v2/`: index, cars, about, showroom, contact) is the design for the inner pages; `_design/` stays the reference for the homepage. About, Featured Cars, Showroom and Contact are built exactly as v2 (Contact adds the existing FAQs); Latest Cars stays untouched until decided. A Design tab on Pan Motors settings (administrators; Editors by a switch) sets colours, heading and body fonts (bundled or uploaded woff2), heading scale, body size, corner radius, logo heights, a logo for light backgrounds, the site icon link and the default share image; every colour in the CSS comes from its tokens. Our Values moves to Options and `pm/values` gets a dark and a light style. New blocks: `pm/page-header`, `pm/story`, `pm/services`, `pm/cta-image`, `pm/cars-grid`, `pm/photo-slider`, `pm/visit`, `pm/contact-details`, `pm/contact-form`. The homepage changes only in Our Values and the new "All featured cars" pill. See `inner-pages.md`, build order in its §9.
 
 ## 9. SEO and GEO
 

@@ -6,74 +6,48 @@
    Sections add their own blocks below as they are built.
    ========================================================================== */
 
-/* 1. Fonts — self-hosted variable woff2 (Fontsource, OFL). Latin-ext loads only when needed. */
-
-@font-face {
-	font-family: 'Bodoni Moda';
-	font-style: normal;
-	font-weight: 400 900;
-	font-display: swap;
-	src: url(../fonts/bodoni-moda-latin-opsz-normal.woff2) format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-	font-family: 'Bodoni Moda';
-	font-style: normal;
-	font-weight: 400 900;
-	font-display: swap;
-	src: url(../fonts/bodoni-moda-latin-ext-opsz-normal.woff2) format('woff2');
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-	font-family: 'Bodoni Moda';
-	font-style: italic;
-	font-weight: 400 900;
-	font-display: swap;
-	src: url(../fonts/bodoni-moda-latin-opsz-italic.woff2) format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-	font-family: 'Bodoni Moda';
-	font-style: italic;
-	font-weight: 400 900;
-	font-display: swap;
-	src: url(../fonts/bodoni-moda-latin-ext-opsz-italic.woff2) format('woff2');
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-	font-family: 'Archivo';
-	font-style: normal;
-	font-weight: 100 900;
-	font-display: swap;
-	src: url(../fonts/archivo-latin-wght-normal.woff2) format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-	font-family: 'Archivo';
-	font-style: normal;
-	font-weight: 100 900;
-	font-display: swap;
-	src: url(../fonts/archivo-latin-ext-wght-normal.woff2) format('woff2');
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
+/* 1. Fonts — self-hosted woff2 (Fontsource, OFL) in assets/fonts/. The @font-face rules for the
+   heading and body fonts chosen in Pan Motors → Design print in <head> (inc/design.php), so only
+   those fonts load. */
 
 /* 2. Tokens */
 
+/* Transparent variants are built from the tokens, so they follow the Design settings.
+   - Flat colours: color-mix(in srgb, var(--paper) 14.11764706%, transparent). The design's
+     rgba(243, 242, 242, .14) is drawn with an 8-bit alpha (36/255 = 14.11764706%); the long
+     percentages keep exactly that alpha, so the page draws pixel for pixel as before.
+   - Gradient stops: rgb(var(--ink-rgb) / 0.72156863). Browsers draw gradients whose stops come
+     from color-mix() on a different path (other interpolation and rounding), so gradients use the
+     channel tokens, which inc/design.php prints next to the colours. */
+
 :root {
+	/* Design settings (Pan Motors → Design). These are the defaults; inc/design.php prints the saved
+	   values in <head> after this file, on the front end and in the block editor. */
 	--ink: #0c0b0b;
 	--paper: #f3f2f2;
 	--accent: #ec3013;
-	--surface-dark: #161514;
+	--surface: #161514;
+	/* The same two colours as channels, for gradient stops. */
+	--ink-rgb: 12 11 11;
+	--paper-rgb: 243 242 242;
 	--r: 24px;
 	/* Fallbacks as in the design: glyphs the subsets lack (e.g. the → arrow) come from the same generic font. */
 	--font-display: 'Bodoni Moda', serif;
 	--font-body: 'Archivo', sans-serif;
+	--h-scale: 1; /* Multiplies every heading clamp(). */
+	--fs-body: 16px; /* Body text; smaller text sizes are fractions of it. */
+	--logo-h: 46px;
+	--logo-h-m: 46px;
+	/* Fixed: text on accent buttons and selection, the design system's caption ink, shadows. */
+	--on-accent: #fff;
+	--ink-soft: #201e1d;
+	--shadow: #000;
 	--ease: cubic-bezier(.16, .84, .3, 1);
 	/* The design's text sits on Google Archivo's "normal" line height, 1.55. Self-hosted Archivo
 	   has different font metrics, so "normal" would be tighter here: use this instead. */
 	--lh: 1.55;
-	--line-dark: rgba(243, 242, 242, .14);
-	--line-light: rgba(12, 11, 11, .18);
+	--line-dark: color-mix(in srgb, var(--paper) 14.11764706%, transparent);
+	--line-light: color-mix(in srgb, var(--ink) 18.03921569%, transparent);
 	--pad-x: 40px;
 	--pad-y: 132px;
 	--nav-h: 82px;
@@ -112,7 +86,7 @@ body {
 	background: var(--ink);
 	color: var(--paper);
 	font-family: var(--font-body);
-	font-size: 16px;
+	font-size: var(--fs-body);
 	font-weight: 400;
 	line-height: var(--lh);
 	-webkit-font-smoothing: antialiased;
@@ -180,7 +154,7 @@ button {
 
 ::selection {
 	background: var(--accent);
-	color: #fff;
+	color: var(--on-accent);
 }
 
 /* 4. Base type — every heading is set explicitly, weight 400, Bodoni. */
@@ -197,25 +171,25 @@ h6 {
 }
 
 h1 {
-	font-size: clamp(56px, 9.4vw, 176px);
+	font-size: calc(clamp(56px, 9.4vw, 176px) * var(--h-scale));
 	line-height: .86;
 	letter-spacing: -.02em;
 }
 
 h2 {
-	font-size: clamp(40px, 6vw, 96px);
+	font-size: calc(clamp(40px, 6vw, 96px) * var(--h-scale));
 	line-height: .92;
 }
 
 h3 {
-	font-size: clamp(26px, 2.2vw, 34px);
+	font-size: calc(clamp(26px, 2.2vw, 34px) * var(--h-scale));
 	line-height: 1.02;
 }
 
 h4,
 h5,
 h6 {
-	font-size: clamp(20px, 1.6vw, 24px);
+	font-size: calc(clamp(20px, 1.6vw, 24px) * var(--h-scale));
 	line-height: 1.2;
 }
 
@@ -301,7 +275,7 @@ p {
 	margin: 0;
 	font-family: var(--font-display);
 	font-weight: 400;
-	font-size: clamp(40px, 6vw, 96px);
+	font-size: calc(clamp(40px, 6vw, 96px) * var(--h-scale));
 	line-height: .92;
 }
 
@@ -317,7 +291,7 @@ p {
 
 .pm-lede {
 	max-width: 340px;
-	font-size: 14px;
+	font-size: calc(var(--fs-body) * .875);
 	line-height: 1.7;
 	opacity: .6;
 }
@@ -337,7 +311,7 @@ p {
 	gap: 14px;
 	flex: none;
 	padding: 15px 28px;
-	border: 1px solid rgba(243, 242, 242, .34);
+	border: 1px solid color-mix(in srgb, var(--paper) 34.11764706%, transparent);
 	border-radius: 999px;
 	background: transparent;
 	color: var(--paper);
@@ -358,7 +332,7 @@ p {
 }
 
 .pm-light .pm-pill {
-	border-color: rgba(12, 11, 11, .28);
+	border-color: color-mix(in srgb, var(--ink) 27.84313725%, transparent);
 	color: var(--ink);
 }
 
@@ -383,7 +357,7 @@ p {
 .pm-pill--solid:hover,
 .pm-pill--solid:focus-visible {
 	background: var(--accent);
-	color: #fff;
+	color: var(--on-accent);
 	transform: translateY(-3px);
 	letter-spacing: .26em;
 }
@@ -397,7 +371,7 @@ p {
 	width: 56px;
 	height: 56px;
 	padding: 0;
-	border: 1px solid rgba(243, 242, 242, .34);
+	border: 1px solid color-mix(in srgb, var(--paper) 34.11764706%, transparent);
 	border-radius: 999px;
 	background: transparent;
 	color: var(--paper);
@@ -415,7 +389,7 @@ p {
 }
 
 .pm-light .pm-round {
-	border-color: rgba(12, 11, 11, .28);
+	border-color: color-mix(in srgb, var(--ink) 27.84313725%, transparent);
 	color: var(--ink);
 }
 
@@ -454,7 +428,7 @@ p {
 	position: relative;
 	overflow: hidden;
 	border-radius: var(--r);
-	background: var(--surface-dark);
+	background: var(--surface);
 }
 
 .pm-media > img,
@@ -546,7 +520,7 @@ p {
 	justify-content: space-between;
 	gap: 24px;
 	padding: 18px clamp(20px, 3vw, 40px);
-	background: linear-gradient(to bottom, rgba(12, 11, 11, .72), rgba(12, 11, 11, 0));
+	background: linear-gradient(to bottom, rgb(var(--ink-rgb) / 0.72156863), transparent);
 	-webkit-backdrop-filter: blur(2px);
 	backdrop-filter: blur(2px);
 	color: var(--paper);
@@ -565,7 +539,13 @@ p {
 
 .pm-nav__logo-img {
 	width: auto;
-	height: 46px;
+	height: var(--logo-h);
+}
+
+@media (max-width: 880px) {
+	.pm-nav__logo-img {
+		height: var(--logo-h-m);
+	}
 }
 
 .pm-nav__logo-text {
@@ -600,7 +580,7 @@ p {
 .pm-nav__contact {
 	flex: none;
 	padding: 11px 24px;
-	border: 1px solid rgba(243, 242, 242, .4);
+	border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
 	border-radius: 999px;
 	font-size: 11px;
 	letter-spacing: .2em;
@@ -626,9 +606,9 @@ p {
 	width: 48px;
 	height: 48px;
 	padding: 0;
-	border: 1px solid rgba(243, 242, 242, .4);
+	border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
 	border-radius: 999px;
-	background: rgba(12, 11, 11, .35);
+	background: color-mix(in srgb, var(--ink) 34.90196078%, transparent);
 	-webkit-backdrop-filter: blur(6px);
 	backdrop-filter: blur(6px);
 	color: var(--paper);
@@ -662,7 +642,7 @@ p {
 	overflow-y: auto;
 	padding: 104px 24px 40px;
 	border-radius: 0 0 var(--r) var(--r);
-	background: rgba(12, 11, 11, .97);
+	background: color-mix(in srgb, var(--ink) 96.8627451%, transparent);
 	-webkit-backdrop-filter: blur(14px);
 	backdrop-filter: blur(14px);
 	color: var(--paper);
@@ -689,7 +669,7 @@ p {
 .pm-menu__link {
 	display: block;
 	padding: 6px 0;
-	border-bottom: 1px solid rgba(243, 242, 242, .12);
+	border-bottom: 1px solid color-mix(in srgb, var(--paper) 12.15686275%, transparent);
 	font-family: var(--font-display);
 	font-size: 30px;
 	letter-spacing: .01em;
@@ -787,6 +767,11 @@ p {
 	filter: invert(1);
 }
 
+/* The logo for light backgrounds (Pan Motors → Design) is used as it is. */
+.pm-footer__logo--light {
+	filter: none;
+}
+
 .pm-footer__links {
 	display: flex;
 	flex-wrap: wrap;
@@ -847,7 +832,7 @@ p {
 .pm-hero__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgba(12, 11, 11, .55) 0%, rgba(12, 11, 11, .15) 38%, rgba(12, 11, 11, .92) 100%);
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.54901961) 0%, rgb(var(--ink-rgb) / 0.14901961) 38%, rgb(var(--ink-rgb) / 0.92156863) 100%);
 }
 
 .pm-hero__copy {
@@ -877,7 +862,7 @@ p {
 .pm-hero__line {
 	display: block;
 	font-family: var(--font-display);
-	font-size: clamp(56px, 9.4vw, 176px);
+	font-size: calc(clamp(56px, 9.4vw, 176px) * var(--h-scale));
 	font-weight: 400;
 	line-height: .86;
 	letter-spacing: -.02em;
@@ -971,7 +956,7 @@ p {
 	min-height: 460px;
 	overflow: hidden;
 	border-radius: var(--r);
-	background: var(--surface-dark);
+	background: var(--surface);
 	transition: flex-grow 1.05s var(--ease), box-shadow .9s ease;
 }
 
@@ -987,7 +972,7 @@ p {
 .pm-tile__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgba(12, 11, 11, .1) 30%, rgba(12, 11, 11, .88) 100%);
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.10196078) 30%, rgb(var(--ink-rgb) / 0.87843137) 100%);
 	pointer-events: none;
 }
 
@@ -1009,7 +994,7 @@ p {
 
 .pm-tile__model {
 	margin: 0 0 14px;
-	font-size: clamp(26px, 2.2vw, 34px);
+	font-size: calc(clamp(26px, 2.2vw, 34px) * var(--h-scale));
 	line-height: 1.02;
 }
 
@@ -1035,7 +1020,7 @@ p {
 @media (hover: hover) {
 	.pm-tile:hover {
 		flex-grow: 2.6;
-		box-shadow: 0 34px 90px rgba(0, 0, 0, .55);
+		box-shadow: 0 34px 90px color-mix(in srgb, var(--shadow) 54.90196078%, transparent);
 	}
 
 	.pm-tile:hover .pm-tile__img {
@@ -1072,7 +1057,7 @@ p {
 	display: block;
 	min-height: 340px;
 	padding: 44px 36px 36px;
-	border: 1px solid rgba(243, 242, 242, .16);
+	border: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
 	border-radius: var(--r);
 	background: transparent;
 	color: var(--paper);
@@ -1085,7 +1070,7 @@ p {
 	color: var(--ink);
 	border-color: var(--paper);
 	transform: translateY(-8px);
-	box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+	box-shadow: 0 30px 70px color-mix(in srgb, var(--shadow) 45.09803922%, transparent);
 }
 
 .pm-value__top {
@@ -1112,13 +1097,13 @@ p {
 
 .pm-value__title {
 	margin: 40px 0 18px;
-	font-size: clamp(32px, 4.4vw, 44px);
+	font-size: calc(clamp(32px, 4.4vw, 44px) * var(--h-scale));
 	line-height: 1;
 }
 
 .pm-value__body {
 	max-width: 34ch;
-	font-size: 14px;
+	font-size: calc(var(--fs-body) * .875);
 	line-height: 1.75;
 	opacity: .68;
 }
@@ -1149,14 +1134,14 @@ p {
 
 .pm-about__title {
 	margin: 0 0 32px;
-	font-size: clamp(40px, 5.4vw, 88px);
+	font-size: calc(clamp(40px, 5.4vw, 88px) * var(--h-scale));
 	line-height: .94;
 }
 
 .pm-about__text {
 	max-width: 46ch;
 	margin: 0 0 22px;
-	font-size: 16px;
+	font-size: var(--fs-body);
 	line-height: 1.8;
 	opacity: .78;
 }
@@ -1172,7 +1157,7 @@ p {
 
 .pm-stats__value {
 	font-family: var(--font-display);
-	font-size: clamp(30px, 2.6vw, 40px);
+	font-size: calc(clamp(30px, 2.6vw, 40px) * var(--h-scale));
 	line-height: 1;
 }
 
@@ -1290,7 +1275,7 @@ p {
 	aspect-ratio: 4 / 5;
 	overflow: hidden;
 	border-radius: var(--r);
-	background: var(--surface-dark);
+	background: var(--surface);
 	color: var(--paper);
 	transition: transform .9s var(--ease), box-shadow .9s ease;
 }
@@ -1298,7 +1283,7 @@ p {
 .pm-post:hover,
 .pm-post:focus-visible {
 	transform: translateY(-8px);
-	box-shadow: 0 30px 70px rgba(0, 0, 0, .5);
+	box-shadow: 0 30px 70px color-mix(in srgb, var(--shadow) 50.19607843%, transparent);
 }
 
 .pm-post__media {
@@ -1312,7 +1297,7 @@ p {
 .pm-post__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgba(12, 11, 11, 0) 52%, rgba(12, 11, 11, .82) 100%);
+	background: linear-gradient(180deg, transparent 52%, rgb(var(--ink-rgb) / 0.81960784) 100%);
 	pointer-events: none;
 }
 
@@ -1378,7 +1363,7 @@ p {
 	position: absolute;
 	inset: 0;
 	z-index: 1;
-	background: radial-gradient(120% 80% at 50% 40%, rgba(243, 242, 242, .55) 0%, rgba(243, 242, 242, .94) 72%);
+	background: radial-gradient(120% 80% at 50% 40%, rgb(var(--paper-rgb) / 0.54901961) 0%, rgb(var(--paper-rgb) / 0.94117647) 72%);
 	pointer-events: none;
 }
 
@@ -1401,7 +1386,7 @@ p {
 .pm-showroom__arrow {
 	width: 60px;
 	height: 60px;
-	background: rgba(243, 242, 242, .5);
+	background: color-mix(in srgb, var(--paper) 50.19607843%, transparent);
 	-webkit-backdrop-filter: blur(6px);
 	backdrop-filter: blur(6px);
 }
@@ -1417,8 +1402,8 @@ p {
 	aspect-ratio: 16 / 10;
 	overflow: hidden;
 	border-radius: var(--r);
-	background: var(--surface-dark);
-	box-shadow: 0 40px 110px rgba(12, 11, 11, .28);
+	background: var(--surface);
+	box-shadow: 0 40px 110px color-mix(in srgb, var(--ink) 27.84313725%, transparent);
 }
 
 .pm-showroom__photos:focus-visible {
@@ -1448,7 +1433,7 @@ p {
 	gap: 24px;
 	margin-top: 4px;
 	padding-top: 20px;
-	color: color-mix(in srgb, #201e1d 55%, transparent);
+	color: color-mix(in srgb, var(--ink-soft) 55%, transparent);
 	font-size: 11px;
 	letter-spacing: .2em;
 	text-transform: uppercase;
@@ -1508,7 +1493,7 @@ p {
 
 .pm-hours__time {
 	font-family: var(--font-display);
-	font-size: clamp(22px, 2vw, 30px);
+	font-size: calc(clamp(22px, 2vw, 30px) * var(--h-scale));
 	line-height: 1.05;
 }
 
@@ -1549,7 +1534,7 @@ p {
 .pm-faq__question {
 	padding: 26px 20px;
 	font-family: var(--font-display);
-	font-size: clamp(22px, 2vw, 30px);
+	font-size: calc(clamp(22px, 2vw, 30px) * var(--h-scale));
 	line-height: 1.1;
 	cursor: pointer;
 	transition: padding-left .45s;
@@ -1572,7 +1557,7 @@ p {
 .pm-faq__answer {
 	max-width: 68ch;
 	padding: 0 20px 28px;
-	font-size: 15px;
+	font-size: calc(var(--fs-body) * .9375);
 	line-height: 1.8;
 	opacity: .78;
 }
@@ -1595,14 +1580,14 @@ p {
 
 .pm-enquire__title {
 	margin: 0 0 24px;
-	font-size: clamp(40px, 5vw, 80px);
+	font-size: calc(clamp(40px, 5vw, 80px) * var(--h-scale));
 	line-height: .94;
 }
 
 .pm-enquire__intro {
 	max-width: 40ch;
 	margin: 0 0 34px;
-	font-size: 15px;
+	font-size: calc(var(--fs-body) * .9375);
 	line-height: 1.8;
 	opacity: .66;
 }
@@ -1610,7 +1595,7 @@ p {
 .pm-enquire__details {
 	display: grid;
 	gap: 10px;
-	font-size: 13px;
+	font-size: calc(var(--fs-body) * .8125);
 	letter-spacing: .1em;
 	opacity: .7;
 }
@@ -1672,7 +1657,7 @@ p {
 	gap: 10px;
 	margin: 0;
 	padding: 0;
-	color: rgba(243, 242, 242, .5);
+	color: color-mix(in srgb, var(--paper) 50.19607843%, transparent);
 	font-size: 10px;
 	font-weight: 400;
 	letter-spacing: .26em;
@@ -1694,7 +1679,7 @@ p {
 	margin: 0;
 	padding: 12px 0;
 	border: 0;
-	border-bottom: 1px solid rgba(243, 242, 242, .28);
+	border-bottom: 1px solid color-mix(in srgb, var(--paper) 27.84313725%, transparent);
 	border-radius: 0;
 	background: transparent;
 	box-shadow: none;
@@ -1728,7 +1713,7 @@ p {
 
 .pm-form input::placeholder,
 .pm-form textarea::placeholder {
-	color: rgba(243, 242, 242, .4);
+	color: color-mix(in srgb, var(--paper) 40%, transparent);
 	opacity: 1;
 }
 
@@ -1745,7 +1730,7 @@ p {
 	border-radius: 999px;
 	background: var(--accent);
 	box-shadow: none;
-	color: #fff;
+	color: var(--on-accent);
 	font-family: var(--font-body);
 	font-size: 12px;
 	font-weight: 400;
@@ -1784,7 +1769,7 @@ p {
 	width: 18px;
 	height: 18px;
 	margin: 0 0 0 14px;
-	border: 2px solid rgba(243, 242, 242, .6);
+	border: 2px solid color-mix(in srgb, var(--paper) 60%, transparent);
 	border-right-color: transparent;
 	border-radius: 50%;
 	background: none;
@@ -1836,7 +1821,7 @@ p {
 .pm-form .wpforms-error-container {
 	margin: 18px 0 0;
 	padding: 16px 20px;
-	border: 1px solid rgba(243, 242, 242, .28);
+	border: 1px solid color-mix(in srgb, var(--paper) 27.84313725%, transparent);
 	border-radius: 12px;
 	background: transparent;
 	box-shadow: none;
@@ -1904,7 +1889,7 @@ p {
 	inset: 0;
 	/* The home hero gradient, darker in the middle (the copy sits higher on this shorter hero)
 	   and ending in solid ink so there is no seam above the page content. */
-	background: linear-gradient(180deg, rgba(12, 11, 11, .6) 0%, rgba(12, 11, 11, .4) 38%, var(--ink) 100%);
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.6) 0%, rgb(var(--ink-rgb) / 0.4) 38%, var(--ink) 100%);
 }
 
 .pm-page-hero__copy {
@@ -1940,7 +1925,7 @@ p {
 
 .pm-page-hero__title {
 	max-width: 16ch;
-	font-size: clamp(48px, 7vw, 128px);
+	font-size: calc(clamp(48px, 7vw, 128px) * var(--h-scale));
 	line-height: .9;
 	letter-spacing: -.01em;
 }
@@ -1948,7 +1933,7 @@ p {
 .pm-page-hero__intro {
 	max-width: 46ch;
 	margin-top: 28px;
-	font-size: 16px;
+	font-size: var(--fs-body);
 	line-height: 1.7;
 	opacity: .78;
 }
@@ -1961,7 +1946,7 @@ p {
 	margin-left: auto;
 	padding-right: var(--pad-x);
 	padding-left: var(--pad-x);
-	font-size: 16px;
+	font-size: var(--fs-body);
 	line-height: 1.8;
 }
 
@@ -1980,12 +1965,12 @@ p {
 }
 
 .pm-blocks > h2 {
-	font-size: clamp(30px, 3vw, 44px);
+	font-size: calc(clamp(30px, 3vw, 44px) * var(--h-scale));
 	line-height: 1;
 }
 
 .pm-blocks > h3 {
-	font-size: clamp(22px, 2vw, 28px);
+	font-size: calc(clamp(22px, 2vw, 28px) * var(--h-scale));
 	line-height: 1.1;
 }
 
@@ -2041,14 +2026,14 @@ p {
 }
 
 .pm-cta__title {
-	font-size: clamp(40px, 5vw, 80px);
+	font-size: calc(clamp(40px, 5vw, 80px) * var(--h-scale));
 	line-height: .94;
 }
 
 .pm-cta__text {
 	max-width: 40ch;
 	margin-top: 24px;
-	font-size: 15px;
+	font-size: calc(var(--fs-body) * .9375);
 	line-height: 1.8;
 	opacity: .66;
 }
@@ -2081,7 +2066,7 @@ p {
 }
 
 .pm-page__title {
-	font-size: clamp(40px, 6vw, 96px);
+	font-size: calc(clamp(40px, 6vw, 96px) * var(--h-scale));
 	line-height: .92;
 }
 
@@ -2093,7 +2078,7 @@ p {
 /* Readable rich text from the editor (privacy, cookie policy). */
 .pm-prose {
 	max-width: 72ch;
-	font-size: 16px;
+	font-size: var(--fs-body);
 	line-height: 1.8;
 }
 
@@ -2103,13 +2088,13 @@ p {
 
 .pm-prose h2 {
 	margin-top: 1.8em;
-	font-size: clamp(30px, 3vw, 44px);
+	font-size: calc(clamp(30px, 3vw, 44px) * var(--h-scale));
 	line-height: 1;
 }
 
 .pm-prose h3 {
 	margin-top: 1.6em;
-	font-size: clamp(22px, 2vw, 28px);
+	font-size: calc(clamp(22px, 2vw, 28px) * var(--h-scale));
 	line-height: 1.1;
 }
 
@@ -2148,7 +2133,7 @@ p {
 .pm-prose table {
 	width: 100%;
 	border-collapse: collapse;
-	font-size: 14px;
+	font-size: calc(var(--fs-body) * .875);
 }
 
 .pm-prose th,
@@ -2222,7 +2207,7 @@ p {
 
 .pm-list__title {
 	font-family: var(--font-display);
-	font-size: clamp(24px, 2.4vw, 36px);
+	font-size: calc(clamp(24px, 2.4vw, 36px) * var(--h-scale));
 	line-height: 1.05;
 }
 
@@ -2245,7 +2230,7 @@ p {
 	min-width: 48px;
 	height: 48px;
 	padding: 0 16px;
-	border: 1px solid rgba(243, 242, 242, .34);
+	border: 1px solid color-mix(in srgb, var(--paper) 34.11764706%, transparent);
 	border-radius: 999px;
 	font-size: 12px;
 	letter-spacing: .14em;
@@ -2262,7 +2247,7 @@ p {
 
 .pm-light .pm-pagination .page-numbers,
 .pm-light .pm-pagination .post-page-numbers {
-	border-color: rgba(12, 11, 11, .28);
+	border-color: color-mix(in srgb, var(--ink) 27.84313725%, transparent);
 }
 
 .pm-light .pm-pagination .current,
@@ -2286,7 +2271,7 @@ p {
 .pm-404__code {
 	margin-bottom: 16px;
 	font-family: var(--font-display);
-	font-size: clamp(120px, 24vw, 360px);
+	font-size: calc(clamp(120px, 24vw, 360px) * var(--h-scale));
 	line-height: .8;
 	letter-spacing: -.03em;
 	opacity: .12;
@@ -2299,7 +2284,7 @@ p {
 .pm-404__text {
 	max-width: 44ch;
 	margin-bottom: 40px;
-	font-size: 15px;
+	font-size: calc(var(--fs-body) * .9375);
 	line-height: 1.8;
 	opacity: .66;
 }

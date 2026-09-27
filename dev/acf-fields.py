@@ -10,6 +10,8 @@ Editor rules (docs/editability.md):
 - Images and videos state the recommended size and format; minimums protect the layout.
 - Text that breaks the layout when too long gets a character limit.
 - Fields marked pm_admin_only are hidden from non-administrators (inc/acf.php).
+- Fields marked pm_design (the Design tab, D12) are for administrators, and for Editors only when
+  Technical → "Editors can change the design" is on (inc/design.php).
 - Messages and instructions may use {settings} and {cars} tokens, which inc/acf.php turns into
   links to Pan Motors settings and to the Cars list.
 - Blocks (D11, docs/blocks.md): one field group per pm/* block, located by block name. A field that
@@ -40,6 +42,8 @@ def base(key, label, name, ftype, **kw):
     }
     if kw.pop('admin_only', False):
         f['pm_admin_only'] = 1
+    if kw.pop('design', False):
+        f['pm_design'] = 1
     f.update(kw)
     return f
 
@@ -81,7 +85,8 @@ def number(key, label, name=None, **kw):
 def image(key, label, name=None, min_width='', min_height='', **kw):
     return base(key, label, name or key, 'image', return_format='id', library='all',
                 min_width=min_width, min_height=min_height, min_size='', max_width='', max_height='',
-                max_size=kw.pop('max_size', 8), mime_types='jpg, jpeg, png, webp, avif', preview_size='medium', **kw)
+                max_size=kw.pop('max_size', 8), mime_types=kw.pop('mime_types', 'jpg, jpeg, png, webp, avif'),
+                preview_size='medium', **kw)
 
 
 def video(key, label, name=None, **kw):
@@ -128,6 +133,31 @@ def wysiwyg(key, label, name=None, **kw):
 def page_field(key, label, name=None, **kw):
     return base(key, label, name or key, 'post_object', post_type=['page'], post_status=['publish'], taxonomy='',
                 return_format='id', multiple=0, allow_null=1, bidirectional=0, ui=1, bidirectional_target=[], **kw)
+
+
+def color(key, label, default, name=None, **kw):
+    return base(key, label, name or key, 'color_picker', default_value=default, enable_opacity=0,
+                return_format='string', **kw)
+
+
+def select(key, label, choices, default, name=None, **kw):
+    return base(key, label, name or key, 'select', choices=choices, default_value=default, return_format='value',
+                multiple=0, allow_null=0, ui=0, ajax=0, placeholder='', allow_custom=0, search_placeholder='', **kw)
+
+
+def range_field(key, label, default, min, max, step=1, append='', name=None, **kw):
+    return base(key, label, name or key, 'range', default_value=default, min=min, max=max, step=step,
+                prepend='', append=append, **kw)
+
+
+def font_file(key, label, name=None, **kw):
+    return base(key, label, name or key, 'file', return_format='id', library='all',
+                min_size='', max_size=2, mime_types='woff2', **kw)
+
+
+def true_false(key, label, name=None, default=1, on='On', off='Off', **kw):
+    return base(key, label, name or key, 'true_false', message='', default_value=default, ui=1,
+                ui_on_text=on, ui_off_text=off, **kw)
 
 
 def toggle(key, label, instructions, **kw):
@@ -258,6 +288,63 @@ options = group('options', 'Pan Motors settings', [
     text('notfound_home_label', 'Home button', width='50', default_value='Back to home', maxlength=24),
     text('notfound_contact_label', 'Contact button', width='50', default_value='Contact us', maxlength=24),
 
+    tab('design', 'Design', design=True),
+    message('design', 'About the design settings',
+            'Colours, fonts, sizes, corners and logos for the whole site, on every page and in the page editor. '
+            'Each setting starts at the value of the original design: change one, save, and check the site.',
+            design=True),
+    color('color_ink', 'Dark colour', '#0c0b0b', width='25', design=True,
+          instructions='Dark backgrounds and text on light sections.'),
+    color('color_paper', 'Light colour', '#f3f2f2', width='25', design=True,
+          instructions='Light backgrounds and text on dark sections.'),
+    color('color_accent', 'Accent colour', '#ec3013', width='25', design=True,
+          instructions='Small red lines, active links, buttons on hover, focus rings.'),
+    color('color_surface', 'Card colour', '#161514', width='25', design=True,
+          instructions='Dark cards and the space behind photos while they load.'),
+    message('contrast', 'Contrast check', '{contrast}', design=True),
+    select('font_heading', 'Heading font', {
+        'bodoni-moda': 'Bodoni Moda', 'playfair-display': 'Playfair Display',
+        'cormorant-garamond': 'Cormorant Garamond', 'dm-serif-display': 'DM Serif Display', 'custom': 'Custom (upload)',
+    }, 'bodoni-moda', width='50', design=True, instructions='Headings, titles and large numbers.'),
+    select('font_body', 'Body font', {
+        'archivo': 'Archivo', 'inter': 'Inter', 'manrope': 'Manrope', 'dm-sans': 'DM Sans', 'custom': 'Custom (upload)',
+    }, 'archivo', width='50', design=True, instructions='Paragraphs, menus, buttons and small labels.'),
+    font_file('font_heading_regular', 'Heading font file', width='25', design=True,
+              instructions='WOFF2, up to 2 MB. The regular style.',
+              conditional_logic=[[{'field': 'field_pm_font_heading', 'operator': '==', 'value': 'custom'}]]),
+    font_file('font_heading_italic', 'Heading font file, italic', width='25', design=True,
+              instructions='Optional. WOFF2.',
+              conditional_logic=[[{'field': 'field_pm_font_heading', 'operator': '==', 'value': 'custom'}]]),
+    font_file('font_body_regular', 'Body font file', width='25', design=True,
+              instructions='WOFF2, up to 2 MB. The regular style.',
+              conditional_logic=[[{'field': 'field_pm_font_body', 'operator': '==', 'value': 'custom'}]]),
+    font_file('font_body_italic', 'Body font file, italic', width='25', design=True,
+              instructions='Optional. WOFF2.',
+              conditional_logic=[[{'field': 'field_pm_font_body', 'operator': '==', 'value': 'custom'}]]),
+    message('fonts', 'Font licence',
+            'Upload only fonts your licence allows on a website. Without a file, the site uses the design\'s font.',
+            design=True,
+            conditional_logic=[[{'field': 'field_pm_font_heading', 'operator': '==', 'value': 'custom'}],
+                               [{'field': 'field_pm_font_body', 'operator': '==', 'value': 'custom'}]]),
+    range_field('heading_scale', 'Heading size', 100, 85, 115, append='%', width='33', design=True,
+                instructions='Makes every heading larger or smaller. 100% is the design.'),
+    range_field('body_size', 'Text size', 16, 14, 18, append='px', width='33', design=True,
+                instructions='Paragraph text. Small labels keep their size. 16px is the design.'),
+    range_field('radius', 'Corner rounding', 24, 0, 48, append='px', width='34', design=True,
+                instructions='Cards, photos and panels. 0 is square. 24px is the design.'),
+    range_field('logo_height', 'Logo height, computer', 46, 24, 80, append='px', width='50', design=True,
+                instructions='The logo at the top of every page. 46px is the design.'),
+    range_field('logo_height_mobile', 'Logo height, phone', 46, 24, 80, append='px', width='50', design=True,
+                instructions='The same logo on screens up to 880px wide.'),
+    image('logo_light', 'Logo for light backgrounds', width='50', design=True,
+          instructions='Optional. A dark version of the logo, used in the light footer. Empty: the main logo is '
+                       'turned dark automatically. PNG or WebP with a transparent background, at least 300px wide.',
+          mime_types='png, webp'),
+    image('share_image', 'Default share image', min_width=1200, min_height=630, width='50', design=True,
+          instructions='Shown when a page is shared on social media or in messages and the page has no featured '
+                       'image of its own. 1200 × 630px. ' + IMG_FORMAT),
+    message('site_icon', 'Main logo and site icon', '{identity}', design=True),
+
     tab('technical', 'Technical', admin_only=True),
     message('technical', 'For the site administrator',
             'Only administrators see this tab. Changing these can break links or the enquiry form.', admin_only=True),
@@ -265,6 +352,8 @@ options = group('options', 'Pan Motors settings', [
                instructions='The page opened by the Contact button (header, mobile menu, page not found). Empty: the button is hidden.'),
     text('enquire_form_shortcode', 'Enquiry form shortcode', placeholder='[contact-form-7 id="123"]', admin_only=True,
          instructions='From the form plugin. Empty: a preview form is shown that does not send.'),
+    true_false('design_editors', 'Editors can change the design', default=0, on='Yes', off='No', admin_only=True,
+               instructions='Shows the Design tab to Editors. Off: only administrators see it.'),
 ], [[{'param': 'options_page', 'operator': '==', 'value': 'panmotors-settings'}]])
 
 
@@ -273,11 +362,6 @@ def relationship(key, label, post_type, name=None, **kw):
     return base(key, label, name or key, 'relationship', post_type=post_type, post_status=['publish'], taxonomy='',
                 filters=['search'], return_format='id', min=kw.pop('min', ''), max=kw.pop('max', ''),
                 elements=['featured_image'], bidirectional=0, bidirectional_target=[], **kw)
-
-
-def true_false(key, label, name=None, default=1, on='On', off='Off', **kw):
-    return base(key, label, name or key, 'true_false', message='', default_value=default, ui=1,
-                ui_on_text=on, ui_off_text=off, **kw)
 
 
 car = group('car', 'Car', [

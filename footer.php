@@ -14,7 +14,7 @@ $panmotors_copy    = str_replace( '{year}', wp_date( 'Y' ), (string) panmotors_o
 <footer class="pm-footer pm-light">
 	<div class="pm-footer__row">
 		<p class="pm-footer__brand">
-			<?php panmotors_logo_image( 'pm-footer__logo', '', '62px' ); // 34px tall. ?>
+			<?php panmotors_logo_light_image( 'pm-footer__logo', '', '62px' ); // 34px tall. ?>
 			<?php echo esc_html( (string) $panmotors_tagline ); ?>
 		</p>
 

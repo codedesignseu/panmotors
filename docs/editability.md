@@ -12,7 +12,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | **Pages → Featured Cars / About Pan Motors / Latest Cars / The Showroom / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until the inner pages are designed (D10). |
 | **Cars** | Every showcase car once: photo, marque, model, reference, detail, note, optional link, slider caption, place, Featured, order. Featured Cars and Latest Cars read from here. |
 | **Patterns → Our Values** (or "Edit original" on the block) | The Our Values cards, shared by Home and About. Edit once, both pages change. |
-| **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, Social, Footer, Page not found. **Technical** (Contact button page, form shortcode) is visible to administrators only. |
+| **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
 | **Appearance → Menus** | Primary menu (header + mobile menu), Footer menu. |
 | **Appearance → Customise → Site Identity** | Logo (header, contact card, footer). |
 | **Media** | Images and videos; photo captions (Showroom slider) come from each image's Caption. |

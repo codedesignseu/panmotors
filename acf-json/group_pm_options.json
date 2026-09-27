@@ -1045,6 +1045,534 @@
             "append": ""
         },
         {
+            "key": "field_pm_tab_design",
+            "label": "Design",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_msg_design",
+            "label": "About the design settings",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "message": "Colours, fonts, sizes, corners and logos for the whole site, on every page and in the page editor. Each setting starts at the value of the original design: change one, save, and check the site.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_color_ink",
+            "label": "Dark colour",
+            "name": "color_ink",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Dark backgrounds and text on light sections.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": "#0c0b0b",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_pm_color_paper",
+            "label": "Light colour",
+            "name": "color_paper",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Light backgrounds and text on dark sections.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": "#f3f2f2",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_pm_color_accent",
+            "label": "Accent colour",
+            "name": "color_accent",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Small red lines, active links, buttons on hover, focus rings.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": "#ec3013",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_pm_color_surface",
+            "label": "Card colour",
+            "name": "color_surface",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Dark cards and the space behind photos while they load.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": "#161514",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_pm_msg_contrast",
+            "label": "Contrast check",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "message": "{contrast}",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_font_heading",
+            "label": "Heading font",
+            "name": "font_heading",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Headings, titles and large numbers.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "choices": {
+                "bodoni-moda": "Bodoni Moda",
+                "playfair-display": "Playfair Display",
+                "cormorant-garamond": "Cormorant Garamond",
+                "dm-serif-display": "DM Serif Display",
+                "custom": "Custom (upload)"
+            },
+            "default_value": "bodoni-moda",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": ""
+        },
+        {
+            "key": "field_pm_font_body",
+            "label": "Body font",
+            "name": "font_body",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Paragraphs, menus, buttons and small labels.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "choices": {
+                "archivo": "Archivo",
+                "inter": "Inter",
+                "manrope": "Manrope",
+                "dm-sans": "DM Sans",
+                "custom": "Custom (upload)"
+            },
+            "default_value": "archivo",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": ""
+        },
+        {
+            "key": "field_pm_font_heading_regular",
+            "label": "Heading font file",
+            "name": "font_heading_regular",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "WOFF2, up to 2 MB. The regular style.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_font_heading",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": 2,
+            "mime_types": "woff2"
+        },
+        {
+            "key": "field_pm_font_heading_italic",
+            "label": "Heading font file, italic",
+            "name": "font_heading_italic",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Optional. WOFF2.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_font_heading",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": 2,
+            "mime_types": "woff2"
+        },
+        {
+            "key": "field_pm_font_body_regular",
+            "label": "Body font file",
+            "name": "font_body_regular",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "WOFF2, up to 2 MB. The regular style.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_font_body",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": 2,
+            "mime_types": "woff2"
+        },
+        {
+            "key": "field_pm_font_body_italic",
+            "label": "Body font file, italic",
+            "name": "font_body_italic",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Optional. WOFF2.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_font_body",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": 2,
+            "mime_types": "woff2"
+        },
+        {
+            "key": "field_pm_msg_fonts",
+            "label": "Font licence",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_font_heading",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_pm_font_body",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "message": "Upload only fonts your licence allows on a website. Without a file, the site uses the design's font.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_heading_scale",
+            "label": "Heading size",
+            "name": "heading_scale",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Makes every heading larger or smaller. 100% is the design.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": 100,
+            "min": 85,
+            "max": 115,
+            "step": 1,
+            "prepend": "",
+            "append": "%"
+        },
+        {
+            "key": "field_pm_body_size",
+            "label": "Text size",
+            "name": "body_size",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Paragraph text. Small labels keep their size. 16px is the design.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": 16,
+            "min": 14,
+            "max": 18,
+            "step": 1,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_pm_radius",
+            "label": "Corner rounding",
+            "name": "radius",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Cards, photos and panels. 0 is square. 24px is the design.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": 24,
+            "min": 0,
+            "max": 48,
+            "step": 1,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_pm_logo_height",
+            "label": "Logo height, computer",
+            "name": "logo_height",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "The logo at the top of every page. 46px is the design.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": 46,
+            "min": 24,
+            "max": 80,
+            "step": 1,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_pm_logo_height_mobile",
+            "label": "Logo height, phone",
+            "name": "logo_height_mobile",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "The same logo on screens up to 880px wide.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "default_value": 46,
+            "min": 24,
+            "max": 80,
+            "step": 1,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_pm_logo_light",
+            "label": "Logo for light backgrounds",
+            "name": "logo_light",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Optional. A dark version of the logo, used in the light footer. Empty: the main logo is turned dark automatically. PNG or WebP with a transparent background, at least 300px wide.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "png, webp",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_share_image",
+            "label": "Default share image",
+            "name": "share_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Shown when a page is shared on social media or in messages and the page has no featured image of its own. 1200 × 630px. JPG or WebP, sRGB colour.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1200,
+            "min_height": 630,
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_msg_site_icon",
+            "label": "Main logo and site icon",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_design": 1,
+            "message": "{identity}",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
             "key": "field_pm_tab_technical",
             "label": "Technical",
             "name": "",
@@ -1131,6 +1659,27 @@
             "default_value": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_pm_design_editors",
+            "label": "Editors can change the design",
+            "name": "design_editors",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Shows the Design tab to Editors. Off: only administrators see it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Yes",
+            "ui_off_text": "No"
         }
     ],
     "location": [
@@ -1154,5 +1703,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790371872
+    "modified": 1790500815
 }

@@ -145,7 +145,7 @@ function panmotors_cars_admin_css() {
 	if ( ! $screen || 'edit-pm_car' !== $screen->id ) {
 		return;
 	}
-	echo '<style>.column-pm_photo{width:112px}.column-pm_featured,.column-pm_order{width:110px}.pm-admin-thumb{display:block;width:96px;height:54px;object-fit:cover;border-radius:4px}.pm-admin-featured{display:inline-block;padding:2px 8px;border-radius:10px;background:#ec3013;color:#fff;font-size:11px;letter-spacing:.04em}</style>';
+	echo '<style>.column-pm_photo{width:112px}.column-pm_featured,.column-pm_order{width:110px}.pm-admin-thumb{display:block;width:96px;height:54px;object-fit:cover;border-radius:4px}.pm-admin-featured{display:inline-block;padding:2px 8px;border-radius:10px;background:' . esc_attr( panmotors_design()['accent'] ) . ';color:#fff;font-size:11px;letter-spacing:.04em}</style>';
 }
 add_action( 'admin_head', 'panmotors_cars_admin_css' );
 

@@ -19,29 +19,12 @@ function panmotors_asset_version( $path ) {
 }
 
 /**
- * Fonts preloaded in <head>. Latin subsets only; latin-ext loads on demand via unicode-range.
- *
- * @return string[] Paths relative to the theme root.
- */
-function panmotors_preload_fonts() {
-	return array(
-		'assets/fonts/archivo-latin-wght-normal.woff2',
-		'assets/fonts/bodoni-moda-latin-opsz-normal.woff2',
-	);
-}
-
-/**
- * Print font preload links early in <head> so text never waits on CSS discovery.
+ * Print font preload links early in <head> so text never waits on CSS discovery. Only the
+ * heading and body fonts chosen in Pan Motors → Design (inc/design.php).
  */
 function panmotors_font_preload() {
 	foreach ( panmotors_preload_fonts() as $font ) {
-		if ( ! panmotors_asset_version( $font ) ) {
-			continue;
-		}
-		printf(
-			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-			esc_url( PANMOTORS_URI . '/' . $font )
-		);
+		printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( $font ) );
 	}
 }
 add_action( 'wp_head', 'panmotors_font_preload', 1 );
