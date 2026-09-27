@@ -63,7 +63,7 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] 2. Our Values to Options + homepage updates (§3, §4) + nav active state + footer auto style (§2.1, §2.2)
 - [x] 3. About (§5), including `pm/page-header`, `pm/story`, `pm/services`, `pm/cta-image`
 - [x] 4. Featured Cars (§6)
-- [ ] 5. Showroom (§7)
+- [x] 5. Showroom (§7)
 - [ ] 6. Contact (§8)
 
 ## 5. SEO, GEO and extra pages

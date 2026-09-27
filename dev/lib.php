@@ -357,3 +357,68 @@ function panmotors_demo_featured_content() {
 		)
 	);
 }
+
+/**
+ * Showroom page as block markup (D12, _design/v2/showroom.html): page header (photo), photo slider
+ * ("Inside"), visit (hours and address from the options), photo call to action. Used by the seed
+ * and by the migration that brings an existing page to this layout.
+ *
+ * @return string
+ */
+function panmotors_demo_showroom_content() {
+	return implode(
+		"\n\n",
+		array(
+			panmotors_seed_block(
+				'pm/page-header',
+				array(
+					'header_style'      => 'image',
+					'header_eyebrow'    => 'Avenue 65, Mesoyi — Paphos',
+					'header_title'      => "The\nShowroom",
+					'header_intro'      => 'Paphos, open six days a week. Sales, service and the boutique under one roof.',
+					'header_image'      => panmotors_dev_media( 'DSC04357-copy-scaled.jpg' ),
+					'header_filter'     => 'none',
+					'header_brightness' => 62,
+				)
+			),
+			panmotors_seed_block(
+				'pm/photo-slider',
+				array(
+					'slider_title'  => 'Inside',
+					'slider_hint'   => 'Drag or use arrows',
+					'slider_photos' => array_filter(
+						array(
+							panmotors_dev_media( 'DSC04357-copy-scaled.jpg' ),
+							panmotors_dev_media( 'IMG_6844-scaled.jpg' ),
+							panmotors_dev_media( 'DSC08440-copy-Large.jpg' ),
+							panmotors_dev_media( 'DSC08476-copy-Large.jpg' ),
+						)
+					),
+				)
+			),
+			panmotors_seed_block(
+				'pm/visit',
+				array(
+					'visit_hours_label'      => 'Opening hours',
+					'visit_find_label'       => 'Find us',
+					'visit_directions_label' => 'Get directions',
+				)
+			),
+			panmotors_seed_block(
+				'pm/cta-image',
+				array(
+					'ctai_eyebrow'    => '',
+					'ctai_title'      => "Book\nA Visit",
+					'ctai_image'      => panmotors_dev_media( 'IMG_6844-scaled.jpg' ),
+					'ctai_filter'     => 'none',
+					'ctai_brightness' => 50,
+					'ctai_size'       => 'standard',
+					'ctai_label'      => 'Contact us',
+					'ctai_link'       => panmotors_dev_page( 'contact' ),
+					'ctai_label_2'    => 'See featured cars',
+					'ctai_link_2'     => panmotors_dev_page( 'featured-cars' ),
+				)
+			),
+		)
+	);
+}

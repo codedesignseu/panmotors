@@ -17,6 +17,9 @@ panmotors_render_block(
 		'eyebrow' => get_field( 'ctai_eyebrow' ),
 		'title'   => get_field( 'ctai_title' ),
 		'image'   => (int) get_field( 'ctai_image' ),
+		'colour'  => 'none' === get_field( 'ctai_filter' ),
+		'bright'  => get_field( 'ctai_brightness' ),
+		'size'    => 'standard' === get_field( 'ctai_size' ) ? 'standard' : 'tall',
 		'buttons' => array(
 			array( get_field( 'ctai_label' ), get_field( 'ctai_link' ) ),
 			array( get_field( 'ctai_label_2' ), get_field( 'ctai_link_2' ) ),

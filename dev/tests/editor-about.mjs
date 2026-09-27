@@ -15,14 +15,18 @@ const EDITS = {
   'pm/cta-image': ['ctai_eyebrow', '.pm-cta-image'],
   'pm/cars-grid': [process.env.CARS_FIELD || 'cars_enquire_label', '.pm-cars'],
   'pm/cta-band': ['cta_text', '.pm-cta'],
+  'pm/photo-slider': ['slider_hint', '.pm-slider'],
+  'pm/visit': ['visit_find_label', '.pm-visit'],
 };
+// FIELDS='{"pm/visit":"visit_hours_label"}' tests other fields of those blocks.
+for (const [name, field] of Object.entries(JSON.parse(process.env.FIELDS || '{}'))) EDITS[name][0] = field;
 
 export default async ({ page, sleep, shot }) => {
   for (const c of cookies) await page.send('Network.setCookie', { name: c.name, value: c.value, domain: 'panmotors.local', path: '/' });
   await page.size(1440, 900);
   await page.go(`http://panmotors.local/wp-admin/post.php?post=${ABOUT_ID}&action=edit`);
   for (let i = 0; i < 60; i++) {
-    if (await page.eval(`return !!document.querySelector('iframe[name=editor-canvas]')?.contentDocument?.querySelector('.pm-cta-image, .pm-cta')`).catch(() => false)) break;
+    if (await page.eval(`return !!document.querySelector('iframe[name=editor-canvas]')?.contentDocument?.querySelector('.pm-cta-image, .pm-cta, .pm-slider')`).catch(() => false)) break;
     await sleep(500);
   }
   await page.eval(`wp.data.dispatch('core/preferences').set('core/edit-post', 'welcomeGuide', false); return 1`);
@@ -46,7 +50,7 @@ export default async ({ page, sleep, shot }) => {
     await shot('editor-' + ABOUT_ID + '-' + b.name.slice(3));
     out.blocks.push(row);
   }
-  out.inserter = await page.eval(`return wp.data.select('core/block-editor').getInserterItems().map(i => i.name).filter(n => ['pm/page-header','pm/story','pm/services','pm/cta-image','pm/cars-grid','pm/cta-band'].includes(n))`);
+  out.inserter = await page.eval(`return wp.data.select('core/block-editor').getInserterItems().map(i => i.name).filter(n => ['pm/page-header','pm/story','pm/services','pm/cta-image','pm/cars-grid','pm/cta-band','pm/photo-slider','pm/visit'].includes(n))`);
   out.dirtyNotSaved = await page.eval(`return wp.data.select('core/editor').isEditedPostDirty()`);
   return out;
 };

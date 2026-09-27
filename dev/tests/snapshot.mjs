@@ -2,6 +2,9 @@
 // Usage: LABEL=before node dev/cdp.mjs dev/tests/snapshot.mjs   → dev/.cache/snapshots/<LABEL>/
 // Another page: PAGE=about/ LABEL=about-before ... (its sections are listed in page order; the
 // homepage-only reduced-motion check is skipped).
+// EAGER=1 loads and decodes every image before the full-page captures: needed for Featured Cars,
+// whose lazy card photos are not always loaded otherwise. It changes which file sizes="auto" picks,
+// so compare EAGER runs only with EAGER runs.
 // Then: node dev/tests/diff.mjs before after
 //
 // Saves: the served <main> HTML and the list of assets in the whole document (normalised),
@@ -54,7 +57,7 @@ export default async ({ page, sleep }) => {
     await page.size(w, h);
     await page.media(true);
     await page.go(URL_HOME);
-    await page.eval(`document.documentElement.style.scrollBehavior='auto'; const H=document.documentElement.scrollHeight; for (let y=0;y<H;y+=${Math.round(h * 0.6)}){ scrollTo(0,y); await new Promise(r=>setTimeout(r,200)); } scrollTo(0,0); await document.fonts.ready; await Promise.race([Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))), new Promise(r => setTimeout(r, 8000))]); return [...document.images].filter(i => !i.complete).length`);
+    await page.eval(`document.documentElement.style.scrollBehavior='auto'; const H=document.documentElement.scrollHeight; for (let y=0;y<H;y+=${Math.round(h * 0.6)}){ scrollTo(0,y); await new Promise(r=>setTimeout(r,200)); } scrollTo(0,0); await document.fonts.ready; ${process.env.EAGER ? `for (const i of document.images) i.loading = 'eager';` : ''} await Promise.race([Promise.all([...document.images].map(i => i.complete ? ${process.env.EAGER ? 'i.decode().catch(() => 0)' : '0'} : new Promise(r => { i.onload = i.onerror = r; }))), new Promise(r => setTimeout(r, 8000))]); return [...document.images].filter(i => !i.complete).length`);
     await sleep(2000);
     const full = await page.eval(`return document.documentElement.scrollHeight`);
     // A full-page capture resizes the viewport, and images with sizes="auto" may pick a new

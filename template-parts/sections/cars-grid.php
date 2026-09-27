@@ -161,7 +161,7 @@ $panmotors_preview = ! empty( $args['preview'] );
 			$panmotors_img   = (int) ( $panmotors_car['image'] ?? 0 );
 			$panmotors_sheet = $panmotors_specs( $panmotors_car );
 			?>
-			<article class="pm-sheet" data-sheet="<?php echo esc_attr( $panmotors_id ); ?>" aria-labelledby="pm-sheet-title-<?php echo esc_attr( $panmotors_id ); ?>"<?php echo ( $panmotors_preview && 0 === $panmotors_k ) ? '' : ' hidden'; ?>>
+			<article class="pm-sheet<?php echo ( $panmotors_preview && 0 === $panmotors_k ) ? ' is-current' : ''; ?>" data-sheet="<?php echo esc_attr( $panmotors_id ); ?>" aria-labelledby="pm-sheet-title-<?php echo esc_attr( $panmotors_id ); ?>"<?php echo ( $panmotors_preview && 0 === $panmotors_k ) ? '' : ' hidden'; ?>>
 				<div class="pm-sheet__media">
 					<?php
 					if ( $panmotors_img ) {

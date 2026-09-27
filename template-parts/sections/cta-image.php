@@ -7,6 +7,9 @@
  * - eyebrow (string)  Small red line.
  * - title   (string)  Heading; new lines start new lines.
  * - image   (int)     Background photo.
+ * - colour  (bool)    Photo in colour (else black and white).
+ * - bright  (int)     Photo brightness in percent, 40–70 (default 55).
+ * - size    (string)  'tall' (About) or 'standard' (Showroom: less padding, lighter gradient).
  * - buttons (array[]) [label, url] pairs: the first is the solid button, the second outlined.
  *
  * @package panmotors
@@ -25,9 +28,14 @@ $panmotors_buttons = array_values(
 if ( ! $panmotors_title ) {
 	return;
 }
+
+$panmotors_bright = is_numeric( $args['bright'] ?? null ) ? max( 40, min( 70, (int) $args['bright'] ) ) : 55;
+$panmotors_class  = 'pm-cta-image__card';
+$panmotors_class .= ! empty( $args['colour'] ) ? ' pm-cta-image__card--colour' : '';
+$panmotors_class .= 'standard' === ( $args['size'] ?? '' ) ? ' pm-cta-image__card--standard' : '';
 ?>
 <section class="pm-cta-image pm-light pm-pad" aria-labelledby="cta-image-title">
-	<div class="pm-cta-image__card" data-rise data-zoom>
+	<div class="<?php echo esc_attr( $panmotors_class ); ?>"<?php echo 55 !== $panmotors_bright ? ' style="--pm-brightness: ' . esc_attr( (string) ( $panmotors_bright / 100 ) ) . '"' : ''; ?> data-rise data-zoom>
 		<?php if ( $panmotors_image ) : ?>
 			<div class="pm-cta-image__media" aria-hidden="true">
 				<?php

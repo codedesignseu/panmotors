@@ -37,8 +37,10 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/page-header` | block fields | D12: the page's H1, Photo or Text style (`inner-pages.md` §2.3) |
 | `pm/story` | block fields + Options description (first paragraph when empty) | D12, About |
 | `pm/services` | block fields (repeater, 2–4 tiles) | D12, About ("What We Do") |
-| `pm/cta-image` | block fields | D12, About and Showroom |
+| `pm/cta-image` | block fields (incl. photo colour, brightness, card height) | D12, About and Showroom |
 | `pm/cta-band` | block fields | D12: paper card on the dark page, heading left, ink button right (`inner-pages.md` §2.4) |
+| `pm/photo-slider` | block fields (gallery; captions from the media library) | D12, Showroom "Inside" |
+| `pm/visit` | Options (hours, address, phones, email, map link) + block fields (labels) | D12, Showroom |
 | `pm/cars-grid` | Cars (`pm_car`) + block fields (source, labels, sheet button) | D12, Featured Cars: filters, 3-2-3-2-3 rows, car sheet `<dialog>` |
 
 Inner pages may also use a small set of core blocks for plain text: heading, paragraph, list, image, quote, buttons, and embeds limited to YouTube, Vimeo and Instagram (other providers, and embeds that cannot load, print as a plain link). Everything else from core is hidden. Core blocks, shortcodes, embeds and plugins filtering `the_content` run through the normal content pipeline; pm/* sections are rendered outside it so their HTML matches the design exactly (`panmotors_the_blocks()`).

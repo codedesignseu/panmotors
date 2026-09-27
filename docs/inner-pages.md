@@ -150,6 +150,14 @@ Accepted differences from v2:
 
 ---
 
+As built (27 Sep 2026): page heights equal v2 at 1440, 880 and 390 (3211, 2914, 2975px); at 1080 the footer's second row adds 49px, as on the other pages. The header overlap (24px, radius 24px) and the blurred backdrop (blur 64px, saturate .35, brightness 1.5, contrast .55, opacity .5, scale 1.2) measure the same as v2. Crossfade samples after "next" (WordPress / v2): 60ms .93 / .89, 200ms .48 / .42, 330ms swap .20 / .15, 500ms .57 / .63, 700ms .91 / .96, 950ms 1 / 1. Every photo, caption and counter is in the HTML; the script toggles `is-current` (the block editor's preview drops `hidden`, so visibility is by class; the same fix applies to the car sheets). The photo call to action gained Photo colour, Photo brightness and Card height options, because v2 Showroom's card differs from About's (colour photo at 50%, padding clamp(80px, 10vw, 140px), lighter gradient).
+
+Accepted differences from v2:
+- Phones print as stored in the options (+357 99 575 001 / +357 99 339 233); v2 shortens the second.
+- Small red lines on light sections use the accessible accent shade (§1).
+- Footer, navigation, and focus-visible states as on the other pages.
+- Not applicable here: the footer shows no address or hours (D10), and the JSON-LD graph is not built yet (TASKS §5), so an Options change reaches the Showroom page and the homepage card, not those two.
+
 ## 8. Contact (`_design/v2/contact.html`)
 
 1. `pm/page-header` Text: eyebrow "Pan Motors — Paphos, Cyprus", H1 "Contact / Us", intro "Call, write, or walk in during showroom hours."

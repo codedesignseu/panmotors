@@ -2670,7 +2670,21 @@ p {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	filter: grayscale(1) brightness(.55);
+	filter: grayscale(1) brightness(var(--pm-brightness, .55));
+}
+
+.pm-cta-image__card--colour .pm-cta-image__media img {
+	filter: brightness(var(--pm-brightness, .55));
+}
+
+/* Standard height (Showroom): a little less padding, a lighter gradient on the right. */
+.pm-cta-image__card--standard {
+	padding-top: clamp(80px, 10vw, 140px);
+	padding-bottom: clamp(80px, 10vw, 140px);
+}
+
+.pm-cta-image__card--standard .pm-cta-image__shade {
+	background: linear-gradient(90deg, rgb(var(--ink-rgb) / .85) 0%, rgb(var(--ink-rgb) / .25) 70%);
 }
 
 .pm-cta-image__shade {
@@ -2997,7 +3011,8 @@ p {
 	padding: 28px;
 }
 
-.pm-sheet[hidden] {
+/* By class as well as [hidden]: the block editor's preview drops the hidden attribute. */
+.pm-sheet:not(.is-current) {
 	display: none;
 }
 
@@ -3146,6 +3161,334 @@ p {
 		grid-template-columns: 1fr;
 		gap: 22px;
 		padding: 20px;
+	}
+}
+
+/* Photo slider (Showroom "Inside", inner-pages §7.2): paper panel overlapping the page header by
+   24px, a blurred copy of the current photo under a radial wash, photos crossfading. */
+.pm-slider {
+	position: relative;
+	isolation: isolate;
+	margin-top: -24px;
+	padding: 130px 0 110px;
+	overflow: hidden;
+	border-radius: var(--r) var(--r) 0 0;
+}
+
+.pm-slider__backdrop {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	overflow: hidden;
+}
+
+.pm-slider__bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: blur(64px) saturate(.35) brightness(1.5) contrast(.55);
+	opacity: 0;
+	transform: scale(1.2);
+}
+
+.pm-slider__bg.is-current {
+	opacity: .5;
+}
+
+.pm-slider__wash {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(120% 80% at 50% 40%, rgb(var(--paper-rgb) / .55) 0%, rgb(var(--paper-rgb) / .94) 72%);
+}
+
+.pm-slider__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 40px;
+	margin-bottom: 52px;
+}
+
+/* One caption and one counter show at a time. By class as well as [hidden]: the block editor's
+   preview drops the hidden attribute. */
+.pm-slider [data-slide-part]:not(.is-current) {
+	display: none;
+}
+
+.pm-slider__count {
+	margin: 0;
+	font-size: 12px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	opacity: .55;
+}
+
+.pm-slider__row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: clamp(16px, 3vw, 44px);
+}
+
+.pm-slider__arrow {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	padding: 0;
+	border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--paper) 50%, transparent);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: var(--ink);
+	font-size: 18px;
+	cursor: pointer;
+	transition: background .4s, color .4s, border-color .4s;
+}
+
+.pm-slider__arrow:hover,
+.pm-slider__arrow:focus-visible {
+	border-color: var(--ink);
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.pm-slider__figure {
+	flex: 1 1 auto;
+	max-width: min(1080px, 76vw);
+	margin: 0;
+}
+
+.pm-slider__stage {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface);
+	box-shadow: 0 40px 110px color-mix(in srgb, var(--ink) 28%, transparent);
+	cursor: grab;
+	touch-action: pan-y;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.pm-slider__stage.is-dragging {
+	cursor: grabbing;
+}
+
+.pm-slider__stage:focus-visible {
+	outline-offset: 4px;
+}
+
+.pm-slider__photo {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0;
+	-webkit-user-drag: none;
+}
+
+/* The change, as in the design: the current photo fades out (.6s), at 320ms the next one takes
+   over and fades in, and the one that left drops out at once. Two classes, so this outranks the
+   generic [data-zoom] img transition. */
+.pm-slider__stage .pm-slider__photo {
+	transition: transform 1.5s var(--ease);
+}
+
+.pm-slider__stage .pm-slider__photo.is-current {
+	transition: opacity .6s ease, transform 1.5s var(--ease);
+}
+
+.pm-slider__photo.is-current {
+	opacity: 1;
+}
+
+.pm-slider__photo.is-leaving {
+	opacity: 0;
+}
+
+/* Colour and 4px top margin from the design system's figcaption rule, as on the homepage. */
+.pm-slider__caption {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	margin-top: 4px;
+	padding-top: 20px;
+	color: color-mix(in srgb, var(--ink-soft) 55%, transparent);
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-slider__hint {
+	opacity: .55;
+}
+
+.pm-slider__nav {
+	display: none;
+	justify-content: center;
+	gap: 12px;
+	padding-top: 22px;
+}
+
+.pm-slider__arrow--small {
+	width: 52px;
+	height: 52px;
+	background: transparent;
+	-webkit-backdrop-filter: none;
+	backdrop-filter: none;
+	font-size: 17px;
+}
+
+.pm-slider__dots {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 30px;
+}
+
+.pm-slider__dot {
+	width: 6px;
+	height: 6px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--ink) 25%, transparent);
+	cursor: pointer;
+	transition: width .6s var(--ease), background .4s;
+}
+
+.pm-slider__dot[aria-current="true"] {
+	width: 34px;
+	background: var(--ink);
+}
+
+.pm-slider__dot:focus-visible {
+	outline-offset: 4px;
+}
+
+@media (max-width: 880px) {
+	.pm-slider__row > .pm-slider__arrow {
+		display: none;
+	}
+
+	.pm-slider__nav {
+		display: flex;
+	}
+
+	.pm-slider__figure {
+		max-width: 100%;
+	}
+}
+
+/* Visit (Showroom, inner-pages §7.3): opening hours and address on paper. */
+.pm-visit {
+	padding-top: 40px;
+	padding-bottom: 120px;
+}
+
+.pm-visit__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+	gap: clamp(40px, 6vw, 96px);
+}
+
+.pm-visit__hours {
+	display: grid;
+	margin: 0;
+	border-top: 1px solid var(--line-light);
+}
+
+.pm-visit__row {
+	display: grid;
+	grid-template-columns: 180px 1fr;
+	align-items: center;
+	gap: 24px;
+	padding: 24px 16px;
+	border-bottom: 1px solid var(--line-light);
+	transition: background .45s, color .45s, padding-left .45s;
+}
+
+.pm-visit__row:hover {
+	padding-left: 30px;
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.pm-visit__day {
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+.pm-visit__time {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: calc(clamp(22px, 2vw, 30px) * var(--h-scale));
+	line-height: var(--lh);
+}
+
+.pm-visit__address {
+	font-style: normal;
+}
+
+.pm-visit__lines {
+	margin: 0 0 28px;
+	font-family: var(--font-display);
+	font-size: calc(clamp(26px, 2.6vw, 40px) * var(--h-scale));
+	line-height: 1.15;
+}
+
+.pm-visit__contact {
+	display: grid;
+	gap: 8px;
+	margin: 0 0 32px;
+	font-size: calc(var(--fs-body) * .875);
+	letter-spacing: .06em;
+	line-height: var(--lh);
+	opacity: .75;
+}
+
+.pm-visit__contact a:hover,
+.pm-visit__contact a:focus-visible {
+	color: var(--accent-text-light);
+}
+
+.pm-visit__directions {
+	display: inline-block; /* One run of text, as in the design: "Get directions →". */
+	padding: 15px 26px;
+	border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+	border-radius: 999px;
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	transition: background .5s, color .5s, border-color .5s;
+}
+
+.pm-visit__directions:hover,
+.pm-visit__directions:focus-visible {
+	border-color: var(--ink);
+	background: var(--ink);
+	color: var(--paper);
+}
+
+@media (max-width: 880px) {
+	.pm-visit__row {
+		grid-template-columns: 1fr;
+		gap: 6px;
+		padding: 20px 4px;
 	}
 }
 

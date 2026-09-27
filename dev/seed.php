@@ -593,21 +593,6 @@ $pm_pages = array(
 			)
 		)
 	),
-	'showroom' => panmotors_seed_block_page(
-		'showroom',
-		'The Showroom',
-		implode(
-			"\n\n",
-			array(
-				$pm_hero( 'Avenue 65, Mesoyi', 'Paphos, open six days a week. Sales, service and the boutique under one roof.', $pm_media['sr_forecourt'] ),
-				panmotors_seed_paragraphs( '<p>The Pan Motors showroom is on Avenue 65 in Mesoyi, Paphos. Cars are presented indoors under controlled light, with the service workshop and the boutique in the same building.</p>' ),
-				$pm_showroom_block,
-				"<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Getting here</h2>\n<!-- /wp:heading -->",
-				panmotors_seed_paragraphs( '<p>DRAFT: From Paphos centre, [client to add the route and approximate driving time to Avenue 65, Mesoyi].</p><p>DRAFT: From Paphos International Airport, [client to add the route and approximate driving time].</p><p>DRAFT: Parking: [client to confirm where visitors park].</p>' ),
-				$pm_cta,
-			)
-		)
-	),
 	'contact'  => panmotors_seed_block_page(
 		'contact',
 		'Contact',
@@ -657,6 +642,8 @@ $pm_pages = array(
 	),
 	// After Contact, which its car sheets and CTA band link to (D12, _design/v2/cars.html).
 	'featured' => panmotors_seed_block_page( 'featured-cars', 'Featured Cars', panmotors_demo_featured_content() ),
+	// After Contact and Featured Cars, which its call to action links to (D12, _design/v2/showroom.html).
+	'showroom' => panmotors_seed_block_page( 'showroom', 'The Showroom', panmotors_demo_showroom_content() ),
 	// After Showroom and Contact, which its call to action links to (D12, _design/v2/about.html).
 	'about'    => panmotors_seed_block_page( 'about', 'About Pan Motors', panmotors_demo_about_content() ),
 );

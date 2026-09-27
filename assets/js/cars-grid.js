@@ -93,6 +93,7 @@ function initCars(root) {
 		sheets.forEach((sheet) => {
 			const on = sheet.dataset.sheet === id;
 			sheet.hidden = !on;
+			sheet.classList.toggle('is-current', on);
 			if (on) {
 				sheet.querySelector('[data-lb-pos]').textContent = pad(index + 1);
 				sheet.querySelector('[data-lb-total]').textContent = pad(list.length);
