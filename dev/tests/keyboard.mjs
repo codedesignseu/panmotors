@@ -3,7 +3,7 @@
 export default async ({ page, sleep }) => {
   await page.size(Number(process.env.W || 1440), 900);
   await page.media(false);
-  await page.go('http://panmotors.local/');
+  await page.go('http://panmotors.local/' + (process.env.PAGE || ''));
   await sleep(1500);
   const stops = [];
   for (let i = 0; i < 80; i++) {

@@ -13,8 +13,8 @@
  * before writing anything.
  *
  *   wp --require=dev/seed-command.php panmotors seed --user=1 --reset-demo
- * overwrites the demo content (items flagged _pm_demo) with the seed's version. It refuses to run
- * when WP_ENVIRONMENT_TYPE is production.
+ * overwrites the demo content (items flagged _pm_demo) with the seed's version. It runs only when
+ * WP_ENVIRONMENT_TYPE is local or development.
  *
  * Structural changes to existing content (a block added to a page, data moved) are one-off
  * scripts in dev/migrations/, never the seed.
@@ -48,8 +48,10 @@ if ( 1 !== get_current_user_id() ) {
 require_once __DIR__ . '/lib.php';
 
 $pm_reset = panmotors_seed_reset();
-if ( $pm_reset && 'production' === wp_get_environment_type() ) {
-	WP_CLI::error( '--reset-demo overwrites content and never runs on production (WP_ENVIRONMENT_TYPE).' );
+// --reset-demo overwrites content: only on a local or development copy. WP_ENVIRONMENT_TYPE must
+// say so (a missing value counts as production in WordPress).
+if ( $pm_reset && ! in_array( wp_get_environment_type(), array( 'local', 'development' ), true ) ) {
+	WP_CLI::error( '--reset-demo overwrites content and runs only when WP_ENVIRONMENT_TYPE is local or development (here: ' . wp_get_environment_type() . ').' );
 }
 
 // The seed imports acf-json into the database; only from committed files.

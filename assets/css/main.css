@@ -1100,9 +1100,10 @@ p {
 	gap: 14px;
 }
 
-/* Between phone and wide screens four cards would break 3 + 1 with cramped titles: two by two. */
+/* Dark cards (Home): between phone and wide screens four cards would break 3 + 1 with cramped
+   titles, so two by two. The light section (About) keeps the v2 auto-fit grid. */
 @media (min-width: 641px) and (max-width: 1180px) {
-	.pm-values__grid {
+	.pm-values:not(.pm-values--light) .pm-values__grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }

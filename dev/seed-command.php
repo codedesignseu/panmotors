@@ -26,7 +26,7 @@ WP_CLI::add_command(
 				'type'        => 'flag',
 				'name'        => 'reset-demo',
 				'optional'    => true,
-				'description' => 'Overwrite demo content with the seed version. Refused on production.',
+				'description' => 'Overwrite demo content with the seed version. Only when WP_ENVIRONMENT_TYPE is local or development.',
 			),
 		),
 	)

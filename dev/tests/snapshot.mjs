@@ -1,5 +1,7 @@
 // Snapshot of the homepage for before/after comparisons (docs/migration-blocks.md §10).
 // Usage: LABEL=before node dev/cdp.mjs dev/tests/snapshot.mjs   → dev/.cache/snapshots/<LABEL>/
+// Another page: PAGE=about/ LABEL=about-before ... (its sections are listed in page order; the
+// homepage-only reduced-motion check is skipped).
 // Then: node dev/tests/diff.mjs before after
 //
 // Saves: the served <main> HTML and the list of assets in the whole document (normalised),
@@ -10,7 +12,8 @@ import keyboard from './keyboard.mjs';
 import reducedMotion from './reduced-motion.mjs';
 import lcp from './lcp.mjs';
 
-const URL_HOME = 'http://panmotors.local/';
+const PAGE = process.env.PAGE || '';
+const URL_HOME = 'http://panmotors.local/' + PAGE;
 const OUT = new URL(`../.cache/snapshots/${process.env.LABEL || 'snapshot'}/`, import.meta.url).pathname;
 const SECTIONS = { hero: '#top', marquee: '.pm-marquee', floor: '#floor', ways: '#ways', heritage: '#heritage', gallery: '#gallery', live: '#live', showroom: '#showroom', enquire: '#enquire', footer: 'footer' };
 
@@ -73,14 +76,16 @@ export default async ({ page, sleep }) => {
     await sleep(1000);
     out.sections[w] = await page.eval(`
       const o = {};
-      for (const [k, s] of Object.entries(${JSON.stringify(SECTIONS)})) { const el = document.querySelector(s); if (!el) { o[k] = null; continue; } const b = el.getBoundingClientRect(); o[k] = [Math.round(b.top + scrollY), Math.round(b.height * 10) / 10]; }
+      const map = ${PAGE ? 'null' : JSON.stringify(SECTIONS)} || Object.fromEntries([...document.querySelectorAll('main > section, main .pm-blocks > section, main > .pm-blocks > *, footer')].map((e, i) => [i + ':' + (e.className.split(' ')[0] || e.tagName), null]));
+      if (${PAGE ? 'true' : 'false'}) { [...document.querySelectorAll('main > section, main .pm-blocks > section, main > .pm-blocks > *, footer')].forEach((el, i) => { const b = el.getBoundingClientRect(); o[i + ':' + (el.className.split(' ')[0] || el.tagName)] = [Math.round(b.top + scrollY), Math.round(b.height * 10) / 10]; }); return o; }
+      for (const [k, s] of Object.entries(map)) { const el = document.querySelector(s); if (!el) { o[k] = null; continue; } const b = el.getBoundingClientRect(); o[k] = [Math.round(b.top + scrollY), Math.round(b.height * 10) / 10]; }
       return o;`);
   }
 
   // Behaviour.
   out.modules = [...html.matchAll(/<script\b[^>]*\/js\/([a-z-]+)\.js/g)].map((m) => m[1]);
   out.keyboard = (await keyboard({ page, sleep })).map((s) => `${s.tag} ${s.name} [${s.sec}] top ${s.top} ${s.indicator}`);
-  out.reducedMotion = await reducedMotion({ page, sleep });
+  out.reducedMotion = PAGE ? 'skipped (homepage only)' : await reducedMotion({ page, sleep });
   await page.size(1440, 900);
   await page.media(false);
   await page.go(URL_HOME);
