@@ -24,7 +24,7 @@ panmotors_render_block(
 			array(
 				'mode'  => $panmotors_pick ? 'pick' : 'featured',
 				'ids'   => $panmotors_pick ? panmotors_rows( 'featured_pick' ) : array(),
-				'limit' => (int) get_field( 'featured_limit' ),
+				'limit' => (int) get_field( 'featured_limit' ) ? (int) get_field( 'featured_limit' ) : 4, // Emptied field: the default.
 			)
 		),
 	),

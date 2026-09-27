@@ -32,7 +32,7 @@ $panmotors_label   = static fn( $key, $fallback ) => ( '' !== trim( (string) ( $
 $panmotors_intro   = trim( (string) ( $args['intro'] ?? '' ) );
 $panmotors_enquire = trim( (string) ( $args['enquire'] ?? '' ) );
 $panmotors_link    = (string) ( $args['link'] ?? '' );
-$panmotors_no      = $panmotors_label( 'no', 'No.' );
+$panmotors_no      = $panmotors_label( 'no', __( 'No.', 'panmotors' ) );
 
 // Marques with their counts: most cars first, then A to Z.
 $panmotors_marques = array();
@@ -44,31 +44,32 @@ foreach ( $panmotors_cars as $panmotors_car ) {
 }
 uksort(
 	$panmotors_marques,
-	static fn( $a, $b ) => ( $panmotors_marques[ $b ] <=> $panmotors_marques[ $a ] ) ?: strnatcasecmp( $a, $b )
+	static fn( $a, $b ) => $panmotors_marques[ $b ] === $panmotors_marques[ $a ] ? strnatcasecmp( $a, $b ) : $panmotors_marques[ $b ] <=> $panmotors_marques[ $a ]
 );
 
 // Rows: 3, 2, 3, 2, 3, then the pattern repeats.
 $panmotors_rows    = array();
 $panmotors_pattern = array( 3, 2, 3, 2, 3 );
-for ( $panmotors_i = 0, $panmotors_p = 0; $panmotors_i < count( $panmotors_cars ); $panmotors_p++ ) {
-	$panmotors_n        = $panmotors_pattern[ $panmotors_p % count( $panmotors_pattern ) ];
-	$panmotors_rows[]   = array(
+$panmotors_n_cars  = count( $panmotors_cars );
+for ( $panmotors_i = 0, $panmotors_p = 0; $panmotors_i < $panmotors_n_cars; $panmotors_p++ ) {
+	$panmotors_n      = $panmotors_pattern[ $panmotors_p % count( $panmotors_pattern ) ];
+	$panmotors_rows[] = array(
 		'size' => $panmotors_n, // The pattern's size: a last row may hold fewer cards.
 		'cars' => array_slice( array_keys( $panmotors_cars ), $panmotors_i, $panmotors_n ),
 	);
-	$panmotors_i       += $panmotors_n;
+	$panmotors_i     += $panmotors_n;
 }
 
 $panmotors_specs = static function ( $car ) use ( $panmotors_label ) {
 	return array_filter(
 		array(
-			$panmotors_label( 'year', 'Year' )         => $car['year'] ?? '',
-			$panmotors_label( 'engine', 'Engine' )     => $car['engine'] ?? '',
-			$panmotors_label( 'power', 'Power' )       => $car['power'] ?? '',
-			$panmotors_label( 'sprint', 'Acceleration' ) => $car['acceleration'] ?? '',
-			$panmotors_label( 'gearbox', 'Gearbox' )   => $car['gearbox'] ?? '',
-			$panmotors_label( 'colour', 'Colour' )     => $car['colour'] ?? '',
-			$panmotors_label( 'mileage', 'Mileage' )   => $car['mileage'] ?? '',
+			$panmotors_label( 'year', __( 'Year', 'panmotors' ) )           => $car['year'] ?? '',
+			$panmotors_label( 'engine', __( 'Engine', 'panmotors' ) )       => $car['engine'] ?? '',
+			$panmotors_label( 'power', __( 'Power', 'panmotors' ) )         => $car['power'] ?? '',
+			$panmotors_label( 'sprint', __( 'Acceleration', 'panmotors' ) ) => $car['acceleration'] ?? '',
+			$panmotors_label( 'gearbox', __( 'Gearbox', 'panmotors' ) )     => $car['gearbox'] ?? '',
+			$panmotors_label( 'colour', __( 'Colour', 'panmotors' ) )       => $car['colour'] ?? '',
+			$panmotors_label( 'mileage', __( 'Mileage', 'panmotors' ) )     => $car['mileage'] ?? '',
 		),
 		static fn( $v ) => '' !== trim( (string) $v )
 	);
@@ -86,7 +87,7 @@ $panmotors_preview = ! empty( $args['preview'] );
 
 	<?php if ( count( $panmotors_marques ) > 1 ) : ?>
 		<div class="pm-cars__filters" role="group" aria-label="<?php esc_attr_e( 'Show cars by marque', 'panmotors' ); ?>" data-cars-filters data-hero-in="3"<?php echo $panmotors_preview ? '' : ' hidden'; ?>>
-			<button type="button" class="pm-cars__filter" aria-pressed="true" data-filter=""><?php echo esc_html( $panmotors_label( 'all', trim( (string) ( $args['all'] ?? '' ) ) ?: 'All' ) ); ?> <span class="pm-cars__count"><?php echo esc_html( (string) $panmotors_total ); ?></span></button>
+			<button type="button" class="pm-cars__filter" aria-pressed="true" data-filter=""><?php echo esc_html( $panmotors_label( 'all', ( '' !== trim( (string) ( $args['all'] ?? '' ) ) ? trim( (string) $args['all'] ) : __( 'All', 'panmotors' ) ) ) ); ?> <span class="pm-cars__count"><?php echo esc_html( (string) $panmotors_total ); ?></span></button>
 			<?php foreach ( $panmotors_marques as $panmotors_m => $panmotors_count ) : ?>
 				<button type="button" class="pm-cars__filter" aria-pressed="false" data-filter="<?php echo esc_attr( sanitize_title( $panmotors_m ) ); ?>"><?php echo esc_html( $panmotors_m ); ?> <span class="pm-cars__count"><?php echo esc_html( (string) $panmotors_count ); ?></span></button>
 			<?php endforeach; ?>

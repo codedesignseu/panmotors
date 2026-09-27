@@ -22,7 +22,7 @@ $panmotors_intro    = (string) ( $args['intro'] ?? '' );
 // Breadcrumb: Home, then any parent pages, then this page.
 $panmotors_crumbs = array(
 	array(
-		'label' => get_the_title( (int) get_option( 'page_on_front' ) ),
+		'label' => panmotors_home_label(),
 		'url'   => home_url( '/' ),
 	),
 );

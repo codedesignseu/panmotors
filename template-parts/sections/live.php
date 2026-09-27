@@ -28,7 +28,7 @@ $panmotors_cta_label = (string) ( $args['cta_label'] ?? '' );
 $panmotors_insta     = panmotors_option( 'instagram_url' );
 $panmotors_preview   = ! empty( $args['preview'] );
 ?>
-<section id="live" class="pm-live pm-pad" aria-labelledby="live-title">
+<section id="live" class="pm-live pm-pad"<?php echo $panmotors_title ? ' aria-labelledby="live-title"' : ''; ?>>
 	<div class="pm-section-head pm-live__head" data-rise>
 		<div>
 			<?php if ( $panmotors_eyebrow ) : ?>

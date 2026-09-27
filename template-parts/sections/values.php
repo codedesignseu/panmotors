@@ -16,7 +16,11 @@
  * @package panmotors
  */
 
-$panmotors_values = (array) ( $args['values'] ?? array() );
+// Only rows with a title are cards.
+$panmotors_values = array_filter(
+	(array) ( $args['values'] ?? array() ),
+	static fn( $row ) => '' !== trim( (string) ( $row['title'] ?? '' ) )
+);
 
 if ( ! $panmotors_values ) {
 	return;

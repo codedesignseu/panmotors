@@ -1,6 +1,6 @@
 <?php
 /**
- * wp-admin for the client, who logs in as an Editor.
+ * The wp-admin for the client, who logs in as an Editor.
  *
  * Editors edit the pages (block editor), Cars, the synced patterns, the Pan Motors settings (not
  * the Technical tab), menus, the logo (Customizer → Site Identity) and media. They cannot reach
@@ -73,7 +73,7 @@ function panmotors_client_redirects() {
 	if ( ! panmotors_is_client() ) {
 		return;
 	}
-	$post_type = isset( $_GET['post_type'] ) ? sanitize_key( $_GET['post_type'] ) : 'post'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$post_type = isset( $_GET['post_type'] ) ? sanitize_key( wp_unslash( $_GET['post_type'] ) ) : 'post'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: picks a redirect, changes nothing.
 	$blocked   = in_array( $pagenow, array( 'edit-comments.php', 'comment.php', 'widgets.php', 'themes.php', 'site-editor.php', 'font-library.php' ), true )
 		|| ( in_array( $pagenow, array( 'edit.php', 'post-new.php' ), true ) && 'post' === $post_type );
 	if ( $blocked ) {

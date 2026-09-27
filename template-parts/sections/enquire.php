@@ -60,13 +60,10 @@ $panmotors_fields  = array(
 				<?php if ( $panmotors_phones ) : ?>
 					<p>
 						<?php
-						echo implode(
-							' / ',
-							array_map(
-								static fn( $n ) => '<a href="' . esc_url( 'tel:' . panmotors_tel( $n ) ) . '">' . esc_html( $n ) . '</a>',
-								$panmotors_phones
-							)
-						); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+						foreach ( array_values( $panmotors_phones ) as $panmotors_i => $panmotors_n ) {
+							echo $panmotors_i ? ' / ' : '';
+							printf( '<a href="%s">%s</a>', esc_url( 'tel:' . panmotors_tel( $panmotors_n ) ), esc_html( $panmotors_n ) );
+						}
 						?>
 					</p>
 				<?php endif; ?>

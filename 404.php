@@ -21,7 +21,7 @@ $panmotors_contact = panmotors_option( 'notfound_contact_label' );
 	<?php if ( $panmotors_eyebrow ) : ?>
 		<p class="pm-eyebrow"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
 	<?php endif; ?>
-	<h1 class="pm-404__title pm-title"><?php echo esc_html( $panmotors_title ? $panmotors_title : $panmotors_code ); ?></h1>
+	<h1 class="pm-404__title pm-title"><?php echo esc_html( $panmotors_title ? $panmotors_title : ( $panmotors_code ? $panmotors_code : __( 'Page not found', 'panmotors' ) ) ); ?></h1>
 	<?php if ( $panmotors_text ) : ?>
 		<p class="pm-404__text"><?php echo esc_html( $panmotors_text ); ?></p>
 	<?php endif; ?>

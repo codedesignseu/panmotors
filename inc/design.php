@@ -16,7 +16,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * unicode-range of the Fontsource latin and latin-ext subsets.
+ * The unicode-range of the Fontsource latin and latin-ext subsets.
  */
 const PANMOTORS_RANGE_LATIN     = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
 const PANMOTORS_RANGE_LATIN_EXT = 'U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF';
@@ -134,7 +134,10 @@ function panmotors_font_css( $slot ) {
 		$name    = 'heading' === $slot ? 'PM Heading' : 'PM Body';
 		$generic = 'heading' === $slot ? 'serif' : 'sans-serif';
 		$preload = array();
-		foreach ( array( 'regular' => 'normal', 'italic' => 'italic' ) as $style => $css_style ) {
+		foreach ( array(
+			'regular' => 'normal',
+			'italic'  => 'italic',
+		) as $style => $css_style ) {
 			$url = panmotors_custom_font_url( $slot, $style );
 			if ( $url ) {
 				$faces .= sprintf( "@font-face{font-family:'%s';font-style:%s;font-weight:100 900;font-display:swap;src:url(%s) format('woff2')}", $name, $css_style, esc_url( $url ) );
@@ -143,12 +146,19 @@ function panmotors_font_css( $slot ) {
 				}
 			}
 		}
-		return array( 'faces' => $faces, 'family' => "'" . $name . "', " . $generic, 'preload' => $preload );
+		return array(
+			'faces'   => $faces,
+			'family'  => "'" . $name . "', " . $generic,
+			'preload' => $preload,
+		);
 	}
 
 	list( $name, $generic, $weight, $prefix, $suffix, $styles ) = panmotors_fonts()[ $key ];
 	foreach ( $styles as $style ) {
-		foreach ( array( 'latin' => PANMOTORS_RANGE_LATIN, 'latin-ext' => PANMOTORS_RANGE_LATIN_EXT ) as $subset => $range ) {
+		foreach ( array(
+			'latin'     => PANMOTORS_RANGE_LATIN,
+			'latin-ext' => PANMOTORS_RANGE_LATIN_EXT,
+		) as $subset => $range ) {
 			$faces .= sprintf(
 				"@font-face{font-family:'%s';font-style:%s;font-weight:%s;font-display:swap;src:url(%s) format('woff2');unicode-range:%s}",
 				$name,
@@ -162,7 +172,11 @@ function panmotors_font_css( $slot ) {
 	// Latin, upright only: latin-ext and italics load on demand through unicode-range and font-style.
 	$preload = array( PANMOTORS_URI . "/assets/fonts/{$prefix}-latin-{$suffix}-normal.woff2" );
 
-	return array( 'faces' => $faces, 'family' => "'" . $name . "', " . $generic, 'preload' => $preload );
+	return array(
+		'faces'   => $faces,
+		'family'  => "'" . $name . "', " . $generic,
+		'preload' => $preload,
+	);
 }
 
 /**
@@ -186,20 +200,20 @@ function panmotors_design_css() {
 	$body    = panmotors_font_css( 'body' );
 
 	$tokens = array(
-		'--ink'          => $d['ink'],
-		'--paper'        => $d['paper'],
-		'--accent'       => $d['accent'],
-		'--surface'      => $d['surface'],
+		'--ink'               => $d['ink'],
+		'--paper'             => $d['paper'],
+		'--accent'            => $d['accent'],
+		'--surface'           => $d['surface'],
 		'--accent-text-light' => panmotors_accent_text_light( $d['accent'], $d['paper'], $d['ink'] ),
-		'--ink-rgb'      => panmotors_hex_channels( $d['ink'] ),
-		'--paper-rgb'    => panmotors_hex_channels( $d['paper'] ),
-		'--r'            => $d['radius'] . 'px',
-		'--font-display' => $heading['family'],
-		'--font-body'    => $body['family'],
-		'--h-scale'      => rtrim( rtrim( number_format( $d['heading_scale'] / 100, 2, '.', '' ), '0' ), '.' ),
-		'--fs-body'      => $d['body_size'] . 'px',
-		'--logo-h'       => $d['logo_h'] . 'px',
-		'--logo-h-m'     => $d['logo_h_m'] . 'px',
+		'--ink-rgb'           => panmotors_hex_channels( $d['ink'] ),
+		'--paper-rgb'         => panmotors_hex_channels( $d['paper'] ),
+		'--r'                 => $d['radius'] . 'px',
+		'--font-display'      => $heading['family'],
+		'--font-body'         => $body['family'],
+		'--h-scale'           => rtrim( rtrim( number_format( $d['heading_scale'] / 100, 2, '.', '' ), '0' ), '.' ),
+		'--fs-body'           => $d['body_size'] . 'px',
+		'--logo-h'            => $d['logo_h'] . 'px',
+		'--logo-h-m'          => $d['logo_h_m'] . 'px',
 	);
 
 	$root = '';
@@ -270,13 +284,13 @@ function panmotors_contrast( $a, $b ) {
 	$lum = static function ( $hex ) {
 		$l = array();
 		foreach ( str_split( ltrim( $hex, '#' ), 2 ) as $i => $pair ) {
-			$c     = hexdec( $pair ) / 255;
+			$c       = hexdec( $pair ) / 255;
 			$l[ $i ] = $c <= 0.04045 ? $c / 12.92 : pow( ( $c + 0.055 ) / 1.055, 2.4 );
 		}
 		return 0.2126 * $l[0] + 0.7152 * $l[1] + 0.0722 * $l[2];
 	};
-	$la = $lum( $a );
-	$lb = $lum( $b );
+	$la  = $lum( $a );
+	$lb  = $lum( $b );
 	return ( max( $la, $lb ) + 0.05 ) / ( min( $la, $lb ) + 0.05 );
 }
 
@@ -286,8 +300,8 @@ function panmotors_contrast( $a, $b ) {
  * @return array[] { label: string, ratio: float, pass: bool }
  */
 function panmotors_contrast_checks() {
-	$d     = panmotors_design();
-	$pairs = array(
+	$d      = panmotors_design();
+	$pairs  = array(
 		array( __( 'Accent on the dark colour', 'panmotors' ), $d['accent'], $d['ink'] ),
 		array( __( 'Dark colour on the light colour', 'panmotors' ), $d['ink'], $d['paper'] ),
 	);
@@ -303,8 +317,8 @@ function panmotors_contrast_checks() {
 
 	// Accent on the light colour: small text there uses a darker shade that passes, so a low ratio
 	// here is information, not a failure (buttons and large text keep the accent).
-	$ratio = panmotors_contrast( $d['accent'], $d['paper'] );
-	$shade = panmotors_accent_text_light( $d['accent'], $d['paper'], $d['ink'] );
+	$ratio    = panmotors_contrast( $d['accent'], $d['paper'] );
+	$shade    = panmotors_accent_text_light( $d['accent'], $d['paper'], $d['ink'] );
 	$checks[] = array(
 		'label' => __( 'Accent on the light colour', 'panmotors' ),
 		'ratio' => $ratio,
@@ -400,7 +414,7 @@ function panmotors_acf_design_messages( $field ) {
 	}
 
 	if ( false !== strpos( $field['message'], '{identity}' ) ) {
-		$link = static function ( $section, $label ) {
+		$link             = static function ( $section, $label ) {
 			return sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'customize.php?autofocus[section]=' . $section ) ), esc_html( $label ) );
 		};
 		$field['message'] = sprintf(
@@ -428,16 +442,18 @@ function panmotors_contrast_notice() {
 		return;
 	}
 	$items = array_map(
-		static fn( $c ) => esc_html( $c['label'] ) . ' (' . esc_html( number_format_i18n( $c['ratio'], 2 ) ) . ' : 1)',
+		static fn( $c ) => $c['label'] . ' (' . number_format_i18n( $c['ratio'], 2 ) . ' : 1)',
 		$failed
 	);
 	printf(
 		'<div class="notice notice-warning"><p><strong>%s</strong> %s</p></div>',
 		esc_html__( 'Design: low colour contrast.', 'panmotors' ),
-		sprintf(
-			/* translators: %s: list of colour pairs with their contrast ratio. */
-			esc_html__( 'These colour pairs are below the WCAG AA minimum of 4.5 : 1, so small text will be hard to read: %s. See the Design tab.', 'panmotors' ),
-			implode( ', ', $items ) // Escaped above.
+		esc_html(
+			sprintf(
+				/* translators: %s: list of colour pairs with their contrast ratio. */
+				__( 'These colour pairs are below the WCAG AA minimum of 4.5 : 1, so small text will be hard to read: %s. See the Design tab.', 'panmotors' ),
+				implode( ', ', $items )
+			)
 		)
 	);
 }
@@ -487,14 +503,14 @@ add_filter( 'wp_check_filetype_and_ext', 'panmotors_font_filetype', 10, 3 );
  * The logo for light backgrounds (Design tab). When there is none, the main logo is printed and
  * CSS turns it dark, as in the design.
  *
- * @param string $class CSS class for the <img>.
- * @param string $alt   Alt text ('' marks it decorative).
- * @param string $sizes Rendered width for the sizes attribute.
+ * @param string $class_name CSS class for the <img>.
+ * @param string $alt        Alt text ('' marks it decorative).
+ * @param string $sizes      Rendered width for the sizes attribute.
  */
-function panmotors_logo_light_image( $class, $alt = '', $sizes = '100px' ) {
+function panmotors_logo_light_image( $class_name, $alt = '', $sizes = '100px' ) {
 	$id = (int) panmotors_option( 'logo_light', 0 );
 	if ( ! $id ) {
-		panmotors_logo_image( $class, $alt, $sizes );
+		panmotors_logo_image( $class_name, $alt, $sizes );
 		return;
 	}
 	echo wp_get_attachment_image(
@@ -502,10 +518,10 @@ function panmotors_logo_light_image( $class, $alt = '', $sizes = '100px' ) {
 		'medium',
 		false,
 		array(
-			'class'   => $class . ' ' . $class . '--light',
+			'class'   => $class_name . ' ' . $class_name . '--light',
 			'alt'     => $alt,
 			'sizes'   => $sizes,
-			'loading' => false,
+			'loading' => 'lazy', // Footer: below the fold.
 		)
 	);
 }

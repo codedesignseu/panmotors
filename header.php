@@ -6,9 +6,10 @@
  */
 
 $panmotors_contact_id  = panmotors_contact_page();
-$panmotors_contact_url = $panmotors_contact_id ? get_permalink( $panmotors_contact_id ) : home_url( '/' );
+$panmotors_contact_url = $panmotors_contact_id ? get_permalink( $panmotors_contact_id ) : '';
 $panmotors_contact_cur = $panmotors_contact_id && is_page( $panmotors_contact_id ) ? ' aria-current="page"' : '';
-$panmotors_contact_txt = panmotors_option( 'contact_button_label', '' );
+// The Contact pill and menu item show only when a Contact page is set (Pan Motors settings).
+$panmotors_contact_txt = $panmotors_contact_url ? panmotors_option( 'contact_button_label', '' ) : '';
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>

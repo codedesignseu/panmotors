@@ -19,7 +19,7 @@ panmotors_render_block(
 		'slides'  => panmotors_cars(
 			array(
 				'mode'  => 'latest',
-				'limit' => (int) get_field( 'latest_limit' ),
+				'limit' => (int) get_field( 'latest_limit' ) ? (int) get_field( 'latest_limit' ) : 6, // Emptied field: the default.
 			)
 		),
 	),

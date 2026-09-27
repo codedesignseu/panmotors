@@ -31,12 +31,14 @@ if ( ! $panmotors_title && ! $panmotors_image ) {
 			<?php if ( $panmotors_title ) : ?>
 				<h2 class="pm-story__title" id="story-title"><?php echo nl2br( esc_html( $panmotors_title ), false ); ?></h2>
 			<?php endif; ?>
-			<div class="pm-story__text">
-				<?php if ( $panmotors_lead ) : ?>
-					<p><?php echo esc_html( $panmotors_lead ); ?></p>
-				<?php endif; ?>
-				<?php echo wp_kses_post( $panmotors_text ); ?>
-			</div>
+			<?php if ( $panmotors_lead || $panmotors_text ) : ?>
+				<div class="pm-story__text">
+					<?php if ( $panmotors_lead ) : ?>
+						<p><?php echo esc_html( $panmotors_lead ); ?></p>
+					<?php endif; ?>
+					<?php echo wp_kses_post( $panmotors_text ); ?>
+				</div>
+			<?php endif; ?>
 		</div>
 
 		<?php if ( $panmotors_image ) : ?>

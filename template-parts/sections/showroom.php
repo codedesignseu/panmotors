@@ -24,17 +24,17 @@ $panmotors_total   = count( $panmotors_photos );
 $panmotors_multi   = $panmotors_total > 1;
 $panmotors_first   = (string) wp_get_attachment_caption( $panmotors_photos[0] );
 
-$panmotors_arrow = static function ( $dir, $class ) {
+$panmotors_arrow = static function ( $dir, $class_name ) {
 	printf(
 		'<button class="%1$s" type="button" aria-controls="showroom-photos" aria-label="%2$s" data-slider-%3$s>%4$s</button>',
-		esc_attr( $class ),
+		esc_attr( $class_name ),
 		'prev' === $dir ? esc_attr__( 'Previous showroom photograph', 'panmotors' ) : esc_attr__( 'Next showroom photograph', 'panmotors' ),
 		esc_attr( $dir ),
 		'prev' === $dir ? '&larr;' : '&rarr;'
 	);
 };
 ?>
-<section id="showroom" class="pm-showroom pm-light" aria-labelledby="showroom-title" data-showroom>
+<section id="showroom" class="pm-showroom pm-light"<?php echo $panmotors_title ? ' aria-labelledby="showroom-title"' : ''; ?> data-showroom>
 	<div class="pm-showroom__backdrop" aria-hidden="true">
 		<?php foreach ( $panmotors_photos as $panmotors_i => $panmotors_id ) : ?>
 			<?php
@@ -46,7 +46,7 @@ $panmotors_arrow = static function ( $dir, $class ) {
 					'class'   => 'pm-showroom__bg' . ( 0 === $panmotors_i ? ' is-active' : '' ),
 					'alt'     => '',
 					'sizes'   => '400px', // Blurred 64px: resolution is wasted here.
-					'loading' => 0 === $panmotors_i ? 'eager' : 'lazy',
+					'loading' => 'lazy', // Sliders follow a hero or page header: below the fold.
 				)
 			);
 			?>
@@ -60,7 +60,9 @@ $panmotors_arrow = static function ( $dir, $class ) {
 				<?php if ( $panmotors_eyebrow ) : ?>
 					<p class="pm-eyebrow"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
 				<?php endif; ?>
-				<h2 class="pm-title" id="showroom-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+				<?php if ( $panmotors_title ) : ?>
+					<h2 class="pm-title" id="showroom-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+				<?php endif; ?>
 			</div>
 			<?php if ( $panmotors_intro ) : ?>
 				<p class="pm-lede"><?php echo esc_html( $panmotors_intro ); ?></p>
@@ -75,7 +77,7 @@ $panmotors_arrow = static function ( $dir, $class ) {
 			?>
 			<figure class="pm-showroom__figure">
 				<div class="pm-showroom__photos" id="showroom-photos" data-zoom
-					<?php echo $panmotors_multi ? 'role="region" aria-roledescription="' . esc_attr__( 'carousel', 'panmotors' ) . '" aria-label="' . esc_attr( $panmotors_title ) . '" tabindex="0" data-slider-viewport' : ''; ?>>
+					<?php echo $panmotors_multi ? 'role="region" aria-roledescription="' . esc_attr__( 'carousel', 'panmotors' ) . '" aria-label="' . esc_attr( $panmotors_title ? $panmotors_title : __( 'The showroom', 'panmotors' ) ) . '" tabindex="0" data-slider-viewport' : ''; ?>>
 					<?php foreach ( $panmotors_photos as $panmotors_i => $panmotors_id ) : ?>
 						<?php
 						echo wp_get_attachment_image(
@@ -85,7 +87,7 @@ $panmotors_arrow = static function ( $dir, $class ) {
 							array(
 								'class'        => 'pm-showroom__photo' . ( 0 === $panmotors_i ? ' is-active' : '' ),
 								'sizes'        => '(max-width: 880px) calc(100vw - 40px), min(1080px, 76vw)',
-								'loading'      => 0 === $panmotors_i ? 'eager' : 'lazy',
+								'loading'      => 'lazy', // Sliders follow a hero or page header: below the fold.
 								'aria-hidden'  => 0 === $panmotors_i ? 'false' : 'true',
 								'data-caption' => (string) wp_get_attachment_caption( $panmotors_id ),
 							)

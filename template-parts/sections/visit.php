@@ -14,7 +14,7 @@ $panmotors_hours = array_filter(
 );
 
 // Address as in the design: name; area, street; city postcode, country.
-$panmotors_lines = array_filter(
+$panmotors_lines  = array_filter(
 	array(
 		trim( (string) panmotors_option( 'legal_name', '' ) ),
 		implode( ', ', array_filter( array( trim( (string) panmotors_option( 'locality', '' ) ), trim( (string) panmotors_option( 'street_address', '' ) ) ) ) ),
@@ -54,31 +54,30 @@ if ( ! $panmotors_hours && ! $panmotors_lines ) {
 			<?php if ( $panmotors_flabel ) : ?>
 				<p class="pm-eyebrow pm-visit__eyebrow"><?php echo esc_html( $panmotors_flabel ); ?></p>
 			<?php endif; ?>
-			<address class="pm-visit__address">
-				<?php if ( $panmotors_lines ) : ?>
-					<p class="pm-visit__lines"><?php echo implode( '<br>', array_map( 'esc_html', $panmotors_lines ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped per line. ?></p>
-				<?php endif; ?>
-				<?php if ( $panmotors_phones || $panmotors_email ) : ?>
-					<p class="pm-visit__contact">
-						<?php if ( $panmotors_phones ) : ?>
-							<span>
-								<?php
-								echo implode( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped per item.
-									' / ',
-									array_map(
-										static fn( $n ) => '<a href="' . esc_url( 'tel:' . panmotors_tel( $n ) ) . '">' . esc_html( $n ) . '</a>',
-										$panmotors_phones
-									)
-								);
-								?>
-							</span>
-						<?php endif; ?>
-						<?php if ( $panmotors_email ) : ?>
-							<a href="<?php echo esc_url( 'mailto:' . $panmotors_email ); ?>"><?php echo esc_html( $panmotors_email ); ?></a>
-						<?php endif; ?>
-					</p>
-				<?php endif; ?>
-			</address>
+			<?php if ( $panmotors_lines || $panmotors_phones || $panmotors_email ) : ?>
+				<address class="pm-visit__address">
+					<?php if ( $panmotors_lines ) : ?>
+						<p class="pm-visit__lines"><?php echo wp_kses( implode( '<br>', array_map( 'esc_html', $panmotors_lines ) ), array( 'br' => array() ) ); ?></p>
+					<?php endif; ?>
+					<?php if ( $panmotors_phones || $panmotors_email ) : ?>
+						<p class="pm-visit__contact">
+							<?php if ( $panmotors_phones ) : ?>
+								<span>
+									<?php
+									foreach ( array_values( $panmotors_phones ) as $panmotors_i => $panmotors_n ) {
+										echo $panmotors_i ? ' / ' : '';
+										printf( '<a href="%s">%s</a>', esc_url( 'tel:' . panmotors_tel( $panmotors_n ) ), esc_html( $panmotors_n ) );
+									}
+									?>
+								</span>
+							<?php endif; ?>
+							<?php if ( $panmotors_email ) : ?>
+								<a href="<?php echo esc_url( 'mailto:' . $panmotors_email ); ?>"><?php echo esc_html( $panmotors_email ); ?></a>
+							<?php endif; ?>
+						</p>
+					<?php endif; ?>
+				</address>
+			<?php endif; ?>
 			<?php if ( $panmotors_dirs && $panmotors_map ) : ?>
 				<a class="pm-visit__directions" href="<?php echo esc_url( $panmotors_map ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $panmotors_dirs ); ?> <span aria-hidden="true">&rarr;</span><span class="screen-reader-text"> <?php esc_html_e( '(opens in a new tab)', 'panmotors' ); ?></span></a>
 			<?php endif; ?>

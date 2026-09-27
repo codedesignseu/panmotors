@@ -22,7 +22,7 @@ panmotors_render_block(
 		'intro'      => get_field( 'header_intro' ),
 		'image'      => (int) get_field( 'header_image' ),
 		'grayscale'  => 'grayscale' === get_field( 'header_filter' ),
-		'brightness' => (int) get_field( 'header_brightness' ),
+		'brightness' => (int) get_field( 'header_brightness' ) ? (int) get_field( 'header_brightness' ) : 62, // Emptied field: the default.
 	),
 	$is_preview
 );

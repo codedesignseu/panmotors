@@ -7,9 +7,9 @@
 
 $panmotors_tagline = panmotors_option( 'footer_tagline' );
 // "{year}" in the copyright text becomes the current year.
-$panmotors_copy    = str_replace( '{year}', wp_date( 'Y' ), (string) panmotors_option( 'footer_copyright', '' ) );
+$panmotors_copy = str_replace( '{year}', wp_date( 'Y' ), (string) panmotors_option( 'footer_copyright', '' ) );
 // Light or dark, from the page's Footer style (Auto: the last section's background).
-$panmotors_dark    = 'dark' === panmotors_footer_tone();
+$panmotors_dark = 'dark' === panmotors_footer_tone();
 ?>
 </main>
 

@@ -61,22 +61,23 @@ function panmotors_tel( $number ) {
 /**
  * Print the custom logo image, without a link.
  *
- * @param string      $class CSS class for the <img>.
- * @param string|null $alt   Alt text. Null keeps the media library alt, '' marks it decorative.
- * @param string      $sizes Rendered width for the sizes attribute, e.g. '84px'.
- * @param bool        $high  fetchpriority="high" (the header logo is the LCP element: the
- *                           full-viewport hero image is ignored by Chrome's LCP).
+ * @param string      $class_name CSS class for the <img>.
+ * @param string|null $alt        Alt text. Null keeps the media library alt, '' marks it decorative.
+ * @param string      $sizes      Rendered width for the sizes attribute, e.g. '84px'.
+ * @param bool        $high       fetchpriority="high" (the header logo is the LCP element: the
+ *                                full-viewport hero image is ignored by Chrome's LCP). Other
+ *                                logos (footer, Enquire card) load lazily.
  */
-function panmotors_logo_image( $class, $alt = null, $sizes = '100px', $high = false ) {
+function panmotors_logo_image( $class_name, $alt = null, $sizes = '100px', $high = false ) {
 	$logo_id = (int) get_theme_mod( 'custom_logo' );
 	if ( ! $logo_id ) {
 		return;
 	}
 
 	$attr = array(
-		'class'   => $class,
+		'class'   => $class_name,
 		'sizes'   => $sizes,
-		'loading' => false,
+		'loading' => $high ? false : 'lazy',
 	);
 	if ( $high ) {
 		$attr['fetchpriority'] = 'high';
@@ -93,17 +94,17 @@ function panmotors_logo_image( $class, $alt = null, $sizes = '100px', $high = fa
  *
  * Not a heading: the page H1 belongs to the page content.
  *
- * @param string $class CSS class for the link.
+ * @param string $class_name CSS class for the link.
  */
-function panmotors_logo( $class ) {
+function panmotors_logo( $class_name ) {
 	$name = panmotors_option( 'trading_name', get_bloginfo( 'name' ) );
 
-	printf( '<a class="%s" href="%s" rel="home">', esc_attr( $class ), esc_url( home_url( '/' ) ) );
+	printf( '<a class="%s" href="%s" rel="home">', esc_attr( $class_name ), esc_url( home_url( '/' ) ) );
 
 	if ( get_theme_mod( 'custom_logo' ) ) {
-		panmotors_logo_image( $class . '-img', $name, '84px', true ); // 46px tall.
+		panmotors_logo_image( $class_name . '-img', $name, '84px', true ); // 46px tall.
 	} else {
-		echo '<span class="' . esc_attr( $class ) . '-text">' . esc_html( $name ) . '</span>';
+		echo '<span class="' . esc_attr( $class_name ) . '-text">' . esc_html( $name ) . '</span>';
 	}
 
 	echo '</a>';
@@ -145,4 +146,15 @@ function panmotors_hero_poster_id() {
 function panmotors_contact_page() {
 	$id = (int) panmotors_option( 'page_contact', 0 );
 	return ( $id && 'publish' === get_post_status( $id ) ) ? $id : 0;
+}
+
+/**
+ * Label of the first breadcrumb: the static front page's title, or "Home" when there is none.
+ *
+ * @return string
+ */
+function panmotors_home_label() {
+	$front = (int) get_option( 'page_on_front' );
+	$title = $front ? get_the_title( $front ) : '';
+	return '' !== $title ? $title : __( 'Home', 'panmotors' );
 }

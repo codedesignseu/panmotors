@@ -46,17 +46,17 @@ function panmotors_sitemap_url() {
 }
 
 /**
- * robots.txt: every crawler may read the site (search engines and, by default, the AI crawlers),
+ * The robots.txt: every crawler may read the site (search engines and, by default, the AI crawlers),
  * wp-admin stays closed, one Sitemap line. When "Allow AI crawlers" is off, the five AI crawlers
  * are shut out. A site set to discourage search engines (Settings → Reading) keeps WordPress's
  * own "Disallow: /".
  *
- * @param string $output Robots.txt from WordPress and plugins.
- * @param bool   $public Whether the site may be indexed.
+ * @param string $output    Robots.txt from WordPress and plugins.
+ * @param bool   $is_public Whether the site may be indexed.
  * @return string
  */
-function panmotors_robots_txt( $output, $public ) {
-	if ( ! $public ) {
+function panmotors_robots_txt( $output, $is_public ) {
+	if ( ! $is_public ) {
 		return $output;
 	}
 
@@ -190,7 +190,7 @@ function panmotors_llms_text() {
 			'- Website: ' . home_url( '/' ),
 		)
 	);
-	$lines = array_merge( $lines, array( '## Contact', '' ), $contact, array( '' ) );
+	$lines   = array_merge( $lines, array( '## Contact', '' ), $contact, array( '' ) );
 
 	$hours = array();
 	foreach ( panmotors_rows( 'hours', 'option' ) as $row ) {
@@ -213,8 +213,8 @@ function panmotors_llms_text() {
 			if ( 'page' !== $item->object || isset( $pages[ $id ] ) || 'publish' !== get_post_status( $id ) ) {
 				continue;
 			}
-			$intro       = panmotors_page_description( $id );
-			$intro       = $intro === trim( (string) panmotors_option( 'description', '' ) ) ? '' : $intro;
+			$intro        = panmotors_page_description( $id );
+			$intro        = trim( (string) panmotors_option( 'description', '' ) ) === $intro ? '' : $intro;
 			$pages[ $id ] = '- [' . get_the_title( $id ) . '](' . get_permalink( $id ) . ')' . ( $intro ? ': ' . $intro : '' );
 		}
 	}
@@ -240,6 +240,7 @@ function panmotors_llms_serve() {
 	}
 	status_header( 200 );
 	header( 'Content-Type: text/plain; charset=utf-8' );
+	header( 'X-Content-Type-Options: nosniff' );
 	echo panmotors_llms_text(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Plain text response.
 	exit;
 }

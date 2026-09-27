@@ -155,7 +155,7 @@ add_action( 'admin_head', 'panmotors_cars_admin_css' );
  * @param WP_Query $query Query.
  */
 function panmotors_cars_admin_order( $query ) {
-	if ( is_admin() && $query->is_main_query() && 'pm_car' === $query->get( 'post_type' ) && ! isset( $_GET['orderby'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( is_admin() && $query->is_main_query() && 'pm_car' === $query->get( 'post_type' ) && ! isset( $_GET['orderby'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: only checks whether the list is sorted by a column.
 		$query->set( 'orderby', array( 'date' => 'DESC' ) );
 	}
 }
@@ -177,6 +177,8 @@ add_filter( 'wp_sitemaps_post_types', 'panmotors_cars_sitemap' );
  * Cars as rows for the section views: image, marque, model_name, ref_no, spec, note, link, caption, place.
  *
  * @param array $args {
+ *     Which cars, and how many.
+ *
  *     @type string $mode  'featured' (marked Featured, by order), 'pick' (the given IDs, in that order),
  *                         'page' (on the Featured Cars page, by order) or 'latest' (newest first).
  *     @type int[]  $ids   Car IDs for 'pick'.

@@ -23,7 +23,7 @@ if ( ! $panmotors_title && ! $panmotors_image ) {
 	return;
 }
 ?>
-<section id="heritage" class="pm-about pm-pad pm-pad-y" aria-labelledby="about-title"<?php echo ! empty( $args['fade'] ) ? ' data-heritage-fade' : ''; ?>>
+<section id="heritage" class="pm-about pm-pad pm-pad-y"<?php echo $panmotors_title ? ' aria-labelledby="about-title"' : ''; ?><?php echo ! empty( $args['fade'] ) ? ' data-heritage-fade' : ''; ?>>
 	<div class="pm-about__grid">
 		<?php if ( $panmotors_image ) : ?>
 			<div class="pm-media pm-about__media" data-rise-l data-zoom>
@@ -45,7 +45,9 @@ if ( ! $panmotors_title && ! $panmotors_image ) {
 			<?php if ( $panmotors_eyebrow ) : ?>
 				<p class="pm-eyebrow pm-about__eyebrow"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
 			<?php endif; ?>
-			<h2 class="pm-about__title" id="about-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php if ( $panmotors_title ) : ?>
+				<h2 class="pm-about__title" id="about-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+			<?php endif; ?>
 			<?php if ( $panmotors_text ) : ?>
 				<p class="pm-about__text"><?php echo esc_html( $panmotors_text ); ?></p>
 			<?php endif; ?>

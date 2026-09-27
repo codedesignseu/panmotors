@@ -161,9 +161,9 @@ function panmotors_block_field( $block, $name ) {
  * @param string $module     JS module name, or ''.
  * @param array  $args       View arguments.
  * @param bool   $is_preview Editor preview.
- * @param string $empty      Placeholder text for an empty block in the editor.
+ * @param string $empty_text Placeholder text for an empty block in the editor.
  */
-function panmotors_render_block( $part, $module, $args, $is_preview, $empty = '' ) {
+function panmotors_render_block( $part, $module, $args, $is_preview, $empty_text = '' ) {
 	$args['preview'] = (bool) $is_preview;
 	ob_start();
 	get_template_part( $part, null, $args );
@@ -171,7 +171,7 @@ function panmotors_render_block( $part, $module, $args, $is_preview, $empty = ''
 
 	if ( '' === $html ) {
 		if ( $is_preview ) {
-			printf( '<div class="pm-block-empty">%s</div>', esc_html( $empty ? $empty : __( 'Nothing to show yet. Fill in this block in the sidebar.', 'panmotors' ) ) );
+			printf( '<div class="pm-block-empty">%s</div>', esc_html( $empty_text ? $empty_text : __( 'Nothing to show yet. Fill in this block in the sidebar.', 'panmotors' ) ) );
 		}
 		return;
 	}
@@ -367,7 +367,7 @@ add_filter( 'render_block', 'panmotors_embed_providers', 10, 2 );
  * Print the current page's blocks. Used by front-page.php and page.php for pages built from pm/*
  * blocks.
  *
- * pm/* sections render outside the_content, as the section templates did before D11: their
+ * The pm/* sections render outside the_content, as the section templates did before D11: their
  * images keep the attributes WordPress gives template images, and their text is printed exactly
  * as typed. Everything else (core text blocks, embeds, shortcodes, plugins that filter the
  * content) goes through the normal the_content pipeline, once for the whole page. The sections
@@ -407,7 +407,7 @@ function panmotors_the_blocks() {
 	if ( false !== $autop ) {
 		remove_filter( 'the_content', 'wpautop', $autop );
 	}
-	$html = apply_filters( 'the_content', $content );
+	$html = apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core's filter, applied to page content.
 	if ( false !== $autop ) {
 		add_filter( 'the_content', 'wpautop', $autop );
 	}

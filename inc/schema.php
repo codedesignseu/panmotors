@@ -154,7 +154,7 @@ function panmotors_schema_business() {
 	return array(
 		'@type'                     => 'AutoDealer',
 		'@id'                       => $home . '#business',
-		'name'                      => panmotors_option( 'trading_name', '' ),
+		'name'                      => panmotors_option( 'trading_name', get_bloginfo( 'name' ) ),
 		'legalName'                 => panmotors_option( 'legal_name', '' ),
 		'description'               => panmotors_option( 'description', '' ),
 		'url'                       => $home,
@@ -247,7 +247,7 @@ function panmotors_schema_page_type( $post_id ) {
 		'contact' => 'ContactPage',
 		'web'     => 'WebPage',
 	);
-	$set = (string) panmotors_field( 'schema_type', $post_id, 'auto' );
+	$set   = (string) panmotors_field( 'schema_type', $post_id, 'auto' );
 	if ( isset( $types[ $set ] ) ) {
 		return $types[ $set ];
 	}
@@ -277,17 +277,17 @@ function panmotors_schema_graph() {
 
 	$post_id = ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0;
 	if ( $post_id ) {
-		$url      = get_permalink( $post_id );
-		$is_home  = (int) get_option( 'page_on_front' ) === $post_id;
-		$faqs     = panmotors_faq_items( $post_id );
-		$crumbs   = $is_home ? null : array(
+		$url     = get_permalink( $post_id );
+		$is_home = (int) get_option( 'page_on_front' ) === $post_id;
+		$faqs    = panmotors_faq_items( $post_id );
+		$crumbs  = $is_home ? null : array(
 			'@type'           => 'BreadcrumbList',
 			'@id'             => $url . '#breadcrumb',
 			'itemListElement' => array(
 				array(
 					'@type'    => 'ListItem',
 					'position' => 1,
-					'name'     => get_the_title( (int) get_option( 'page_on_front' ) ),
+					'name'     => panmotors_home_label(),
 					'item'     => $home,
 				),
 				array(

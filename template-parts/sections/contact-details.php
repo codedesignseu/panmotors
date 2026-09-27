@@ -59,7 +59,9 @@ if ( ! $panmotors_rows ) {
 			?>
 			<li>
 				<a class="pm-contact-rows__row" href="<?php echo esc_url( $panmotors_href ); ?>" data-rise<?php echo $panmotors_new_tab ? ' target="_blank" rel="noopener"' : ''; ?>>
-					<span class="pm-contact-rows__label"><?php echo esc_html( $panmotors_label ); ?></span>
+					<?php if ( $panmotors_label ) : ?>
+						<span class="pm-contact-rows__label"><?php echo esc_html( $panmotors_label ); ?></span>
+					<?php endif; ?>
 					<span class="pm-contact-rows__value"><?php echo esc_html( $panmotors_value ); ?></span>
 					<span class="pm-contact-rows__action">
 						<?php if ( $panmotors_action ) : ?>

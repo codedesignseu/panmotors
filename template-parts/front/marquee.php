@@ -24,11 +24,9 @@ if ( ! $panmotors_marques ) {
 	return;
 }
 
-$panmotors_sep   = (string) panmotors_option( 'marquee_separator', '' );
-$panmotors_names = array();
-while ( count( $panmotors_names ) < 6 ) {
-	$panmotors_names = array_merge( $panmotors_names, $panmotors_marques );
-}
+$panmotors_sep = (string) panmotors_option( 'marquee_separator', '' );
+// Repeat the list until it holds at least 6 names.
+$panmotors_names = array_merge( ...array_fill( 0, (int) ceil( 6 / count( $panmotors_marques ) ), $panmotors_marques ) );
 ?>
 <section class="pm-marquee" aria-label="<?php esc_attr_e( 'Marques', 'panmotors' ); ?>">
 	<div class="pm-marquee__track">

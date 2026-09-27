@@ -26,10 +26,10 @@ $panmotors_multi = $panmotors_total > 1;
 $panmotors_pad   = static fn( $n ) => str_pad( (string) $n, 2, '0', STR_PAD_LEFT );
 $panmotors_label = $panmotors_title ? $panmotors_title : __( 'Photographs', 'panmotors' );
 
-$panmotors_arrow = static function ( $dir, $class ) {
+$panmotors_arrow = static function ( $dir, $class_name ) {
 	printf(
 		'<button class="%1$s" type="button" aria-controls="pm-slider-stage" aria-label="%2$s" data-slide-%3$s><span aria-hidden="true">%4$s</span></button>',
-		esc_attr( $class ),
+		esc_attr( $class_name ),
 		'prev' === $dir ? esc_attr__( 'Previous photograph', 'panmotors' ) : esc_attr__( 'Next photograph', 'panmotors' ),
 		esc_attr( $dir ),
 		'prev' === $dir ? '&larr;' : '&rarr;'
@@ -48,7 +48,7 @@ $panmotors_arrow = static function ( $dir, $class ) {
 					'class'   => 'pm-slider__bg' . ( 0 === $panmotors_i ? ' is-current' : '' ),
 					'alt'     => '',
 					'sizes'   => '400px', // Blurred 64px: resolution is wasted here.
-					'loading' => 0 === $panmotors_i ? 'eager' : 'lazy',
+					'loading' => 'lazy', // Sliders follow a hero or page header: below the fold.
 				)
 			);
 			?>
@@ -90,7 +90,7 @@ $panmotors_arrow = static function ( $dir, $class ) {
 							array(
 								'class'       => 'pm-slider__photo' . ( 0 === $panmotors_i ? ' is-current' : '' ),
 								'sizes'       => '(max-width: 880px) calc(100vw - 40px), min(1080px, 76vw)',
-								'loading'     => 0 === $panmotors_i ? 'eager' : 'lazy',
+								'loading'     => 'lazy', // Sliders follow a hero or page header: below the fold.
 								'draggable'   => 'false',
 								'aria-hidden' => 0 === $panmotors_i ? 'false' : 'true',
 							)

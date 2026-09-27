@@ -24,9 +24,11 @@ $panmotors_more  = trim( (string) ( $args['more'] ?? '' ) );
 $panmotors_link  = (string) ( $args['link'] ?? '' );
 $panmotors_more  = $panmotors_link ? $panmotors_more : '';
 ?>
-<section id="floor" class="pm-featured pm-pad" aria-labelledby="featured-title">
+<section id="floor" class="pm-featured pm-pad"<?php echo $panmotors_title ? ' aria-labelledby="featured-title"' : ''; ?>>
 	<div class="pm-section-head" data-rise>
-		<h2 class="pm-title" id="featured-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+		<?php if ( $panmotors_title ) : ?>
+			<h2 class="pm-title" id="featured-title"><?php echo esc_html( $panmotors_title ); ?></h2>
+		<?php endif; ?>
 		<?php if ( $panmotors_more ) : ?>
 			<div class="pm-section-head__aside">
 				<?php if ( $panmotors_intro ) : ?>
