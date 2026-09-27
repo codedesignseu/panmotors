@@ -377,9 +377,10 @@ def relationship(key, label, post_type, name=None, **kw):
 
 
 car = group('car', 'Car', [
-    image('car_image', 'Photo', name='image', required=1, min_width=1960, min_height=1102,
+    image('car_image', 'Photo', name='image', min_width=1960, min_height=1102,
           instructions='Landscape, at least 1960 × 1102px. ' + IMG_FORMAT + ' Keep the car in the centre: '
-                       'Featured Cars crops it tall, Latest Cars shows it 16:9.'),
+                       'Featured Cars crops it tall, Latest Cars shows it 16:9. Empty: a plain dark card until '
+                       'the photo is ready (homepage rows need a photo).'),
     text('car_marque', 'Marque', name='marque', required=1, width='50', maxlength=20, placeholder='Porsche'),
     text('car_model', 'Model', name='model_name', required=1, width='50', maxlength=28, placeholder='911 Carrera'),
     text('car_ref', 'Reference', name='ref_no', width='33', maxlength=12, placeholder='No. 04'),
