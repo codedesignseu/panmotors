@@ -7,8 +7,8 @@
             "label": "Heading",
             "name": "cta_title",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "textarea",
+            "instructions": "Each new line starts a new line on the page. Up to 30 characters.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -16,11 +16,11 @@
                 "class": "",
                 "id": ""
             },
+            "rows": 2,
+            "new_lines": "",
             "maxlength": 30,
             "default_value": "Come and see",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "placeholder": ""
         },
         {
             "key": "field_pm_cta_text",
@@ -28,7 +28,7 @@
             "name": "cta_text",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "",
+            "instructions": "Optional, under the heading. Up to 160 characters.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -39,7 +39,7 @@
             "rows": 2,
             "new_lines": "",
             "maxlength": 160,
-            "default_value": "Call, write, or walk in during showroom hours. Someone from the family will answer.",
+            "default_value": "",
             "placeholder": ""
         },
         {
@@ -48,7 +48,7 @@
             "name": "cta_label",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "An arrow is added.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -109,5 +109,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1790519184
 }

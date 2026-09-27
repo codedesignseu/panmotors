@@ -384,14 +384,29 @@ car = group('car', 'Car', [
     text('car_model', 'Model', name='model_name', required=1, width='50', maxlength=28, placeholder='911 Carrera'),
     text('car_ref', 'Reference', name='ref_no', width='33', maxlength=12, placeholder='No. 04'),
     text('car_spec', 'Detail', name='spec', width='33', maxlength=22, placeholder='Flat six'),
-    text('car_note', 'Note', name='note', width='34', maxlength=26, placeholder='Kept in slate grey'),
+    textarea('car_note', 'Note', name='note', rows=2, maxlength=160, placeholder='Full service history, ceramic brakes, sport chrono.',
+             instructions='One or two sentences about this car. The description in the Featured Cars page\'s car sheet, '
+                          'and a short line on homepage tiles. Up to 160 characters.'),
     link('car_link', 'Link', name='link', instructions='Optional. Leave empty: the Featured Cars tile is a showcase only.'),
     text('slide_caption', 'Slider caption', name='caption', width='60', maxlength=40, placeholder='Bay four, morning light',
          instructions='Under the photo in Latest Cars.'),
     text('slide_place', 'Place', name='place', width='40', default_value='Paphos', maxlength=20,
          instructions='Right of the caption in Latest Cars.'),
+    message('car_sheet', 'Car sheet',
+            'Shown when a visitor opens this car on the Featured Cars page. Empty lines are left out.'),
+    text('car_year', 'Year', name='year', width='25', maxlength=4, placeholder='2023'),
+    text('car_power', 'Power', name='power', width='25', maxlength=14, placeholder='650 hp'),
+    text('car_sprint', 'Acceleration (0–100)', name='acceleration', width='25', maxlength=20, placeholder='0–100 in 2.7 s',
+         instructions='As it should read, e.g. "0–100 in 2.7 s".'),
+    text('car_mileage', 'Mileage', name='mileage', width='25', maxlength=14, placeholder='4,800 km'),
+    text('car_engine', 'Engine', name='engine', width='34', maxlength=30, placeholder='3.8 flat six, twin turbo'),
+    text('car_gearbox', 'Gearbox', name='gearbox', width='33', maxlength=20, placeholder='PDK, 8 speed'),
+    text('car_colour', 'Colour', name='colour', width='33', maxlength=24, placeholder='Jet black'),
+    true_false('car_on_page', 'On the Featured Cars page', name='on_page', default=1, on='Shown', off='Hidden',
+               instructions='Shown in the grid on the Featured Cars page, in the order set under Page attributes → Order. '
+                            'Its number ("No. 01") is its place in that order.'),
     true_false('car_featured', 'Featured', name='featured', default=0, on='Yes', off='No',
-               instructions='Shown in Featured Cars (in the order set under Page attributes → Order). '
+               instructions='Shown in the homepage Featured Cars row (in the order set under Page attributes → Order). '
                             'Latest Cars shows the newest cars by date.'),
 ], [[{'param': 'post_type', 'operator': '==', 'value': 'pm_car'}]],
     desc='Showcase only, no prices. The name in the list is set from marque and model.')
@@ -549,10 +564,10 @@ b_page_hero = block_group('page-hero', 'Page top', [
 ])
 
 b_cta = block_group('cta-band', 'Call to action', [
-    text('cta_title', 'Heading', default_value='Come and see', maxlength=30),
-    textarea('cta_text', 'Text', rows=2, maxlength=160,
-             default_value='Call, write, or walk in during showroom hours. Someone from the family will answer.'),
-    text('cta_label', 'Button text', width='50', default_value='Contact us', maxlength=24),
+    textarea('cta_title', 'Heading', rows=2, default_value='Come and see', maxlength=30,
+             instructions='Each new line starts a new line on the page. Up to 30 characters.'),
+    textarea('cta_text', 'Text', rows=2, maxlength=160, instructions='Optional, under the heading. Up to 160 characters.'),
+    text('cta_label', 'Button text', width='50', default_value='Contact us', maxlength=24, instructions='An arrow is added.'),
     page_link('cta_link', 'Button goes to', width='50', required=1, allow_null=0, instructions='Usually the Contact page.'),
 ])
 
@@ -622,7 +637,30 @@ b_cta_image = block_group('cta-image', 'Photo call to action', [
     page_link('ctai_link_2', 'Second button goes to', width='50'),
 ])
 
-GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+b_cars_grid = block_group('cars-grid', 'Cars grid', [
+    message('block_cars_grid', 'Cars', 'The cars, their photos and car sheets are edited under {cars}. The filter buttons are '
+                                       'made from their marques, with the number of cars for each.'),
+    button_group('cars_source', 'Which cars', {'all': 'All cars on the page', 'featured': 'Featured only'}, 'all',
+                 instructions='All: every car with "On the Featured Cars page" on. Featured only: the cars marked Featured.'),
+    textarea('cars_intro', 'Short intro', rows=2, maxlength=200,
+             instructions='Optional, above the filter buttons. Up to 200 characters.'),
+    text('cars_all_label', 'First filter button', width='50', default_value='All', maxlength=16,
+         instructions='The button that shows every car.'),
+    text('cars_enquire_label', 'Car sheet button text', width='50', default_value='Enquire', maxlength=20,
+         instructions='The red button in each car sheet. An arrow is added.'),
+    page_link('cars_enquire_link', 'Car sheet button goes to', width='50', instructions='Usually the Contact page. Empty: no button.'),
+    text('cars_label_year', 'Label: year', width='25', default_value='Year', maxlength=16),
+    text('cars_label_engine', 'Label: engine', width='25', default_value='Engine', maxlength=16),
+    text('cars_label_power', 'Label: power', width='25', default_value='Power', maxlength=16),
+    text('cars_label_sprint', 'Label: acceleration', width='25', default_value='Acceleration', maxlength=16),
+    text('cars_label_gearbox', 'Label: gearbox', width='25', default_value='Gearbox', maxlength=16),
+    text('cars_label_colour', 'Label: colour', width='25', default_value='Colour', maxlength=16),
+    text('cars_label_mileage', 'Label: mileage', width='25', default_value='Mileage', maxlength=16),
+    text('cars_label_no', 'Number prefix', width='25', default_value='No.', maxlength=6,
+         instructions='Before each car\'s number, e.g. "No. 01".'),
+])
+
+GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':

@@ -1,0 +1,314 @@
+{
+    "key": "group_pm_block_cars_grid",
+    "title": "Block: Cars grid",
+    "fields": [
+        {
+            "key": "field_pm_msg_block_cars_grid",
+            "label": "Cars",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The cars, their photos and car sheets are edited under {cars}. The filter buttons are made from their marques, with the number of cars for each.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_cars_source",
+            "label": "Which cars",
+            "name": "cars_source",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "All: every car with \"On the Featured Cars page\" on. Featured only: the cars marked Featured.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "all": "All cars on the page",
+                "featured": "Featured only"
+            },
+            "default_value": "all",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_pm_cars_intro",
+            "label": "Short intro",
+            "name": "cars_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Optional, above the filter buttons. Up to 200 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 200,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_cars_all_label",
+            "label": "First filter button",
+            "name": "cars_all_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The button that shows every car.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "All",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_enquire_label",
+            "label": "Car sheet button text",
+            "name": "cars_enquire_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The red button in each car sheet. An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Enquire",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_enquire_link",
+            "label": "Car sheet button goes to",
+            "name": "cars_enquire_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "Usually the Contact page. Empty: no button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        },
+        {
+            "key": "field_pm_cars_label_year",
+            "label": "Label: year",
+            "name": "cars_label_year",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Year",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_engine",
+            "label": "Label: engine",
+            "name": "cars_label_engine",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Engine",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_power",
+            "label": "Label: power",
+            "name": "cars_label_power",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Power",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_sprint",
+            "label": "Label: acceleration",
+            "name": "cars_label_sprint",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Acceleration",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_gearbox",
+            "label": "Label: gearbox",
+            "name": "cars_label_gearbox",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Gearbox",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_colour",
+            "label": "Label: colour",
+            "name": "cars_label_colour",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Colour",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_mileage",
+            "label": "Label: mileage",
+            "name": "cars_label_mileage",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Mileage",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cars_label_no",
+            "label": "Number prefix",
+            "name": "cars_label_no",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Before each car's number, e.g. \"No. 01\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 6,
+            "default_value": "No.",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/cars-grid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790519184
+}

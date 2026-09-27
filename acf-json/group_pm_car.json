@@ -112,20 +112,20 @@
             "label": "Note",
             "name": "note",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "textarea",
+            "instructions": "One or two sentences about this car. The description in the Featured Cars page's car sheet, and a short line on homepage tiles. Up to 160 characters.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "34",
+                "width": "",
                 "class": "",
                 "id": ""
             },
-            "maxlength": 26,
-            "placeholder": "Kept in slate grey",
-            "default_value": "",
-            "prepend": "",
-            "append": ""
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "placeholder": "Full service history, ceramic brakes, sport chrono.",
+            "default_value": ""
         },
         {
             "key": "field_pm_car_link",
@@ -184,12 +184,190 @@
             "append": ""
         },
         {
+            "key": "field_pm_msg_car_sheet",
+            "label": "Car sheet",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Shown when a visitor opens this car on the Featured Cars page. Empty lines are left out.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_car_year",
+            "label": "Year",
+            "name": "year",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 4,
+            "placeholder": "2023",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_power",
+            "label": "Power",
+            "name": "power",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 14,
+            "placeholder": "650 hp",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_sprint",
+            "label": "Acceleration (0–100)",
+            "name": "acceleration",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "As it should read, e.g. \"0–100 in 2.7 s\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "placeholder": "0–100 in 2.7 s",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_mileage",
+            "label": "Mileage",
+            "name": "mileage",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 14,
+            "placeholder": "4,800 km",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_engine",
+            "label": "Engine",
+            "name": "engine",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "placeholder": "3.8 flat six, twin turbo",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_gearbox",
+            "label": "Gearbox",
+            "name": "gearbox",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "placeholder": "PDK, 8 speed",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_colour",
+            "label": "Colour",
+            "name": "colour",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "placeholder": "Jet black",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_car_on_page",
+            "label": "On the Featured Cars page",
+            "name": "on_page",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Shown in the grid on the Featured Cars page, in the order set under Page attributes → Order. Its number (\"No. 01\") is its place in that order.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
             "key": "field_pm_car_featured",
             "label": "Featured",
             "name": "featured",
             "aria-label": "",
             "type": "true_false",
-            "instructions": "Shown in Featured Cars (in the order set under Page attributes → Order). Latest Cars shows the newest cars by date.",
+            "instructions": "Shown in the homepage Featured Cars row (in the order set under Page attributes → Order). Latest Cars shows the newest cars by date.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -225,5 +403,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1790519184
 }
