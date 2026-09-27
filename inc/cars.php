@@ -131,8 +131,8 @@ function panmotors_cars_column( $column, $post_id ) {
 	} elseif ( 'pm_featured' === $column ) {
 		echo get_field( 'featured', $post_id ) ? '<span class="pm-admin-featured">' . esc_html__( 'Featured', 'panmotors' ) . '</span>' : '<span aria-hidden="true">—</span>';
 	} elseif ( 'pm_order' === $column ) {
-		// The order only applies to the Featured Cars row.
-		echo get_field( 'featured', $post_id ) ? esc_html( (string) get_post_field( 'menu_order', $post_id ) ) : '<span aria-hidden="true">—</span>';
+		// The order sets the homepage Featured Cars row and the Featured Cars page.
+		echo esc_html( (string) get_post_field( 'menu_order', $post_id ) );
 	}
 }
 add_action( 'manage_pm_car_posts_custom_column', 'panmotors_cars_column', 10, 2 );
@@ -177,7 +177,8 @@ add_filter( 'wp_sitemaps_post_types', 'panmotors_cars_sitemap' );
  * Cars as rows for the section views: image, marque, model_name, ref_no, spec, note, link, caption, place.
  *
  * @param array $args {
- *     @type string $mode  'featured' (marked Featured, by order), 'pick' (the given IDs, in that order) or 'latest' (newest first).
+ *     @type string $mode  'featured' (marked Featured, by order), 'pick' (the given IDs, in that order),
+ *                         'page' (on the Featured Cars page, by order) or 'latest' (newest first).
  *     @type int[]  $ids   Car IDs for 'pick'.
  *     @type int    $limit Max cars.
  * }
@@ -214,14 +215,43 @@ function panmotors_cars( $args ) {
 				'date'       => 'DESC',
 			);
 			break;
+		case 'page':
+			// A car saved before the "On the Featured Cars page" field existed counts as shown.
+			$query['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'relation' => 'OR',
+				array(
+					'key'   => 'on_page',
+					'value' => '1',
+				),
+				array(
+					'key'     => 'on_page',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+			$query['orderby']    = array(
+				'menu_order' => 'ASC',
+				'date'       => 'DESC',
+			);
+			break;
 		default:
 			$query['orderby'] = array( 'date' => 'DESC' );
+	}
+
+	// Homepage rows (Featured, Latest, a pick) show photos: a car without one only appears on the
+	// Featured Cars page, as a plain card.
+	if ( 'page' !== ( $args['mode'] ?? 'latest' ) ) {
+		$query['meta_query']   = (array) ( $query['meta_query'] ?? array() ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+		$query['meta_query'][] = array(
+			'key'     => 'image',
+			'value'   => array( '', '0' ),
+			'compare' => 'NOT IN',
+		);
 	}
 
 	$rows = array();
 	foreach ( get_posts( $query ) as $car ) {
 		$row = array( 'id' => $car->ID );
-		foreach ( array( 'image', 'marque', 'model_name', 'ref_no', 'spec', 'note', 'link', 'caption', 'place' ) as $name ) {
+		foreach ( array( 'image', 'marque', 'model_name', 'ref_no', 'spec', 'note', 'link', 'caption', 'place', 'year', 'power', 'acceleration', 'mileage', 'engine', 'gearbox', 'colour' ) as $name ) {
 			$row[ $name ] = get_field( $name, $car->ID );
 		}
 		$rows[] = $row;

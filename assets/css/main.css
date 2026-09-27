@@ -2084,7 +2084,8 @@ p {
 	opacity: .78;
 }
 
-.pm-blocks a:not(.pm-pill, .wp-element-button) {
+/* Links in plain text blocks; the sections style their own links and buttons. */
+.pm-blocks > :not(section) a:not(.pm-pill, .wp-element-button) {
 	text-decoration: underline;
 	text-decoration-thickness: 1px;
 	text-underline-offset: 3px;
@@ -2107,9 +2108,9 @@ p {
 	padding-bottom: 120px;
 }
 
-/* CTA band: design "Come And See" card, linking to Contact. */
+/* CTA band (inner-pages §2.4, v2 cars.html): a paper card on the dark page, heading left, an ink
+   button right that turns accent on hover. */
 .pm-cta {
-	padding-top: 20px;
 	padding-bottom: 120px;
 }
 
@@ -2118,20 +2119,15 @@ p {
 	flex-wrap: wrap;
 	align-items: flex-end;
 	justify-content: space-between;
-	gap: 40px 64px;
-	padding: 72px 56px;
+	gap: 40px;
+	padding: clamp(48px, 7vw, 96px) clamp(28px, 5vw, 72px);
+	overflow: hidden;
 	border-radius: var(--r);
-	background: var(--ink);
-	color: var(--paper);
-}
-
-.pm-cta__copy {
-	max-width: 640px;
 }
 
 .pm-cta__title {
-	font-size: calc(clamp(40px, 5vw, 80px) * var(--h-scale));
-	line-height: .94;
+	font-size: calc(clamp(40px, 6vw, 96px) * var(--h-scale));
+	line-height: .92;
 }
 
 .pm-cta__text {
@@ -2142,6 +2138,29 @@ p {
 	opacity: .66;
 }
 
+.pm-cta__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 18px;
+	padding: 18px 30px;
+	border-radius: 999px;
+	background: var(--ink);
+	color: var(--paper);
+	font-size: 12px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	transition: background .6s var(--ease), color .6s, letter-spacing .6s, transform .6s;
+}
+
+.pm-cta__link:hover,
+.pm-cta__link:focus-visible {
+	background: var(--accent);
+	color: var(--on-accent);
+	letter-spacing: .26em;
+	transform: translateY(-3px);
+}
+
 @media (max-width: 880px) {
 	.pm-page-hero__copy {
 		padding: 0 20px 32px;
@@ -2149,10 +2168,6 @@ p {
 
 	.pm-page-body {
 		padding-top: 56px;
-	}
-
-	.pm-cta__card {
-		padding: 40px 24px;
 	}
 }
 
@@ -2710,6 +2725,427 @@ p {
 @media (max-width: 880px) {
 	.pm-cta-image__card {
 		padding: 56px 24px;
+	}
+}
+
+/* Featured Cars page: the Text page header runs straight into the filter buttons (v2 cars.html:
+   its intro is a step smaller, and the header's bottom space sits under the buttons). */
+.pm-page-header--text:has(+ .pm-cars) {
+	padding-bottom: 0;
+}
+
+.pm-page-header--text:has(+ .pm-cars) .pm-page-header__intro {
+	font-size: calc(var(--fs-body) * .875);
+	opacity: .62;
+}
+
+/* Cars grid (inner-pages §6.2). */
+.pm-cars {
+	padding-bottom: 140px;
+}
+
+.pm-cars__intro {
+	max-width: 60ch;
+	margin: 40px 0 0;
+	font-size: calc(var(--fs-body) * .875);
+	line-height: 1.7;
+	opacity: .62;
+}
+
+.pm-cars__filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 56px 0 64px;
+	padding-top: 28px;
+	border-top: 1px solid var(--line-dark);
+}
+
+.pm-cars__filters[hidden] {
+	display: none;
+}
+
+/* Without JS the buttons stay hidden: keep the header's space above the cars. */
+.pm-page-header--text + .pm-cars > .pm-cars__grid:first-child,
+.pm-cars__filters[hidden] + .pm-cars__grid {
+	margin-top: 64px;
+}
+
+.pm-cars__filter {
+	padding: 12px 22px;
+	border: 1px solid color-mix(in srgb, var(--paper) 24%, transparent);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--paper);
+	font-family: var(--font-body);
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: 12px; /* The design's button: Archivo's own line height at 11px. */
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background .5s var(--ease), color .5s, border-color .5s;
+}
+
+.pm-cars__filter:hover,
+.pm-cars__filter:focus-visible {
+	border-color: var(--paper);
+}
+
+.pm-cars__filter[aria-pressed="true"] {
+	border-color: var(--paper);
+	background: var(--paper);
+	color: var(--ink);
+}
+
+.pm-cars__count {
+	margin-left: 6px;
+	opacity: .5;
+}
+
+.pm-cars__grid {
+	display: grid;
+	gap: 14px;
+	transition: opacity .45s ease, transform .6s var(--ease);
+}
+
+.pm-cars__grid.is-fading {
+	opacity: 0;
+	transform: translateY(18px);
+}
+
+.pm-cars__row {
+	display: flex;
+	gap: 14px;
+}
+
+.pm-car {
+	position: relative;
+	flex: 1 1 0;
+	min-width: 0;
+	height: clamp(420px, 44vw, 640px);
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface);
+	transition: flex-grow 1.05s var(--ease), box-shadow .9s ease;
+}
+
+.pm-car--wide {
+	flex: 1.5 1 0;
+}
+
+.pm-car:hover,
+.pm-car:has(.pm-car__open:focus-visible) {
+	flex-grow: 2.4;
+	box-shadow: 0 34px 90px color-mix(in srgb, var(--shadow) 55%, transparent);
+}
+
+.pm-car__media {
+	position: absolute;
+	inset: 0;
+	border-radius: 0;
+}
+
+.pm-car__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .35) 0%, rgb(var(--ink-rgb) / 0) 26%, rgb(var(--ink-rgb) / 0) 48%, rgb(var(--ink-rgb) / .9) 100%);
+	pointer-events: none;
+}
+
+.pm-car__top {
+	position: absolute;
+	top: 22px;
+	right: 24px;
+	left: 24px;
+	display: flex;
+	justify-content: space-between;
+	margin: 0;
+	font-size: 11px;
+	letter-spacing: .22em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	pointer-events: none;
+}
+
+.pm-car__top span {
+	opacity: .8;
+}
+
+.pm-car__copy {
+	position: absolute;
+	right: 24px;
+	bottom: 26px;
+	left: 24px;
+	pointer-events: none;
+}
+
+.pm-car__marque {
+	margin: 0 0 12px;
+	color: var(--accent);
+	font-size: 10px;
+	letter-spacing: .28em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-car__model {
+	margin-bottom: 16px;
+	font-size: calc(clamp(28px, 2.6vw, 42px) * var(--h-scale));
+	line-height: 1;
+}
+
+.pm-car__spec {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 22px;
+	margin: 0;
+	font-size: 11px;
+	letter-spacing: .14em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: 0;
+	transform: translateY(10px);
+	transition: opacity .6s ease, transform .8s var(--ease);
+}
+
+.pm-car:hover .pm-car__spec,
+.pm-car:has(.pm-car__open:focus-visible) .pm-car__spec {
+	opacity: .7;
+	transform: none;
+}
+
+/* The whole card opens its sheet: a real button laid over it. */
+.pm-car__open {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	border-radius: inherit;
+	background: transparent;
+	cursor: pointer;
+}
+
+.pm-car__open:focus-visible {
+	outline-offset: -4px;
+}
+
+@media (hover: none) {
+	.pm-car__spec {
+		opacity: .7;
+		transform: none;
+	}
+}
+
+@media (max-width: 880px) {
+	.pm-cars__row {
+		flex-direction: column;
+	}
+
+	.pm-car,
+	.pm-car--wide {
+		flex: none;
+		height: 108vw;
+		max-height: 560px;
+	}
+
+	.pm-car__spec {
+		opacity: .7;
+		transform: none;
+	}
+}
+
+/* Car sheet: a native modal <dialog> with every car's sheet inside, one shown at a time. */
+@keyframes pm-lb-in {
+	from { opacity: 0; transform: scale(.97); }
+	to { opacity: 1; transform: none; }
+}
+
+.pm-lb-open {
+	overflow: hidden;
+}
+
+.pm-lightbox {
+	width: min(1320px, 94vw);
+	max-width: none;
+	max-height: 92vh;
+	margin: auto;
+	padding: 0;
+	overflow: auto;
+	border: 0;
+	border-radius: var(--r);
+	background: color-mix(in srgb, var(--surface) 88%, var(--ink));
+	color: var(--paper);
+}
+
+.pm-lightbox[open] {
+	animation: pm-lb-in .7s var(--ease) both;
+}
+
+.pm-lightbox::backdrop {
+	background: color-mix(in srgb, var(--ink) 90%, transparent);
+	-webkit-backdrop-filter: blur(18px);
+	backdrop-filter: blur(18px);
+}
+
+.pm-sheet {
+	display: grid;
+	grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+	align-items: center;
+	gap: 44px;
+	padding: 28px;
+}
+
+.pm-sheet[hidden] {
+	display: none;
+}
+
+.pm-sheet__media {
+	position: relative;
+	aspect-ratio: 16 / 11;
+	overflow: hidden;
+	border-radius: calc(var(--r) - 8px);
+	background: color-mix(in srgb, var(--surface) 97%, var(--paper));
+}
+
+.pm-sheet__media img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.pm-sheet__info {
+	display: grid;
+	gap: 26px;
+	padding-right: 12px;
+}
+
+.pm-sheet__top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.pm-sheet__marque {
+	margin: 0;
+	color: var(--accent);
+	font-size: 11px;
+	letter-spacing: .22em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-sheet__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	flex: none;
+	padding: 0;
+	border: 1px solid color-mix(in srgb, var(--paper) 30%, transparent);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--paper);
+	font-size: 16px;
+	cursor: pointer;
+	transition: background .4s, color .4s;
+}
+
+.pm-sheet__button--nav {
+	width: 50px;
+	height: 50px;
+}
+
+.pm-sheet__button:hover,
+.pm-sheet__button:focus-visible {
+	background: var(--paper);
+	color: var(--ink);
+}
+
+.pm-sheet__title {
+	font-size: calc(clamp(36px, 3.6vw, 60px) * var(--h-scale));
+	line-height: .95;
+}
+
+.pm-sheet__note {
+	margin: 0;
+	font-size: calc(var(--fs-body) * .875);
+	line-height: 1.75;
+	opacity: .66;
+}
+
+.pm-sheet__specs {
+	display: grid;
+	margin: 0;
+	border-top: 1px solid var(--line-dark);
+}
+
+.pm-sheet__spec {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--line-dark);
+	font-size: 12px;
+	letter-spacing: .14em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-sheet__spec dt {
+	opacity: .5;
+}
+
+.pm-sheet__spec dd {
+	margin: 0;
+	text-align: right;
+}
+
+.pm-sheet__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.pm-sheet__enquire {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	padding: 16px 26px;
+	border-radius: 999px;
+	background: var(--accent);
+	color: var(--on-accent);
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	transition: background .5s, color .5s;
+}
+
+.pm-sheet__enquire:hover,
+.pm-sheet__enquire:focus-visible {
+	background: var(--paper);
+	color: var(--ink);
+}
+
+.pm-sheet__counter {
+	margin: 0 0 0 auto;
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	opacity: .5;
+}
+
+@media (max-width: 880px) {
+	.pm-sheet {
+		grid-template-columns: 1fr;
+		gap: 22px;
+		padding: 20px;
 	}
 }
 

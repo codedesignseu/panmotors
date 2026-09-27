@@ -306,3 +306,54 @@ function panmotors_demo_about_content() {
 		)
 	);
 }
+
+/**
+ * Featured Cars page as block markup (D12, _design/v2/cars.html): page header (text), cars grid,
+ * CTA band. Used by the seed and by the migration that brings an existing page to this layout.
+ *
+ * @return string
+ */
+function panmotors_demo_featured_content() {
+	$contact = panmotors_dev_page( 'contact' );
+	return implode(
+		"\n\n",
+		array(
+			panmotors_seed_block(
+				'pm/page-header',
+				array(
+					'header_style'   => 'text',
+					'header_eyebrow' => 'Pan Motors — Paphos',
+					'header_title'   => "Featured\nCars",
+					'header_intro'   => 'Twelve cars currently on the floor at Avenue 65. Hover to open a car, click for the full sheet.',
+				)
+			),
+			panmotors_seed_block(
+				'pm/cars-grid',
+				array(
+					'cars_source'        => 'all',
+					'cars_intro'         => '',
+					'cars_all_label'     => 'All',
+					'cars_enquire_label' => 'Enquire',
+					'cars_enquire_link'  => $contact,
+					'cars_label_year'    => 'Year',
+					'cars_label_engine'  => 'Engine',
+					'cars_label_power'   => 'Power',
+					'cars_label_sprint'  => 'Acceleration',
+					'cars_label_gearbox' => 'Gearbox',
+					'cars_label_colour'  => 'Colour',
+					'cars_label_mileage' => 'Mileage',
+					'cars_label_no'      => 'No.',
+				)
+			),
+			panmotors_seed_block(
+				'pm/cta-band',
+				array(
+					'cta_title' => "Seen One\nYou Like?",
+					'cta_text'  => '',
+					'cta_label' => 'Arrange a viewing',
+					'cta_link'  => $contact,
+				)
+			),
+		)
+	);
+}

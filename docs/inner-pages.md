@@ -131,6 +131,15 @@ Add fields to the Cars post type: year, power, acceleration (0–100), mileage, 
 
 ---
 
+As built (27 Sep 2026): page heights equal v2 at 1440, 880 and 390 (4616, 8165, 6724px); at 1080 our footer wraps its five links to a second row (+49px). Hover measures the same as v2 (303 / 727 / 303px). The car sheet is one `<dialog>` holding every car's sheet (`hidden` except the open one), so the script never writes text; Tab wraps inside the open sheet (a modal dialog lets it reach the browser bar), focus returns to the card. Cars: the McLaren 720S of the first design is v2's No. 03; the other five first-design cars have "On the Featured Cars page" off (they stay on Home); eleven v2 cars were added, not Featured and dated before the first-design cars, so Home is unchanged. A car's photo is optional; homepage rows skip cars without one.
+
+Accepted differences from v2:
+- Filter order: most cars first, then A to Z (Aston Martin, Bentley, McLaren); v2 hardcodes McLaren, Bentley, Aston Martin. Ours follows the data.
+- Cards without a photo are plain dark cards; v2 shows the design tool's image-slot placeholder.
+- Footer: our menu (five links with the legal pages) and the current page in the accent colour; v2's footer has four links.
+- Navigation: our menu (no "Live" link, D10).
+- Keyboard focus on a card grows it like hover (v2 has no keyboard state).
+
 ## 7. Showroom (`_design/v2/showroom.html`)
 
 1. `pm/page-header` Image: plain (no grayscale), brightness .62, eyebrow "Avenue 65, Mesoyi — Paphos", H1 "The / Showroom", intro "Paphos, open six days a week. Sales, service and the boutique under one roof."

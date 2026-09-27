@@ -10,8 +10,9 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 |---|---|
 | **Pages → Home** (block editor) | The homepage sections as blocks, in page order: Top video, Marques strip, Featured Cars, Our Values, About Pan Motors, Latest Cars, Pan Motors Live, The Showroom, Come And See. Each block shows the real section; its fields are in the sidebar (Block tab). |
 | **Pages → About Pan Motors** | Built as `_design/v2/about.html` (D12): Page header, Story, What We Do, Our Values (light section), Photo call to action. |
-| **Pages → Featured Cars / Latest Cars / The Showroom / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until their v2 build (D12 steps 4–6; Latest Cars undecided). |
-| **Cars** | Every showcase car once: photo, marque, model, reference, detail, note, optional link, slider caption, place, Featured, order. Featured Cars and Latest Cars read from here. |
+| **Pages → Featured Cars** | Built as `_design/v2/cars.html` (D12): Page header (Text), Cars grid, CTA band. |
+| **Pages → Latest Cars / The Showroom / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until their v2 build (D12 steps 5–6; Latest Cars undecided). |
+| **Cars** | Every showcase car once: photo (optional; homepage rows only show cars with one), marque, model, reference, detail, note (the car sheet description), optional link, slider caption, place, the car sheet (year, power, acceleration, mileage, engine, gearbox, colour), On the Featured Cars page, Featured, order (Page attributes; also the car's number on the Featured Cars page). The homepage rows and the Featured Cars page read from here. |
 | **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, **Our Values** (the values shown on Home and About; D12), Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
 | **Appearance → Menus** | Primary menu (header + mobile menu), Footer menu. |
 | **Appearance → Customise → Site Identity** | Logo (header, contact card, footer). |
@@ -89,6 +90,19 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Our Values | Our Values block, Light section (heading, intro); the values in Settings → Our Values |
 | See The Showroom card: small red line, heading, photo, two buttons (text and page) | Photo call to action block |
 | Footer colour | Page settings → Footer style (Auto: light, the last section is light) |
+
+## Featured Cars (D12)
+
+| Element | Where |
+|---|---|
+| Small red line, title (H1), intro | Page header block, Text style |
+| The cars | Cars: every car with "On the Featured Cars page" on, in their order (or the Featured ones: Cars grid → Which cars) |
+| Filter buttons and counts | made from the cars' marques (most cars first, then A to Z); first button text: Cars grid → First filter button |
+| Card: number, year, marque, model, power / 0–100 / mileage | Cars (the number is the car's place in the order, prefix in Cars grid → Number prefix) |
+| Car sheet: photo, marque, model, note, spec rows | Cars; row labels in Cars grid → Label fields |
+| Car sheet button | Cars grid → Car sheet button text and page |
+| "Seen One / You Like?" band | CTA band block (heading with line breaks, optional text, button text, button page) |
+| Footer | Page settings → Footer style (Auto: dark, the last section is dark) |
 
 ## Other inner pages (placeholders until their v2 build)
 

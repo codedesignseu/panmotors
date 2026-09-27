@@ -37,7 +37,9 @@ export default async ({ page, sleep }) => {
     const H = Math.max(...pngs.map((p) => p.full)) + 30, W = w * 2 + 36;
     const html = `<meta charset="utf-8"><body style="margin:0;background:#444;font:14px sans-serif;color:#fff;display:flex;gap:12px;padding:0 6px">${pngs.map((p) => `<div><div style="height:26px;line-height:26px">${p.site} · ${PAGE} · ${w}px · ${p.full}px</div><div style="position:relative;width:${w}px;height:${p.full}px;overflow:hidden">${p.tiles.map((t) => `<img src="data:image/jpeg;base64,${t.data}" width="${w}" style="position:absolute;left:0;top:${t.top}px">`).join('')}</div></div>`).join('')}</body>`;
     await page.size(W, Math.min(H, 16000));
-    await page.go('data:text/html;base64,' + Buffer.from(html).toString('base64'));
+    // A file, not a data: URL: a dozen stitched tiles are too large for a data: URL.
+    writeFileSync(`${SHOTS}_compose.html`, html);
+    await page.go(`file://${SHOTS}_compose.html`);
     await sleep(800);
     const shot = await page.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: W, height: H, scale: 1 } });
     writeFileSync(`${SHOTS}page-${NAME}-${w}.png`, Buffer.from(shot.data, 'base64'));

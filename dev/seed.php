@@ -387,16 +387,58 @@ function panmotors_seed_page( $slug, $title, $content = '', $existing = 0 ) {
  *    Dates set the Latest Cars order (newest first); Featured cars in menu_order.
  * ------------------------------------------------------------------
  */
-$pm_cars = array(
-	'mclaren'        => array( 'McLaren', '720S', '', '', '', 'Bay four, morning light', 0, 0 ),
-	'red_night'      => array( 'Performance', 'Red Coupé', '', '', '', 'Night run, empty ring road', 0, 0 ),
-	'black_studio'   => array( 'Track', 'Winged Coupé', 'No. 17', 'Naturally aspirated', 'Carbon aero', 'Single lamp, no reflectors', 1, 4 ),
-	'grey_sunset'    => array( 'Grand Touring', 'Mid-Engine Coupé', 'No. 09', 'Twin-turbo V8', 'Last light', 'After the rain, last light', 1, 2 ),
-	'ferrari_rear'   => array( 'Ferrari', '458 Italia', 'No. 12', 'V8', 'Single owner', 'Rear three-quarter, no. 458', 1, 3 ),
-	'porsche_studio' => array( 'Porsche', '911 Carrera', 'No. 04', 'Flat six', 'Kept in slate grey', 'Glass black, held on the line', 1, 1 ),
+// The first design's cars (Home: Featured Cars row, Latest Cars). Only the McLaren 720S is also in
+// the v2 Featured Cars page; the other five are not on that page ("on_page" off).
+$pm_car = static fn( $marque, $model, $extra = array() ) => array_merge(
+	array(
+		'marque'   => $marque,
+		'model'    => $model,
+		'ref'      => '',
+		'spec'     => '',
+		'note'     => '',
+		'caption'  => '',
+		'featured' => 0,
+		'order'    => 0,
+		'image'    => '',
+		'on_page'  => 1,
+	),
+	$extra
 );
-$pm_day  = 0;
-foreach ( $pm_cars as $pm_key => list( $pm_marque, $pm_model, $pm_ref, $pm_spec, $pm_note, $pm_caption, $pm_featured, $pm_order ) ) {
+$pm_old  = array( 'on_page' => 0 );
+$pm_cars = array(
+	'mclaren'        => $pm_car( 'McLaren', '720S', array( 'caption' => 'Bay four, morning light', 'order' => 3, 'image' => 'mclaren', 'year' => '2021', 'power' => '720 hp', 'acceleration' => '0–100 in 2.9 s', 'mileage' => '11,200 km', 'engine' => '4.0 V8, twin turbo', 'gearbox' => 'SSG, 7 speed', 'colour' => 'Silica white', 'note' => 'Performance spec, carbon exterior pack.' ) ),
+	'red_night'      => $pm_car( 'Performance', 'Red Coupé', $pm_old + array( 'caption' => 'Night run, empty ring road', 'image' => 'red_night' ) ),
+	'black_studio'   => $pm_car( 'Track', 'Winged Coupé', $pm_old + array( 'ref' => 'No. 17', 'spec' => 'Naturally aspirated', 'note' => 'Carbon aero', 'caption' => 'Single lamp, no reflectors', 'featured' => 1, 'order' => 4, 'image' => 'black_studio' ) ),
+	'grey_sunset'    => $pm_car( 'Grand Touring', 'Mid-Engine Coupé', $pm_old + array( 'ref' => 'No. 09', 'spec' => 'Twin-turbo V8', 'note' => 'Last light', 'caption' => 'After the rain, last light', 'featured' => 1, 'order' => 2, 'image' => 'grey_sunset' ) ),
+	'ferrari_rear'   => $pm_car( 'Ferrari', '458 Italia', $pm_old + array( 'ref' => 'No. 12', 'spec' => 'V8', 'note' => 'Single owner', 'caption' => 'Rear three-quarter, no. 458', 'featured' => 1, 'order' => 3, 'image' => 'ferrari_rear' ) ),
+	'porsche_studio' => $pm_car( 'Porsche', '911 Carrera', $pm_old + array( 'ref' => 'No. 04', 'spec' => 'Flat six', 'note' => 'Kept in slate grey', 'caption' => 'Glass black, held on the line', 'featured' => 1, 'order' => 1, 'image' => 'porsche_studio' ) ),
+);
+// The v2 Featured Cars page (_design/v2/cars.html): twelve cars, the McLaren above is No. 03. Not
+// Featured, so the homepage row keeps its four; dated before the cars above, so Latest Cars on Home
+// keeps its six. Two have no photo yet.
+$pm_v2 = array(
+	'v2_911_turbo_s'     => array( 'Porsche', '911 Turbo S', 1, '2023', '650 hp', '0–100 in 2.7 s', '4,800 km', '3.8 flat six, twin turbo', 'PDK, 8 speed', 'Jet black', 'porsche_studio', 'Full Porsche service history, ceramic brakes, sport chrono.' ),
+	'v2_296_gtb'         => array( 'Ferrari', '296 GTB', 2, '2022', '830 hp', '0–100 in 2.9 s', '9,400 km', '3.0 V6 hybrid', 'DCT, 8 speed', 'Rosso Corsa', 'ferrari_rear', 'Single owner from new, Assetto Fiorano pack.' ),
+	'v2_mc20_cielo'      => array( 'Maserati', 'MC20 Cielo', 4, '2024', '630 hp', '0–100 in 3.0 s', '1,200 km', '3.0 V6 Nettuno', 'DCT, 8 speed', 'Bianco Audace', 'grey_sunset', 'Retractable glass roof, delivered new in Modena.' ),
+	'v2_718_spyder_rs'   => array( 'Porsche', '718 Spyder RS', 5, '2024', '500 hp', '0–100 in 3.4 s', '600 km', '4.0 flat six', 'PDK, 7 speed', 'Graphite grey', 'black_studio', 'Weissach package, lift system.' ),
+	'v2_huracan_tecnica' => array( 'Lamborghini', 'Huracán Tecnica', 6, '2023', '640 hp', '0–100 in 3.2 s', '3,100 km', '5.2 V10', 'DCT, 7 speed', 'Rosso Mars', 'red_night', 'Rear wheel drive, one Cyprus owner.' ),
+	'v2_911_carrera_gts' => array( 'Porsche', '911 Carrera GTS', 7, '2023', '480 hp', '0–100 in 3.4 s', '7,600 km', '3.0 flat six, twin turbo', 'PDK, 8 speed', 'Guards red', 'sr_bay', 'Rear axle steering, sport exhaust.' ),
+	'v2_roma'            => array( 'Ferrari', 'Roma', 8, '2022', '620 hp', '0–100 in 3.4 s', '8,900 km', '3.9 V8, twin turbo', 'DCT, 8 speed', 'Grigio Titanio', 'sr_floor', 'Passenger display, adaptive headlights.' ),
+	'v2_granturismo'     => array( 'Maserati', 'GranTurismo Trofeo', 9, '2024', '550 hp', '0–100 in 3.5 s', '2,400 km', '3.0 V6 Nettuno', 'Auto, 8 speed', 'Blu Nobile', 'sr_night', 'Four seats, Sonus Faber audio.' ),
+	'v2_continental_gt'  => array( 'Bentley', 'Continental GT Speed', 10, '2022', '659 hp', '0–100 in 3.6 s', '12,800 km', '6.0 W12, twin turbo', 'DCT, 8 speed', 'Onyx', 'sr_forecourt', 'Mulliner driving spec, Naim audio.' ),
+	'v2_db12'            => array( 'Aston Martin', 'DB12', 11, '2024', '680 hp', '0–100 in 3.6 s', '1,900 km', '4.0 V8, twin turbo', 'Auto, 8 speed', 'Magnetic silver', '', 'Launch edition, Bowers & Wilkins audio.' ),
+	'v2_urus_performante' => array( 'Lamborghini', 'Urus Performante', 12, '2023', '666 hp', '0–100 in 3.3 s', '6,300 km', '4.0 V8, twin turbo', 'Auto, 8 speed', 'Nero Noctis', '', 'Akrapovič exhaust, carbon roof.' ),
+);
+foreach ( $pm_v2 as $pm_key => list( $pm_m, $pm_mo, $pm_o, $pm_y, $pm_pw, $pm_ac, $pm_km, $pm_en, $pm_gb, $pm_co, $pm_img, $pm_nt ) ) {
+	$pm_cars[ $pm_key ] = $pm_car( $pm_m, $pm_mo, array( 'order' => $pm_o, 'year' => $pm_y, 'power' => $pm_pw, 'acceleration' => $pm_ac, 'mileage' => $pm_km, 'engine' => $pm_en, 'gearbox' => $pm_gb, 'colour' => $pm_co, 'image' => $pm_img, 'note' => $pm_nt ) );
+}
+
+$pm_day = 0;
+foreach ( $pm_cars as $pm_key => $pm_c ) {
+	// First design: 20 Sep and the days before. v2 cars: from 1 Sep back.
+	$pm_date  = str_starts_with( $pm_key, 'v2_' )
+		? strtotime( '2026-09-01 10:00:00' ) - ( $pm_c['order'] * DAY_IN_SECONDS )
+		: strtotime( '2026-09-20 10:00:00' ) - $pm_day++ * DAY_IN_SECONDS;
 	$pm_found = get_posts(
 		array(
 			'post_type'      => 'pm_car',
@@ -416,34 +458,40 @@ foreach ( $pm_cars as $pm_key => list( $pm_marque, $pm_model, $pm_ref, $pm_spec,
 	} elseif ( panmotors_seed_created( $pm_car_key ) && ! $pm_reset ) {
 		continue; // Deleted by the client.
 	}
-	$pm_car = array(
+	$pm_post = array(
 		'post_type'   => 'pm_car',
 		'post_status' => 'publish',
-		'post_title'  => "{$pm_marque} {$pm_model}",
-		'menu_order'  => $pm_order,
-		'post_date'   => gmdate( 'Y-m-d H:i:s', strtotime( '2026-09-20 10:00:00' ) - $pm_day++ * DAY_IN_SECONDS ),
+		'post_title'  => "{$pm_c['marque']} {$pm_c['model']}",
+		'menu_order'  => $pm_c['order'],
+		'post_date'   => gmdate( 'Y-m-d H:i:s', $pm_date ),
 	);
 	if ( $pm_found ) {
-		$pm_car['ID'] = $pm_found[0];
+		$pm_post['ID'] = $pm_found[0];
 	}
-	$pm_car_id = (int) ( isset( $pm_car['ID'] ) ? wp_update_post( $pm_car ) : wp_insert_post( $pm_car ) );
+	$pm_car_id = (int) ( isset( $pm_post['ID'] ) ? wp_update_post( $pm_post ) : wp_insert_post( $pm_post ) );
 	panmotors_seed_created( $pm_car_key, true );
 	update_post_meta( $pm_car_id, '_pm_seed_key', $pm_key );
 	update_post_meta( $pm_car_id, '_pm_demo', 1 );
-	foreach ( array(
-		'car_image'     => $pm_media[ $pm_key ],
-		'car_marque'    => $pm_marque,
-		'car_model'     => $pm_model,
-		'car_ref'       => $pm_ref,
-		'car_spec'      => $pm_spec,
-		'car_note'      => $pm_note,
+	$pm_fields = array(
+		'car_image'     => $pm_c['image'] ? $pm_media[ $pm_c['image'] ] : '', // Empty: the page shows the plain card.
+		'car_marque'    => $pm_c['marque'],
+		'car_model'     => $pm_c['model'],
+		'car_ref'       => $pm_c['ref'],
+		'car_spec'      => $pm_c['spec'],
+		'car_note'      => $pm_c['note'],
 		'car_link'      => '',
-		'slide_caption' => $pm_caption,
+		'slide_caption' => $pm_c['caption'],
 		'slide_place'   => 'Paphos',
-		'car_featured'  => $pm_featured,
-	) as $pm_field => $pm_value ) {
+		'car_featured'  => $pm_c['featured'],
+		'car_on_page'   => $pm_c['on_page'],
+	);
+	foreach ( array( 'year' => 'car_year', 'power' => 'car_power', 'acceleration' => 'car_sprint', 'mileage' => 'car_mileage', 'engine' => 'car_engine', 'gearbox' => 'car_gearbox', 'colour' => 'car_colour' ) as $pm_name => $pm_field ) {
+		$pm_fields[ $pm_field ] = $pm_c[ $pm_name ] ?? '';
+	}
+	foreach ( $pm_fields as $pm_field => $pm_value ) {
 		update_field( 'field_pm_' . $pm_field, $pm_value, $pm_car_id );
 	}
+	WP_CLI::log( "Car {$pm_c['marque']} {$pm_c['model']}: " . ( $pm_found ? 'reset.' : 'created.' ) );
 }
 WP_CLI::log( 'Cars: ' . count( $pm_cars ) . ' in the seed, missing ones created.' );
 
@@ -525,26 +573,6 @@ $pm_hero = static fn( $eyebrow, $intro, $image ) => panmotors_seed_block(
 );
 
 $pm_pages = array(
-	'featured' => panmotors_seed_block_page(
-		'featured-cars',
-		'Featured Cars',
-		implode(
-			"\n\n",
-			array(
-				$pm_hero( 'The Paphos collection', 'A rotating selection of luxury and performance cars, prepared and presented in our Paphos showroom.', $pm_media['black_studio'] ),
-				panmotors_seed_paragraphs( '<p>Every car on this page has been chosen, prepared and photographed at Pan Motors in Paphos. The selection changes as cars arrive and leave, so it shows the collection as it is today rather than a catalogue.</p><p>To see a car in person, arrange a private viewing at the showroom on Avenue 65 in Mesoyi.</p>' ),
-				panmotors_seed_block(
-					'pm/featured-cars',
-					array(
-						'featured_title'  => 'Featured Cars',
-						'featured_source' => 'featured',
-						'featured_limit'  => 12,
-					)
-				),
-				$pm_cta,
-			)
-		)
-	),
 	'latest'   => panmotors_seed_block_page(
 		'latest-cars',
 		'Latest Cars',
@@ -627,6 +655,8 @@ $pm_pages = array(
 			)
 		)
 	),
+	// After Contact, which its car sheets and CTA band link to (D12, _design/v2/cars.html).
+	'featured' => panmotors_seed_block_page( 'featured-cars', 'Featured Cars', panmotors_demo_featured_content() ),
 	// After Showroom and Contact, which its call to action links to (D12, _design/v2/about.html).
 	'about'    => panmotors_seed_block_page( 'about', 'About Pan Motors', panmotors_demo_about_content() ),
 );

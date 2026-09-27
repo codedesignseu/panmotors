@@ -108,3 +108,11 @@
 	text-align: center;
 	opacity: .7;
 }
+
+/* Cars grid: the first car sheet shows under the grid, so its labels and button preview. */
+.editor-styles-wrapper .pm-lightbox[open] {
+	position: static;
+	width: 100%;
+	margin: 40px 0 0;
+	animation: none;
+}
