@@ -127,6 +127,51 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_pm_featured_more_label",
+            "label": "Button text",
+            "name": "featured_more_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The outlined button under the intro, e.g. \"All featured cars\". An arrow is added. Empty: no button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 28,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_featured_more_link",
+            "label": "Button goes to",
+            "name": "featured_more_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "Usually the Featured Cars page. Empty: no button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
         }
     ],
     "location": [
@@ -150,5 +195,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790371872
+    "modified": 1790512967
 }

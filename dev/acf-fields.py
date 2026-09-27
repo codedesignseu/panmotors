@@ -262,6 +262,18 @@ options = group('options', 'Pan Motors settings', [
     text('marquee_separator', 'Separator', width='25', default_value='—', maxlength=3,
          instructions='The mark shown between the names.'),
 
+    tab('values', 'Our Values'),
+    message('values', 'Our Values',
+            'The values shown by the Our Values block, on the homepage and on About. Edit them here once; '
+            'every page that shows the block updates.'),
+    repeater('values', 'Values', [
+        text('value_index', 'Small label', name='index', width='30', maxlength=20, placeholder='01'),
+        text('value_title', 'Title', name='title', required=1, width='70', maxlength=24, placeholder='Chosen'),
+        textarea('value_body', 'Short text', name='body', rows=2, maxlength=140,
+                 instructions='Up to 140 characters.'),
+    ], min=1, max=6, button='Add value', collapsed='value_title',
+        instructions='Four fit one row on a computer. Drag to reorder.'),
+
     tab('social', 'Social'),
     url('instagram_url', 'Instagram', width='50', instructions='Used by the "Follow the floor" button on the homepage.'),
     url('facebook_url', 'Facebook', width='50'),
@@ -425,18 +437,24 @@ b_featured = block_group('featured-cars', 'Featured Cars', [
                  conditional_logic=[[{'field': 'field_pm_featured_source', 'operator': '==', 'value': 'pick'}]]),
     number('featured_limit', 'How many', width='33', min=1, max=12, default_value=4,
            instructions='Four fill one row.'),
+    text('featured_more_label', 'Button text', width='50', maxlength=28,
+         instructions='The outlined button under the intro, e.g. "All featured cars". An arrow is added. Empty: no button.'),
+    page_link('featured_more_link', 'Button goes to', width='50',
+              instructions='Usually the Featured Cars page. Empty: no button.'),
 ])
 
 b_values = block_group('values', 'Our Values', [
+    message('block_values', 'Values', 'The values themselves are edited in {settings} → Our Values.'),
+    button_group('values_style', 'Style', {'dark': 'Dark cards', 'light': 'Light section'}, 'dark',
+                 instructions='Dark cards: outlined cards on the dark page, each card a link (homepage). '
+                              'Light section: a light panel with a short intro, cards are not links (About).'),
     heading('values_title', 'Our Values'),
-    page_link('values_link', 'Cards go to', instructions='The page each card opens, e.g. About Pan Motors. Empty: the cards are not links.'),
-    repeater('values', 'Values', [
-        text('value_index', 'Small label', name='index', width='30', maxlength=20, placeholder='01 — Keeping'),
-        text('value_title', 'Title', name='title', required=1, width='70', maxlength=24, placeholder='Kept Running'),
-        textarea('value_body', 'Short text', name='body', rows=2, maxlength=140,
-                 instructions='Up to 140 characters.'),
-    ], min=1, max=6, button='Add value', collapsed='value_title',
-        instructions='Three fit one row. Drag to reorder.'),
+    textarea('values_intro', 'Short intro', rows=2, maxlength=160,
+             default_value='Four things we hold to with every car and every client.',
+             instructions='Next to the heading. Up to 160 characters.',
+             conditional_logic=[[{'field': 'field_pm_values_style', 'operator': '==', 'value': 'light'}]]),
+    page_link('values_link', 'Cards go to', instructions='The page each card opens, e.g. About Pan Motors. Empty: the cards are not links.',
+              conditional_logic=[[{'field': 'field_pm_values_style', 'operator': '==', 'value': 'dark'}]]),
 ])
 
 b_about = block_group('about', 'About Pan Motors', [
@@ -538,7 +556,13 @@ b_cta = block_group('cta-band', 'Call to action', [
     page_link('cta_link', 'Button goes to', width='50', required=1, allow_null=0, instructions='Usually the Contact page.'),
 ])
 
-GROUPS = (options, car, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+page_settings = group('page', 'Page settings', [
+    button_group('footer_style', 'Footer style', {'auto': 'Auto', 'dark': 'Dark', 'light': 'Light'}, 'auto',
+                 instructions='Auto: the footer takes the colour of the last section on the page.'),
+], [[{'param': 'post_type', 'operator': '==', 'value': 'page'}]], order=10)
+page_settings['position'] = 'side'
+
+GROUPS = (options, car, page_settings, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':

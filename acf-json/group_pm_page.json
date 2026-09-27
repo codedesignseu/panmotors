@@ -1,0 +1,52 @@
+{
+    "key": "group_pm_page",
+    "title": "Page settings",
+    "fields": [
+        {
+            "key": "field_pm_footer_style",
+            "label": "Footer style",
+            "name": "footer_style",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Auto: the footer takes the colour of the last section on the page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "auto": "Auto",
+                "dark": "Dark",
+                "light": "Light"
+            },
+            "default_value": "auto",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 10,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790512967
+}

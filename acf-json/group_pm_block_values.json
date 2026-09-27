@@ -3,6 +3,47 @@
     "title": "Block: Our Values",
     "fields": [
         {
+            "key": "field_pm_msg_block_values",
+            "label": "Values",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The values themselves are edited in {settings} → Our Values.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_values_style",
+            "label": "Style",
+            "name": "values_style",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Dark cards: outlined cards on the dark page, each card a link (homepage). Light section: a light panel with a short intro, cards are not links (About).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dark": "Dark cards",
+                "light": "Light section"
+            },
+            "default_value": "dark",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
             "key": "field_pm_values_title",
             "label": "Heading",
             "name": "values_title",
@@ -23,6 +64,34 @@
             "append": ""
         },
         {
+            "key": "field_pm_values_intro",
+            "label": "Short intro",
+            "name": "values_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Next to the heading. Up to 160 characters.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_values_style",
+                        "operator": "==",
+                        "value": "light"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "default_value": "Four things we hold to with every car and every client.",
+            "placeholder": ""
+        },
+        {
             "key": "field_pm_values_link",
             "label": "Cards go to",
             "name": "values_link",
@@ -30,7 +99,15 @@
             "type": "page_link",
             "instructions": "The page each card opens, e.g. About Pan Motors. Empty: the cards are not links.",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_values_style",
+                        "operator": "==",
+                        "value": "dark"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -46,93 +123,6 @@
             "allow_archives": 0,
             "multiple": 0,
             "allow_null": 1
-        },
-        {
-            "key": "field_pm_values",
-            "label": "Values",
-            "name": "values",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "Three fit one row. Drag to reorder.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "pagination": 0,
-            "min": 1,
-            "max": 6,
-            "collapsed": "field_pm_value_title",
-            "button_label": "Add value",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_pm_value_index",
-                    "label": "Small label",
-                    "name": "index",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "30",
-                        "class": "",
-                        "id": ""
-                    },
-                    "maxlength": 20,
-                    "placeholder": "01 — Keeping",
-                    "default_value": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_values"
-                },
-                {
-                    "key": "field_pm_value_title",
-                    "label": "Title",
-                    "name": "title",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "70",
-                        "class": "",
-                        "id": ""
-                    },
-                    "maxlength": 24,
-                    "placeholder": "Kept Running",
-                    "default_value": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_pm_values"
-                },
-                {
-                    "key": "field_pm_value_body",
-                    "label": "Short text",
-                    "name": "body",
-                    "aria-label": "",
-                    "type": "textarea",
-                    "instructions": "Up to 140 characters.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "rows": 2,
-                    "new_lines": "",
-                    "maxlength": 140,
-                    "default_value": "",
-                    "placeholder": "",
-                    "parent_repeater": "field_pm_values"
-                }
-            ]
         }
     ],
     "location": [
@@ -156,5 +146,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790371872
+    "modified": 1790512967
 }

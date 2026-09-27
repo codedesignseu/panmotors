@@ -699,6 +699,129 @@
             "append": ""
         },
         {
+            "key": "field_pm_tab_values",
+            "label": "Our Values",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_msg_values",
+            "label": "Our Values",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The values shown by the Our Values block, on the homepage and on About. Edit them here once; every page that shows the block updates.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_values",
+            "label": "Values",
+            "name": "values",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Four fit one row on a computer. Drag to reorder.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 1,
+            "max": 6,
+            "collapsed": "field_pm_value_title",
+            "button_label": "Add value",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pm_value_index",
+                    "label": "Small label",
+                    "name": "index",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 20,
+                    "placeholder": "01",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_values"
+                },
+                {
+                    "key": "field_pm_value_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 24,
+                    "placeholder": "Chosen",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_values"
+                },
+                {
+                    "key": "field_pm_value_body",
+                    "label": "Short text",
+                    "name": "body",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Up to 140 characters.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 2,
+                    "new_lines": "",
+                    "maxlength": 140,
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_pm_values"
+                }
+            ]
+        },
+        {
             "key": "field_pm_tab_social",
             "label": "Social",
             "name": "",
@@ -1703,5 +1826,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790500815
+    "modified": 1790512967
 }
