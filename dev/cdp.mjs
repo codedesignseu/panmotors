@@ -70,6 +70,10 @@ const page = {
     await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: keyCode });
   },
   console: [],
+  // Listen to CDP events, e.g. page.on((m) => m.method === 'Network.requestWillBeSent' && ...).
+  on(fn) {
+    listeners.push(fn);
+  },
 };
 async function shot(name, clip) {
   const r = await send('Page.captureScreenshot', { format: 'jpeg', quality: 80, ...(clip ? { clip: { ...clip, scale: 1 } } : {}) });

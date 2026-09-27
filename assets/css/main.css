@@ -1621,49 +1621,91 @@ p {
 	}
 }
 
-/* Questions (pm/faq): rows like the opening hours, native details/summary. */
+/* Questions (pm/faq, Contact): hairline rows on the dark page like the contact rows; Bodoni
+   question, body answer, accent on the open item; native details/summary. */
 .pm-faq__title {
 	margin-bottom: 56px;
 }
 
+.pm-contact-form + .pm-faq {
+	padding-top: 0;
+}
+
 .pm-faq__list {
-	border-top: 1px solid var(--line-light);
+	border-top: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
 }
 
 .pm-faq__item {
-	border-bottom: 1px solid var(--line-light);
-	transition: background .45s, color .45s;
+	border-bottom: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
 }
 
 .pm-faq__question {
-	padding: 26px 20px;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 30px 20px;
 	font-family: var(--font-display);
-	font-size: calc(clamp(22px, 2vw, 30px) * var(--h-scale));
-	line-height: 1.1;
+	font-size: calc(clamp(22px, 2.4vw, 36px) * var(--h-scale));
+	line-height: 1.15;
+	list-style: none;
 	cursor: pointer;
-	transition: padding-left .45s;
+	transition: color .5s, padding-left .6s var(--ease);
 }
 
 .pm-faq__question::-webkit-details-marker {
 	display: none;
 }
 
-.pm-faq__item:hover,
-.pm-faq__item:has(.pm-faq__question:focus-visible) {
-	background: var(--ink);
-	color: var(--paper);
+/* A plus that turns into a cross when open. */
+.pm-faq__question::after {
+	content: "+";
+	flex: none;
+	font-family: var(--font-body);
+	font-size: 22px;
+	line-height: 1;
+	transition: transform .5s var(--ease);
 }
 
-.pm-faq__item:hover .pm-faq__question {
+.pm-faq__question:hover,
+.pm-faq__question:focus-visible {
 	padding-left: 34px;
+}
+
+.pm-faq__question:focus-visible {
+	outline-offset: -2px;
+}
+
+.pm-faq__item[open] .pm-faq__question {
+	color: var(--accent);
+}
+
+.pm-faq__item[open] .pm-faq__question::after {
+	transform: rotate(45deg);
 }
 
 .pm-faq__answer {
 	max-width: 68ch;
-	padding: 0 20px 28px;
+	margin: 0;
+	padding: 0 20px 30px;
 	font-size: calc(var(--fs-body) * .9375);
 	line-height: 1.8;
-	opacity: .78;
+	opacity: .72;
+}
+
+@media (max-width: 880px) {
+	.pm-faq__question {
+		padding: 22px 4px;
+	}
+
+	.pm-faq__question:hover,
+	.pm-faq__question:focus-visible {
+		padding-left: 4px;
+	}
+
+	.pm-faq__answer {
+		padding: 0 4px 24px;
+	}
 }
 
 /* Come And See (home): dark card on paper, contact details and the form. */
@@ -3492,6 +3534,203 @@ p {
 	}
 }
 
+/* Contact rows (Contact, inner-pages §8.2): each row one link; hover and keyboard focus invert
+   to paper and indent. */
+.pm-contact-rows {
+	padding-bottom: 24px;
+}
+
+.pm-contact-rows__list {
+	display: grid;
+	border-top: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
+}
+
+.pm-contact-rows__row {
+	display: grid;
+	grid-template-columns: 220px 1fr auto;
+	align-items: center;
+	gap: 28px;
+	padding: 30px 20px;
+	border-bottom: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
+	color: var(--paper);
+	transition: background .5s var(--ease), color .5s, padding-left .6s var(--ease);
+}
+
+.pm-contact-rows__row:hover,
+.pm-contact-rows__row:focus-visible {
+	padding-left: 34px;
+	background: var(--paper);
+	color: var(--ink);
+}
+
+.pm-contact-rows__row:focus-visible {
+	outline-offset: -2px;
+}
+
+.pm-contact-rows__label {
+	font-size: 11px;
+	letter-spacing: .22em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .55;
+}
+
+.pm-contact-rows__value {
+	font-family: var(--font-display);
+	font-size: calc(clamp(22px, 2.4vw, 36px) * var(--h-scale));
+	line-height: 1.15;
+}
+
+.pm-contact-rows__action {
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+@media (max-width: 880px) {
+	.pm-contact-rows__row {
+		grid-template-columns: 1fr;
+		gap: 8px;
+		padding: 22px 4px;
+	}
+
+	.pm-contact-rows__row:hover,
+	.pm-contact-rows__row:focus-visible {
+		padding-left: 4px;
+	}
+}
+
+/* Contact form and map (inner-pages §8.3). */
+.pm-contact-form {
+	padding-top: 96px;
+	padding-bottom: 120px;
+}
+
+.pm-contact-form__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+	gap: 14px;
+}
+
+.pm-contact-form__card {
+	padding: 56px 48px;
+	border-radius: var(--r);
+	background: var(--surface);
+}
+
+.pm-contact-form__title {
+	margin-bottom: 40px;
+	font-size: calc(clamp(36px, 4vw, 64px) * var(--h-scale));
+	line-height: .94;
+}
+
+/* v2 Contact spaces its fields 20px apart (the homepage form: 18px). */
+.pm-contact-form .pm-form form,
+.pm-contact-form .pm-form .ff-el-group-wrap,
+.pm-contact-form .pm-form .wpforms-field-container,
+.pm-contact-form .pm-form .wpforms-submit-container {
+	gap: 20px;
+}
+
+.pm-contact-form__side {
+	display: grid;
+	grid-template-rows: 1fr auto;
+	gap: 14px;
+}
+
+.pm-contact-form__map {
+	position: relative;
+	min-height: 420px;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface);
+}
+
+.pm-contact-form__placeholder {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-content: center;
+	justify-items: center;
+	gap: 22px;
+	padding: 24px;
+	text-align: center;
+}
+
+.pm-contact-form__note {
+	margin: 0;
+	font-size: 11px;
+	letter-spacing: .22em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .55;
+}
+
+.pm-contact-form__show:disabled {
+	cursor: default;
+}
+
+.pm-contact-form__iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	filter: grayscale(1) invert(.92) contrast(.9);
+	transition: filter 1s ease;
+}
+
+.pm-contact-form__map:hover .pm-contact-form__iframe,
+.pm-contact-form__iframe:focus-visible {
+	filter: grayscale(.2) invert(0) contrast(1);
+}
+
+.pm-contact-form__hours {
+	padding: 36px 36px 30px;
+	border-radius: var(--r);
+}
+
+.pm-contact-form__eyebrow {
+	margin-bottom: 20px;
+	letter-spacing: .28em;
+}
+
+.pm-contact-form__dl {
+	margin: 0;
+}
+
+.pm-contact-form__row {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 14px 0;
+	font-size: 13px;
+	letter-spacing: .08em; /* Inherited by the time, as in the design. */
+	border-top: 1px solid color-mix(in srgb, var(--ink) 14.11764706%, transparent);
+}
+
+.pm-contact-form__row dt {
+	font-size: 11px;
+	letter-spacing: .18em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+.pm-contact-form__row dd {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: calc(20px * var(--h-scale));
+	line-height: var(--lh);
+}
+
+@media (max-width: 880px) {
+	.pm-contact-form__card {
+		padding: 40px 24px;
+	}
+}
+
 /* 12. Reduced motion: no reveals, no hero entrance, no video, static marquee. */
 
 @media (prefers-reduced-motion: reduce) {
@@ -3512,6 +3751,23 @@ p {
 	[data-hero-in] {
 		opacity: 1;
 		animation: none !important;
+	}
+
+	/* Contact rows and questions: colour change only, no indent. */
+	.pm-contact-rows__row:hover,
+	.pm-contact-rows__row:focus-visible,
+	.pm-faq__question:hover,
+	.pm-faq__question:focus-visible {
+		padding-left: 20px;
+	}
+
+	@media (max-width: 880px) {
+		.pm-contact-rows__row:hover,
+		.pm-contact-rows__row:focus-visible,
+		.pm-faq__question:hover,
+		.pm-faq__question:focus-visible {
+			padding-left: 4px;
+		}
 	}
 
 	/* Poster only: hero-video.js never plays the video under this setting. */

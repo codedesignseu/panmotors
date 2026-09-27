@@ -64,7 +64,7 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] 3. About (§5), including `pm/page-header`, `pm/story`, `pm/services`, `pm/cta-image`
 - [x] 4. Featured Cars (§6)
 - [x] 5. Showroom (§7)
-- [ ] 6. Contact (§8)
+- [x] 6. Contact (§8)
 
 ## 5. SEO, GEO and extra pages
 - [ ] `inc/schema.php`: JSON-LD graph from options (AutoDealer, WebSite, WebPage, FAQPage)

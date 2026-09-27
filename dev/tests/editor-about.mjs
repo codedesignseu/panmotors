@@ -17,6 +17,9 @@ const EDITS = {
   'pm/cta-band': ['cta_text', '.pm-cta'],
   'pm/photo-slider': ['slider_hint', '.pm-slider'],
   'pm/visit': ['visit_find_label', '.pm-visit'],
+  'pm/contact-details': ['cd_call_label', '.pm-contact-rows'],
+  'pm/contact-form': ['cf_title', '.pm-contact-form'],
+  'pm/faq': ['faq_title', '.pm-faq'],
 };
 // FIELDS='{"pm/visit":"visit_hours_label"}' tests other fields of those blocks.
 for (const [name, field] of Object.entries(JSON.parse(process.env.FIELDS || '{}'))) EDITS[name][0] = field;
@@ -26,7 +29,7 @@ export default async ({ page, sleep, shot }) => {
   await page.size(1440, 900);
   await page.go(`http://panmotors.local/wp-admin/post.php?post=${ABOUT_ID}&action=edit`);
   for (let i = 0; i < 60; i++) {
-    if (await page.eval(`return !!document.querySelector('iframe[name=editor-canvas]')?.contentDocument?.querySelector('.pm-cta-image, .pm-cta, .pm-slider')`).catch(() => false)) break;
+    if (await page.eval(`return !!document.querySelector('iframe[name=editor-canvas]')?.contentDocument?.querySelector('.pm-cta-image, .pm-cta, .pm-slider, .pm-faq')`).catch(() => false)) break;
     await sleep(500);
   }
   await page.eval(`wp.data.dispatch('core/preferences').set('core/edit-post', 'welcomeGuide', false); return 1`);
@@ -50,7 +53,8 @@ export default async ({ page, sleep, shot }) => {
     await shot('editor-' + ABOUT_ID + '-' + b.name.slice(3));
     out.blocks.push(row);
   }
-  out.inserter = await page.eval(`return wp.data.select('core/block-editor').getInserterItems().map(i => i.name).filter(n => ['pm/page-header','pm/story','pm/services','pm/cta-image','pm/cars-grid','pm/cta-band','pm/photo-slider','pm/visit'].includes(n))`);
+  out.inserter = await page.eval(`return wp.data.select('core/block-editor').getInserterItems().map(i => i.name).filter(n => ['pm/page-header','pm/story','pm/services','pm/cta-image','pm/cars-grid','pm/cta-band','pm/photo-slider','pm/visit','pm/contact-details','pm/contact-form'].includes(n))`);
+  out.map = await page.eval(`const d=${canvas}; return { iframe: !!d.querySelector('.pm-contact-form__iframe, iframe[src*=google]'), template: !!d.querySelector('template[data-map-frame]'), placeholder: !!d.querySelector('[data-map-placeholder]') }`).catch(() => null);
   out.dirtyNotSaved = await page.eval(`return wp.data.select('core/editor').isEditedPostDirty()`);
   return out;
 };

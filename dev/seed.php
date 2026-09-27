@@ -264,6 +264,7 @@ $pm_options = array(
 	'enquire_form_shortcode' => '',
 	'footer_tagline'         => 'Pan Motors — Paphos',
 	'footer_copyright'       => '© {year} Pan Motors',
+	'map_embed_query'        => 'Pan Motors Mesoyi Paphos Cyprus',
 	// Our Values (D12): one set for Home and About, from _design/v2/about.html.
 	'values'                 => array(
 		array(
@@ -572,6 +573,44 @@ $pm_hero = static fn( $eyebrow, $intro, $image ) => panmotors_seed_block(
 	)
 );
 
+// Contact page questions (DRAFT answers for the client to confirm).
+$pm_faq_block = panmotors_seed_block(
+	'pm/faq',
+	array(
+		'faq_title' => 'Questions',
+		'faqs'      => array(
+			array(
+				'question' => 'Where is Pan Motors?',
+				'answer'   => 'DRAFT: Pan Motors is on Avenue 65 in Mesoyi, Paphos 8060, Cyprus. [Client to add a landmark and parking details.]',
+			),
+			array(
+				'question' => 'What are your opening hours?',
+				'answer'   => 'DRAFT: Monday to Friday 08:00 to 13:00 and 14:30 to 18:00, Saturday 08:00 to 13:00. Closed on Sunday.',
+			),
+			array(
+				'question' => 'Do I need an appointment to visit the showroom?',
+				'answer'   => 'DRAFT: You are welcome to walk in during opening hours. For a private viewing, call or write ahead and we will set a time. [Client to confirm.]',
+			),
+			array(
+				'question' => 'Which marques do you work with?',
+				'answer'   => 'DRAFT: Porsche, Maserati, Ferrari, Lamborghini, Aston Martin and Bentley, among others. [Client to confirm the list.]',
+			),
+			array(
+				'question' => 'Do you look after cars after purchase?',
+				'answer'   => 'DRAFT: Yes. Service and aftercare are handled in house in Paphos, by the same people who prepared the car. [Client to confirm scope.]',
+			),
+			array(
+				'question' => 'What is in the boutique?',
+				'answer'   => 'DRAFT: Parts and accessories for the marques we work with. [Client to describe the range.]',
+			),
+			array(
+				'question' => 'Do you deliver outside Paphos?',
+				'answer'   => 'DRAFT: [Client to confirm whether cars are delivered across Cyprus, and on what terms.]',
+			),
+		),
+	)
+);
+
 $pm_pages = array(
 	'latest'   => panmotors_seed_block_page(
 		'latest-cars',
@@ -593,53 +632,8 @@ $pm_pages = array(
 			)
 		)
 	),
-	'contact'  => panmotors_seed_block_page(
-		'contact',
-		'Contact',
-		implode(
-			"\n\n",
-			array(
-				$pm_hero( 'Paphos, Cyprus', 'Call, write, or walk in during showroom hours. Someone from the family will answer.', 0 ),
-				$pm_enquire_block,
-				panmotors_seed_block(
-					'pm/faq',
-					array(
-						'faq_title' => 'Questions',
-						'faqs'      => array(
-							array(
-								'question' => 'Where is Pan Motors?',
-								'answer'   => 'DRAFT: Pan Motors is on Avenue 65 in Mesoyi, Paphos 8060, Cyprus. [Client to add a landmark and parking details.]',
-							),
-							array(
-								'question' => 'What are your opening hours?',
-								'answer'   => 'DRAFT: Monday to Friday 08:00 to 13:00 and 14:30 to 18:00, Saturday 08:00 to 13:00. Closed on Sunday.',
-							),
-							array(
-								'question' => 'Do I need an appointment to visit the showroom?',
-								'answer'   => 'DRAFT: You are welcome to walk in during opening hours. For a private viewing, call or write ahead and we will set a time. [Client to confirm.]',
-							),
-							array(
-								'question' => 'Which marques do you work with?',
-								'answer'   => 'DRAFT: Porsche, Maserati, Ferrari, Lamborghini, Aston Martin and Bentley, among others. [Client to confirm the list.]',
-							),
-							array(
-								'question' => 'Do you look after cars after purchase?',
-								'answer'   => 'DRAFT: Yes. Service and aftercare are handled in house in Paphos, by the same people who prepared the car. [Client to confirm scope.]',
-							),
-							array(
-								'question' => 'What is in the boutique?',
-								'answer'   => 'DRAFT: Parts and accessories for the marques we work with. [Client to describe the range.]',
-							),
-							array(
-								'question' => 'Do you deliver outside Paphos?',
-								'answer'   => 'DRAFT: [Client to confirm whether cars are delivered across Cyprus, and on what terms.]',
-							),
-						),
-					)
-				),
-			)
-		)
-	),
+	'contact'  => panmotors_seed_block_page( 'contact', 'Contact', panmotors_demo_contact_content( $pm_faq_block ) ),
+
 	// After Contact, which its car sheets and CTA band link to (D12, _design/v2/cars.html).
 	'featured' => panmotors_seed_block_page( 'featured-cars', 'Featured Cars', panmotors_demo_featured_content() ),
 	// After Contact and Featured Cars, which its call to action links to (D12, _design/v2/showroom.html).

@@ -422,3 +422,62 @@ function panmotors_demo_showroom_content() {
 		)
 	);
 }
+
+/**
+ * Contact page as block markup (D12, _design/v2/contact.html): page header (text), contact rows,
+ * contact form and map, questions. The questions are passed in, so the migration keeps the page's
+ * current ones word for word.
+ *
+ * @param string $faq_block The pm/faq block markup (the existing one, or the seed's).
+ * @return string
+ */
+function panmotors_demo_contact_content( $faq_block ) {
+	return implode(
+		"\n\n",
+		array(
+			panmotors_seed_block(
+				'pm/page-header',
+				array(
+					'header_style'   => 'text',
+					'header_eyebrow' => 'Pan Motors — Paphos, Cyprus',
+					'header_title'   => "Contact\nUs",
+					'header_intro'   => 'Call, write, or walk in during showroom hours.',
+				)
+			),
+			panmotors_seed_block(
+				'pm/contact-details',
+				array(
+					'cd_call_label'    => 'Call us',
+					'cd_call_action'   => 'Call',
+					'cd_email_label'   => 'Email us',
+					'cd_email_action'  => 'Write',
+					'cd_find_label'    => 'Find us',
+					'cd_find_action'   => 'Directions',
+					'cd_follow_label'  => 'Follow us',
+					'cd_follow_action' => 'Open',
+				)
+			),
+			panmotors_seed_block(
+				'pm/contact-form',
+				array(
+					'cf_title'         => 'Write To Us',
+					'cf_shortcode'     => '',
+					'cf_label_name'    => 'Name',
+					'cf_hint_name'     => 'Full name',
+					'cf_label_email'   => 'Email',
+					'cf_hint_email'    => 'you@domain.com',
+					'cf_label_subject' => 'Subject',
+					'cf_hint_subject'  => 'Viewing, service, boutique',
+					'cf_label_message' => 'Message',
+					'cf_hint_message'  => 'Tell us which car you are interested in.',
+					'cf_button'        => 'Send message',
+					'cf_map_note'      => 'Google Maps',
+					'cf_map_button'    => 'Show map',
+					'cf_map_link'      => 'Get directions',
+					'cf_hours_label'   => 'Showroom hours',
+				)
+			),
+			$faq_block,
+		)
+	);
+}

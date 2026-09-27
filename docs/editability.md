@@ -12,7 +12,8 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | **Pages → About Pan Motors** | Built as `_design/v2/about.html` (D12): Page header, Story, What We Do, Our Values (light section), Photo call to action. |
 | **Pages → Featured Cars** | Built as `_design/v2/cars.html` (D12): Page header (Text), Cars grid, CTA band. |
 | **Pages → The Showroom** | Built as `_design/v2/showroom.html` (D12): Page header (Photo), Photo slider, Visit, Photo call to action. |
-| **Pages → Latest Cars / Contact** | Inner pages, built from blocks: Page top, text, the section blocks, Call to action. Placeholders until their v2 build (D12 step 6; Latest Cars undecided). |
+| **Pages → Contact** | Built as `_design/v2/contact.html` (D12): Page header (Text), Contact rows, Contact form and map, Questions. |
+| **Pages → Latest Cars** | Placeholder built from blocks (Page top, text, Latest Cars, Call to action); its design is not decided (D12). |
 | **Cars** | Every showcase car once: photo (optional; homepage rows only show cars with one), marque, model, reference, detail, note (the car sheet description), optional link, slider caption, place, the car sheet (year, power, acceleration, mileage, engine, gearbox, colour), On the Featured Cars page, Featured, order (Page attributes; also the car's number on the Featured Cars page). The homepage rows and the Featured Cars page read from here. |
 | **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, **Our Values** (the values shown on Home and About; D12), Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
 | **Appearance → Menus** | Primary menu (header + mobile menu), Footer menu. |
@@ -116,6 +117,20 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | "Opening hours", "Find us", "Get directions" | Visit block |
 | "Book A Visit" card: heading, photo, colour, brightness, height, two buttons | Photo call to action block |
 | Footer | Page settings → Footer style (Auto: light) |
+
+## Contact (D12)
+
+| Element | Where |
+|---|---|
+| Small red line, title (H1), intro | Page header block, Text style |
+| Call / Email / Find / Follow rows: the details | Settings → Contact (phones, email, address, Google Maps link) and Social (Instagram, Facebook); a row with an empty detail is left out |
+| Row labels and actions ("Call us", "Call →") | Contact rows block |
+| Form | Contact form and map block → Form shortcode (admin), else Settings → Technical → Enquiry form shortcode; else a preview form with the block's labels and hints |
+| Map | Settings → Contact → Map embed query; loads only after "Show map" (Google cookies). Empty query: a directions link. Note, button and link texts in the block |
+| Showroom hours card | Settings → Opening hours; the small red line in the block |
+| Questions | Questions block (heading, questions and answers) |
+| Contact button in the header | shows filled on this page (automatic) |
+| Footer | Page settings → Footer style (Auto: dark) |
 
 ## Other inner pages (placeholders until their v2 build)
 

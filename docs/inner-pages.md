@@ -171,6 +171,15 @@ Accepted differences from v2:
 
 ---
 
+As built (27 Sep 2026): everything above the Questions measures the same as v2 at 1440, 880 and 390 (and at 1080 apart from the footer's second row). The form's fields sit 20px apart as in v2 (the homepage form keeps 18px). The map iframe is in the page inside a <template>; nothing is requested from Google until "Show map" (checked in the network log), then focus moves to the map. The iframe keeps its colour while it has keyboard focus. The Questions block moved to the dark page (hairline rows, accent when open) and keeps the page's questions and DRAFT answers. There was no FAQPage JSON-LD yet: `panmotors_faq_items()` returns the page's questions exactly as printed, for the SEO session.
+
+Accepted differences from v2:
+- Phones print as stored (+357 99 339 233); v2 shortens the second.
+- "Follow us" lists the profiles set in the options: "Instagram" (no Facebook link is set); v2 shows "Instagram — Facebook".
+- The map card starts as a placeholder with a "Show map" button (cookies), not the live map.
+- The Questions section is new here (not in v2), as required by §8.
+- Footer, navigation and focus states as on the other pages.
+
 ## 9. Build order (one session each)
 
 1. Global design settings (§1), with a zero-change diff at the defaults.
