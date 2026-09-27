@@ -1,0 +1,365 @@
+{
+    "key": "group_pm_block_contact_form",
+    "title": "Block: Contact form and map",
+    "fields": [
+        {
+            "key": "field_pm_cf_title",
+            "label": "Heading",
+            "name": "cf_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The heading of the dark form card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Write To Us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_shortcode",
+            "label": "Form shortcode",
+            "name": "cf_shortcode",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "From the form plugin, for this form only. Empty: the enquiry form shortcode in {settings} → Technical.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "maxlength": "",
+            "placeholder": "[contact-form-7 id=\"123\"]",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_cf_preview",
+            "label": "Preview form",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Until a form plugin is connected, a preview form is shown with these texts. It does not send.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_cf_label_name",
+            "label": "Name label",
+            "name": "cf_label_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Name",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_hint_name",
+            "label": "Name hint",
+            "name": "cf_hint_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "Full name",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_label_email",
+            "label": "Email label",
+            "name": "cf_label_email",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Email",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_hint_email",
+            "label": "Email hint",
+            "name": "cf_hint_email",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "you@domain.com",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_label_subject",
+            "label": "Subject label",
+            "name": "cf_label_subject",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Subject",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_hint_subject",
+            "label": "Subject hint",
+            "name": "cf_hint_subject",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "Viewing, service, boutique",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_label_message",
+            "label": "Message label",
+            "name": "cf_label_message",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Message",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_hint_message",
+            "label": "Message hint",
+            "name": "cf_hint_message",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 60,
+            "default_value": "Tell us which car you are interested in.",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_button",
+            "label": "Button text",
+            "name": "cf_button",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Send message",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_cf_map",
+            "label": "Map",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The map shows the \"Map embed query\" from {settings} → Contact. It loads from Google only after a visitor presses the button, because Google Maps sets cookies.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_cf_map_note",
+            "label": "Map note",
+            "name": "cf_map_note",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The line on the map card before it loads.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "Google Maps",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_map_button",
+            "label": "Map button",
+            "name": "cf_map_button",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Show map",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_map_link",
+            "label": "Directions link",
+            "name": "cf_map_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Shown instead of the map when there is no map query. An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Get directions",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cf_hours_label",
+            "label": "Hours card: small red line",
+            "name": "cf_hours_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The hours themselves come from {settings} → Opening hours.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Showroom hours",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/contact-form"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790529639
+}

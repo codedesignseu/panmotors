@@ -276,6 +276,26 @@
             "placeholder": "https:\/\/"
         },
         {
+            "key": "field_pm_map_embed_query",
+            "label": "Map embed query",
+            "name": "map_embed_query",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "What the map on the Contact page searches for, as you would type it into Google Maps. The map loads only when a visitor asks for it. Empty: a directions link instead of the map.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 120,
+            "placeholder": "Pan Motors Mesoyi Paphos Cyprus",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_pm_latitude",
             "label": "Latitude",
             "name": "latitude",
@@ -1842,5 +1862,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1790529639
 }

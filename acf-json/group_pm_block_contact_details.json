@@ -1,0 +1,206 @@
+{
+    "key": "group_pm_block_contact_details",
+    "title": "Block: Contact rows",
+    "fields": [
+        {
+            "key": "field_pm_msg_block_contact_details",
+            "label": "Contact details",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The phone numbers, email, address, map link and Instagram come from {settings}. A row whose detail is empty there is left out.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_cd_call_label",
+            "label": "Phone: label",
+            "name": "cd_call_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Call us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_call_action",
+            "label": "Phone: action",
+            "name": "cd_call_action",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Call",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_email_label",
+            "label": "Email: label",
+            "name": "cd_email_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Email us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_email_action",
+            "label": "Email: action",
+            "name": "cd_email_action",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Write",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_find_label",
+            "label": "Address: label",
+            "name": "cd_find_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Find us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_find_action",
+            "label": "Address: action",
+            "name": "cd_find_action",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Opens the Google Maps link in a new tab.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Directions",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_follow_label",
+            "label": "Social: label",
+            "name": "cd_follow_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Follow us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_cd_follow_action",
+            "label": "Social: action",
+            "name": "cd_follow_action",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Opens Instagram in a new tab.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Open",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/contact-details"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790529639
+}

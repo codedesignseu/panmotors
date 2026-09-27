@@ -228,6 +228,9 @@ options = group('options', 'Pan Motors settings', [
     text('country_name', 'Country', width='50', default_value='Cyprus', maxlength=40,
          instructions='Shown at the end of the address.'),
     url('map_url', 'Google Maps link', width='50', instructions='The link to your business on Google Maps.'),
+    text('map_embed_query', 'Map embed query', width='50', maxlength=120, placeholder='Pan Motors Mesoyi Paphos Cyprus',
+         instructions='What the map on the Contact page searches for, as you would type it into Google Maps. The map loads '
+                      'only when a visitor asks for it. Empty: a directions link instead of the map.'),
     number('latitude', 'Latitude', width='25', step='any', instructions='From the Google Maps pin. Used by Google only.'),
     number('longitude', 'Longitude', width='25', step='any'),
     repeater('phones', 'Phone numbers', [
@@ -685,7 +688,49 @@ b_visit = block_group('visit', 'Visit', [
          instructions='Opens the Google Maps link from {settings}. An arrow is added. Empty: no button.'),
 ])
 
-GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+b_contact_details = block_group('contact-details', 'Contact rows', [
+    message('block_contact_details', 'Contact details', 'The phone numbers, email, address, map link and Instagram come from '
+                                                         '{settings}. A row whose detail is empty there is left out.'),
+    text('cd_call_label', 'Phone: label', width='50', default_value='Call us', maxlength=20),
+    text('cd_call_action', 'Phone: action', width='50', default_value='Call', maxlength=16, instructions='An arrow is added.'),
+    text('cd_email_label', 'Email: label', width='50', default_value='Email us', maxlength=20),
+    text('cd_email_action', 'Email: action', width='50', default_value='Write', maxlength=16),
+    text('cd_find_label', 'Address: label', width='50', default_value='Find us', maxlength=20),
+    text('cd_find_action', 'Address: action', width='50', default_value='Directions', maxlength=16,
+         instructions='Opens the Google Maps link in a new tab.'),
+    text('cd_follow_label', 'Social: label', width='50', default_value='Follow us', maxlength=20),
+    text('cd_follow_action', 'Social: action', width='50', default_value='Open', maxlength=16,
+         instructions='Opens Instagram in a new tab.'),
+])
+
+b_contact_form = block_group('contact-form', 'Contact form and map', [
+    text('cf_title', 'Heading', width='50', default_value='Write To Us', maxlength=30,
+         instructions='The heading of the dark form card.'),
+    text('cf_shortcode', 'Form shortcode', width='50', placeholder='[contact-form-7 id="123"]', admin_only=True,
+         instructions='From the form plugin, for this form only. Empty: the enquiry form shortcode in {settings} → Technical.'),
+    message('cf_preview', 'Preview form',
+            'Until a form plugin is connected, a preview form is shown with these texts. It does not send.'),
+    text('cf_label_name', 'Name label', width='50', default_value='Name', maxlength=20),
+    text('cf_hint_name', 'Name hint', width='50', default_value='Full name', maxlength=40),
+    text('cf_label_email', 'Email label', width='50', default_value='Email', maxlength=20),
+    text('cf_hint_email', 'Email hint', width='50', default_value='you@domain.com', maxlength=40),
+    text('cf_label_subject', 'Subject label', width='50', default_value='Subject', maxlength=20),
+    text('cf_hint_subject', 'Subject hint', width='50', default_value='Viewing, service, boutique', maxlength=40),
+    text('cf_label_message', 'Message label', width='50', default_value='Message', maxlength=20),
+    text('cf_hint_message', 'Message hint', width='50', default_value='Tell us which car you are interested in.', maxlength=60),
+    text('cf_button', 'Button text', width='50', default_value='Send message', maxlength=24),
+    message('cf_map', 'Map', 'The map shows the "Map embed query" from {settings} → Contact. It loads from Google only '
+                             'after a visitor presses the button, because Google Maps sets cookies.'),
+    text('cf_map_note', 'Map note', width='50', default_value='Google Maps', maxlength=40,
+         instructions='The line on the map card before it loads.'),
+    text('cf_map_button', 'Map button', width='50', default_value='Show map', maxlength=20),
+    text('cf_map_link', 'Directions link', width='50', default_value='Get directions', maxlength=24,
+         instructions='Shown instead of the map when there is no map query. An arrow is added.'),
+    text('cf_hours_label', 'Hours card: small red line', width='50', default_value='Showroom hours', maxlength=30,
+         instructions='The hours themselves come from {settings} → Opening hours.'),
+])
+
+GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':
