@@ -1,0 +1,204 @@
+{
+    "key": "group_pm_block_page_header",
+    "title": "Block: Page header",
+    "fields": [
+        {
+            "key": "field_pm_header_style",
+            "label": "Style",
+            "name": "header_style",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Photo: a full-width photo with the title over it (About, Showroom). Text: the title on the dark page (Featured Cars, Contact).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "image": "Photo",
+                "text": "Text"
+            },
+            "default_value": "text",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_pm_header_eyebrow",
+            "label": "Small red line",
+            "name": "header_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the title, e.g. \"About — Mesoyi, Paphos\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 50,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_header_title",
+            "label": "Title",
+            "name": "header_title",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "The page's main heading. Each new line starts a new line on the page. Empty: the page title. Up to 40 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_header_intro",
+            "label": "Short intro",
+            "name": "header_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Next to the title. Also used as the page description for Google. Up to 160 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_header_image",
+            "label": "Photo",
+            "name": "header_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Landscape, at least 2400px wide. JPG or WebP, sRGB colour. The alt text from the media library is used.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_header_style",
+                        "operator": "==",
+                        "value": "image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1920,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_header_filter",
+            "label": "Photo colour",
+            "name": "header_filter",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_header_style",
+                        "operator": "==",
+                        "value": "image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "Colour",
+                "grayscale": "Black and white"
+            },
+            "default_value": "none",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_pm_header_brightness",
+            "label": "Photo brightness",
+            "name": "header_brightness",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Darker makes the title easier to read. About uses 60%, Showroom 62%.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_header_style",
+                        "operator": "==",
+                        "value": "image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 62,
+            "min": 50,
+            "max": 80,
+            "step": 1,
+            "prepend": "",
+            "append": "%"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/page-header"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790515812
+}

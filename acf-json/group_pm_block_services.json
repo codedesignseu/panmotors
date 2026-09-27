@@ -1,0 +1,161 @@
+{
+    "key": "group_pm_block_services",
+    "title": "Block: What We Do",
+    "fields": [
+        {
+            "key": "field_pm_services_title",
+            "label": "Heading",
+            "name": "services_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "What We Do",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_services",
+            "label": "Services",
+            "name": "services",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Two to four tiles in a row. Drag to reorder.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 4,
+            "collapsed": "field_pm_service_title",
+            "button_label": "Add service",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pm_service_index",
+                    "label": "Small red label",
+                    "name": "index",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 20,
+                    "placeholder": "01 — Sales",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_services"
+                },
+                {
+                    "key": "field_pm_service_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "maxlength": 20,
+                    "placeholder": "Sales",
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pm_services"
+                },
+                {
+                    "key": "field_pm_service_body",
+                    "label": "Short text",
+                    "name": "body",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Up to 110 characters.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 2,
+                    "new_lines": "",
+                    "maxlength": 110,
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_pm_services"
+                },
+                {
+                    "key": "field_pm_service_image",
+                    "label": "Photo",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "At least 1200px wide, the subject in the centre: the tile is tall and narrow until hovered. JPG or WebP, sRGB colour.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": 1200,
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": 8,
+                    "mime_types": "jpg, jpeg, png, webp, avif",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_pm_services"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/services"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790515812
+}

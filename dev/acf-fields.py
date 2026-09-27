@@ -562,7 +562,67 @@ page_settings = group('page', 'Page settings', [
 ], [[{'param': 'post_type', 'operator': '==', 'value': 'page'}]], order=10)
 page_settings['position'] = 'side'
 
-GROUPS = (options, car, page_settings, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+# ---------------------------------------------------------------- D12 inner-page blocks (docs/inner-pages.md)
+b_page_header = block_group('page-header', 'Page header', [
+    button_group('header_style', 'Style', {'image': 'Photo', 'text': 'Text'}, 'text',
+                 instructions='Photo: a full-width photo with the title over it (About, Showroom). '
+                              'Text: the title on the dark page (Featured Cars, Contact).'),
+    text('header_eyebrow', 'Small red line', maxlength=50, instructions='Above the title, e.g. "About — Mesoyi, Paphos".'),
+    textarea('header_title', 'Title', rows=2, maxlength=40,
+             instructions='The page\'s main heading. Each new line starts a new line on the page. '
+                          'Empty: the page title. Up to 40 characters.'),
+    textarea('header_intro', 'Short intro', rows=2, maxlength=160,
+             instructions='Next to the title. Also used as the page description for Google. Up to 160 characters.'),
+    image('header_image', 'Photo', min_width=1920,
+          instructions='Landscape, at least 2400px wide. ' + IMG_FORMAT + ' The alt text from the media library is used.',
+          conditional_logic=[[{'field': 'field_pm_header_style', 'operator': '==', 'value': 'image'}]]),
+    button_group('header_filter', 'Photo colour', {'none': 'Colour', 'grayscale': 'Black and white'}, 'none', width='50',
+                 conditional_logic=[[{'field': 'field_pm_header_style', 'operator': '==', 'value': 'image'}]]),
+    range_field('header_brightness', 'Photo brightness', 62, 50, 80, append='%', width='50',
+                instructions='Darker makes the title easier to read. About uses 60%, Showroom 62%.',
+                conditional_logic=[[{'field': 'field_pm_header_style', 'operator': '==', 'value': 'image'}]]),
+])
+
+b_story = block_group('story', 'Story', [
+    text('story_eyebrow', 'Small red line', width='50', maxlength=40, placeholder='Our story'),
+    textarea('story_title', 'Heading', rows=2, width='50', maxlength=40,
+             instructions='Each new line starts a new line on the page. Up to 40 characters.'),
+    textarea('story_lead', 'First paragraph', rows=3, maxlength=300,
+             instructions='Empty: the one-sentence description from {settings} → Business, so the site '
+                          'describes the business the same way everywhere. Up to 300 characters.'),
+    wysiwyg('story_text', 'More paragraphs', instructions='One or two short paragraphs after the first. Bold, '
+                                                          'italic and links only.'),
+    image('story_image', 'Photo', min_width=1080, min_height=1350,
+          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT),
+])
+
+b_services = block_group('services', 'What We Do', [
+    heading('services_title', 'What We Do'),
+    repeater('services', 'Services', [
+        text('service_index', 'Small red label', name='index', width='30', maxlength=20, placeholder='01 — Sales'),
+        text('service_title', 'Title', name='title', required=1, width='70', maxlength=20, placeholder='Sales'),
+        textarea('service_body', 'Short text', name='body', rows=2, maxlength=110, instructions='Up to 110 characters.'),
+        image('service_image', 'Photo', name='image', min_width=1200,
+              instructions='At least 1200px wide, the subject in the centre: the tile is tall and narrow until '
+                           'hovered. ' + IMG_FORMAT),
+    ], min=2, max=4, button='Add service', collapsed='service_title',
+        instructions='Two to four tiles in a row. Drag to reorder.'),
+])
+
+b_cta_image = block_group('cta-image', 'Photo call to action', [
+    text('ctai_eyebrow', 'Small red line', width='50', maxlength=40, instructions='Optional, above the heading.'),
+    textarea('ctai_title', 'Heading', rows=2, width='50', maxlength=30,
+             instructions='Each new line starts a new line on the page. Up to 30 characters.'),
+    image('ctai_image', 'Background photo', min_width=1920,
+          instructions='Landscape, at least 2400px wide. Shown in black and white, darkened. ' + IMG_FORMAT),
+    text('ctai_label', 'Main button text', width='50', maxlength=26, placeholder='Visit the showroom',
+         instructions='The light button. An arrow is added.'),
+    page_link('ctai_link', 'Main button goes to', width='50'),
+    text('ctai_label_2', 'Second button text', width='50', maxlength=26, instructions='Optional outlined button.'),
+    page_link('ctai_link_2', 'Second button goes to', width='50'),
+])
+
+GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':
@@ -575,7 +635,14 @@ if __name__ == '__main__':
 
     for g in GROUPS:
         walk(g['fields'])
-        with open(os.path.join(OUT, g['key'] + '.json'), 'w') as fh:
+        path = os.path.join(OUT, g['key'] + '.json')
+        # A group whose fields did not change keeps its file (and its "modified" time).
+        if os.path.exists(path):
+            with open(path) as fh:
+                saved = json.load(fh)
+            if {k: v for k, v in saved.items() if k != 'modified'} == {k: v for k, v in g.items() if k != 'modified'}:
+                continue
+        with open(path, 'w') as fh:
             # ACF's saved format: slashes escaped, so a seed run does not rewrite the files.
             fh.write(json.dumps(g, indent=4, ensure_ascii=False).replace('/', '\\/') + '\n')
     dupes = {k for k in keys if keys.count(k) > 1}

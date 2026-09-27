@@ -1,0 +1,133 @@
+{
+    "key": "group_pm_block_story",
+    "title": "Block: Story",
+    "fields": [
+        {
+            "key": "field_pm_story_eyebrow",
+            "label": "Small red line",
+            "name": "story_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "placeholder": "Our story",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_story_title",
+            "label": "Heading",
+            "name": "story_title",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Each new line starts a new line on the page. Up to 40 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_story_lead",
+            "label": "First paragraph",
+            "name": "story_lead",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Empty: the one-sentence description from {settings} → Business, so the site describes the business the same way everywhere. Up to 300 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "",
+            "maxlength": 300,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_story_text",
+            "label": "More paragraphs",
+            "name": "story_text",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "One or two short paragraphs after the first. Bold, italic and links only.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_pm_story_image",
+            "label": "Photo",
+            "name": "story_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Portrait (4:5), at least 1080 × 1350px. JPG or WebP, sRGB colour.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1080,
+            "min_height": 1350,
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/story"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790515812
+}

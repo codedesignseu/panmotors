@@ -1,0 +1,183 @@
+{
+    "key": "group_pm_block_cta_image",
+    "title": "Block: Photo call to action",
+    "fields": [
+        {
+            "key": "field_pm_ctai_eyebrow",
+            "label": "Small red line",
+            "name": "ctai_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional, above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ctai_title",
+            "label": "Heading",
+            "name": "ctai_title",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Each new line starts a new line on the page. Up to 30 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 30,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_ctai_image",
+            "label": "Background photo",
+            "name": "ctai_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Landscape, at least 2400px wide. Shown in black and white, darkened. JPG or WebP, sRGB colour.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": 1920,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_pm_ctai_label",
+            "label": "Main button text",
+            "name": "ctai_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The light button. An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 26,
+            "placeholder": "Visit the showroom",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ctai_link",
+            "label": "Main button goes to",
+            "name": "ctai_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        },
+        {
+            "key": "field_pm_ctai_label_2",
+            "label": "Second button text",
+            "name": "ctai_label_2",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional outlined button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 26,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ctai_link_2",
+            "label": "Second button goes to",
+            "name": "ctai_link_2",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/cta-image"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1790515812
+}
