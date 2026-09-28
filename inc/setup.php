@@ -90,6 +90,22 @@ function panmotors_meta_description() {
 add_action( 'wp_head', 'panmotors_meta_description', 1 );
 
 /**
+ * Rank Math or Yoast without a description for the page (none written, no template): the theme's
+ * default, as above. A description written in the SEO plugin always wins.
+ *
+ * @param string $description The SEO plugin's description.
+ * @return string
+ */
+function panmotors_seo_description_fallback( $description ) {
+	if ( '' !== trim( (string) $description ) ) {
+		return $description;
+	}
+	return panmotors_page_description( ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0 );
+}
+add_filter( 'rank_math/frontend/description', 'panmotors_seo_description_fallback' );
+add_filter( 'wpseo_metadesc', 'panmotors_seo_description_fallback' );
+
+/**
  * Keep a fixed sizes value on lazy images that ask for it ('pm-fixed-sizes' => true in the
  * wp_get_attachment_image() attributes). WordPress prefixes sizes with "auto" on lazy images,
  * which sizes the file to the image's layout width: right for photos, wrong for the blurred
