@@ -76,12 +76,23 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] Inner pages built from blocks (D11) as the v2 design (D12, section 4c): Featured Cars, About, Showroom, Contact; Latest Cars kept as a placeholder (design undecided); Privacy and Cookie policy on `page.php`
 
 ## 6. Finish
-- [ ] Escaping review across all templates
-- [ ] Accessibility pass: keyboard through menu, sliders, form. Focus states visible. Contrast on accent text
-- [ ] Performance: image sizes, lazy loading, video preload, no render-blocking fonts, Lighthouse run
-- [ ] SEO plugin installed and configured, its own business schema turned off, OG image absolute
+- [x] Escaping review across all templates (PHPCS with WordPress Coding Standards in `dev/`, 0 errors/warnings, no rules excluded; i18n and empty-field review)
+- [x] Accessibility pass: keyboard through menu, sliders, form. Focus states visible. Contrast on accent text (axe 0 serious/critical on all pages at 1440 and 390; reflow at 320px and 200%; text over photos 4.5 : 1 against the brightest pixel, commit 5398245)
+- [ ] Performance: image sizes, lazy loading, video preload, no render-blocking fonts, Lighthouse run (done except the Lighthouse "after" run: `node dev/tests/lighthouse.mjs after`)
+- [ ] SEO plugin installed and configured, its own business schema turned off, OG image absolute (Rank Math installed and active; configuration pending)
 - [ ] Rich Results Test and Schema validator clean
 - [ ] NAP matches the Google Business Profile exactly
-- [ ] Cross-browser: Safari (video autoplay, backdrop-filter, color-mix), Chrome, Firefox, iOS, Android
-- [ ] Install the form plugin, paste its shortcode in options, check it matches the design
+- [x] Cross-browser, automated: Chrome, WebKit and Firefox (Playwright): keyboard, dialog, sliders, video autoplay, backdrop-filter, color-mix (`dev/tests/interactions.mjs`)
+- [ ] Cross-browser by hand: Safari (macOS), iOS Safari, Android Chrome
+- [ ] Install the form plugin, paste its shortcode in options, check it matches the design (Fluent Forms installed and active; shortcode and check pending)
+- [x] Deploy package: `bash dev/build-zip.sh` (production files only, `.distignore`), `screenshot.png`, `Requires PHP: 8.2` (tested on a fresh install with PHP 8.2)
 - [ ] Remove demo content flags, deploy
+
+### Still to do by Efthimios
+1. **Rank Math**: run its setup wizard. Then Titles & Meta → Local SEO / Schema: leave the business schema off (the theme already switches Rank Math's schema off with its filter and prints one AutoDealer graph, `inc/schema.php`). Set the default OG/Twitter image to the 1200×630 showroom photo. Sitemap: pages only (no posts, no Cars, no media attachments). Check one page's source: one JSON-LD graph, no second Organization/LocalBusiness.
+2. **Fluent Forms**: build the enquiry form (name, email, phone, message, consent if needed) with a visible label on every field, set the notification email and the success message. Paste its shortcode in Pan Motors settings → Technical → form shortcode (and in the Contact page's Contact form block if it should differ). Check Home (Enquire) and Contact at 1440 and 390, submit it empty once to see the error styles, send one real test.
+3. **Rich Results Test** and **Schema.org validator** on Home, About, Showroom and Contact (after deploy, on the live URLs).
+4. **NAP**: compare name, address, phones and hours in Pan Motors settings with the Google Business Profile, character for character.
+5. **Safari, iOS and Android by hand**: menu, cars dialog, sliders (swipe), hero video autoplay (muted), blurred backdrops, the Contact map button.
+6. **Content**: replace demo photos with the client's (WebP, descriptive file names and alt text, see theme-map 9.5); delete the default "Sample Page"; the red labels over photos now sit on darker shades, so check the look with the client (revert commit 5398245 if they prefer the old one).
+7. **Deploy**: remove the demo content flags, upload `dev/.cache/dist/panmotors-theme.zip` (rebuild it with `bash dev/build-zip.sh` after the last commit), set the environment type to production, then check debug.log and the console on the live site.
