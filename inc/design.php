@@ -521,7 +521,7 @@ function panmotors_logo_light_image( $class_name, $alt = '', $sizes = '100px' ) 
 			'class'   => $class_name . ' ' . $class_name . '--light',
 			'alt'     => $alt,
 			'sizes'   => $sizes,
-			'loading' => 'lazy', // Footer: below the fold.
+			'loading' => false,
 		)
 	);
 }

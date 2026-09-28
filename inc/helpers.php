@@ -65,8 +65,7 @@ function panmotors_tel( $number ) {
  * @param string|null $alt        Alt text. Null keeps the media library alt, '' marks it decorative.
  * @param string      $sizes      Rendered width for the sizes attribute, e.g. '84px'.
  * @param bool        $high       fetchpriority="high" (the header logo is the LCP element: the
- *                                full-viewport hero image is ignored by Chrome's LCP). Other
- *                                logos (footer, Enquire card) load lazily.
+ *                                full-viewport hero image is ignored by Chrome's LCP).
  */
 function panmotors_logo_image( $class_name, $alt = null, $sizes = '100px', $high = false ) {
 	$logo_id = (int) get_theme_mod( 'custom_logo' );
@@ -77,7 +76,7 @@ function panmotors_logo_image( $class_name, $alt = null, $sizes = '100px', $high
 	$attr = array(
 		'class'   => $class_name,
 		'sizes'   => $sizes,
-		'loading' => $high ? false : 'lazy',
+		'loading' => false,
 	);
 	if ( $high ) {
 		$attr['fetchpriority'] = 'high';

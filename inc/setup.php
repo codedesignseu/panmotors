@@ -88,3 +88,24 @@ function panmotors_meta_description() {
 	}
 }
 add_action( 'wp_head', 'panmotors_meta_description', 1 );
+
+/**
+ * Keep a fixed sizes value on lazy images that ask for it ('pm-fixed-sizes' => true in the
+ * wp_get_attachment_image() attributes). WordPress prefixes sizes with "auto" on lazy images,
+ * which sizes the file to the image's layout width: right for photos, wrong for the blurred
+ * backdrops, which are laid out full width but blurred to 64px (sizes="400px").
+ *
+ * @param array $attr Image attributes.
+ * @return array
+ */
+function panmotors_fixed_sizes( $attr ) {
+	if ( ! isset( $attr['pm-fixed-sizes'] ) ) {
+		return $attr;
+	}
+	unset( $attr['pm-fixed-sizes'] );
+	if ( isset( $attr['sizes'] ) ) {
+		$attr['sizes'] = preg_replace( '/^auto\s*,\s*/i', '', $attr['sizes'] );
+	}
+	return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'panmotors_fixed_sizes' );

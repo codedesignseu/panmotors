@@ -45,10 +45,11 @@ $panmotors_arrow = static function ( $dir, $class_name ) {
 				'medium_large',
 				false,
 				array(
-					'class'   => 'pm-slider__bg' . ( 0 === $panmotors_i ? ' is-current' : '' ),
-					'alt'     => '',
-					'sizes'   => '400px', // Blurred 64px: resolution is wasted here.
-					'loading' => 'lazy', // Sliders follow a hero or page header: below the fold.
+					'class'          => 'pm-slider__bg' . ( 0 === $panmotors_i ? ' is-current' : '' ),
+					'alt'            => '',
+					'sizes'          => '400px', // Blurred 64px: resolution is wasted here.
+					'pm-fixed-sizes' => true, // No sizes="auto": the layout width would pick a big file.
+					'loading'        => 'lazy', // Sliders follow a hero or page header: below the fold.
 				)
 			);
 			?>
