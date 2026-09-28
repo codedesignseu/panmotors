@@ -6,7 +6,8 @@
 // Checks: menu (open with Enter, focus stays in the panel, Esc closes, focus back on the burger);
 // Featured Cars filter and car sheet dialog (Enter, arrows, focus trap, Esc, focus return); the
 // Latest Cars and Showroom sliders on Home and the Photo slider on Showroom (buttons and arrow
-// keys, counter); the Contact map button (Enter loads the map and focuses it); form labels; FAQ
+// keys, counter); the Contact map (on request: Enter loads it and focuses it; with the page: titled
+// and reachable with Tab); form labels; FAQ
 // (Enter toggles); hero video autoplay (and no autoplay with reduced motion); backdrop-filter and
 // color-mix() support and their computed values. Every check prints ok or FAIL with the detail.
 import { chromium, webkit, firefox } from 'playwright';
@@ -27,7 +28,7 @@ async function run(name) {
   const errors = [];
   const open = async (path, opts = {}) => {
     const ctx = await browser.newContext({ viewport: { width: opts.width || 1440, height: opts.width < 600 ? 844 : 900 }, reducedMotion: opts.reduce ? 'reduce' : 'no-preference' });
-    await ctx.route(/google\.com/, (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>map</p>' }));
+    await ctx.route(/google\.com/, (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<a href="#">map</a>' }));
     const page = await ctx.newPage();
     page.on('pageerror', (e) => errors.push(`${path}: ${e.message}`));
     // WebKit refuses WordPress's speculative prefetch on plain http (local only; the live site is https).
@@ -170,11 +171,19 @@ async function run(name) {
     // Contact: map button, FAQ, form labels.
     {
       const { ctx, page } = await open('contact/');
-      await page.locator('[data-map-show]').focus();
-      await page.keyboard.press('Enter');
-      await page.waitForTimeout(800);
-      const map = await page.evaluate(() => ({ iframe: !!document.querySelector('[data-map] iframe'), focused: document.activeElement.tagName }));
-      check('map: Enter loads the map and focuses it', map.iframe && map.focused === 'IFRAME', JSON.stringify(map));
+      if (await page.locator('[data-map-show]').count()) {
+        // Map on request: Enter on the button loads it and moves focus to it.
+        await page.locator('[data-map-show]').focus();
+        await page.keyboard.press('Enter');
+        await page.waitForTimeout(800);
+        const map = await page.evaluate(() => ({ iframe: !!document.querySelector('[data-map] iframe'), focused: document.activeElement.tagName }));
+        check('map: Enter loads the map and focuses it', map.iframe && map.focused === 'IFRAME', JSON.stringify(map));
+      } else {
+        // Map with the page: the iframe is there, titled, and reachable with Tab.
+        const map = await page.evaluate(() => { const f = document.querySelector('.pm-contact-form__map iframe'); return f ? { title: f.title, lazy: f.loading } : null; });
+        const reached = await tabTo(page, () => document.activeElement?.tagName === 'IFRAME', 80);
+        check('map: shown with the page, titled, reachable with Tab', !!map?.title && reached, JSON.stringify(map));
+      }
       const summary = page.locator('.pm-faq__question').first();
       await summary.focus();
       await page.keyboard.press('Enter');

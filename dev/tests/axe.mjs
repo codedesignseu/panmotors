@@ -4,6 +4,8 @@
 // dev/.cache/axe/<label>.json. Runs system Chrome through Playwright with a throwaway profile.
 // Excluded: .pm-404__code, the giant ghost "404" behind the 404 title. It is aria-hidden pure
 // decoration (the title says the same), which WCAG 1.4.3 exempts from the contrast minimum.
+// target-size is not checked on the slider dots ([data-slider-dot], 6px): the arrows next to them
+// do the same at 52px, the "equivalent control" exception of WCAG 2.5.8.
 import { chromium } from 'playwright';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { PAGES } from './pages.mjs';
@@ -27,6 +29,7 @@ for (const [name, path] of Object.entries(PAGES)) {
       await page.waitForTimeout(1200);
       await page.addScriptTag({ content: AXE });
       const r = await page.evaluate(() => window.axe.run({ exclude: [['.pm-404__code']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] }, resultTypes: ['violations', 'incomplete'] }));
+      r.violations = r.violations.map((v) => (v.id === 'target-size' ? { ...v, nodes: v.nodes.filter((n) => !n.target.join(' ').includes('data-slider-dot')) } : v)).filter((v) => v.nodes.length);
       const key = `${name} ${width}${motion === 'reduce' ? ' reduced' : ''}`;
       all[key] = { violations: r.violations, incomplete: r.incomplete.map(({ id, impact, nodes }) => ({ id, impact, nodes: nodes.map((n) => ({ target: n.target, summary: n.failureSummary })) })) };
       const bad = r.violations.filter((v) => ['serious', 'critical'].includes(v.impact));
