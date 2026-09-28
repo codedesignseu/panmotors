@@ -1837,7 +1837,8 @@ p {
 
 .pm-form input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="hidden"], [type="file"]),
 .pm-form textarea,
-.pm-form select {
+.pm-form select,
+.pm-form .ff-default .ff-el-form-control { /* Fluent Forms' own rule is .ff-default .ff-el-form-control. */
 	width: 100%;
 	max-width: none;
 	height: auto;
@@ -1870,7 +1871,10 @@ p {
 /* Focus: the accent underline is the focus indicator, as in the design. */
 .pm-form input:focus,
 .pm-form textarea:focus,
-.pm-form select:focus {
+.pm-form select:focus,
+.pm-form .ff-default .ff-el-form-control:focus {
+	background: transparent;
+	color: var(--paper);
 	border-bottom-color: var(--accent);
 	box-shadow: none;
 	outline: none;
@@ -1886,6 +1890,7 @@ p {
 .pm-form button:not([type="button"]),
 .pm-form .wpcf7-submit,
 .pm-form .ff-btn-submit,
+.pm-form .ff-default .ff-btn-submit:not(.ff_btn_no_style), /* Beats Fluent Forms' blue default. */
 .pm-form .wpforms-submit {
 	justify-self: start;
 	width: auto;
@@ -1893,7 +1898,7 @@ p {
 	padding: 18px 34px;
 	border: 0;
 	border-radius: 999px;
-	background: var(--accent);
+	background: var(--accent-text-light); /* White on --accent is 4.2 : 1; this is 5.1. */
 	box-shadow: none;
 	color: var(--on-accent);
 	font-family: var(--font-body);
@@ -1908,6 +1913,7 @@ p {
 
 .pm-form [type="submit"]:not(:disabled):is(:hover, :focus-visible),
 .pm-form .ff-btn-submit:not(:disabled):is(:hover, :focus-visible),
+.pm-form .ff-default .ff-btn-submit:not(.ff_btn_no_style):not(:disabled):is(:hover, :focus-visible),
 .pm-form .wpforms-submit:not(:disabled):is(:hover, :focus-visible) {
 	background: var(--paper);
 	color: var(--ink);
