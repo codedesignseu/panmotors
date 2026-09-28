@@ -264,6 +264,7 @@ $pm_options = array(
 	'enquire_form_shortcode' => '',
 	'footer_tagline'         => 'Pan Motors — Paphos',
 	'footer_copyright'       => '© {year} Pan Motors',
+	'footer_credit'          => 'Designed & Developed by <a href="https://codedesigns.eu" target="_blank">CodeDesigns</a>',
 	'map_embed_query'        => 'Pan Motors Mesoyi Paphos Cyprus',
 	// Our Values (D12): one set for Home and About, from _design/v2/about.html.
 	'values'                 => array(
