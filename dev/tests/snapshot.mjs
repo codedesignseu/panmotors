@@ -97,10 +97,17 @@ export default async ({ page, sleep }) => {
     // A full-page capture resizes the viewport, and images with sizes="auto" may pick a new
     // candidate. The first capture triggers that; settle again, then keep the second.
     const capture = () => page.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
-    await capture();
-    await page.eval(SETTLE);
-    await sleep(1500);
-    const r = await capture();
+    // Captures repeat until two in a row are byte-identical: an image Chrome has not painted yet
+    // (seen under load) shows up as a difference and gets another settle.
+    let r = await capture();
+    for (let tries = 0; tries < 5; tries++) {
+      await page.eval(SETTLE);
+      await sleep(1000);
+      const next = await capture();
+      const same = next.data === r.data;
+      r = next;
+      if (same) break;
+    }
     writeFileSync(`${OUT}full-${w}.png`, Buffer.from(r.data, 'base64'));
     out.full[w] = full;
   }
