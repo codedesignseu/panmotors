@@ -889,7 +889,9 @@ p {
 .pm-hero__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.54901961) 0%, rgb(var(--ink-rgb) / 0.14901961) 38%, rgb(var(--ink-rgb) / 0.92156863) 100%);
+	/* Near-solid ink from the eyebrow down: the red eyebrow reaches 4.5 : 1 over the brightest
+	   pixel of the poster (TASKS 6). */
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.54901961) 0%, rgb(var(--ink-rgb) / 0.14901961) 38%, rgb(var(--ink-rgb) / .97) 60%, rgb(var(--ink-rgb) / .98) 100%);
 }
 
 .pm-hero__copy {
@@ -1029,7 +1031,8 @@ p {
 .pm-tile__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.10196078) 30%, rgb(var(--ink-rgb) / 0.87843137) 100%);
+	/* Near-solid ink behind the copy, so the red marque reaches 4.5 : 1 (TASKS 6). */
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.10196078) 30%, rgb(var(--ink-rgb) / .97) 68%, rgb(var(--ink-rgb) / .98) 100%);
 	pointer-events: none;
 }
 
@@ -1547,18 +1550,15 @@ p {
 	gap: 24px;
 	margin-top: 4px;
 	padding-top: 20px;
-	color: color-mix(in srgb, var(--ink-soft) 55%, transparent);
+	color: color-mix(in srgb, var(--ink-soft) 62%, transparent); /* 4.5 : 1 on the wash (TASKS 6). */
 	font-size: 11px;
 	letter-spacing: .2em;
 	text-transform: uppercase;
 }
 
-.pm-showroom__caption-text {
-	opacity: .72;
-}
-
+.pm-showroom__caption-text,
 .pm-showroom__count {
-	opacity: .48;
+	opacity: 1; /* Was .72 and .48: 2.5 and 1.8 : 1. */
 }
 
 .pm-showroom__nav {
@@ -2060,7 +2060,7 @@ p {
 	inset: 0;
 	/* The home hero gradient, darker in the middle (the copy sits higher on this shorter hero)
 	   and ending in solid ink so there is no seam above the page content. */
-	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.6) 0%, rgb(var(--ink-rgb) / 0.4) 38%, var(--ink) 100%);
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / 0.6) 0%, rgb(var(--ink-rgb) / 0.4) 38%, rgb(var(--ink-rgb) / .97) 56%, var(--ink) 100%);
 }
 
 .pm-page-hero__copy {
@@ -2545,7 +2545,8 @@ p {
 .pm-page-header__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .5) 0%, rgb(var(--ink-rgb) / .1) 40%, rgb(var(--ink-rgb) / .94) 100%);
+	/* Near-solid ink from the eyebrow down, so it reaches 4.5 : 1 (TASKS 6). */
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .5) 0%, rgb(var(--ink-rgb) / .1) 40%, rgb(var(--ink-rgb) / .97) 58%, rgb(var(--ink-rgb) / .98) 100%);
 }
 
 .pm-page-header--image .pm-page-header__copy {
@@ -2664,7 +2665,8 @@ p {
 .pm-service__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .1) 30%, rgb(var(--ink-rgb) / .9) 100%);
+	/* Near-solid ink behind the copy, so the red index reaches 4.5 : 1 (TASKS 6). */
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .1) 30%, rgb(var(--ink-rgb) / .98) 52%, rgb(var(--ink-rgb) / .99) 100%);
 	pointer-events: none;
 }
 
@@ -2934,7 +2936,8 @@ p {
 .pm-car__shade {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .35) 0%, rgb(var(--ink-rgb) / 0) 26%, rgb(var(--ink-rgb) / 0) 48%, rgb(var(--ink-rgb) / .9) 100%);
+	/* Near-solid ink behind the copy, so the red marque reaches 4.5 : 1 (TASKS 6). */
+	background: linear-gradient(180deg, rgb(var(--ink-rgb) / .35) 0%, rgb(var(--ink-rgb) / 0) 26%, rgb(var(--ink-rgb) / 0) 45%, rgb(var(--ink-rgb) / .98) 68%, rgb(var(--ink-rgb) / .99) 100%);
 	pointer-events: none;
 }
 
@@ -3295,7 +3298,7 @@ p {
 	font-size: 12px;
 	letter-spacing: .2em;
 	line-height: var(--lh);
-	opacity: .55;
+	opacity: .6; /* 4.5 : 1 (was .55). */
 }
 
 .pm-slider__row {
@@ -3394,7 +3397,7 @@ p {
 	gap: 24px;
 	margin-top: 4px;
 	padding-top: 20px;
-	color: color-mix(in srgb, var(--ink-soft) 55%, transparent);
+	color: color-mix(in srgb, var(--ink-soft) 60%, transparent); /* 4.5 : 1 on the wash (TASKS 6). */
 	font-size: 11px;
 	letter-spacing: .2em;
 	line-height: var(--lh);
@@ -3402,7 +3405,7 @@ p {
 }
 
 .pm-slider__hint {
-	opacity: .55;
+	opacity: 1; /* Was .55: 2 : 1. */
 }
 
 .pm-slider__nav {
@@ -3759,6 +3762,17 @@ p {
 	.pm-contact-form__card {
 		padding: 40px 24px;
 	}
+}
+
+/* Red labels over photos: a 1px ink outline and a soft ink halo, so the accent keeps 4.5 : 1
+   next to the brightest pixel behind it (with the near-solid shades above; TASKS 6). */
+.pm-hero__eyebrow,
+.pm-page-header--image .pm-page-header__eyebrow,
+.pm-page-hero--image .pm-page-hero__eyebrow,
+.pm-tile__marque,
+.pm-car__marque,
+.pm-service__index {
+	text-shadow: 1px 0 0 rgb(var(--ink-rgb)), -1px 0 0 rgb(var(--ink-rgb)), 0 1px 0 rgb(var(--ink-rgb)), 0 -1px 0 rgb(var(--ink-rgb)), 1px 1px 0 rgb(var(--ink-rgb)), -1px -1px 0 rgb(var(--ink-rgb)), 1px -1px 0 rgb(var(--ink-rgb)), -1px 1px 0 rgb(var(--ink-rgb)), 0 0 6px rgb(var(--ink-rgb) / .8);
 }
 
 /* 12. Reduced motion: no reveals, no hero entrance, no video, static marquee. */
