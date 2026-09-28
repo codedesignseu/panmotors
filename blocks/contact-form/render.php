@@ -31,6 +31,8 @@ panmotors_render_block(
 		'map_note'   => get_field( 'cf_map_note' ),
 		'map_button' => get_field( 'cf_map_button' ),
 		'map_link'   => get_field( 'cf_map_link' ),
+		// A block saved before this field existed has no value: the field default (with the page).
+		'map_auto'   => false !== get_field( 'cf_map_autoload' ) && '0' !== (string) get_field( 'cf_map_autoload' ),
 		'hours'      => get_field( 'cf_hours_label' ),
 	),
 	$is_preview

@@ -8,6 +8,10 @@
 $panmotors_tagline = panmotors_option( 'footer_tagline' );
 // "{year}" in the copyright text becomes the current year.
 $panmotors_copy = str_replace( '{year}', wp_date( 'Y' ), (string) panmotors_option( 'footer_copyright', '' ) );
+// Developer credit (Technical option, administrators only): text with at most a link (href only),
+// which opens in a new tab.
+$panmotors_credit = wp_kses( trim( (string) panmotors_option( 'footer_credit', '' ) ), array( 'a' => array( 'href' => true ) ) );
+$panmotors_credit = str_replace( '<a ', '<a target="_blank" rel="noopener" ', $panmotors_credit );
 // Light or dark, from the page's Footer style (Auto: the last section's background).
 $panmotors_dark = 'dark' === panmotors_footer_tone();
 ?>
@@ -40,8 +44,14 @@ $panmotors_dark = 'dark' === panmotors_footer_tone();
 		);
 		?>
 
-		<?php if ( $panmotors_copy ) : ?>
-			<p class="pm-footer__copy"><?php echo esc_html( $panmotors_copy ); ?></p>
+		<?php if ( $panmotors_copy || $panmotors_credit ) : ?>
+			<p class="pm-footer__copy">
+				<?php echo esc_html( $panmotors_copy ); ?>
+				<?php if ( $panmotors_copy && $panmotors_credit ) : ?>
+					<span aria-hidden="true">·</span>
+				<?php endif; ?>
+				<?php echo $panmotors_credit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_kses() above. ?>
+			</p>
 		<?php endif; ?>
 	</div>
 </footer>

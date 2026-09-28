@@ -5,7 +5,8 @@
  * Left: the dark form card with the form plugin's shortcode (styled through .pm-form), or a preview
  * form with the v2 fields that does not send. Right: the map card and the showroom hours.
  *
- * The map: Google Maps sets cookies, so nothing loads from Google until a visitor presses the
+ * The map: with "Show the map: with the page" (default) the iframe is in the page, lazy-loaded.
+ * On request: Google Maps sets cookies, so nothing loads from Google until a visitor presses the
  * button. The iframe is in the HTML inside a <template> (inert); contact-map.js puts it in place on
  * click. Without a map query the card shows a directions link instead. In the block editor the
  * card only shows the placeholder.
@@ -37,7 +38,8 @@ $panmotors_fields   = array(
 	'subject' => array( 'text', 'off' ),
 	'message' => array( 'textarea', '' ),
 );
-$panmotors_can_load = $panmotors_query && $panmotors_show && empty( $args['preview'] );
+$panmotors_auto     = ! empty( $args['map_auto'] );
+$panmotors_can_load = $panmotors_query && ( $panmotors_show || $panmotors_auto ) && empty( $args['preview'] );
 ?>
 <section class="pm-contact-form pm-pad"<?php echo $panmotors_title ? ' aria-labelledby="contact-form-title"' : ''; ?>>
 	<div class="pm-contact-form__grid">
@@ -80,6 +82,11 @@ $panmotors_can_load = $panmotors_query && $panmotors_show && empty( $args['previ
 		</div>
 
 		<div class="pm-contact-form__side">
+			<?php if ( $panmotors_can_load && $panmotors_auto ) : ?>
+			<div class="pm-contact-form__map is-loaded" data-rise>
+				<iframe class="pm-contact-form__iframe" src="<?php echo esc_url( 'https://www.google.com/maps?q=' . rawurlencode( $panmotors_query ) . '&output=embed' ); ?>" title="<?php /* translators: %s: business name. */ echo esc_attr( sprintf( __( '%s on Google Maps', 'panmotors' ), $panmotors_name ) ); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+			</div>
+			<?php else : ?>
 			<div class="pm-contact-form__map" data-map data-rise>
 				<div class="pm-contact-form__placeholder" data-map-placeholder>
 					<?php if ( $panmotors_note ) : ?>
@@ -97,6 +104,7 @@ $panmotors_can_load = $panmotors_query && $panmotors_show && empty( $args['previ
 					</template>
 				<?php endif; ?>
 			</div>
+			<?php endif; ?>
 
 			<?php if ( $panmotors_hours ) : ?>
 				<div class="pm-contact-form__hours pm-light" data-rise>

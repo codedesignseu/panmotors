@@ -1561,6 +1561,15 @@ p {
 	opacity: 1; /* Was .72 and .48: 2.5 and 1.8 : 1. */
 }
 
+.pm-showroom__photos[data-slider-viewport] {
+	touch-action: pan-y;
+}
+
+/* The dots, as on the Showroom page's Photo slider (.pm-slider__dot). */
+.pm-showroom__dots {
+	margin-top: 26px;
+}
+
 .pm-showroom__nav {
 	display: none;
 	justify-content: center;

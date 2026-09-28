@@ -106,6 +106,15 @@ $panmotors_arrow = static function ( $dir, $class_name ) {
 					<?php endif; ?>
 				</figcaption>
 				<?php if ( $panmotors_multi ) : ?>
+					<div class="pm-slider__dots pm-showroom__dots">
+						<?php foreach ( $panmotors_photos as $panmotors_i => $panmotors_id ) : ?>
+							<?php
+							/* translators: 1: photograph number, 2: number of photographs, 3: its caption. */
+							$panmotors_dot = sprintf( __( 'Photograph %1$d of %2$d: %3$s', 'panmotors' ), $panmotors_i + 1, $panmotors_total, (string) wp_get_attachment_caption( $panmotors_id ) );
+							?>
+							<button type="button" class="pm-slider__dot" aria-controls="showroom-photos" aria-label="<?php echo esc_attr( rtrim( $panmotors_dot, ': ' ) ); ?>" aria-current="<?php echo 0 === $panmotors_i ? 'true' : 'false'; ?>" data-slider-dot="<?php echo esc_attr( (string) $panmotors_i ); ?>"></button>
+						<?php endforeach; ?>
+					</div>
 					<div class="pm-showroom__nav">
 						<?php
 						$panmotors_arrow( 'prev', 'pm-round pm-showroom__nav-btn' );
