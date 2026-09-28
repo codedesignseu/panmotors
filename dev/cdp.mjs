@@ -7,16 +7,19 @@
 // Rendering runs on the CPU in a fixed colour profile, without partial or checker-imaged
 // raster, so the same page gives the same pixels on every run (dev/tests/snapshot.mjs).
 import { spawn } from 'node:child_process';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const CACHE = new URL('.cache/', import.meta.url).pathname;
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const PORT = 9333;
+const PORT = Number(process.env.CDP_PORT || 9333); // Another port runs a second Chrome alongside.
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-mkdirSync(CACHE + 'chrome-profile', { recursive: true });
+// A new, empty profile every run: state left in a reused profile changed what a capture showed.
+const PROFILE = mkdtempSync(join(tmpdir(), 'pm-cdp-'));
 const proc = spawn(CHROME, [
-  '--headless=new', `--remote-debugging-port=${PORT}`, `--user-data-dir=${CACHE}chrome-profile`,
+  '--headless=new', `--remote-debugging-port=${PORT}`, `--user-data-dir=${PROFILE}`,
   '--autoplay-policy=no-user-gesture-required', '--hide-scrollbars', '--window-size=1440,900',
   '--disable-gpu', '--force-color-profile=srgb', '--disable-partial-raster', '--disable-checker-imaging', '--disable-lcd-text',
   'about:blank',
@@ -103,4 +106,5 @@ try {
 } finally {
   ws?.close();
   proc.kill();
+  setTimeout(() => rmSync(PROFILE, { recursive: true, force: true }), 500);
 }

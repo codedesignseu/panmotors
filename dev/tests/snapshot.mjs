@@ -9,7 +9,7 @@
 // 1440/1080/880/390, and the keyboard, reduced-motion, reveal and LCP results.
 //
 // The PNGs are deterministic: two runs of unchanged code give 0 differing pixels. Before each
-// capture settle() loads every image eagerly and waits for its decode(), waits for
+// capture settle() waits for every image in the page's width to load and decode(), waits for
 // document.fonts.ready, pauses every video on its poster, and finishes (or, when infinite,
 // cancels) every animation and transition; dev/cdp.mjs renders without the GPU.
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -43,15 +43,25 @@ export const SETTLE = `
   }
   document.documentElement.style.scrollBehavior = 'auto';
   for (const v of document.querySelectorAll('video')) { v.autoplay = false; v.pause(); if (v.currentSrc || v.getAttribute('src')) v.load(); }
-  for (const i of document.images) i.loading = 'eager';
   await document.fonts.ready;
-  await Promise.race([
-    Promise.all([...document.images].map((i) => (i.complete ? Promise.resolve() : new Promise((r) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); })).then(() => i.decode()).catch(() => 0))),
-    new Promise((r) => setTimeout(r, 15000)),
-  ]);
+  // Every image in the page's width (the scroll pass before this started the lazy ones; slides
+  // outside it are off screen). loading is left alone: switching a sizes="auto" image to eager
+  // makes Chrome pick another file.
+  const inWidth = [...document.images].filter((i) => { const b = i.getBoundingClientRect(); return b.width && b.right > 0 && b.left < innerWidth; });
+  // A lazy image the scroll pass did not start is scrolled to; then wait until each has pixels.
+  const ready = (i) => i.complete && i.naturalWidth > 0;
+  const until = Date.now() + 20000;
+  for (const i of inWidth) {
+    while (!ready(i) && Date.now() < until) {
+      i.scrollIntoView({ block: 'center' });
+      await new Promise((r) => setTimeout(r, 150));
+    }
+  }
+  scrollTo(0, 0);
+  await Promise.all(inWidth.map((i) => i.decode().catch(() => 0)));
   for (const a of document.getAnimations()) { if (a.effect?.getComputedTiming().endTime === Infinity) a.cancel(); else a.finish(); }
   await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-  return [...document.images].filter((i) => !i.complete).length;
+  return inWidth.filter((i) => !ready(i)).length;
 `;
 
 export default async ({ page, sleep }) => {

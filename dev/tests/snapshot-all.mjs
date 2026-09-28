@@ -11,7 +11,9 @@ if (!label) {
 }
 const cdp = new URL('../cdp.mjs', import.meta.url).pathname;
 const snapshot = new URL('./snapshot.mjs', import.meta.url).pathname;
+const only = process.env.ONLY ? process.env.ONLY.split(',') : null; // ONLY=about,home
 for (const [name, path] of Object.entries(PAGES)) {
+  if (only && !only.includes(name)) continue;
   const env = { ...process.env, PAGE: path, LABEL: `${label}-${name}` };
   const out = execFileSync('node', [cdp, snapshot], { env, encoding: 'utf8', maxBuffer: 1 << 26 });
   const r = JSON.parse(out.slice(out.indexOf('{')));
