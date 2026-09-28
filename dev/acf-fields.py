@@ -295,6 +295,9 @@ options = group('options', 'Pan Motors settings', [
          instructions='Next to the small logo at the bottom of every page.'),
     text('footer_copyright', 'Copyright', width='50', default_value='© {year} Pan Motors', maxlength=40,
          instructions='Bottom right of every page. {year} becomes the current year automatically.'),
+    text('footer_credit', 'Credit', width='100', admin_only=True, maxlength=200,
+         default_value='Designed & Developed by <a href="https://codedesigns.eu" target="_blank">CodeDesigns</a>',
+         instructions='After the copyright. A link may be added as <a href="…">…</a>; it opens in a new tab. Empty: hidden.'),
 
     tab('notfound', 'Page not found'),
     message('notfound', 'The "page not found" page', 'Shown when someone opens a link that no longer exists.'),
@@ -731,11 +734,14 @@ b_contact_form = block_group('contact-form', 'Contact form and map', [
     text('cf_label_message', 'Message label', width='50', default_value='Message', maxlength=20),
     text('cf_hint_message', 'Message hint', width='50', default_value='Tell us which car you are interested in.', maxlength=60),
     text('cf_button', 'Button text', width='50', default_value='Send message', maxlength=24),
-    message('cf_map', 'Map', 'The map shows the "Map embed query" from {settings} → Contact. It loads from Google only '
-                             'after a visitor presses the button, because Google Maps sets cookies.'),
+    message('cf_map', 'Map', 'The map shows the "Map embed query" from {settings} → Contact. Google Maps sets cookies: '
+                             'if it loads with the page, mention it in the cookie policy (or use a cookie banner).'),
+    true_false('cf_map_autoload', 'Show the map', default=1, on='With the page', off='On request', width='50',
+               instructions='With the page: the map is there straight away. On request: a button loads it.'),
     text('cf_map_note', 'Map note', width='50', default_value='Google Maps', maxlength=40,
          instructions='The line on the map card before it loads.'),
-    text('cf_map_button', 'Map button', width='50', default_value='Show map', maxlength=20),
+    text('cf_map_button', 'Map button', width='50', default_value='Show map', maxlength=20,
+         instructions='Only when the map shows on request.'),
     text('cf_map_link', 'Directions link', width='50', default_value='Get directions', maxlength=24,
          instructions='Shown instead of the map when there is no map query. An arrow is added.'),
     text('cf_hours_label', 'Hours card: small red line', width='50', default_value='Showroom hours', maxlength=30,

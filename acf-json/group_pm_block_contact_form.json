@@ -255,9 +255,29 @@
                 "class": "",
                 "id": ""
             },
-            "message": "The map shows the \"Map embed query\" from {settings} → Contact. It loads from Google only after a visitor presses the button, because Google Maps sets cookies.",
+            "message": "The map shows the \"Map embed query\" from {settings} → Contact. Google Maps sets cookies: if it loads with the page, mention it in the cookie policy (or use a cookie banner).",
             "new_lines": "wpautop",
             "esc_html": 0
+        },
+        {
+            "key": "field_pm_cf_map_autoload",
+            "label": "Show the map",
+            "name": "cf_map_autoload",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "With the page: the map is there straight away. On request: a button loads it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "With the page",
+            "ui_off_text": "On request"
         },
         {
             "key": "field_pm_cf_map_note",
@@ -285,7 +305,7 @@
             "name": "cf_map_button",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "Only when the map shows on request.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -361,5 +381,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790529639
+    "modified": 1790610863
 }

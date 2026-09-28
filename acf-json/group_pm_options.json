@@ -1060,6 +1060,27 @@
             "append": ""
         },
         {
+            "key": "field_pm_footer_credit",
+            "label": "Credit",
+            "name": "footer_credit",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "After the copyright. A link may be added as <a href=\"…\">…<\/a>; it opens in a new tab. Empty: hidden.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "pm_admin_only": 1,
+            "maxlength": 200,
+            "default_value": "Designed & Developed by <a href=\"https:\/\/codedesigns.eu\" target=\"_blank\">CodeDesigns<\/a>",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_pm_tab_notfound",
             "label": "Page not found",
             "name": "",
@@ -1932,5 +1953,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790536614
+    "modified": 1790610863
 }
