@@ -12,6 +12,9 @@
  * - image      (int)    Photo (image style).
  * - grayscale  (bool)   Photo in black and white.
  * - brightness (int)    Photo brightness in percent, 50–80.
+ * - modifier   (string) Extra class suffix, e.g. 'event' (pm-page-header--event).
+ * - back       (array)  Optional link above the title: url, label (an event's "All events").
+ * - pill       (string) Optional status next to the small red line (an event's "Upcoming").
  *
  * @package panmotors
  */
@@ -27,6 +30,11 @@ if ( ! $panmotors_title ) {
 }
 
 $panmotors_class = 'pm-page-header pm-page-header--' . ( $panmotors_photo ? 'image' : 'text' );
+if ( ! empty( $args['modifier'] ) ) {
+	$panmotors_class .= ' pm-page-header--' . sanitize_html_class( $args['modifier'] );
+}
+$panmotors_back = (array) ( $args['back'] ?? array() );
+$panmotors_pill = trim( (string) ( $args['pill'] ?? '' ) );
 if ( $panmotors_photo && ! empty( $args['grayscale'] ) ) {
 	$panmotors_class .= ' pm-page-header--grayscale';
 }
@@ -54,7 +62,21 @@ $panmotors_brightness = max( 50, min( 80, (int) ( $args['brightness'] ?? 62 ) ) 
 
 	<div class="pm-page-header__copy">
 		<div class="pm-page-header__head">
-			<?php if ( $panmotors_eyebrow ) : ?>
+			<?php
+			if ( ! empty( $panmotors_back['url'] ) && ! empty( $panmotors_back['label'] ) ) {
+				printf( '<a class="pm-page-header__back" href="%s" data-hero-in="1"><span aria-hidden="true">&larr;</span> %s</a>', esc_url( $panmotors_back['url'] ), esc_html( $panmotors_back['label'] ) );
+			}
+			if ( $panmotors_pill ) :
+				?>
+				<div class="pm-page-header__meta" data-hero-in="1">
+					<?php if ( $panmotors_eyebrow ) : ?>
+						<p class="pm-eyebrow pm-page-header__eyebrow"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
+					<?php endif; ?>
+					<p class="pm-page-header__pill"><?php echo esc_html( $panmotors_pill ); ?></p>
+				</div>
+				<?php
+			elseif ( $panmotors_eyebrow ) :
+				?>
 				<p class="pm-eyebrow pm-page-header__eyebrow" data-hero-in="1"><?php echo esc_html( $panmotors_eyebrow ); ?></p>
 			<?php endif; ?>
 			<h1 class="pm-page-header__title" id="page-title" data-hero-in="2"><?php echo nl2br( esc_html( $panmotors_title ), false ); ?></h1>

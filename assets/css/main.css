@@ -2305,10 +2305,10 @@ p {
 
 .pm-cta__text {
 	max-width: 40ch;
-	margin-top: 24px;
-	font-size: calc(var(--fs-body) * .9375);
-	line-height: 1.8;
-	opacity: .66;
+	margin-top: 18px;
+	font-size: calc(var(--fs-body) * .875);
+	line-height: 1.7;
+	opacity: .62;
 }
 
 .pm-cta__link {
@@ -3868,6 +3868,619 @@ p {
 	.pm-contact-form__card {
 		padding: 40px 24px;
 	}
+}
+
+/* 11c. Events (TASKS 4d, _design/events/) */
+
+/* Events page: the Text page header runs into the tabs, as the Featured Cars header runs into its
+   filters (events.html: the intro a step smaller, the header's bottom space under the tabs). */
+.pm-page-header--text:has(+ .pm-events) {
+	padding-bottom: 0;
+}
+
+.pm-page-header--text:has(+ .pm-events) .pm-page-header__intro {
+	font-size: calc(var(--fs-body) * .875);
+	opacity: .62;
+}
+
+.pm-events {
+	padding-bottom: 120px;
+}
+
+.pm-events__intro {
+	max-width: 60ch;
+	margin: 40px 0 0;
+	font-size: calc(var(--fs-body) * .875);
+	line-height: 1.7;
+	opacity: .62;
+}
+
+.pm-events__tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 56px 0 64px;
+	padding-top: 28px;
+	border-top: 1px solid var(--line-dark);
+}
+
+.pm-events__tabs[hidden] {
+	display: none;
+}
+
+/* Without JS the tabs stay hidden: keep the header's space above the list. */
+.pm-events__tabs[hidden] + .pm-events__list {
+	margin-top: 64px;
+}
+
+.pm-events__tab {
+	padding: 12px 24px;
+	border: 1px solid color-mix(in srgb, var(--paper) 24%, transparent);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--paper);
+	font-family: var(--font-body);
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: 12px; /* As the cars filters: Archivo's own line height at 11px. */
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background .5s var(--ease), color .5s, border-color .5s;
+}
+
+.pm-events__tab:hover,
+.pm-events__tab:focus-visible {
+	border-color: var(--paper);
+}
+
+.pm-events__tab[aria-pressed="true"] {
+	border-color: var(--paper);
+	background: var(--paper);
+	color: var(--ink);
+}
+
+.pm-events__count {
+	margin-left: 6px;
+	opacity: .5;
+}
+
+/* On the selected (paper) tab, .5 is 3.6 : 1; .6 reaches 4.5 : 1. */
+.pm-events__tab[aria-pressed="true"] .pm-events__count {
+	opacity: .6;
+}
+
+.pm-events__list {
+	border-top: 1px solid var(--line-dark);
+	transition: opacity .45s ease, transform .6s var(--ease);
+}
+
+.pm-events__list.is-fading {
+	opacity: 0;
+	transform: translateY(18px);
+}
+
+.pm-events__group[hidden] {
+	display: none;
+}
+
+/* No events at all. */
+.pm-events--empty {
+	padding-top: 64px;
+}
+
+.pm-events__empty {
+	display: grid;
+	justify-items: start;
+	gap: 28px;
+	padding: 64px 0;
+	border-top: 1px solid var(--line-dark);
+	border-bottom: 1px solid var(--line-dark);
+}
+
+.pm-events__empty-text {
+	max-width: 42ch;
+	font-family: var(--font-display);
+	font-size: calc(clamp(26px, 2.6vw, 40px) * var(--h-scale));
+	line-height: 1.2;
+}
+
+/* One event: copy left, photos right, hairline under. */
+.pm-event-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+	align-items: center;
+	gap: clamp(32px, 5vw, 80px);
+	padding: 64px 0;
+	border-bottom: 1px solid var(--line-dark);
+}
+
+.pm-event-row__date {
+	margin-bottom: 26px;
+}
+
+.pm-event-row__date time {
+	display: flex;
+	align-items: baseline;
+	gap: 18px;
+}
+
+.pm-event-row__day {
+	font-family: var(--font-display);
+	font-size: calc(clamp(56px, 6vw, 96px) * var(--h-scale));
+	line-height: .8;
+}
+
+.pm-event-row__month {
+	font-size: 11px;
+	letter-spacing: .24em;
+	line-height: 1.6;
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+.pm-event-row__type {
+	margin-bottom: 14px;
+	color: var(--accent);
+	font-size: 10px;
+	letter-spacing: .28em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-event-row__title {
+	margin: 0 0 20px;
+	font-size: calc(clamp(34px, 3.4vw, 54px) * var(--h-scale));
+	line-height: .98;
+}
+
+.pm-event-row__title a {
+	transition: color .4s;
+}
+
+.pm-event-row__summary {
+	max-width: 42ch;
+	margin-bottom: 28px;
+	font-size: calc(var(--fs-body) * .9375);
+	line-height: 1.75;
+	opacity: .7;
+}
+
+.pm-event-row__foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 22px;
+}
+
+.pm-event-row__place {
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .55;
+}
+
+.pm-event-row__view {
+	display: inline-flex;
+	gap: 5px; /* The arrow sits a space after the label, as in the design. */
+	padding: 13px 22px;
+}
+
+.pm-event-row__pics {
+	display: flex;
+	gap: 12px;
+	height: clamp(320px, 34vw, 500px);
+}
+
+.pm-event-row__pic {
+	flex: 1 1 0;
+	min-width: 0;
+	transition: flex-grow 1.05s var(--ease);
+}
+
+.pm-event-row__pic--first {
+	flex: 1.6 1 0;
+}
+
+.pm-event-row__pic:hover {
+	flex-grow: 3;
+}
+
+.pm-event-row__pic:hover img {
+	transform: scale(1.06);
+}
+
+@media (max-width: 880px) {
+	.pm-event-row {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+		padding: 44px 0;
+	}
+
+	.pm-event-row__pics {
+		height: 72vw;
+		min-height: 260px;
+	}
+}
+
+/* Event page header: the Photo page header with a back link, the type and a status pill, and a
+   narrower title (event.html). */
+.pm-page-header__back {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 30px;
+	font-size: 11px;
+	letter-spacing: .24em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .8;
+	transition: opacity .4s, gap .5s var(--ease), color .4s;
+}
+
+.pm-page-header__back:hover,
+.pm-page-header__back:focus-visible {
+	gap: 18px;
+	opacity: 1;
+}
+
+.pm-page-header__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 24px;
+}
+
+.pm-page-header__meta .pm-page-header__eyebrow {
+	margin: 0;
+}
+
+.pm-page-header__pill {
+	padding: 6px 14px;
+	border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+	border-radius: 999px;
+	font-size: 10px;
+	letter-spacing: .22em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-page-header--event .pm-page-header__title {
+	max-width: 14ch;
+	font-size: calc(clamp(52px, 8.6vw, 160px) * var(--h-scale));
+	line-height: .88;
+}
+
+@media (max-width: 880px) {
+	.pm-page-header--event {
+		height: 86svh;
+	}
+}
+
+/* Facts: date, time, place, guests between hairlines. The count of facts sets the columns. */
+.pm-event-facts__list {
+	display: grid;
+	grid-template-columns: repeat(var(--pm-facts, 4), minmax(0, 1fr));
+	margin: 0;
+	border-top: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
+	border-bottom: 1px solid color-mix(in srgb, var(--paper) 16.07843137%, transparent);
+}
+
+.pm-event-facts__item {
+	display: grid;
+	align-content: start;
+	gap: 12px;
+	padding: 30px 20px 30px 0;
+}
+
+.pm-event-facts__label {
+	font-size: 10px;
+	letter-spacing: .26em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .5;
+}
+
+.pm-event-facts__value {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: calc(clamp(20px, 1.8vw, 28px) * var(--h-scale));
+	line-height: 1.15;
+}
+
+@media (max-width: 880px) {
+	.pm-event-facts__list {
+		grid-template-columns: repeat(min(var(--pm-facts, 4), 2), minmax(0, 1fr));
+	}
+}
+
+/* Lede left; story and buttons right. */
+.pm-event-body {
+	padding-top: 110px;
+	padding-bottom: 120px;
+}
+
+.pm-event-body__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+	gap: clamp(40px, 6vw, 110px);
+}
+
+.pm-event-body__lede p {
+	font-family: var(--font-display);
+	font-size: calc(clamp(26px, 2.6vw, 40px) * var(--h-scale));
+	line-height: 1.2;
+}
+
+.pm-event-body__main {
+	grid-column: 2;
+	display: grid;
+	align-content: start;
+	gap: 22px;
+	max-width: 62ch;
+}
+
+.pm-event-body__story {
+	display: grid;
+	gap: 22px;
+}
+
+.pm-event-body__story > * {
+	margin: 0;
+}
+
+.pm-event-body__story p,
+.pm-event-body__story li {
+	font-size: var(--fs-body);
+	line-height: 1.85;
+	opacity: .76;
+}
+
+.pm-event-body__story :is(h2, h3, h4) {
+	margin-top: 18px;
+	font-size: calc(clamp(26px, 2.2vw, 34px) * var(--h-scale));
+	line-height: 1.1;
+}
+
+.pm-event-body__story ul,
+.pm-event-body__story ol {
+	padding-left: 1.2em;
+}
+
+.pm-event-body__story blockquote {
+	padding-left: 24px;
+	border-left: 1px solid var(--accent);
+	font-family: var(--font-display);
+	font-size: calc(clamp(22px, 2vw, 30px) * var(--h-scale));
+	line-height: 1.3;
+}
+
+.pm-event-body__story blockquote p {
+	font: inherit;
+	opacity: 1;
+}
+
+.pm-event-body__story img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--r);
+}
+
+.pm-event-body__story a:not(.wp-block-button__link) {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.pm-event-body__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 18px;
+}
+
+.pm-event-body__pill {
+	padding: 18px 30px;
+	border-color: color-mix(in srgb, var(--paper) 40%, transparent);
+	font-size: 12px;
+	transition-duration: .5s;
+}
+
+/* Accent pill (Register interest): turns paper on hover, lifts and widens. White 12px text on the
+   design's accent is 3.9 : 1; the accent shade made for small text on paper (--accent-text-light,
+   inc/design.php) carries white at 4.5 : 1 or more. */
+.pm-pill--accent {
+	background: var(--accent-text-light);
+	color: var(--on-accent);
+}
+
+.pm-pill--accent:hover,
+.pm-pill--accent:focus-visible {
+	background: var(--paper);
+	color: var(--ink);
+}
+
+@media (max-width: 880px) {
+	.pm-event-body__grid {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+	}
+
+	.pm-event-body__main {
+		grid-column: auto;
+	}
+}
+
+/* Photographs: a moving track of 3:2 photos. */
+.pm-event-photos {
+	padding-bottom: 130px;
+	overflow: hidden;
+}
+
+.pm-event-photos__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 32px;
+	margin-bottom: 40px;
+}
+
+.pm-event-photos__title {
+	font-size: calc(clamp(40px, 5vw, 80px) * var(--h-scale));
+	line-height: .92;
+}
+
+.pm-event-photos__controls {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: 12px;
+}
+
+.pm-event-photos__count {
+	flex: none;
+	margin-right: 14px;
+	font-size: 12px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	white-space: nowrap;
+	opacity: .55;
+}
+
+.pm-event-photos__count [hidden] {
+	display: none;
+}
+
+.pm-event-photos__viewport {
+	width: 100%;
+	overflow: hidden;
+	cursor: grab;
+	touch-action: pan-y;
+}
+
+.pm-event-photos__viewport.is-dragging {
+	cursor: grabbing;
+}
+
+.pm-event-photos__viewport:focus-visible {
+	outline-offset: -4px;
+}
+
+.pm-event-photos__track {
+	display: flex;
+	gap: 18px;
+	transition: transform 1.05s var(--ease);
+	will-change: transform;
+}
+
+.pm-event-photos__track.is-instant {
+	transition: none;
+}
+
+.pm-event-photos__slide {
+	flex: none;
+	width: min(62vw, 900px);
+	margin: 0;
+}
+
+.pm-event-photos__frame {
+	aspect-ratio: 3 / 2;
+}
+
+.pm-event-photos__frame img {
+	user-select: none;
+}
+
+.pm-event-photos__caption {
+	margin-top: 14px;
+	font-size: 11px;
+	letter-spacing: .2em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+@media (max-width: 880px) {
+	.pm-event-photos__slide {
+		width: 84vw;
+	}
+}
+
+/* Previous and next event. */
+.pm-event-nav {
+	padding-bottom: 120px;
+}
+
+.pm-event-nav__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 14px;
+}
+
+.pm-event-nav__card {
+	position: relative;
+	display: block;
+	height: 300px;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface);
+	color: var(--paper);
+	transition: box-shadow .9s ease, color .4s;
+}
+
+.pm-event-nav__card:hover,
+.pm-event-nav__card:focus-visible {
+	box-shadow: 0 30px 70px color-mix(in srgb, var(--shadow) 50%, transparent);
+}
+
+.pm-event-nav__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: brightness(.45);
+}
+
+.pm-event-nav__copy {
+	position: absolute;
+	right: 28px;
+	bottom: 26px;
+	left: 28px;
+}
+
+.pm-event-nav__card--next .pm-event-nav__copy {
+	text-align: right;
+}
+
+.pm-event-nav__label {
+	display: block;
+	margin-bottom: 12px;
+	font-size: 11px;
+	letter-spacing: .24em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .7;
+}
+
+.pm-event-nav__title {
+	display: block;
+	font-family: var(--font-display);
+	font-size: calc(clamp(26px, 2.6vw, 40px) * var(--h-scale));
+	line-height: 1;
+}
+
+@media (max-width: 880px) {
+	.pm-event-nav__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Draft without a start date (preview only). */
+.pm-event-body > .pm-event-body__story {
+	max-width: 62ch;
 }
 
 /* Red labels over photos: a 1px ink outline and a soft ink halo, so the accent keeps 4.5 : 1

@@ -69,12 +69,12 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 ## 4d. Homepage changes and Events (6 Oct 2026, `_design/events/`, `docs/events.md`)
 - [x] A1. Live button "Follow the floor" → "Follow the journey" (field default, seed, docs; Home by `dev/migrations/2026-10-06-follow-the-journey.php`, only where the old text was still there)
 - [x] A2. About Pan Motors on Home: Media type Image / Video (upload, or YouTube / Vimeo on request), poster required; Home with Image identical (HTML, 0 pixels at 1440 and 390)
-- [ ] B1. Events post type `pm_event`, Event details and Photographs fields, status, validation, admin columns
-- [ ] B2. Single event page
-- [ ] B3. Events page: `pm/events-list`, CTA band with text
-- [ ] B4. Events in the primary and footer menus
-- [ ] B5. Event JSON-LD, ItemList on the Events page, llms.txt, meta description
-- [ ] B6. Seed and migration (5 demo events, Events page), client guide
+- [x] B1. Events post type `pm_event`, Event details and Photographs fields, status, validation, admin columns
+- [x] B2. Single event page
+- [x] B3. Events page: `pm/events-list`, CTA band with text
+- [x] B4. Events in the primary (after Latest Cars, before Showroom) and footer menus; the nav still fits on one line from 1081px (burger at 1080 and below), no nav change
+- [x] B5. Event JSON-LD, ItemList on the Events page, llms.txt, meta description
+- [x] B6. Seed and migration (5 demo events, Events page), client guide
 
 ## 5. SEO and GEO
 - [x] `inc/schema.php`: one JSON-LD `@graph` on every page from Options and the page (AutoDealer, WebSite, WebPage / AboutPage / ContactPage, BreadcrumbList on inner pages, FAQPage from `pm/faq`); empty values left out; no Car, Product or Offer
@@ -105,5 +105,6 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 3. **NAP**: compare name, address, phones and hours in Pan Motors settings with the Google Business Profile, character for character.
 4. **Safari, iOS and Android by hand**: menu, cars dialog, sliders (swipe, dots), hero video autoplay (muted), blurred backdrops, the Contact map.
 5. **Cookie policy**: the Contact map now loads with the page and Google Maps sets cookies; mention it in the Cookie Policy, or add a cookie banner, or set the Contact block's "Show the map" to On request.
-6. **Content**: replace demo photos with the client's (WebP, descriptive file names and alt text, theme-map 9.5); delete the default "Sample Page"; check the darker photo shades with the client (revert commit 5398245 if they prefer the old look); write per-page descriptions in Rank Math if the defaults are not right.
-7. **Deploy** (see the deploy notes in the last report): remove the demo content flags, set the environment type to production, check debug.log and the console on the live site.
+6. **Events**: set Settings → General → Timezone to Nicosia (it is UTC: event times, JSON-LD offsets and calendar files follow it); replace the five demo events (fixed dates: after 5 Dec 2026 they are all past). The Design accent is #b20000, under 4.5 : 1 on the dark background (2.7 : 1): red labels and the current menu item fail axe on every page; the design's #ec3013 passes.
+7. **Content**: replace demo photos with the client's (WebP, descriptive file names and alt text, theme-map 9.5); delete the default "Sample Page"; check the darker photo shades with the client (revert commit 5398245 if they prefer the old look); write per-page descriptions in Rank Math if the defaults are not right.
+8. **Deploy** (see the deploy notes in the last report): remove the demo content flags, set the environment type to production, check debug.log and the console on the live site.

@@ -25,7 +25,7 @@
  * - Imports _design/uploads into the media library with descriptive file names, titles, alt text
  *   and captions (theme-map 9.5).
  * - Fills the Pan Motors options that were never saved with the business facts from the design.
- * - Creates the demo cars, the pages as block markup, Home, the legal pages and the menus.
+ * - Creates the demo cars and events, the pages as block markup, Home, the legal pages and the menus.
  * - Sets a static front page, the site title, pretty permalinks and the custom logo, where unset.
  *
  * Copy marked DRAFT is for the client to confirm or replace.
@@ -634,6 +634,8 @@ $pm_pages = array(
 		)
 	),
 	'contact'  => panmotors_seed_block_page( 'contact', 'Contact', panmotors_demo_contact_content( $pm_faq_block ) ),
+	// After Contact, which its call to action links to (_design/events/events.html).
+	'events'   => panmotors_seed_block_page( 'events', 'Events', panmotors_demo_events_page_content() ),
 
 	// After Contact, which its car sheets and CTA band link to (D12, _design/v2/cars.html).
 	'featured' => panmotors_seed_block_page( 'featured-cars', 'Featured Cars', panmotors_demo_featured_content() ),
@@ -651,6 +653,81 @@ if ( $pm_pages['about'] && ! metadata_exists( 'post', $pm_pages['about'], 'schem
 // The Contact button (header, mobile menu, 404) links here, unless already set.
 if ( $pm_reset || ! get_option( 'options_page_contact' ) ) {
 	update_field( 'field_pm_page_contact', $pm_pages['contact'], 'option' );
+}
+
+// The "All events" link and the menu's current item on event pages go here, unless already set.
+if ( $pm_pages['events'] && ( $pm_reset || ! get_option( 'options_events_page' ) ) ) {
+	update_field( 'field_pm_events_page', $pm_pages['events'], 'option' );
+}
+
+/*
+ * ------------------------------------------------------------------
+ * 6b. Events (pm_event, _design/events/). Matched on _pm_seed_key: created when missing, never
+ *     duplicated; an existing event is only rewritten with --reset-demo. Dates are fixed
+ *     (docs/events.md).
+ * ------------------------------------------------------------------
+ */
+foreach ( panmotors_demo_events() as $pm_key => $pm_e ) {
+	$pm_found = get_posts(
+		array(
+			'post_type'      => 'pm_event',
+			'post_status'    => 'any',
+			'meta_key'       => '_pm_seed_key', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value'     => $pm_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+		)
+	);
+	$pm_event_key = 'event:' . $pm_key;
+	if ( $pm_found ) {
+		panmotors_seed_created( $pm_event_key, true );
+		if ( ! $pm_reset ) {
+			continue;
+		}
+	} elseif ( panmotors_seed_created( $pm_event_key ) && ! $pm_reset ) {
+		continue; // Deleted by the client.
+	}
+	$pm_post = array(
+		'post_type'    => 'pm_event',
+		'post_status'  => 'publish',
+		'post_title'   => $pm_e['title'],
+		'post_name'    => $pm_key,
+		'post_content' => wp_slash( panmotors_seed_paragraphs( '<p>' . implode( '</p><p>', array_map( 'esc_html', $pm_e['story'] ) ) . '</p>' ) ),
+	);
+	if ( $pm_found ) {
+		$pm_post['ID'] = $pm_found[0];
+	}
+	$pm_event_id = (int) ( isset( $pm_post['ID'] ) ? wp_update_post( $pm_post ) : wp_insert_post( $pm_post ) );
+	panmotors_seed_created( $pm_event_key, true );
+	update_post_meta( $pm_event_id, '_pm_seed_key', $pm_key );
+	update_post_meta( $pm_event_id, '_pm_demo', 1 );
+	$pm_photos = array_values( array_filter( array_map( 'panmotors_dev_media', $pm_e['photos'] ) ) );
+	if ( $pm_photos ) {
+		set_post_thumbnail( $pm_event_id, $pm_photos[0] );
+	}
+	$pm_fields = array(
+		'event_type'           => $pm_e['type'],
+		'event_start_date'     => $pm_e['date'],
+		'event_end_date'       => '',
+		'event_all_day'        => 0,
+		'event_start_time'     => $pm_e['start'],
+		'event_end_time'       => $pm_e['end'],
+		'event_place'          => $pm_e['place'],
+		'event_guests'         => $pm_e['guests'],
+		'event_address'        => '',
+		'event_map'            => '',
+		'event_summary'        => $pm_e['summary'],
+		'event_lede'           => $pm_e['lede'],
+		'event_status'         => 'auto',
+		'event_register_label' => 'Register interest',
+		'event_register_link'  => '', // The Contact page.
+		'event_show_call'      => 1,
+		'event_photos'         => $pm_photos,
+	);
+	foreach ( $pm_fields as $pm_field => $pm_value ) {
+		update_field( 'field_pm_' . $pm_field, $pm_value, $pm_event_id );
+	}
+	WP_CLI::log( "Event {$pm_e['title']}: " . ( $pm_found ? 'reset.' : 'created.' ) );
 }
 
 // Legal pages on page.php, created only when missing. WordPress's own privacy page is reused if it
@@ -884,6 +961,7 @@ $pm_menus = array(
 			'Featured Cars'    => $pm_pages['featured'],
 			'About Pan Motors' => $pm_pages['about'],
 			'Latest Cars'      => $pm_pages['latest'],
+			'Events'           => $pm_pages['events'],
 			'Showroom'         => $pm_pages['showroom'],
 		)
 	),
@@ -891,6 +969,7 @@ $pm_menus = array(
 		'Footer',
 		array(
 			'Featured Cars'  => $pm_pages['featured'],
+			'Events'         => $pm_pages['events'],
 			'Showroom'       => $pm_pages['showroom'],
 			'Contact'        => $pm_pages['contact'],
 			'Privacy Policy' => $pm_privacy_id,

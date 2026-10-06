@@ -7,6 +7,8 @@
  * - WebSite (#website), published by #business.
  * - The current page (WebPage, AboutPage or ContactPage), its BreadcrumbList on inner pages, and
  *   FAQPage where the page has questions, with the text exactly as the page shows it.
+ * - Events: an Event node (organizer #business, no offers or prices) on each event page, and an
+ *   ItemList of the upcoming events on the page with the Events list block.
  * - With Yoast SEO or Rank Math active, their own schema is switched off, so every page has one
  *   business entity.
  *
@@ -333,7 +335,151 @@ function panmotors_schema_graph() {
 		}
 	}
 
+	if ( $post_id && panmotors_find_block( $post_id, 'pm/events-list' ) ) {
+		$graph[] = panmotors_schema_event_list( get_permalink( $post_id ) );
+	}
+
+	if ( is_singular( 'pm_event' ) ) {
+		$graph = array_merge( $graph, panmotors_schema_event_nodes( (int) get_queried_object_id() ) );
+	}
+
 	return array_values( array_filter( array_map( 'panmotors_schema_clean', $graph ) ) );
+}
+
+/**
+ * The upcoming events as an ItemList, for the page with the Events list block.
+ *
+ * @param string $url Page URL.
+ * @return array|null
+ */
+function panmotors_schema_event_list( $url ) {
+	$items = array();
+	foreach ( panmotors_events()['upcoming'] as $i => $event ) {
+		$items[] = array(
+			'@type'    => 'ListItem',
+			'position' => $i + 1,
+			'url'      => $event['url'],
+			'name'     => html_entity_decode( $event['title'], ENT_QUOTES, 'UTF-8' ),
+		);
+	}
+	return $items ? array(
+		'@type'           => 'ItemList',
+		'@id'             => $url . '#events',
+		'isPartOf'        => array( '@id' => $url . '#webpage' ),
+		'itemListOrder'   => 'https://schema.org/ItemListOrderAscending',
+		'numberOfItems'   => count( $items ),
+		'itemListElement' => $items,
+	) : null;
+}
+
+/**
+ * An event page: its WebPage, BreadcrumbList (Home, Events page, event) and Event. The Event is
+ * organised by #business and has no offers or prices. Dates carry the site's timezone offset; an
+ * event without times gives dates only. Empty values are left out.
+ *
+ * @param int $post_id Event ID.
+ * @return array[]
+ */
+function panmotors_schema_event_nodes( $post_id ) {
+	$event = panmotors_event( $post_id );
+	if ( ! $event ) {
+		return array();
+	}
+	$home  = home_url( '/' );
+	$url   = $event['url'];
+	$name  = html_entity_decode( $event['title'], ENT_QUOTES, 'UTF-8' );
+	$list  = panmotors_events_page();
+	$crumb = array(
+		array(
+			'@type' => 'ListItem',
+			'name'  => panmotors_home_label(),
+			'item'  => $home,
+		),
+	);
+	if ( $list ) {
+		$crumb[] = array(
+			'@type' => 'ListItem',
+			'name'  => get_the_title( $list ),
+			'item'  => get_permalink( $list ),
+		);
+	}
+	$crumb[] = array(
+		'@type' => 'ListItem',
+		'name'  => $name,
+		'item'  => $url,
+	);
+	foreach ( $crumb as $i => $item ) {
+		$crumb[ $i ]['position'] = $i + 1;
+	}
+
+	$images = array();
+	foreach ( array_unique( array_filter( array_merge( array( $event['main'] ), $event['photos'] ) ) ) as $image_id ) {
+		$src = wp_get_attachment_image_src( (int) $image_id, 'full' );
+		if ( $src ) {
+			$images[] = $src[0];
+		}
+	}
+
+	// Times: ISO 8601 with the site's offset. No times: the dates alone.
+	$timed = '' !== $event['start_time'];
+	$start = $timed ? $event['start']->format( 'c' ) : $event['start']->format( 'Y-m-d' );
+	if ( $timed && $event['end_time'] ) {
+		$end = $event['until']->format( 'c' );
+	} elseif ( $event['end_day'] ) {
+		$end = $event['end_day']->format( 'Y-m-d' );
+	} else {
+		$end = '';
+	}
+
+	$status = array(
+		'cancelled' => 'https://schema.org/EventCancelled',
+		'postponed' => 'https://schema.org/EventPostponed',
+	);
+
+	return array(
+		array(
+			'@type'              => 'WebPage',
+			'@id'                => $url . '#webpage',
+			'url'                => $url,
+			'name'               => wp_get_document_title(),
+			'description'        => $event['summary'],
+			'inLanguage'         => get_bloginfo( 'language' ),
+			'isPartOf'           => array( '@id' => $home . '#website' ),
+			'about'              => array( '@id' => $url . '#event' ),
+			'primaryImageOfPage' => $images ? array(
+				'@type' => 'ImageObject',
+				'url'   => $images[0],
+			) : null,
+			'breadcrumb'         => array( '@id' => $url . '#breadcrumb' ),
+		),
+		array(
+			'@type'           => 'BreadcrumbList',
+			'@id'             => $url . '#breadcrumb',
+			'itemListElement' => $crumb,
+		),
+		array(
+			'@type'               => 'Event',
+			'@id'                 => $url . '#event',
+			'name'                => $name,
+			'description'         => $event['summary'],
+			'startDate'           => $start,
+			'endDate'             => $end,
+			'eventStatus'         => $status[ $event['status'] ] ?? 'https://schema.org/EventScheduled',
+			'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+			'location'            => array(
+				'@type'   => 'Place',
+				'name'    => $event['place'],
+				'address' => $event['address'] ? array(
+					'@type'         => 'PostalAddress',
+					'streetAddress' => $event['address'],
+				) : null,
+				'hasMap'  => $event['map'],
+			),
+			'image'               => $images,
+			'organizer'           => array( '@id' => $home . '#business' ),
+			'url'                 => $url,
+		),
+	);
 }
 
 /**

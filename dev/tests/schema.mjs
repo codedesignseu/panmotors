@@ -6,10 +6,23 @@
 // Product or Offer node, FAQPage text identical to the visible questions. Also: <html lang>,
 // the skip link as the first focusable element, landmarks, one H1 and no skipped heading levels,
 // and the font preloads.
+// Events (TASKS 4d): each event page has one Event node (name, description = the summary, startDate
+// with the site's offset when timed, eventStatus, OfflineEventAttendanceMode, a Place, organizer
+// #business, url, no offers) and the meta description is its summary; the Events page has an
+// ItemList of exactly the upcoming events it shows, in order.
 import { mkdirSync, writeFileSync } from 'node:fs';
 
 const SITE = process.env.SITE || 'http://panmotors.local/';
-const PAGES = { home: '', 'featured-cars': 'featured-cars/', about: 'about/', showroom: 'showroom/', contact: 'contact/', 'latest-cars': 'latest-cars/', privacy: 'privacy-policy/', '404': 'no-such-page/' };
+const PAGES = { home: '', 'featured-cars': 'featured-cars/', about: 'about/', showroom: 'showroom/', contact: 'contact/', 'latest-cars': 'latest-cars/', events: 'events/', privacy: 'privacy-policy/', '404': 'no-such-page/' };
+// Every published event, from the sitemap (Rank Math's when active, else core's). Cars are never in it.
+let sitemap = '';
+for (const map of ['pm_event-sitemap.xml', 'wp-sitemap-posts-pm_event-1.xml']) {
+  const res = await fetch(SITE + map, { redirect: 'manual' });
+  if (res.status === 200) { sitemap = await res.text(); break; }
+}
+if (!sitemap) console.log('PROBLEM: no events sitemap');
+for (const map of ['pm_car-sitemap.xml', 'wp-sitemap-posts-pm_car-1.xml']) if ((await fetch(SITE + map, { redirect: 'manual' })).status === 200) console.log('PROBLEM: cars sitemap ' + map);
+for (const url of [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])) PAGES['event-' + url.split('/').filter(Boolean).pop()] = url.replace(SITE, '');
 const OUT = new URL('../.cache/schema/', import.meta.url).pathname;
 mkdirSync(OUT, { recursive: true });
 
@@ -54,6 +67,34 @@ for (const [name, path] of Object.entries(PAGES)) {
     const schemaQ = faq ? faq.mainEntity.map((q) => [q.name, q.acceptedAnswer.text]) : [];
     if (JSON.stringify(visibleQ) !== JSON.stringify(schemaQ)) r.problems.push(`FAQ mismatch: ${visibleQ.length} visible, ${schemaQ.length} in schema`);
     r.faq = schemaQ.length;
+    // Events.
+    const events = graph.filter((n) => n['@type'] === 'Event');
+    if (name.startsWith('event-')) {
+      const ev = events[0];
+      if (events.length !== 1) r.problems.push(`${events.length} Event nodes`);
+      else {
+        for (const k of ['name', 'startDate', 'eventStatus', 'eventAttendanceMode', 'location', 'organizer', 'url']) if (!ev[k]) r.problems.push('Event without ' + k);
+        if (ev.eventAttendanceMode !== 'https://schema.org/OfflineEventAttendanceMode') r.problems.push('attendance mode ' + ev.eventAttendanceMode);
+        if (!/^https:\/\/schema\.org\/Event(Scheduled|Cancelled|Postponed)$/.test(ev.eventStatus)) r.problems.push('eventStatus ' + ev.eventStatus);
+        if (ev.location?.['@type'] !== 'Place') r.problems.push('location not a Place');
+        if (ev.organizer?.['@id'] !== SITE + '#business') r.problems.push('organizer ' + JSON.stringify(ev.organizer));
+        if (ev.offers || ev.price) r.problems.push('Event with offers or price');
+        if (!/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2})?$/.test(ev.startDate)) r.problems.push('startDate ' + ev.startDate);
+        if (ev.endDate && ev.endDate < ev.startDate) r.problems.push('endDate before startDate');
+        const meta = decode((html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || '');
+        if (ev.description && meta !== ev.description) r.problems.push('meta description is not the summary');
+        r.event = { startDate: ev.startDate, endDate: ev.endDate, status: ev.eventStatus.split('/').pop() };
+      }
+    } else if (events.length) r.problems.push('Event node on ' + name);
+    const list = graph.find((n) => n['@type'] === 'ItemList');
+    if (name === 'events') {
+      // The rows of the Upcoming group, in order, as printed.
+      const up = html.match(/data-events-group="upcoming">([\s\S]*?)<\/section>\s*(?:<section|<\/div>)/);
+      const shown = up ? [...up[1].matchAll(/<h2 class="pm-event-row__title"[^>]*><a href="([^"]+)"/g)].map((m) => m[1]) : [];
+      const listed = list ? list.itemListElement.map((i) => i.url) : [];
+      if (JSON.stringify(shown) !== JSON.stringify(listed)) r.problems.push(`ItemList ${listed.length} vs ${shown.length} upcoming rows`);
+      r.itemList = listed.length;
+    } else if (list) r.problems.push('ItemList on ' + name);
   }
   // Page basics.
   r.lang = (html.match(/<html[^>]*lang="([^"]+)"/) || [])[1];

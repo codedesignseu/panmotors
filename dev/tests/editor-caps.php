@@ -14,6 +14,7 @@ $check = array(
 	'edit inner pages'         => current_user_can( 'edit_post', get_page_by_path( 'about' )->ID ?? 0 ) && current_user_can( 'edit_post', panmotors_contact_page() ),
 	'cars (add, edit, delete)' => current_user_can( 'edit_pages' ) && current_user_can( 'publish_pages' ) && current_user_can( 'delete_pages' ),
 	'synced patterns'          => current_user_can( 'edit_posts' ),
+	'events (add, edit, publish, trash)' => current_user_can( get_post_type_object( 'pm_event' )->cap->create_posts ) && current_user_can( get_post_type_object( 'pm_event' )->cap->edit_others_posts ) && current_user_can( get_post_type_object( 'pm_event' )->cap->publish_posts ) && current_user_can( get_post_type_object( 'pm_event' )->cap->delete_others_posts ) && current_user_can( get_post_type_object( 'pm_event' )->cap->delete_published_posts ),
 	'Pan Motors settings'      => current_user_can( 'edit_others_pages' ),
 	'menus (edit_theme_options)' => current_user_can( 'edit_theme_options' ),
 	'logo (customize)'         => current_user_can( 'customize' ),

@@ -217,13 +217,18 @@ function panmotors_skip_hidden_block( $pre_render, $block ) {
 add_filter( 'pre_render_block', 'panmotors_skip_hidden_block', 10, 2 );
 
 /**
- * Allowed blocks: every pm/* block and the core text blocks. Nothing else from core.
+ * Allowed blocks: every pm/* block and the core text blocks. Nothing else from core. An event's
+ * story: the text blocks of PANMOTORS_EVENT_BLOCKS.
  *
  * @param bool|string[]           $allowed Allowed blocks.
  * @param WP_Block_Editor_Context $context Editor context.
  * @return bool|string[]
  */
 function panmotors_allowed_blocks( $allowed, $context ) {
+	// An event's story: text blocks only (inc/events.php).
+	if ( ! empty( $context->post ) && 'pm_event' === $context->post->post_type ) {
+		return PANMOTORS_EVENT_BLOCKS;
+	}
 	if ( ! empty( $context->post ) && ! in_array( $context->post->post_type, array( 'page', 'wp_block' ), true ) ) {
 		return $allowed;
 	}

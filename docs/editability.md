@@ -13,9 +13,11 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | **Pages → Featured Cars** | Built as `_design/v2/cars.html` (D12): Page header (Text), Cars grid, CTA band. |
 | **Pages → The Showroom** | Built as `_design/v2/showroom.html` (D12): Page header (Photo), Photo slider, Visit, Photo call to action. |
 | **Pages → Contact** | Built as `_design/v2/contact.html` (D12): Page header (Text), Contact rows, Contact form and map, Questions. |
+| **Pages → Events** | Built as `_design/events/events.html`: Page header (Text), Events list (tabs, labels, how many past events, the text when there are no events), CTA band "Join The / Guest List" with its text. The events themselves come from **Events**. |
+| **Events** | One entry per event, with its own page at /events/…: title, main image, story, Event details, Photographs. See "Events" below. |
 | **Pages → Latest Cars** | Placeholder built from blocks (Page top, text, Latest Cars, Call to action); its design is not decided (D12). |
 | **Cars** | Every showcase car once: photo (optional; homepage rows only show cars with one), marque, model, reference, detail, note (the car sheet description), optional link, slider caption, place, the car sheet (year, power, acceleration, mileage, engine, gearbox, colour), On the Featured Cars page, Featured, order (Page attributes; also the car's number on the Featured Cars page). The homepage rows and the Featured Cars page read from here. |
-| **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, **Our Values** (the values shown on Home and About; D12), Social, Footer, Page not found. **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
+| **Pan Motors (settings)** | Business, Contact, Opening hours, Marques, **Our Values** (the values shown on Home and About; D12), Social, Footer, Page not found, **Events** (the Events page and the small labels on every event page). **Design** (colours, fonts, heading and text size, corner rounding, logo heights, logo for light backgrounds, default share image; D12) is for administrators, and for Editors when Technical → "Editors can change the design" is on. **Technical** (Contact button page, form shortcode, the Design switch) is visible to administrators only. |
 | **Appearance → Menus** | Primary menu (header + mobile menu), Footer menu. |
 | **Appearance → Customise → Site Identity** | Logo (header, contact card, footer). |
 | **Media** | Images and videos; photo captions (Showroom slider) come from each image's Caption. |
@@ -131,6 +133,34 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Questions | Questions block (heading, questions and answers) |
 | Contact button in the header | shows filled on this page (automatic) |
 | Footer | Page settings → Footer style (Auto: dark) |
+
+## Events (TASKS 4d, `docs/events.md`)
+
+### Adding an event (client guide)
+
+1. **Events → Add event.** The screen opens with the title at the top, two empty paragraphs for the story under it, and the **Event details** and **Photographs** boxes below (drag the bar between them to give either more room).
+2. **Title**: the event's name, as it should read on the page (e.g. "Night at Avenue 65"). It becomes the big heading of the event page and its address.
+3. **Main image** (sidebar → Event → Set main image): required. The photo at the top of the event page, the first photo on the Events page and the image shared on social media. Landscape, at least 2400px wide, JPG or WebP. Its alt text in the media library describes it.
+4. **Story**: a few paragraphs about the event. Headings, lists, quotes, images and buttons are available from the + button. Leave a paragraph empty and it is not shown.
+5. **Event details**:
+   - *Event type*: one word in red above the title (Evening, Drive, Unveiling…).
+   - *Start date* (required) and *End date* (only for events over several days; it cannot be before the start date).
+   - *All day*, or *Start time* and *End time* (shown as "19:30 — 23:00"). An event counts as past after its end time, or at the end of its last day when there is no end time.
+   - *Place name* (required): short, as it reads on the page ("Showroom, Mesoyi"). *Guests*: who can come ("By invitation", "Open"); empty hides it.
+   - *Address* and *Map link*: optional, for calendars and Google (not shown on the page). Without a map link, a Google Maps search for the address is used.
+   - *Summary*: one or two sentences for the Events page and Google. *Lede*: the large opening sentence on the event page (empty: the summary).
+   - *Status*: Automatic (Upcoming, then Past event on its own), or Cancelled, Postponed, Sold out (shown on the label; the buttons disappear).
+   - *Registration button* text and page (empty: the Contact page), and *Call button* (calls the first phone number in Pan Motors settings → Contact).
+6. **Photographs**: up to 12 photos for the slider on the event page; the first two also fill the Events page row after the main image. A caption in the media library shows under the photo. No photos: no slider.
+7. **Publish.** If something required is missing, WordPress says what (start date, place, main image, or an end date before the start date). The event appears on the Events page straight away, under Upcoming, and the tab counts update.
+
+### What happens by itself
+
+- **Past events** move to the Past tab (newest first) once they are over, keep their page with the label "Past event", and lose the Register, Call and Add to calendar buttons. Nothing needs to be changed by hand.
+- **Add to calendar** downloads the event for the visitor's calendar (Google, Apple, Outlook).
+- The Events page, Google (structured data, sitemap) and AI tools (llms.txt) read the same fields: the event is entered once.
+- Previous / Next event at the bottom of each event page go through all events in date order.
+- **Delete an event**: Events → hover → Bin. It disappears from the Events page; the other events are not affected.
 
 ## Other inner pages (placeholders until their v2 build)
 

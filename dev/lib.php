@@ -481,3 +481,198 @@ function panmotors_demo_contact_content( $faq_block ) {
 		)
 	);
 }
+
+/**
+ * Events page as block markup (_design/events/events.html): page header (text), events list,
+ * CTA band "Join The / Guest List" to Contact. Used by the seed and by the migration that creates
+ * the page on an existing site.
+ *
+ * @return string
+ */
+function panmotors_demo_events_page_content() {
+	$contact = panmotors_dev_page( 'contact' );
+	return implode(
+		"\n\n",
+		array(
+			panmotors_seed_block(
+				'pm/page-header',
+				array(
+					'header_style'   => 'text',
+					'header_eyebrow' => 'Pan Motors — Paphos',
+					'header_title'   => 'Events',
+					'header_intro'   => 'Evenings in the showroom, drives along the coast and new arrivals shown for the first time.',
+				)
+			),
+			panmotors_seed_block(
+				'pm/events-list',
+				array(
+					'events_intro'        => '',
+					'events_tab_upcoming' => 'Upcoming',
+					'events_tab_past'     => 'Past',
+					'events_view_label'   => 'View event',
+					'events_show_past'    => 1,
+					'events_past_limit'   => '',
+					'events_empty_text'   => 'No events are planned just now. Leave your details and we will write when the next one opens.',
+					'events_empty_label'  => 'Contact us',
+					'events_empty_link'   => $contact,
+				)
+			),
+			panmotors_seed_block(
+				'pm/cta-band',
+				array(
+					'cta_title' => "Join The\nGuest List",
+					'cta_text'  => 'Places are limited. Leave your details and we will write when the next event opens.',
+					'cta_label' => 'Contact us',
+					'cta_link'  => $contact,
+				)
+			),
+		)
+	);
+}
+
+/**
+ * The five demo events of _design/events/ (events.html and event.html), word for word. Dates are
+ * fixed: after 5 December 2026 every demo event counts as past (docs/events.md).
+ * Photos are the seed's imports of the same files (_design/uploads), by original file name: the
+ * first is the main image, all four are the Photographs.
+ *
+ * @return array[] Keyed by seed key.
+ */
+function panmotors_demo_events() {
+	return array(
+		'night-at-avenue-65'   => array(
+			'title'   => 'Night at Avenue 65',
+			'type'    => 'Evening',
+			'date'    => '20261017',
+			'start'   => '19:30:00',
+			'end'     => '23:00:00',
+			'place'   => 'Showroom, Mesoyi',
+			'guests'  => 'By invitation',
+			'summary' => 'An evening in the showroom after hours. The floor lit low, the new arrivals out, and time to talk through the cars with the family.',
+			'lede'    => 'An evening in the showroom after hours, with the floor lit low and the new arrivals out.',
+			'story'   => array(
+				'The doors close to the public at six and open again at half past seven for guests of the house. The cars stay where they are; the lights come down, and there is time to look properly.',
+				'The family will be on the floor through the evening to talk through each car, its history and how it has been prepared. Drinks and a light supper are served in the boutique.',
+				'Places are limited. Register your interest and we will confirm by phone.',
+			),
+			'photos'  => array( 'DSC04357-copy-scaled.jpg', 'IMG_6844-scaled.jpg', 'DSC08440-copy-Large.jpg', 'DSC08476-copy-Large.jpg' ),
+		),
+		'west-coast-drive'     => array(
+			'title'   => 'West Coast Drive',
+			'type'    => 'Drive',
+			'date'    => '20261108',
+			'start'   => '08:00:00',
+			'end'     => '14:00:00',
+			'place'   => 'Paphos to Latchi',
+			'guests'  => 'Owners and guests',
+			'summary' => 'A morning convoy along the west coast, starting at the showroom and ending with lunch by the sea.',
+			'lede'    => 'A morning convoy along the west coast, from the showroom to lunch by the sea.',
+			'story'   => array(
+				'We meet at the showroom for coffee at eight and leave at half past, heading north through Coral Bay and the Akamas road.',
+				'The pace is relaxed and the route is chosen for the views. Lunch is booked at a harbour table in Latchi, and the return is at your own pace.',
+				'Bring your own car, or ask us about joining as a passenger.',
+			),
+			'photos'  => array( 'red-sports-car-is-driving-empty-road-night-there-are-tall-buildings-background.jpg', 'sunset-supercar.jpg', 'black-porsche-911-luxury-sports-car-with-glossy-reflections-studio-lighting-generative-ai.jpg', 'sleek-black-sports-car-dramatic-lighting.jpg' ),
+		),
+		'winter-arrivals'      => array(
+			'title'   => 'Winter Arrivals',
+			'type'    => 'Unveiling',
+			'date'    => '20261205',
+			'start'   => '18:00:00',
+			'end'     => '21:00:00',
+			'place'   => 'Showroom, Mesoyi',
+			'guests'  => 'By invitation',
+			'summary' => 'The winter selection shown for the first time, before any of it goes on the floor.',
+			'lede'    => 'The winter selection shown for the first time, before any of it goes on the floor.',
+			'story'   => array(
+				'Each season a small number of cars arrive together. This evening is the first time they are shown, under covers until the hour.',
+				'Specifications, histories and viewing times are available on the night for anyone who wants to look closer.',
+			),
+			'photos'  => array( 'sleek-black-sports-car-dramatic-lighting.jpg', 'close-up-mclaren-720s-indoor-showroom-with-checkered-floor.jpg', 'black-sports-car-with-number-37-back.jpg', 'DSC08440-copy-Large.jpg' ),
+		),
+		'summer-cars-coffee'   => array(
+			'title'   => 'Summer Cars & Coffee',
+			'type'    => 'Morning',
+			'date'    => '20260614',
+			'start'   => '07:30:00',
+			'end'     => '10:00:00',
+			'place'   => 'Forecourt, Mesoyi',
+			'guests'  => 'Open',
+			'summary' => 'Owners and friends on the forecourt for an early coffee before the heat.',
+			'lede'    => 'Owners and friends on the forecourt for an early coffee before the heat.',
+			'story'   => array(
+				'More than forty cars filled the forecourt and the road outside by eight. Coffee ran out twice.',
+				'Thank you to everyone who came. The next morning meet will be announced here.',
+			),
+			'photos'  => array( 'DSC08476-copy-Large.jpg', 'sunset-supercar.jpg', 'IMG_6844-scaled.jpg', 'black-sports-car-with-number-37-back.jpg' ),
+		),
+		'spring-opening'       => array(
+			'title'   => 'Spring Opening',
+			'type'    => 'Evening',
+			'date'    => '20260322',
+			'start'   => '19:00:00',
+			'end'     => '22:00:00',
+			'place'   => 'Showroom, Mesoyi',
+			'guests'  => 'By invitation',
+			'summary' => 'The spring selection revealed on the showroom floor, with guests of the house.',
+			'lede'    => 'The spring selection revealed on the showroom floor, with guests of the house.',
+			'story'   => array(
+				'Spring opened with the new selection on the floor and the boutique open late.',
+				'Several of the cars shown that evening have since found new owners.',
+			),
+			'photos'  => array( 'DSC08440-copy-Large.jpg', 'black-porsche-911-luxury-sports-car-with-glossy-reflections-studio-lighting-generative-ai.jpg', 'DSC04357-copy-scaled.jpg', 'close-up-mclaren-720s-indoor-showroom-with-checkered-floor.jpg' ),
+		),
+	);
+}
+
+/**
+ * Add a page link to a menu just before a given page's item, unless the page is already in it.
+ * The items from there on move down one place. Used by migrations; the seed builds new menus whole.
+ *
+ * @param int    $menu_id     Menu (term) ID.
+ * @param int    $page_id     Page to add.
+ * @param string $label       Menu label.
+ * @param int    $before_page Page whose item it goes before (0 or not in the menu: at the end).
+ * @return bool Whether it was added.
+ */
+function panmotors_dev_menu_add( $menu_id, $page_id, $label, $before_page = 0 ) {
+	$items = (array) wp_get_nav_menu_items( $menu_id, array( 'post_status' => 'any' ) );
+	foreach ( $items as $item ) {
+		if ( 'page' === $item->object && (int) $item->object_id === (int) $page_id ) {
+			return false;
+		}
+	}
+	usort( $items, static fn( $a, $b ) => $a->menu_order <=> $b->menu_order );
+	$position = count( $items ) + 1;
+	foreach ( $items as $i => $item ) {
+		if ( $before_page && 'page' === $item->object && (int) $item->object_id === (int) $before_page ) {
+			$position = $i + 1;
+			break;
+		}
+	}
+	// Make room: every item from the new position on moves down one.
+	foreach ( $items as $i => $item ) {
+		$order = $i + 1 >= $position ? $i + 2 : $i + 1;
+		if ( (int) $item->menu_order !== $order ) {
+			wp_update_post(
+				array(
+					'ID'         => $item->ID,
+					'menu_order' => $order,
+				)
+			);
+		}
+	}
+	wp_update_nav_menu_item(
+		$menu_id,
+		0,
+		array(
+			'menu-item-title'     => $label,
+			'menu-item-object'    => 'page',
+			'menu-item-object-id' => (int) $page_id,
+			'menu-item-type'      => 'post_type',
+			'menu-item-status'    => 'publish',
+			'menu-item-position'  => $position,
+		)
+	);
+	return true;
+}

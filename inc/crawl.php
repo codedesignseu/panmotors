@@ -89,7 +89,7 @@ function panmotors_robots_txt( $output, $is_public ) {
 add_filter( 'robots_txt', 'panmotors_robots_txt', PHP_INT_MAX, 2 ); // Last: SEO plugins add their own lines.
 
 /**
- * Core sitemap: pages only. No users (there are no author pages), no taxonomies and no posts (the
+ * Core sitemap: pages and events. No users (there are no author pages), no taxonomies and no posts (the
  * site has no blog); Cars are left out in inc/cars.php.
  *
  * @param WP_Sitemaps_Provider $provider Provider.
@@ -102,13 +102,20 @@ function panmotors_sitemap_providers( $provider, $name ) {
 add_filter( 'wp_sitemaps_add_provider', 'panmotors_sitemap_providers', 10, 2 );
 
 /**
- * Pages in the core sitemap: pages only (the Cars post type is removed in inc/cars.php).
+ * Post types in the core sitemap: pages and events (the Cars post type is never in it; see also
+ * inc/cars.php).
  *
  * @param WP_Post_Type[] $post_types Post types.
  * @return WP_Post_Type[]
  */
 function panmotors_sitemap_pages_only( $post_types ) {
-	return array_intersect_key( $post_types, array( 'page' => true ) );
+	return array_intersect_key(
+		$post_types,
+		array(
+			'page'     => true,
+			'pm_event' => true,
+		)
+	);
 }
 add_filter( 'wp_sitemaps_post_types', 'panmotors_sitemap_pages_only', 20 );
 
@@ -154,7 +161,7 @@ add_action( 'after_switch_theme', 'panmotors_flush_rewrites' );
 
 /**
  * The llms.txt text: business facts from the settings, then one line per published page in the
- * menus with its URL and intro. Markdown, as the llms.txt proposal describes.
+ * menus with its URL and intro, then one line per event (title, date, URL). Markdown, as the llms.txt proposal describes.
  *
  * @return string
  */
@@ -222,6 +229,22 @@ function panmotors_llms_text() {
 		$lines = array_merge( $lines, array( '## Pages', '' ), array_values( $pages ), array( '' ) );
 	}
 
+	// Events: one line each (title, date, URL), upcoming first, then past.
+	$events = panmotors_events();
+	foreach ( array(
+		'upcoming' => '## Upcoming events',
+		'past'     => '## Past events',
+	) as $group => $heading ) {
+		$rows = array();
+		foreach ( $events[ $group ] as $event ) {
+			$date   = wp_strip_all_tags( panmotors_event_date_html( $event ) );
+			$rows[] = '- [' . $event['title'] . '](' . $event['url'] . '): ' . $date . ( 'scheduled' !== $event['status'] ? ' (' . $event['pill'] . ')' : '' );
+		}
+		if ( $rows ) {
+			$lines = array_merge( $lines, array( $heading, '' ), $rows, array( '' ) );
+		}
+	}
+
 	return html_entity_decode( implode( "\n", $lines ), ENT_QUOTES, 'UTF-8' );
 }
 
@@ -245,3 +268,31 @@ function panmotors_llms_serve() {
 	exit;
 }
 add_action( 'template_redirect', 'panmotors_llms_serve' );
+
+/**
+ * Rank Math lists a post type in its sitemap only when its Sitemap setting for that type is on,
+ * and a post type registered after Rank Math was set up has no setting. Events are in the sitemap
+ * unless that setting was saved off (Rank Math → Sitemap Settings → Events). Cars are not public,
+ * so no SEO plugin lists them.
+ *
+ * @param mixed $settings Rank Math sitemap settings.
+ * @return mixed
+ */
+function panmotors_rank_math_events_sitemap( $settings ) {
+	if ( is_array( $settings ) && ! isset( $settings['pt_pm_event_sitemap'] ) ) {
+		$settings['pt_pm_event_sitemap'] = 'on';
+	}
+	return $settings;
+}
+add_filter( 'option_rank-math-options-sitemap', 'panmotors_rank_math_events_sitemap' );
+
+/**
+ * Rank Math reads its settings once, before the theme loads: read them again so the filter above
+ * applies.
+ */
+function panmotors_rank_math_settings_reload() {
+	if ( function_exists( 'rank_math' ) && isset( rank_math()->settings ) && method_exists( rank_math()->settings, 'reset' ) && null === rank_math()->settings->get( 'sitemap.pt_pm_event_sitemap', null ) ) {
+		rank_math()->settings->reset();
+	}
+}
+add_action( 'after_setup_theme', 'panmotors_rank_math_settings_reload' );

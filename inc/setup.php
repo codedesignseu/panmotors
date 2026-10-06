@@ -74,15 +74,16 @@ function panmotors_js_class() {
 add_action( 'wp_head', 'panmotors_js_class', 0 );
 
 /**
- * Default meta description when no SEO plugin handles it (theme-map 9.7): the page's hero
- * intro, falling back to the one-sentence business description from the options.
+ * Default meta description when no SEO plugin handles it (theme-map 9.7): an event's summary, the
+ * page's hero intro, falling back to the one-sentence business description from the options.
  */
 function panmotors_meta_description() {
 	if ( panmotors_seo_plugin_active() ) {
 		return;
 	}
 
-	$text = panmotors_page_description( ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0 );
+	$text = is_singular( 'pm_event' ) ? panmotors_event_description() : '';
+	$text = $text ? $text : panmotors_page_description( ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0 );
 	if ( $text ) {
 		printf( '<meta name="description" content="%s">' . "\n", esc_attr( $text ) );
 	}
@@ -100,7 +101,8 @@ function panmotors_seo_description_fallback( $description ) {
 	if ( '' !== trim( (string) $description ) ) {
 		return $description;
 	}
-	return panmotors_page_description( ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0 );
+	$text = is_singular( 'pm_event' ) ? panmotors_event_description() : '';
+	return $text ? $text : panmotors_page_description( ( is_page() || is_front_page() ) ? (int) get_queried_object_id() : 0 );
 }
 add_filter( 'rank_math/frontend/description', 'panmotors_seo_description_fallback' );
 add_filter( 'wpseo_metadesc', 'panmotors_seo_description_fallback' );

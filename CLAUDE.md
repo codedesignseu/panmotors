@@ -7,6 +7,7 @@ This is a luxury brand presence site, not a car listing site. No inventory, no c
 ## Read first
 - `docs/blocks.md` is the content architecture (D11): every page is built from Gutenberg + ACF Blocks (`pm/*`), shared content lives in Options, Cars or synced patterns. It overrides the content model in `pages.md` §2–3 and §6. `docs/migration-blocks.md` is the migration plan and order of work.
 - `docs/inner-pages.md` is the inner pages and global design settings plan (D12, 27 Sep 2026): the second Claude Design export in `_design/v2/`, the Design tab, and the build order in its section 9.
+- `docs/events.md` is the Events model (TASKS 4d, `_design/events/`): the public `pm_event` post type with pages at `/events/{slug}/`, the `pm/events-list` block, status, schema and the client guide.
 - `docs/pages.md` defines the sitemap, menus and per-page SEO (D9/D10). Multi-page site, one page per menu item. It overrides anything in the theme map that assumes a single page with anchor links.
 - `docs/theme-map.md` has the section-by-section map, tokens, ACF fields and settled decisions. Follow it.
 - `_design/` is the Claude Design export and the visual reference (`_design/v2/` is the second export, for the inner pages). Never edit it. Never enqueue anything from it.
@@ -33,7 +34,8 @@ panmotors/
   index.php  page.php  404.php  theme.json (settings only)
   blocks/<name>/   block.json + render.php per ACF block (pm/hero … pm/cta-band, D11)
   patterns/        block patterns (Homepage full design)
-  inc/        setup.php enqueue.php acf.php design.php blocks.php cars.php admin.php schema.php crawl.php helpers.php
+  single-pm_event.php   one event (template-parts/events/)
+  inc/        setup.php enqueue.php acf.php design.php blocks.php cars.php events.php admin.php schema.php crawl.php helpers.php
   template-parts/front/       hero and marquee views
   template-parts/sections/    section views, data passed as args by the block render.php
   template-parts/components/  page-hero.php cta-band.php car-tile.php etc.
