@@ -1,0 +1,56 @@
+{
+    "key": "group_pm_event_photos",
+    "title": "Photographs",
+    "fields": [
+        {
+            "key": "field_pm_event_photos",
+            "label": "Photographs",
+            "name": "photos",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Up to 12 photos for the slider on the event page; the first two also fill the row on the Events page, after the main image. Landscape (3:2), at least 1800px wide, JPG or WebP, sRGB colour. A caption from the media library shows under the photo. Drag to reorder. Empty: no slider.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": "",
+            "max": 12,
+            "min_width": 1600,
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": 8,
+            "mime_types": "jpg, jpeg, png, webp, avif",
+            "insert": "append",
+            "preview_size": "medium"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "pm_event"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1791319276
+}

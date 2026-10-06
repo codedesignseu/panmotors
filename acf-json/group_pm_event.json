@@ -1,0 +1,395 @@
+{
+    "key": "group_pm_event",
+    "title": "Event details",
+    "fields": [
+        {
+            "key": "field_pm_msg_event_intro",
+            "label": "Before you start",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Give the event a title at the top and set its main image in the sidebar (Event → Main image). Fill in the details below; the story goes in the text area above.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_event_type",
+            "label": "Event type",
+            "name": "event_type",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "One word in red above the title, e.g. Evening, Drive, Unveiling.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "placeholder": "Evening",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_event_start_date",
+            "label": "Start date",
+            "name": "start_date",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "The day of the event, or its first day.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Ymd",
+            "first_day": 1
+        },
+        {
+            "key": "field_pm_event_end_date",
+            "label": "End date",
+            "name": "end_date",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "Only for events over several days. Empty: a one-day event.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Ymd",
+            "first_day": 1
+        },
+        {
+            "key": "field_pm_event_all_day",
+            "label": "All day",
+            "name": "all_day",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "No start or end time: shows \"All day\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Yes",
+            "ui_off_text": "No"
+        },
+        {
+            "key": "field_pm_event_start_time",
+            "label": "Start time",
+            "name": "start_time",
+            "aria-label": "",
+            "type": "time_picker",
+            "instructions": "e.g. 19:30. Empty: no time is shown.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_event_all_day",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "H:i",
+            "return_format": "H:i"
+        },
+        {
+            "key": "field_pm_event_end_time",
+            "label": "End time",
+            "name": "end_time",
+            "aria-label": "",
+            "type": "time_picker",
+            "instructions": "e.g. 23:00. The event counts as past after this time.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_event_all_day",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "H:i",
+            "return_format": "H:i"
+        },
+        {
+            "key": "field_pm_event_place",
+            "label": "Place name",
+            "name": "place",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Short, as it should read on the page, e.g. \"Showroom, Mesoyi\" or \"Paphos to Latchi\".",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "placeholder": "Showroom, Mesoyi",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_event_guests",
+            "label": "Guests",
+            "name": "guests",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Who can come, e.g. \"By invitation\", \"Owners and guests\", \"Open\". Empty: not shown.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "placeholder": "By invitation",
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_event_address",
+            "label": "Address",
+            "name": "address",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Optional. For calendars and Google. Not shown on the page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "placeholder": "Avenue 65, Mesoyi, Paphos 8060, Cyprus",
+            "default_value": ""
+        },
+        {
+            "key": "field_pm_event_map",
+            "label": "Map link",
+            "name": "map_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Optional. A Google Maps link to the place. Empty: a map search for the address.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/"
+        },
+        {
+            "key": "field_pm_event_summary",
+            "label": "Summary",
+            "name": "summary",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "One or two sentences on the Events page, and the description Google shows. Up to 180 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 180,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_event_lede",
+            "label": "Lede",
+            "name": "lede",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "The large opening sentence on the event page, left of the story. Empty: the summary. Up to 160 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_event_status",
+            "label": "Status",
+            "name": "event_status",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Automatic: \"Upcoming\" until the event ends, then \"Past event\". Cancelled, Postponed and Sold out show on the label and hide the buttons.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "auto": "Automatic",
+                "cancelled": "Cancelled",
+                "postponed": "Postponed",
+                "soldout": "Sold out"
+            },
+            "default_value": "auto",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_pm_event_register_label",
+            "label": "Registration button",
+            "name": "register_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The red button under the story. An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Register interest",
+            "placeholder": "Register interest",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_event_register_link",
+            "label": "Registration goes to",
+            "name": "register_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "Empty: the Contact page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        },
+        {
+            "key": "field_pm_event_show_call",
+            "label": "Call button",
+            "name": "show_call",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "A button to call the first phone number in {settings} → Contact.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "pm_event"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "excerpt",
+        "discussion",
+        "comments",
+        "author",
+        "format",
+        "categories",
+        "tags",
+        "send-trackbacks"
+    ],
+    "active": true,
+    "description": "The facts of one event. The story is in the block editor above.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1791319276
+}

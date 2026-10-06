@@ -1,0 +1,259 @@
+{
+    "key": "group_pm_block_events_list",
+    "title": "Block: Events list",
+    "fields": [
+        {
+            "key": "field_pm_msg_block_events_list",
+            "label": "Events",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The events are added and edited under {events}. Upcoming events come first, soonest first; past events follow under their own tab, newest first.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_events_intro",
+            "label": "Short intro",
+            "name": "events_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Optional, above the tabs. Up to 200 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 200,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_events_tab_upcoming",
+            "label": "Tab: upcoming",
+            "name": "events_tab_upcoming",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Upcoming",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_events_tab_past",
+            "label": "Tab: past",
+            "name": "events_tab_past",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Past",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_events_view_label",
+            "label": "Event button",
+            "name": "events_view_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The outlined button on each event. An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "View event",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_events_show_past",
+            "label": "Past events",
+            "name": "events_show_past",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Past events under their own tab.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
+        },
+        {
+            "key": "field_pm_events_past_limit",
+            "label": "How many past events",
+            "name": "events_past_limit",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Empty: all of them, newest first.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_pm_events_show_past",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "min": 1,
+            "max": 100,
+            "default_value": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_msg_events_empty",
+            "label": "When there are no events",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Shown instead of the list while no event is published.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_events_empty_text",
+            "label": "Text",
+            "name": "events_empty_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Up to 200 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 200,
+            "default_value": "No events are planned just now. Leave your details and we will write when the next one opens.",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_events_empty_label",
+            "label": "Button text",
+            "name": "events_empty_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "An arrow is added. Empty: no button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Contact us",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_events_empty_link",
+            "label": "Button goes to",
+            "name": "events_empty_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "Usually the Contact page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/events-list"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1791319276
+}

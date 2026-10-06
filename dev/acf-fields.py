@@ -105,6 +105,10 @@ def time_picker(key, label, name=None, **kw):
     return base(key, label, name or key, 'time_picker', display_format='H:i', return_format='H:i', **kw)
 
 
+def date_picker(key, label, name=None, **kw):
+    return base(key, label, name or key, 'date_picker', display_format='d/m/Y', return_format='Ymd', first_day=1, **kw)
+
+
 def checkbox(key, label, choices, name=None, **kw):
     return base(key, label, name or key, 'checkbox', choices=choices, default_value=[], return_format='value',
                 allow_custom=0, layout='horizontal', toggle=0, save_custom=0, custom_choice_button_text='', **kw)
@@ -366,6 +370,37 @@ options = group('options', 'Pan Motors settings', [
                        'image of its own. 1200 × 630px. ' + IMG_FORMAT),
     message('site_icon', 'Main logo and site icon', '{identity}', design=True),
 
+    tab('events', 'Events'),
+    message('events', 'Events',
+            'Events are added under {events}. These settings are shared by every event page: where "All events" '
+            'goes, and the small labels. A label left empty uses the text shown as its placeholder.'),
+    page_field('events_page', 'Events page', width='50',
+               instructions='The page that lists the events. The "All events" link on each event page goes here, '
+                            'and the menu shows it as the current page. Empty: no "All events" link.'),
+    text('ev_label_back', 'Back link', width='50', default_value='All events', maxlength=24, placeholder='All events',
+         instructions='At the top of each event page. An arrow is added.'),
+    text('ev_label_upcoming', 'Label: upcoming', width='25', default_value='Upcoming', maxlength=20, placeholder='Upcoming',
+         instructions='The small label next to the event type.'),
+    text('ev_label_past', 'Label: past event', width='25', default_value='Past event', maxlength=20, placeholder='Past event',
+         instructions='Shown once the event is over.'),
+    text('ev_label_cancelled', 'Label: cancelled', width='25', default_value='Cancelled', maxlength=20, placeholder='Cancelled'),
+    text('ev_label_postponed', 'Label: postponed', width='25', default_value='Postponed', maxlength=20, placeholder='Postponed'),
+    text('ev_label_soldout', 'Label: sold out', width='25', default_value='Sold out', maxlength=20, placeholder='Sold out'),
+    text('ev_label_date', 'Fact: date', width='25', default_value='Date', maxlength=16, placeholder='Date',
+         instructions='The row of facts under the photo.'),
+    text('ev_label_time', 'Fact: time', width='25', default_value='Time', maxlength=16, placeholder='Time'),
+    text('ev_label_place', 'Fact: place', width='25', default_value='Place', maxlength=16, placeholder='Place'),
+    text('ev_label_guests', 'Fact: guests', width='25', default_value='Guests', maxlength=16, placeholder='Guests'),
+    text('ev_label_all_day', 'All day', width='25', default_value='All day', maxlength=16, placeholder='All day',
+         instructions='The time of an all-day event.'),
+    text('ev_label_photos', 'Photographs heading', width='25', default_value='Photographs', maxlength=30, placeholder='Photographs'),
+    text('ev_label_call', 'Call button', width='25', default_value='Call', maxlength=16, placeholder='Call',
+         instructions='Followed by the first phone number in Contact.'),
+    text('ev_label_calendar', 'Calendar link', width='25', default_value='Add to calendar', maxlength=24, placeholder='Add to calendar',
+         instructions='Downloads the event for the visitor\'s calendar.'),
+    text('ev_label_prev', 'Previous event', width='25', default_value='Previous event', maxlength=24, placeholder='Previous event'),
+    text('ev_label_next', 'Next event', width='25', default_value='Next event', maxlength=24, placeholder='Next event'),
+
     tab('technical', 'Technical', admin_only=True),
     message('technical', 'For the site administrator',
             'Only administrators see this tab. Changing these can break links or the enquiry form.', admin_only=True),
@@ -425,6 +460,62 @@ car = group('car', 'Car', [
                             'Latest Cars shows the newest cars by date.'),
 ], [[{'param': 'post_type', 'operator': '==', 'value': 'pm_car'}]],
     desc='Showcase only, no prices. The name in the list is set from marque and model.')
+
+
+# ---------------------------------------------------------------- Events (pm_event, TASKS 4d, docs/events.md)
+EVENT = [[{'param': 'post_type', 'operator': '==', 'value': 'pm_event'}]]
+NOT_ALL_DAY = [[{'field': 'field_pm_event_all_day', 'operator': '!=', 'value': '1'}]]
+
+event = group('event', 'Event details', [
+    message('event_intro', 'Before you start',
+            'Give the event a title at the top and set its main image in the sidebar (Event → Main image). '
+            'Fill in the details below; the story goes in the text area above.'),
+    text('event_type', 'Event type', name='event_type', width='34', maxlength=20, placeholder='Evening',
+         instructions='One word in red above the title, e.g. Evening, Drive, Unveiling.'),
+    date_picker('event_start_date', 'Start date', name='start_date', required=1, width='33',
+                instructions='The day of the event, or its first day.'),
+    date_picker('event_end_date', 'End date', name='end_date', width='33',
+                instructions='Only for events over several days. Empty: a one-day event.'),
+    true_false('event_all_day', 'All day', name='all_day', default=0, on='Yes', off='No', width='34',
+               instructions='No start or end time: shows "All day".'),
+    time_picker('event_start_time', 'Start time', name='start_time', width='33',
+                instructions='e.g. 19:30. Empty: no time is shown.', conditional_logic=NOT_ALL_DAY),
+    time_picker('event_end_time', 'End time', name='end_time', width='33',
+                instructions='e.g. 23:00. The event counts as past after this time.', conditional_logic=NOT_ALL_DAY),
+    text('event_place', 'Place name', name='place', required=1, width='50', maxlength=40, placeholder='Showroom, Mesoyi',
+         instructions='Short, as it should read on the page, e.g. "Showroom, Mesoyi" or "Paphos to Latchi".'),
+    text('event_guests', 'Guests', name='guests', width='50', maxlength=30, placeholder='By invitation',
+         instructions='Who can come, e.g. "By invitation", "Owners and guests", "Open". Empty: not shown.'),
+    textarea('event_address', 'Address', name='address', rows=2, maxlength=160, width='50',
+             placeholder='Avenue 65, Mesoyi, Paphos 8060, Cyprus',
+             instructions='Optional. For calendars and Google. Not shown on the page.'),
+    url('event_map', 'Map link', name='map_url', width='50',
+        instructions='Optional. A Google Maps link to the place. Empty: a map search for the address.'),
+    textarea('event_summary', 'Summary', name='summary', rows=2, maxlength=180,
+             instructions='One or two sentences on the Events page, and the description Google shows. Up to 180 characters.'),
+    textarea('event_lede', 'Lede', name='lede', rows=2, maxlength=160,
+             instructions='The large opening sentence on the event page, left of the story. Empty: the summary. Up to 160 characters.'),
+    select('event_status', 'Status', {
+        'auto': 'Automatic', 'cancelled': 'Cancelled', 'postponed': 'Postponed', 'soldout': 'Sold out',
+    }, 'auto', name='event_status', width='34',
+        instructions='Automatic: "Upcoming" until the event ends, then "Past event". Cancelled, Postponed and Sold out '
+                     'show on the label and hide the buttons.'),
+    text('event_register_label', 'Registration button', name='register_label', width='33', maxlength=24,
+         default_value='Register interest', placeholder='Register interest',
+         instructions='The red button under the story. An arrow is added.'),
+    page_link('event_register_link', 'Registration goes to', name='register_link', width='33',
+              instructions='Empty: the Contact page.'),
+    true_false('event_show_call', 'Call button', name='show_call', default=1, on='Shown', off='Hidden',
+               instructions='A button to call the first phone number in {settings} → Contact.'),
+], EVENT, order=0, hide=['excerpt', 'discussion', 'comments', 'author', 'format', 'categories', 'tags', 'send-trackbacks'],
+    desc='The facts of one event. The story is in the block editor above.')
+
+event_photos = group('event_photos', 'Photographs', [
+    gallery('event_photos', 'Photographs', name='photos', max=12, min_width=1600,
+            instructions='Up to 12 photos for the slider on the event page; the first two also fill the row on the Events '
+                         'page, after the main image. Landscape (3:2), at least 1800px wide, ' + IMG_FORMAT +
+                         ' A caption from the media library shows under the photo. Drag to reorder. Empty: no slider.'),
+], EVENT, order=1)
 
 
 # ---------------------------------------------------------------- Blocks (D11): one group per pm/* block
@@ -768,7 +859,30 @@ b_contact_form = block_group('contact-form', 'Contact form and map', [
          instructions='The hours themselves come from {settings} → Opening hours.'),
 ])
 
-GROUPS = (options, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+b_events_list = block_group('events-list', 'Events list', [
+    message('block_events_list', 'Events', 'The events are added and edited under {events}. Upcoming events come first, '
+                                            'soonest first; past events follow under their own tab, newest first.'),
+    textarea('events_intro', 'Short intro', rows=2, maxlength=200,
+             instructions='Optional, above the tabs. Up to 200 characters.'),
+    text('events_tab_upcoming', 'Tab: upcoming', width='33', default_value='Upcoming', maxlength=20),
+    text('events_tab_past', 'Tab: past', width='33', default_value='Past', maxlength=20),
+    text('events_view_label', 'Event button', width='34', default_value='View event', maxlength=20,
+         instructions='The outlined button on each event. An arrow is added.'),
+    true_false('events_show_past', 'Past events', default=1, on='Shown', off='Hidden', width='50',
+               instructions='Past events under their own tab.'),
+    number('events_past_limit', 'How many past events', width='50', min=1, max=100,
+           instructions='Empty: all of them, newest first.',
+           conditional_logic=[[{'field': 'field_pm_events_show_past', 'operator': '==', 'value': '1'}]]),
+    message('events_empty', 'When there are no events', 'Shown instead of the list while no event is published.'),
+    textarea('events_empty_text', 'Text', rows=2, maxlength=200,
+             default_value='No events are planned just now. Leave your details and we will write when the next one opens.',
+             instructions='Up to 200 characters.'),
+    text('events_empty_label', 'Button text', width='50', default_value='Contact us', maxlength=24,
+         instructions='An arrow is added. Empty: no button.'),
+    page_link('events_empty_link', 'Button goes to', width='50', instructions='Usually the Contact page.'),
+])
+
+GROUPS = (options, event, event_photos, b_events_list, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':

@@ -1781,6 +1781,390 @@
             "esc_html": 0
         },
         {
+            "key": "field_pm_tab_events",
+            "label": "Events",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_pm_msg_events",
+            "label": "Events",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Events are added under {events}. These settings are shared by every event page: where \"All events\" goes, and the small labels. A label left empty uses the text shown as its placeholder.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_events_page",
+            "label": "Events page",
+            "name": "events_page",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "The page that lists the events. The \"All events\" link on each event page goes here, and the menu shows it as the current page. Empty: no \"All events\" link.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_pm_ev_label_back",
+            "label": "Back link",
+            "name": "ev_label_back",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "At the top of each event page. An arrow is added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "All events",
+            "placeholder": "All events",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_upcoming",
+            "label": "Label: upcoming",
+            "name": "ev_label_upcoming",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The small label next to the event type.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Upcoming",
+            "placeholder": "Upcoming",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_past",
+            "label": "Label: past event",
+            "name": "ev_label_past",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Shown once the event is over.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Past event",
+            "placeholder": "Past event",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_cancelled",
+            "label": "Label: cancelled",
+            "name": "ev_label_cancelled",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Cancelled",
+            "placeholder": "Cancelled",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_postponed",
+            "label": "Label: postponed",
+            "name": "ev_label_postponed",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Postponed",
+            "placeholder": "Postponed",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_soldout",
+            "label": "Label: sold out",
+            "name": "ev_label_soldout",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 20,
+            "default_value": "Sold out",
+            "placeholder": "Sold out",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_date",
+            "label": "Fact: date",
+            "name": "ev_label_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The row of facts under the photo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Date",
+            "placeholder": "Date",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_time",
+            "label": "Fact: time",
+            "name": "ev_label_time",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Time",
+            "placeholder": "Time",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_place",
+            "label": "Fact: place",
+            "name": "ev_label_place",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Place",
+            "placeholder": "Place",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_guests",
+            "label": "Fact: guests",
+            "name": "ev_label_guests",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Guests",
+            "placeholder": "Guests",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_all_day",
+            "label": "All day",
+            "name": "ev_label_all_day",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The time of an all-day event.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "All day",
+            "placeholder": "All day",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_photos",
+            "label": "Photographs heading",
+            "name": "ev_label_photos",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Photographs",
+            "placeholder": "Photographs",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_call",
+            "label": "Call button",
+            "name": "ev_label_call",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Followed by the first phone number in Contact.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 16,
+            "default_value": "Call",
+            "placeholder": "Call",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_calendar",
+            "label": "Calendar link",
+            "name": "ev_label_calendar",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Downloads the event for the visitor's calendar.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Add to calendar",
+            "placeholder": "Add to calendar",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_prev",
+            "label": "Previous event",
+            "name": "ev_label_prev",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Previous event",
+            "placeholder": "Previous event",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ev_label_next",
+            "label": "Next event",
+            "name": "ev_label_next",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 24,
+            "default_value": "Next event",
+            "placeholder": "Next event",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_pm_tab_technical",
             "label": "Technical",
             "name": "",
@@ -1953,5 +2337,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1791319260
+    "modified": 1791319276
 }
