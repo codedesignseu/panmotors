@@ -4,3 +4,4 @@ node_modules/
 _design/uploads/
 dev/.cache/
 dev/vendor/
+_design/events/uploads/
