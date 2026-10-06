@@ -66,6 +66,16 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] 5. Showroom (§7)
 - [x] 6. Contact (§8)
 
+## 4d. Homepage changes and Events (6 Oct 2026, `_design/events/`, `docs/events.md`)
+- [x] A1. Live button "Follow the floor" → "Follow the journey" (field default, seed, docs; Home by `dev/migrations/2026-10-06-follow-the-journey.php`, only where the old text was still there)
+- [x] A2. About Pan Motors on Home: Media type Image / Video (upload, or YouTube / Vimeo on request), poster required; Home with Image identical (HTML, 0 pixels at 1440 and 390)
+- [ ] B1. Events post type `pm_event`, Event details and Photographs fields, status, validation, admin columns
+- [ ] B2. Single event page
+- [ ] B3. Events page: `pm/events-list`, CTA band with text
+- [ ] B4. Events in the primary and footer menus
+- [ ] B5. Event JSON-LD, ItemList on the Events page, llms.txt, meta description
+- [ ] B6. Seed and migration (5 demo events, Events page), client guide
+
 ## 5. SEO and GEO
 - [x] `inc/schema.php`: one JSON-LD `@graph` on every page from Options and the page (AutoDealer, WebSite, WebPage / AboutPage / ContactPage, BreadcrumbList on inner pages, FAQPage from `pm/faq`); empty values left out; no Car, Product or Offer
 - [x] SEO plugin coordination: Yoast and Rank Math schema switched off by their filters (one business entity); theme meta description only without an SEO plugin

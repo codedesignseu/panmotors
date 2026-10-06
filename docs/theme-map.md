@@ -132,7 +132,7 @@ The design covers the homepage only. All sections render from `front-page.php` a
 - Content: ACF repeater `latest_cars`: `image`, `caption`, `place` (default place "Paphos"). The export's Greek place names (Kifisias, Athens, Sounio) are wrong. Demo content uses Paphos.
 
 ### 8. Pan Motors Live
-- Eyebrow "Social", H2, "Follow the floor" pill linking to Instagram.
+- Eyebrow "Social", H2, "Follow the journey" pill linking to Instagram.
 - 6 tiles in an auto-fit grid (min 300px, max-width 1120px), 4:5, mix of vertical videos and photos. Videos play only while in view (IntersectionObserver at .35), pause when out.
 - Each tile shows ♥ likes, ✎ comments, caption, and links to an Instagram URL.
 - Content: manual ACF repeater `live_posts`, no Instagram API. Fields: `type` (video / photo), `video` (file, shown when type is video), `image` (photo, or poster for a video), `url`, `caption`, `likes` (text, optional), `comments` (text, optional). When likes or comments are empty, hide that item. Instagram profile URL comes from the options page.

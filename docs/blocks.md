@@ -27,7 +27,7 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/marquee` | Options → Marques | no fields, separator from Options |
 | `pm/featured-cars` | Cars (see below) | fields: heading, intro, which cars (all featured / pick), limit |
 | `pm/values` | Options → Our Values (D12) + block fields (style, heading, intro, link) | Dark cards (Home) or Light section (About) |
-| `pm/about` | block fields (image, eyebrow, heading, stats) + Options description | option: "Scroll colour fade" on/off |
+| `pm/about` | block fields (media type, image or video with poster, eyebrow, heading, stats) + Options description | options: "Scroll colour fade" on/off; Media type Video: an upload plays muted in view (`about-video.js`), a YouTube/Vimeo player loads on request (cookies) |
 | `pm/latest-cars` | Cars | fields: eyebrow, heading, number of cars |
 | `pm/live` | block fields (posts repeater) + Options Instagram URL | |
 | `pm/showroom` | block fields (photos gallery, eyebrow, heading, intro) + Options hours | option: show hours |

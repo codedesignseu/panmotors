@@ -96,7 +96,7 @@ function panmotors_acf_admin_only( $field ) {
 add_filter( 'acf/prepare_field', 'panmotors_acf_admin_only' );
 
 /**
- * Turn {settings} and {cars} in field messages and instructions into links, so the client can
+ * Turn {settings}, {cars} and {events} in field messages and instructions into links, so the client can
  * jump to where that content is edited.
  *
  * @param array $field Field.
@@ -106,6 +106,7 @@ function panmotors_acf_edit_links( $field ) {
 	$links = array(
 		'{settings}' => array( 'admin.php?page=panmotors-settings', __( 'Pan Motors settings', 'panmotors' ) ),
 		'{cars}'     => array( 'edit.php?post_type=pm_car', __( 'Cars', 'panmotors' ) ),
+		'{events}'   => array( 'edit.php?post_type=pm_event', __( 'Events', 'panmotors' ) ),
 	);
 	foreach ( array( 'message', 'instructions' ) as $key ) {
 		if ( empty( $field[ $key ] ) || false === strpos( $field[ $key ], '{' ) ) {
@@ -118,3 +119,18 @@ function panmotors_acf_edit_links( $field ) {
 	return $field;
 }
 add_filter( 'acf/prepare_field', 'panmotors_acf_edit_links', 20 );
+
+/**
+ * The About block's video link accepts YouTube and Vimeo only (panmotors_video_embed()).
+ *
+ * @param bool|string $valid Whether the value is valid, or an error message.
+ * @param mixed       $value Value.
+ * @return bool|string
+ */
+function panmotors_acf_validate_video_url( $valid, $value ) {
+	if ( true !== $valid || '' === trim( (string) $value ) ) {
+		return $valid;
+	}
+	return panmotors_video_embed( $value ) ? $valid : __( 'Use a YouTube or Vimeo video link, e.g. https://www.youtube.com/watch?v=… or https://vimeo.com/…. Other sites are not accepted.', 'panmotors' );
+}
+add_filter( 'acf/validate_value/key=field_pm_about_video_url', 'panmotors_acf_validate_video_url', 10, 2 );

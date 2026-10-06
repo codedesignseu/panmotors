@@ -57,7 +57,7 @@
                 "id": ""
             },
             "maxlength": 24,
-            "default_value": "Follow the floor",
+            "default_value": "Follow the journey",
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -268,5 +268,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1791318415
 }

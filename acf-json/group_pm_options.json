@@ -893,7 +893,7 @@
             "name": "instagram_url",
             "aria-label": "",
             "type": "url",
-            "instructions": "Used by the \"Follow the floor\" button on the homepage.",
+            "instructions": "Used by the \"Follow the journey\" button on the homepage.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1953,5 +1953,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790610863
+    "modified": 1791319260
 }

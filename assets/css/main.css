@@ -1245,6 +1245,97 @@ p {
 	aspect-ratio: 4 / 5;
 }
 
+/* Media type Video (about-video.js): the clip fades in over the poster once it plays. */
+.pm-about__media > .pm-about__video {
+	opacity: 0;
+	transition: opacity .8s ease, transform 1.5s var(--ease), filter 1.2s ease;
+}
+
+.pm-about__media > .pm-about__video.is-playing {
+	opacity: 1;
+}
+
+.pm-about__iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+/* Pause / play (upload) and play (YouTube, Vimeo): round buttons on the photo. */
+.pm-about__toggle,
+.pm-about__play {
+	position: absolute;
+	z-index: 1;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--ink) 35%, transparent);
+	color: var(--paper);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	cursor: pointer;
+	transition: background .5s, color .5s, border-color .5s;
+}
+
+.pm-about__toggle {
+	bottom: 18px;
+	left: 18px;
+	width: 48px;
+	height: 48px;
+}
+
+.pm-about__play {
+	top: 50%;
+	left: 50%;
+	width: 84px;
+	height: 84px;
+	transform: translate(-50%, -50%);
+}
+
+.pm-about__toggle[hidden],
+.pm-about__play[hidden] {
+	display: none;
+}
+
+.pm-about__toggle:hover,
+.pm-about__toggle:focus-visible,
+.pm-about__play:hover,
+.pm-about__play:focus-visible {
+	border-color: var(--paper);
+	background: var(--paper);
+	color: var(--ink);
+}
+
+/* Play: a triangle. Pause (while the clip plays): two bars. */
+.pm-about__icon {
+	width: 0;
+	height: 0;
+	margin-left: 3px;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	border-left: 11px solid currentColor;
+}
+
+.pm-about__play .pm-about__icon {
+	margin-left: 5px;
+	border-top-width: 11px;
+	border-bottom-width: 11px;
+	border-left-width: 17px;
+}
+
+.pm-about__toggle.is-playing .pm-about__icon {
+	width: 12px;
+	height: 14px;
+	margin-left: 0;
+	border: 0;
+	border-right: 4px solid currentColor;
+	border-left: 4px solid currentColor;
+}
+
 .pm-about__eyebrow {
 	margin-bottom: 26px;
 }

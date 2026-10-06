@@ -91,7 +91,7 @@ def image(key, label, name=None, min_width='', min_height='', **kw):
 
 def video(key, label, name=None, **kw):
     return base(key, label, name or key, 'file', return_format='id', library='all',
-                min_size='', max_size=kw.pop('max_size', 10), mime_types='mp4', **kw)
+                min_size='', max_size=kw.pop('max_size', 10), mime_types=kw.pop('mime_types', 'mp4'), **kw)
 
 
 def gallery(key, label, name=None, min_width='', min_height='', **kw):
@@ -281,7 +281,7 @@ options = group('options', 'Pan Motors settings', [
         instructions='Four fit one row on a computer. Drag to reorder.'),
 
     tab('social', 'Social'),
-    url('instagram_url', 'Instagram', width='50', instructions='Used by the "Follow the floor" button on the homepage.'),
+    url('instagram_url', 'Instagram', width='50', instructions='Used by the "Follow the journey" button on the homepage.'),
     url('facebook_url', 'Facebook', width='50'),
     url('google_business_url', 'Google Business Profile', width='50'),
     repeater('other_profiles', 'Other profiles', [
@@ -487,9 +487,29 @@ b_values = block_group('values', 'Our Values', [
               conditional_logic=[[{'field': 'field_pm_values_style', 'operator': '==', 'value': 'dark'}]]),
 ])
 
+ABOUT_VIDEO = [{'field': 'field_pm_about_media', 'operator': '==', 'value': 'video'}]
+
 b_about = block_group('about', 'About Pan Motors', [
+    button_group('about_media', 'Media type', {'image': 'Image', 'video': 'Video'}, 'image',
+                 instructions='What fills the frame on the left: a photo, or a video with a poster photo.'),
     image('about_image', 'Photo', min_width=1080, min_height=1350,
-          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT),
+          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT,
+          conditional_logic=[[{'field': 'field_pm_about_media', 'operator': '!=', 'value': 'video'}]]),
+    button_group('about_video_source', 'Video source', {'upload': 'Upload', 'link': 'YouTube or Vimeo'}, 'upload',
+                 instructions='Upload: a short silent clip from the media library that plays by itself while the section '
+                              'is on screen. YouTube or Vimeo: the poster shows until the visitor presses play.',
+                 conditional_logic=[ABOUT_VIDEO]),
+    video('about_video_file', 'Video file', required=1, max_size=10, mime_types='mp4, webm',
+          instructions='MP4 or WebM, portrait (4:5) or close, 10–20 seconds, under 8 MB. Plays without sound, on a loop.',
+          conditional_logic=[ABOUT_VIDEO + [{'field': 'field_pm_about_video_source', 'operator': '==', 'value': 'upload'}]]),
+    url('about_video_url', 'Video link', required=1, placeholder='https://www.youtube.com/watch?v=…',
+        instructions='The address of the video on YouTube or Vimeo (other sites are not accepted). It loads only when '
+                     'the visitor presses play, because YouTube and Vimeo set cookies.',
+        conditional_logic=[ABOUT_VIDEO + [{'field': 'field_pm_about_video_source', 'operator': '==', 'value': 'link'}]]),
+    image('about_poster', 'Poster image', required=1, min_width=1080, min_height=1350,
+          instructions='Shown before the video plays, for visitors who turn off motion, and in the editor. Portrait (4:5), '
+                       'at least 1080 × 1350px. ' + IMG_FORMAT + ' Its alt text from the media library describes the video.',
+          conditional_logic=[ABOUT_VIDEO]),
     text('about_eyebrow', 'Small red line', maxlength=40, instructions='Above the heading.'),
     heading('about_title', 'About Pan Motors'),
     message('block_about', 'Paragraph', 'The paragraph is the one-sentence description in {settings} → Business.'),
@@ -512,7 +532,7 @@ b_latest = block_group('latest-cars', 'Latest Cars', [
 b_live = block_group('live', 'Pan Motors Live', [
     text('live_eyebrow', 'Small red line', width='33', default_value='Social', maxlength=30),
     text('live_title', 'Heading', width='33', default_value='Pan Motors Live', maxlength=30),
-    text('live_cta_label', 'Instagram button text', width='34', default_value='Follow the floor', maxlength=24,
+    text('live_cta_label', 'Instagram button text', width='34', default_value='Follow the journey', maxlength=24,
          instructions='Opens your Instagram (link in {settings} → Social).'),
     repeater('live_posts', 'Posts', [
         button_group('post_type', 'Type', {'video': 'Video', 'photo': 'Photo'}, 'video', name='type'),

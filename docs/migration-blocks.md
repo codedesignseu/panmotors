@@ -35,7 +35,7 @@ Help texts that pointed to other pages (`{edit:about}` …) are rewritten becaus
 | `pm/values` | Heading (30, "Our Values"), Cards go to (page link, optional: empty = cards are not links), Values repeater 1–6: Small label (20), Title (24, required), Short text (140) | — | — |
 | `pm/about` | Photo (4:5, ≥ 1080 × 1350), Small red line (40), Heading (30, "About Pan Motors"), Three highlights repeater 0–4: Word (12), Line under it (28); Scroll colour fade (true/false, default on) | Options one-sentence description (message says so) | `heritage-fade` when fade on |
 | `pm/latest-cars` | Small red line (40), Heading (30, "Latest Cars"), How many (number 1–12, default 6) | Cars, newest first | `slider-drag` |
-| `pm/live` | Small red line (30, "Social"), Heading (30, "Pan Motors Live"), Instagram button text (24, "Follow the floor"), Posts repeater 0–9 (type, video, photo, link, caption 18, likes 6, comments 6), all as now | Options Instagram URL | `live-videos` |
+| `pm/live` | Small red line (30, "Social"), Heading (30, "Pan Motors Live"), Instagram button text (24, "Follow the journey"), Posts repeater 0–9 (type, video, photo, link, caption 18, likes 6, comments 6), all as now | Options Instagram URL | `live-videos` |
 | `pm/showroom` | Small red line (40), Heading (30, "The Showroom"), Intro (textarea 200), Photos (gallery 1–12, ≥ 1600 wide, captions from Media), Show opening hours (true/false, default on) | Options hours | `showroom-slider` |
 | `pm/enquire` | Heading (30, "Come And See"), Intro (160), Preview form: the nine label/hint/button fields as now | Options address, phones, email, logo, form shortcode | — |
 | `pm/faq` | Heading (30, "Questions"), Questions repeater 0–20: Question (120), Answer (500) | — | — (`details`) |

@@ -723,7 +723,7 @@ $pm_home_content = implode(
 			array(
 				'live_eyebrow'   => 'Social',
 				'live_title'     => 'Pan Motors Live',
-				'live_cta_label' => 'Follow the floor',
+				'live_cta_label' => 'Follow the journey',
 				'live_posts'     => array(
 					array(
 						'type'     => 'video',

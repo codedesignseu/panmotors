@@ -157,3 +157,56 @@ function panmotors_home_label() {
 	$title = $front ? get_the_title( $front ) : '';
 	return '' !== $title ? $title : __( 'Home', 'panmotors' );
 }
+
+/**
+ * A YouTube or Vimeo link as a privacy-friendly player address: youtube-nocookie.com for YouTube,
+ * Vimeo with Do Not Track. Other sites are not accepted. Used by the About block's video
+ * (pm/about), which loads the player only when the visitor presses play.
+ *
+ * Accepts youtube.com/watch?v=…, youtu.be/…, youtube.com/shorts/…, youtube.com/embed/…,
+ * vimeo.com/123, vimeo.com/123/hash (unlisted) and player.vimeo.com/video/123.
+ *
+ * @param string $url Video page address.
+ * @return array|null { provider: 'youtube'|'vimeo', src: player URL with autoplay }, or null.
+ */
+function panmotors_video_embed( $url ) {
+	$url   = trim( (string) $url );
+	$parts = wp_parse_url( $url );
+	if ( ! $parts || empty( $parts['host'] ) || ! in_array( $parts['scheme'] ?? '', array( 'http', 'https' ), true ) ) {
+		return null;
+	}
+	$host = preg_replace( '/^(www\.|m\.)/', '', strtolower( $parts['host'] ) );
+	$path = trim( (string) ( $parts['path'] ?? '' ), '/' );
+	parse_str( (string) ( $parts['query'] ?? '' ), $query );
+
+	if ( in_array( $host, array( 'youtube.com', 'youtu.be', 'youtube-nocookie.com' ), true ) ) {
+		$id = '';
+		if ( 'youtu.be' === $host ) {
+			$id = strtok( $path, '/' );
+		} elseif ( 'watch' === $path ) {
+			$id = (string) ( $query['v'] ?? '' );
+		} elseif ( preg_match( '#^(?:shorts|embed|live)/([^/]+)#', $path, $m ) ) {
+			$id = $m[1];
+		}
+		if ( ! preg_match( '/^[A-Za-z0-9_-]{6,20}$/', (string) $id ) ) {
+			return null;
+		}
+		return array(
+			'provider' => 'youtube',
+			'src'      => 'https://www.youtube-nocookie.com/embed/' . $id . '?autoplay=1&rel=0&playsinline=1',
+		);
+	}
+
+	if ( in_array( $host, array( 'vimeo.com', 'player.vimeo.com' ), true ) ) {
+		if ( ! preg_match( '#^(?:video/)?(\d{5,12})(?:/([0-9a-f]{6,20}))?$#', $path, $m ) ) {
+			return null;
+		}
+		$hash = $m[2] ?? ( isset( $query['h'] ) && preg_match( '/^[0-9a-f]{6,20}$/', (string) $query['h'] ) ? $query['h'] : '' );
+		return array(
+			'provider' => 'vimeo',
+			'src'      => 'https://player.vimeo.com/video/' . $m[1] . '?autoplay=1&dnt=1' . ( $hash ? '&h=' . $hash : '' ),
+		);
+	}
+
+	return null;
+}

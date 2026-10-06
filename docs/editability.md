@@ -64,7 +64,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Our Values | Style (Dark cards on Home, Light section on About), heading, short intro (light), Cards go to (dark) | block fields |
 | | Values (small label, title, short text) | Settings → Our Values (one set for every page) |
 | | → arrow | decorative icon (aria-hidden) |
-| About Pan Motors | Photo, small red line, heading, three highlights, scroll colour fade on/off | block fields |
+| About Pan Motors | Media type (Image or Video), photo; for a video: source (an uploaded MP4/WebM, or a YouTube/Vimeo link) and a poster photo; small red line, heading, three highlights, scroll colour fade on/off | block fields |
 | | Paragraph | Settings → Business → One-sentence description |
 | Latest Cars | Small red line, heading, how many | block fields |
 | | Cars (photo, slider caption, place), newest first by date | Cars |
