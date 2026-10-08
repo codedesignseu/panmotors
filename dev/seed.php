@@ -664,9 +664,13 @@ if ( $pm_pages['events'] && ( $pm_reset || ! get_option( 'options_events_page' )
  * ------------------------------------------------------------------
  * 6b. Events (pm_event, _design/events/). Matched on _pm_seed_key: created when missing, never
  *     duplicated; an existing event is only rewritten with --reset-demo. Dates are fixed
- *     (docs/events.md).
+ *     (docs/events.md), except for the three upcoming ones of Events intro on Home
+ *     (_design/home-events/): they are created only while fewer than three events are coming up,
+ *     and a date that has passed moves forward by whole years.
  * ------------------------------------------------------------------
  */
+$pm_upcoming_keys = array( 'night-at-avenue-65', 'west-coast-drive', 'winter-arrivals' );
+$pm_upcoming      = count( panmotors_events()['upcoming'] );
 foreach ( panmotors_demo_events() as $pm_key => $pm_e ) {
 	$pm_found = get_posts(
 		array(
@@ -686,6 +690,17 @@ foreach ( panmotors_demo_events() as $pm_key => $pm_e ) {
 		}
 	} elseif ( panmotors_seed_created( $pm_event_key ) && ! $pm_reset ) {
 		continue; // Deleted by the client.
+	}
+	$pm_is_upcoming = in_array( $pm_key, $pm_upcoming_keys, true );
+	if ( $pm_is_upcoming ) {
+		if ( ! $pm_found && $pm_upcoming >= 3 ) {
+			WP_CLI::log( "Event {$pm_e['title']}: not created, three events are already coming up." );
+			continue;
+		}
+		$pm_today = wp_date( 'Ymd' );
+		while ( $pm_e['date'] < $pm_today ) {
+			$pm_e['date'] = (string) ( (int) $pm_e['date'] + 10000 );
+		}
 	}
 	$pm_post = array(
 		'post_type'    => 'pm_event',
@@ -726,6 +741,9 @@ foreach ( panmotors_demo_events() as $pm_key => $pm_e ) {
 	);
 	foreach ( $pm_fields as $pm_field => $pm_value ) {
 		update_field( 'field_pm_' . $pm_field, $pm_value, $pm_event_id );
+	}
+	if ( $pm_is_upcoming && ! $pm_found ) {
+		++$pm_upcoming;
 	}
 	WP_CLI::log( "Event {$pm_e['title']}: " . ( $pm_found ? 'reset.' : 'created.' ) );
 }
@@ -795,6 +813,7 @@ $pm_home_content = implode(
 				'latest_limit'   => 6,
 			)
 		),
+		panmotors_demo_events_intro_block(),
 		panmotors_seed_block(
 			'pm/live',
 			array(

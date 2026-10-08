@@ -75,6 +75,7 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] B4. Events in the primary (after Latest Cars, before Showroom) and footer menus; the nav still fits on one line from 1081px (burger at 1080 and below), no nav change
 - [x] B5. Event JSON-LD, ItemList on the Events page, llms.txt, meta description
 - [x] B6. Seed and migration (5 demo events, Events page), client guide
+- [x] B7. Events intro on Home before Pan Motors Live (`pm/events-intro`, `_design/home-events/events-intro.html`): cards, empty state, Postponed / Sold out label, cancelled left out; seed (3 upcoming demo events only while fewer than 3 are coming up), migration `2026-10-09-events-intro.php`, docs
 
 ## 5. SEO and GEO
 - [x] `inc/schema.php`: one JSON-LD `@graph` on every page from Options and the page (AutoDealer, WebSite, WebPage / AboutPage / ContactPage, BreadcrumbList on inner pages, FAQPage from `pm/faq`); empty values left out; no Car, Product or Offer

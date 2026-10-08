@@ -882,7 +882,27 @@ b_events_list = block_group('events-list', 'Events list', [
     page_link('events_empty_link', 'Button goes to', width='50', instructions='Usually the Contact page.'),
 ])
 
-GROUPS = (options, event, event_photos, b_events_list, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+b_events_intro = block_group('events-intro', 'Events intro', [
+    message('block_events_intro', 'Events', 'The events are added and edited under {events}. This section shows the next ones '
+                                            'as cards, soonest first. Cancelled events are left out.'),
+    text('ei_eyebrow', 'Small red line', width='50', default_value='At the house', maxlength=40,
+         instructions='Above the heading.'),
+    heading('ei_title', 'Events'),
+    textarea('ei_intro', 'Short intro', rows=2, maxlength=200,
+             default_value='Evenings in the showroom, drives along the coast and first looks at new arrivals. '
+                           'Owners, friends and guests of the house are welcome.',
+             instructions='One or two sentences next to the heading. Up to 200 characters.'),
+    text('ei_label', 'Button text', width='50', default_value='All events', maxlength=28,
+         instructions='The outlined button under the intro. An arrow is added. Empty: no button.'),
+    page_link('ei_link', 'Button goes to', width='50',
+              instructions='Empty: the Events page chosen in {settings} → Events.'),
+    number('ei_limit', 'How many events', width='33', min=1, max=6, default_value=3,
+           instructions='The next events by date. Three fill one row.'),
+    textarea('ei_empty', 'When no event is coming up', rows=2, maxlength=160, default_value='New events are announced soon.',
+             instructions='Shown under the heading instead of the cards. Up to 160 characters.'),
+])
+
+GROUPS = (options, event, event_photos, b_events_list, b_events_intro, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':

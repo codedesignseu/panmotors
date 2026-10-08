@@ -4103,6 +4103,135 @@ p {
 	}
 }
 
+/* Events intro on Home (_design/home-events/events-intro.html): a hairline over the head, then
+   auto-fit cards of at least 320px. The whole card is one link: it lifts, its image zooms. */
+.pm-ei {
+	padding-top: 40px;
+	padding-bottom: var(--pad-y);
+}
+
+.pm-ei__head {
+	padding-top: 72px;
+	border-top: 1px solid var(--line-dark);
+}
+
+.pm-ei__intro {
+	max-width: 360px;
+}
+
+.pm-ei__empty {
+	max-width: 42ch;
+	font-family: var(--font-display);
+	font-size: calc(clamp(24px, 2vw, 30px) * var(--h-scale));
+	line-height: 1.2;
+	opacity: .8;
+}
+
+.pm-ei__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+	gap: 14px;
+}
+
+.pm-ei__card {
+	display: grid;
+	align-content: start;
+	gap: 22px;
+	border-radius: var(--r);
+	color: var(--paper);
+	transition: transform .75s var(--ease);
+}
+
+.pm-ei__card:hover,
+.pm-ei__card:focus-visible {
+	color: var(--paper); /* Not the accent of a:hover: the card lifts instead. */
+	transform: translateY(-8px);
+}
+
+.pm-ei__card:focus-visible {
+	outline-offset: 6px;
+}
+
+.pm-ei__media {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	border-radius: var(--r);
+	background: var(--surface);
+}
+
+.pm-ei__media img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 1.5s var(--ease);
+}
+
+.pm-ei__card:hover .pm-ei__media img,
+.pm-ei__card:focus-visible .pm-ei__media img {
+	transform: scale(1.055);
+}
+
+.pm-ei__pills {
+	position: absolute;
+	top: 18px;
+	left: 18px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	pointer-events: none;
+}
+
+.pm-ei__pill {
+	padding: 8px 16px;
+	border-radius: 999px;
+	background: var(--paper);
+	color: var(--ink);
+	font-size: 10px;
+	letter-spacing: .24em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+}
+
+.pm-ei__foot {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: start;
+	gap: 22px;
+	padding-top: 22px;
+	border-top: 1px solid var(--line-dark);
+}
+
+.pm-ei__day {
+	font-family: var(--font-display);
+	font-size: calc(56px * var(--h-scale));
+	line-height: .85;
+}
+
+.pm-ei__copy {
+	display: grid;
+	gap: 10px;
+}
+
+.pm-ei__meta {
+	margin: 0;
+	font-size: 11px;
+	letter-spacing: .22em;
+	line-height: var(--lh);
+	text-transform: uppercase;
+	opacity: .6;
+}
+
+.pm-ei__title {
+	margin: 0;
+	font-family: var(--font-display);
+	font-weight: 400;
+	font-size: calc(clamp(24px, 2vw, 30px) * var(--h-scale));
+	line-height: 1.05;
+}
+
 /* Event page header: the Photo page header with a back link, the type and a status pill, and a
    narrower title (event.html). */
 .pm-page-header__back {

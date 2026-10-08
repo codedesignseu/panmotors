@@ -531,6 +531,28 @@ function panmotors_demo_events_page_content() {
 }
 
 /**
+ * Events intro on Home (_design/home-events/events-intro.html), with the field defaults. The button
+ * page is left empty: the block then uses Settings → Events → Events page. Used by the seed and by
+ * the migration that adds it before Pan Motors Live.
+ *
+ * @return string
+ */
+function panmotors_demo_events_intro_block() {
+	return panmotors_seed_block(
+		'pm/events-intro',
+		array(
+			'ei_eyebrow' => 'At the house',
+			'ei_title'   => 'Events',
+			'ei_intro'   => 'Evenings in the showroom, drives along the coast and first looks at new arrivals. Owners, friends and guests of the house are welcome.',
+			'ei_label'   => 'All events',
+			'ei_link'    => '',
+			'ei_limit'   => 3,
+			'ei_empty'   => 'New events are announced soon.',
+		)
+	);
+}
+
+/**
  * The five demo events of _design/events/ (events.html and event.html), word for word. Dates are
  * fixed: after 5 December 2026 every demo event counts as past (docs/events.md).
  * Photos are the seed's imports of the same files (_design/uploads), by original file name: the
