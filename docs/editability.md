@@ -8,7 +8,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 
 | Screen | What |
 |---|---|
-| **Pages → Home** (block editor) | The homepage sections as blocks, in page order: Top video, Marques strip, Featured Cars, Our Values, About Pan Motors, Latest Cars, Pan Motors Live, The Showroom, Come And See. Each block shows the real section; its fields are in the sidebar (Block tab). |
+| **Pages → Home** (block editor) | The homepage sections as blocks, in page order: Top video, Marques strip, Featured Cars, Our Values, About Pan Motors, Latest Cars, Upcoming events, Pan Motors Live, The Showroom, Come And See. Each block shows the real section; its fields are in the sidebar (Block tab). |
 | **Pages → About Pan Motors** | Built as `_design/v2/about.html` (D12): Page header, Story, What We Do, Our Values (light section), Photo call to action. |
 | **Pages → Featured Cars** | Built as `_design/v2/cars.html` (D12): Page header (Text), Cars grid, CTA band. |
 | **Pages → The Showroom** | Built as `_design/v2/showroom.html` (D12): Page header (Photo), Photo slider, Visit, Photo call to action. |
@@ -71,6 +71,8 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Latest Cars | Small red line, heading, how many | block fields |
 | | Cars (photo, slider caption, place), newest first by date | Cars |
 | | Counter "01 / 06", ← → | computed / decorative (buttons have translated aria-labels) |
+| Upcoming events | Small red line, heading, short intro, how many (2 by default), event button text, "All events" button text and page (empty: no button) | block fields |
+| | Events (date, type, title, summary, place, photos), soonest first; the section hides while no event is coming up | Events |
 | Pan Motors Live | Small red line, heading, Instagram button text, posts (video/photo, link, caption, likes, comments) | block fields |
 | | Instagram link | Settings → Social → Instagram |
 | | ♥ ✎ | decorative icons (aria-hidden; "likes"/"comments" screen-reader text) |
@@ -159,6 +161,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 - **Past events** move to the Past tab (newest first) once they are over, keep their page with the label "Past event", and lose the Register, Call and Add to calendar buttons. Nothing needs to be changed by hand.
 - **Add to calendar** downloads the event for the visitor's calendar (Google, Apple, Outlook).
 - The Events page, Google (structured data, sitemap) and AI tools (llms.txt) read the same fields: the event is entered once.
+- **Home** shows the next events (Upcoming events block, after Latest Cars) and hides the section when none is coming up. How many, and the texts around them, are set on the block in Pages → Home.
 - Previous / Next event at the bottom of each event page go through all events in date order.
 - **Delete an event**: Events → hover → Bin. It disappears from the Events page; the other events are not affected.
 

@@ -44,6 +44,7 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/contact-details` | Options (phones, email, address, map URL, Instagram) + block fields (labels, actions) | D12, Contact |
 | `pm/contact-form` | block fields (form shortcode, preview form texts, map texts) + Options (shortcode fallback, map embed query, hours) | D12, Contact; map loads on request |
 | `pm/events-list` | Events (`pm_event`, TASKS 4d) + block fields (intro, tab labels, row button, past events on/off and how many, empty state) | Events page: Upcoming / Past tabs, rows of `_design/events/events.html`; see `events.md` |
+| `pm/upcoming-events` | Events (`pm_event`) + block fields (small red line, heading, intro, how many, row button, "All events" button and page) | Home after Latest Cars (8 Oct 2026, no design): the next events, soonest first, as the Events page rows with H3 titles; hidden while no event is coming up |
 | `pm/cars-grid` | Cars (`pm_car`) + block fields (source, labels, sheet button) | D12, Featured Cars: filters, 3-2-3-2-3 rows, car sheet `<dialog>` |
 
 Inner pages may also use a small set of core blocks for plain text: heading, paragraph, list, image, quote, buttons, and embeds limited to YouTube, Vimeo and Instagram (other providers, and embeds that cannot load, print as a plain link). Everything else from core is hidden. Core blocks, shortcodes, embeds and plugins filtering `the_content` run through the normal content pipeline; pm/* sections are rendered outside it so their HTML matches the design exactly (`panmotors_the_blocks()`).

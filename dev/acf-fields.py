@@ -882,7 +882,24 @@ b_events_list = block_group('events-list', 'Events list', [
     page_link('events_empty_link', 'Button goes to', width='50', instructions='Usually the Contact page.'),
 ])
 
-GROUPS = (options, event, event_photos, b_events_list, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
+b_upcoming = block_group('upcoming-events', 'Upcoming events', [
+    message('block_upcoming', 'Events', 'The events are added and edited under {events}. This section shows the next ones, '
+                                        'soonest first, and is hidden while no event is coming up.'),
+    text('upcoming_eyebrow', 'Small red line', width='50', maxlength=40, instructions='Above the heading.'),
+    heading('upcoming_title', 'Events'),
+    textarea('upcoming_intro', 'Short intro', rows=2, maxlength=200,
+             instructions='One or two sentences next to the heading. Up to 200 characters.'),
+    number('upcoming_limit', 'How many', width='33', min=1, max=6, default_value=2,
+           instructions='The next events by date.'),
+    text('upcoming_view_label', 'Event button', width='33', default_value='View event', maxlength=20,
+         instructions='The outlined button on each event. An arrow is added.'),
+    text('upcoming_more_label', 'Button text', width='50', default_value='All events', maxlength=28,
+         instructions='The outlined button next to the heading. An arrow is added. Empty: no button.'),
+    page_link('upcoming_more_link', 'Button goes to', width='50',
+              instructions='Usually the Events page. Empty: no button.'),
+])
+
+GROUPS = (options, event, event_photos, b_events_list, b_upcoming, car, page_settings, b_page_header, b_story, b_services, b_cta_image, b_cars_grid, b_photo_slider, b_visit, b_contact_details, b_contact_form, b_hero, b_marquee, b_featured, b_values, b_about, b_latest, b_live, b_showroom, b_enquire,
           b_faq, b_page_hero, b_cta)
 
 if __name__ == '__main__':

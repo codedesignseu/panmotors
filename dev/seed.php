@@ -795,6 +795,7 @@ $pm_home_content = implode(
 				'latest_limit'   => 6,
 			)
 		),
+		panmotors_demo_upcoming_events_block( $pm_pages['events'] ),
 		panmotors_seed_block(
 			'pm/live',
 			array(
