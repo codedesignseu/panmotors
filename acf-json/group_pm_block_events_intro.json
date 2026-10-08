@@ -1,0 +1,193 @@
+{
+    "key": "group_pm_block_events_intro",
+    "title": "Block: Events intro",
+    "fields": [
+        {
+            "key": "field_pm_msg_block_events_intro",
+            "label": "Events",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "The events are added and edited under {events}. This section shows the next ones as cards, soonest first. Cancelled events are left out.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_pm_ei_eyebrow",
+            "label": "Small red line",
+            "name": "ei_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 40,
+            "default_value": "At the house",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ei_title",
+            "label": "Heading",
+            "name": "ei_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The large heading of this section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 30,
+            "default_value": "Events",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ei_intro",
+            "label": "Short intro",
+            "name": "ei_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "One or two sentences next to the heading. Up to 200 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 200,
+            "default_value": "Evenings in the showroom, drives along the coast and first looks at new arrivals. Owners, friends and guests of the house are welcome.",
+            "placeholder": ""
+        },
+        {
+            "key": "field_pm_ei_label",
+            "label": "Button text",
+            "name": "ei_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The outlined button under the intro. An arrow is added. Empty: no button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 28,
+            "default_value": "All events",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ei_link",
+            "label": "Button goes to",
+            "name": "ei_link",
+            "aria-label": "",
+            "type": "page_link",
+            "instructions": "Empty: the Events page chosen in {settings} → Events.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "allow_archives": 0,
+            "multiple": 0,
+            "allow_null": 1
+        },
+        {
+            "key": "field_pm_ei_limit",
+            "label": "How many events",
+            "name": "ei_limit",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "The next events by date. Three fill one row.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "min": 1,
+            "max": 6,
+            "default_value": 3,
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pm_ei_empty",
+            "label": "When no event is coming up",
+            "name": "ei_empty",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Shown under the heading instead of the cards. Up to 160 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 2,
+            "new_lines": "",
+            "maxlength": 160,
+            "default_value": "New events are announced soon.",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "pm\/events-intro"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1791493913
+}
