@@ -4103,21 +4103,6 @@ p {
 	}
 }
 
-/* Upcoming events on Home (8 Oct 2026, not in the design): the Featured Cars section head, then
-   the event rows of the Events page between hairlines. */
-.pm-upcoming {
-	padding-top: 120px;
-}
-
-/* Latest Cars already leaves 132px under its slider. */
-.pm-latest + .pm-upcoming {
-	padding-top: 0;
-}
-
-.pm-upcoming__list {
-	border-top: 1px solid var(--line-dark);
-}
-
 /* Event page header: the Photo page header with a back link, the type and a status pill, and a
    narrower title (event.html). */
 .pm-page-header__back {

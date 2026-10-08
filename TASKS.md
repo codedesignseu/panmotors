@@ -75,7 +75,6 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [x] B4. Events in the primary (after Latest Cars, before Showroom) and footer menus; the nav still fits on one line from 1081px (burger at 1080 and below), no nav change
 - [x] B5. Event JSON-LD, ItemList on the Events page, llms.txt, meta description
 - [x] B6. Seed and migration (5 demo events, Events page), client guide
-- [x] B7. Upcoming events on Home after Latest Cars (`pm/upcoming-events`, 8 Oct 2026, no design: agreed exception in CLAUDE.md); seed, migration `2026-10-08-home-events.php`, docs
 
 ## 5. SEO and GEO
 - [x] `inc/schema.php`: one JSON-LD `@graph` on every page from Options and the page (AutoDealer, WebSite, WebPage / AboutPage / ContactPage, BreadcrumbList on inner pages, FAQPage from `pm/faq`); empty values left out; no Car, Product or Offer

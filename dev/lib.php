@@ -531,28 +531,6 @@ function panmotors_demo_events_page_content() {
 }
 
 /**
- * Upcoming events on Home (8 Oct 2026, not in the design): the next two events and a button to the
- * Events page. Used by the seed and by the migration that adds it after Latest Cars.
- *
- * @param int $events_page Events page ID (0: no button).
- * @return string
- */
-function panmotors_demo_upcoming_events_block( $events_page ) {
-	return panmotors_seed_block(
-		'pm/upcoming-events',
-		array(
-			'upcoming_eyebrow'    => 'Pan Motors — Paphos',
-			'upcoming_title'      => 'Events',
-			'upcoming_intro'      => 'Evenings in the showroom, drives along the coast and new arrivals shown for the first time.',
-			'upcoming_limit'      => 2,
-			'upcoming_view_label' => 'View event',
-			'upcoming_more_label' => 'All events',
-			'upcoming_more_link'  => $events_page ? $events_page : '',
-		)
-	);
-}
-
-/**
  * The five demo events of _design/events/ (events.html and event.html), word for word. Dates are
  * fixed: after 5 December 2026 every demo event counts as past (docs/events.md).
  * Photos are the seed's imports of the same files (_design/uploads), by original file name: the
