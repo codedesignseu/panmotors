@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Events intro - design reference</title>
+<!-- DESIGN REFERENCE for the Home "Events intro" section ONLY.
+ Use for layout, proportions and spacing. Do NOT copy colours, fonts, nav or any other section.
+ Use the theme's own tokens. Hover: style-hover="" attributes show the intended hover state
+ (card lifts 8px, image zooms, pill button fills paper). Cards are demo data; real data comes from pm_event. -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda&family=Archivo&display=swap" rel="stylesheet">
+<style>:root{--ink:#0c0b0b;--paper:#f3f2f2;--r:24px}body{margin:0;background:var(--ink);color:var(--paper);font-family:Archivo,sans-serif}a{color:inherit;text-decoration:none}</style>
+</head><body>
+<section id="events" data-pad="" data-pad-y="" style="padding: 40px 40px 132px;">
+    <div data-rise="" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-bottom: 54px; border-top: 1px solid rgba(243,242,242,.16); padding-top: 72px;">
+      <div>
+        <div style="font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: #ec3013; margin-bottom: 22px;">At the house</div>
+        <h2 style="font-family: 'Bodoni Moda', serif; font-weight: 400; font-size: clamp(40px, 6vw, 96px); line-height: .92; margin: 0;">Events</h2>
+      </div>
+      <div style="display: grid; gap: 22px; justify-items: start;">
+        <p style="max-width: 360px; margin: 0; font-size: 14px; line-height: 1.7; opacity: .6;">Evenings in the showroom, drives along the coast and first looks at new arrivals. Owners, friends and guests of the house are welcome.</p>
+        <a href="Events.dc.html" style="border: 1px solid rgba(243,242,242,.34); border-radius: 999px; padding: 13px 24px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; transition: background .4s, color .4s, border-color .4s;" style-hover="background: var(--paper); color: var(--ink); border-color: var(--paper);">All events →</a>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 14px;">
+      
+        <a href="#" data-rise="" style="display: grid; gap: 22px; color: var(--paper); transition: transform .75s cubic-bezier(.16,.84,.3,1);" style-hover="transform: translateY(-8px);">
+          <div data-zoom="" style="position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 3; background: #161514;">
+            <div class="img-placeholder" style="position:absolute;inset:0;background:linear-gradient(135deg,#1d1b1a,#0c0b0b);"></div>
+            <div style="position: absolute; left: 18px; top: 18px; background: var(--paper); color: var(--ink); border-radius: 999px; padding: 8px 16px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; pointer-events: none;">Evening</div>
+          </div>
+          <div style="display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; border-top: 1px solid rgba(243,242,242,.16); padding-top: 22px;">
+            <div style="font-family: 'Bodoni Moda', serif; font-size: 56px; line-height: .85;">17</div>
+            <div style="display: grid; gap: 10px;">
+              <div style="font-size: 11px; letter-spacing: .22em; text-transform: uppercase; opacity: .6;">October 2026 · Showroom, Mesoyi</div>
+              <h3 style="font-family: 'Bodoni Moda', serif; font-weight: 400; font-size: clamp(24px, 2vw, 30px); line-height: 1.05; margin: 0;">Night at Avenue 65</h3>
+            </div>
+          </div>
+        </a>
+      
+        <a href="#" data-rise="" style="display: grid; gap: 22px; color: var(--paper); transition: transform .75s cubic-bezier(.16,.84,.3,1);" style-hover="transform: translateY(-8px);">
+          <div data-zoom="" style="position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 3; background: #161514;">
+            <div class="img-placeholder" style="position:absolute;inset:0;background:linear-gradient(135deg,#1d1b1a,#0c0b0b);"></div>
+            <div style="position: absolute; left: 18px; top: 18px; background: var(--paper); color: var(--ink); border-radius: 999px; padding: 8px 16px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; pointer-events: none;">Drive</div>
+          </div>
+          <div style="display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; border-top: 1px solid rgba(243,242,242,.16); padding-top: 22px;">
+            <div style="font-family: 'Bodoni Moda', serif; font-size: 56px; line-height: .85;">08</div>
+            <div style="display: grid; gap: 10px;">
+              <div style="font-size: 11px; letter-spacing: .22em; text-transform: uppercase; opacity: .6;">November 2026 · Paphos to Latchi</div>
+              <h3 style="font-family: 'Bodoni Moda', serif; font-weight: 400; font-size: clamp(24px, 2vw, 30px); line-height: 1.05; margin: 0;">West Coast Drive</h3>
+            </div>
+          </div>
+        </a>
+      
+        <a href="#" data-rise="" style="display: grid; gap: 22px; color: var(--paper); transition: transform .75s cubic-bezier(.16,.84,.3,1);" style-hover="transform: translateY(-8px);">
+          <div data-zoom="" style="position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 3; background: #161514;">
+            <div class="img-placeholder" style="position:absolute;inset:0;background:linear-gradient(135deg,#1d1b1a,#0c0b0b);"></div>
+            <div style="position: absolute; left: 18px; top: 18px; background: var(--paper); color: var(--ink); border-radius: 999px; padding: 8px 16px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; pointer-events: none;">Unveiling</div>
+          </div>
+          <div style="display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; border-top: 1px solid rgba(243,242,242,.16); padding-top: 22px;">
+            <div style="font-family: 'Bodoni Moda', serif; font-size: 56px; line-height: .85;">05</div>
+            <div style="display: grid; gap: 10px;">
+              <div style="font-size: 11px; letter-spacing: .22em; text-transform: uppercase; opacity: .6;">December 2026 · Showroom, Mesoyi</div>
+              <h3 style="font-family: 'Bodoni Moda', serif; font-weight: 400; font-size: clamp(24px, 2vw, 30px); line-height: 1.05; margin: 0;">Winter Arrivals</h3>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </section>
+</body></html>
