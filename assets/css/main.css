@@ -1245,13 +1245,14 @@ p {
 	aspect-ratio: 4 / 5;
 }
 
-/* Media type Video (about-video.js): the clip fades in over the poster once it plays. */
-.pm-about__media > .pm-about__video {
+/* Media type Video (about-video.js; Home About and About Story, components/media-video.php): the
+   clip fades in over the poster once it plays. */
+.pm-media > .pm-about__video {
 	opacity: 0;
 	transition: opacity .8s ease, transform 1.5s var(--ease), filter 1.2s ease;
 }
 
-.pm-about__media > .pm-about__video.is-playing {
+.pm-media > .pm-about__video.is-playing {
 	opacity: 1;
 }
 

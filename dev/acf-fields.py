@@ -728,6 +728,8 @@ b_page_header = block_group('page-header', 'Page header', [
                 conditional_logic=[[{'field': 'field_pm_header_style', 'operator': '==', 'value': 'image'}]]),
 ])
 
+STORY_VIDEO = [{'field': 'field_pm_story_media', 'operator': '==', 'value': 'video'}]
+
 b_story = block_group('story', 'Story', [
     text('story_eyebrow', 'Small red line', width='50', maxlength=40, placeholder='Our story'),
     textarea('story_title', 'Heading', rows=2, width='50', maxlength=40,
@@ -737,8 +739,26 @@ b_story = block_group('story', 'Story', [
                           'describes the business the same way everywhere. Up to 300 characters.'),
     wysiwyg('story_text', 'More paragraphs', instructions='One or two short paragraphs after the first. Bold, '
                                                           'italic and links only.'),
+    button_group('story_media', 'Media type', {'image': 'Image', 'video': 'Video'}, 'image',
+                 instructions='What fills the frame on the right: a photo, or a video with a poster photo.'),
     image('story_image', 'Photo', min_width=1080, min_height=1350,
-          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT),
+          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT,
+          conditional_logic=[[{'field': 'field_pm_story_media', 'operator': '!=', 'value': 'video'}]]),
+    button_group('story_video_source', 'Video source', {'upload': 'Upload', 'link': 'YouTube or Vimeo'}, 'upload',
+                 instructions='Upload: a short silent clip from the media library that plays by itself while the section '
+                              'is on screen. YouTube or Vimeo: the poster shows until the visitor presses play.',
+                 conditional_logic=[STORY_VIDEO]),
+    video('story_video_file', 'Video file', required=1, max_size=10, mime_types='mp4, webm',
+          instructions='MP4 or WebM, portrait (4:5) or close, 10–20 seconds, under 8 MB. Plays without sound, on a loop.',
+          conditional_logic=[STORY_VIDEO + [{'field': 'field_pm_story_video_source', 'operator': '==', 'value': 'upload'}]]),
+    url('story_video_url', 'Video link', required=1, placeholder='https://www.youtube.com/watch?v=…',
+        instructions='The address of the video on YouTube or Vimeo (other sites are not accepted). It loads only when '
+                     'the visitor presses play, because YouTube and Vimeo set cookies.',
+        conditional_logic=[STORY_VIDEO + [{'field': 'field_pm_story_video_source', 'operator': '==', 'value': 'link'}]]),
+    image('story_poster', 'Poster image', required=1, min_width=1080, min_height=1350,
+          instructions='Shown before the video plays, for visitors who turn off motion, and in the editor. Portrait (4:5), '
+                       'at least 1080 × 1350px. ' + IMG_FORMAT + ' Its alt text from the media library describes the video.',
+          conditional_logic=[STORY_VIDEO]),
 ])
 
 b_services = block_group('services', 'What We Do', [

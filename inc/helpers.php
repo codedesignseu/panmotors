@@ -160,8 +160,8 @@ function panmotors_home_label() {
 
 /**
  * A YouTube or Vimeo link as a privacy-friendly player address: youtube-nocookie.com for YouTube,
- * Vimeo with Do Not Track. Other sites are not accepted. Used by the About block's video
- * (pm/about), which loads the player only when the visitor presses play.
+ * Vimeo with Do Not Track. Other sites are not accepted. Used by the About and Story videos
+ * (pm/about, pm/story), which load the player only when the visitor presses play.
  *
  * Accepts youtube.com/watch?v=…, youtu.be/…, youtube.com/shorts/…, youtube.com/embed/…,
  * vimeo.com/123, vimeo.com/123/hash (unlisted) and player.vimeo.com/video/123.
@@ -209,4 +209,35 @@ function panmotors_video_embed( $url ) {
 	}
 
 	return null;
+}
+
+/**
+ * The video of a block with a Media type field (pm/about on Home, pm/story on About), read from
+ * the block's own fields: "{prefix}_media" (image or video), "{prefix}_video_source" (upload or
+ * link), "{prefix}_video_file" and "{prefix}_video_url". Call it inside the block's render.php.
+ * Nothing in the editor preview: the poster stands in for the video there.
+ *
+ * @param string $prefix     Field name prefix, e.g. 'about'.
+ * @param bool   $is_preview Editor preview.
+ * @return array { kind: 'upload', src, type } or { kind: 'embed', src }; empty for an image, an
+ *               editor preview, or a video that is not filled in.
+ */
+function panmotors_block_video( $prefix, $is_preview ) {
+	if ( $is_preview || 'video' !== get_field( $prefix . '_media' ) ) {
+		return array();
+	}
+	if ( 'link' === get_field( $prefix . '_video_source' ) ) {
+		$embed = panmotors_video_embed( (string) get_field( $prefix . '_video_url' ) );
+		return $embed ? array(
+			'kind' => 'embed',
+			'src'  => $embed['src'],
+		) : array();
+	}
+	$file = (int) get_field( $prefix . '_video_file' );
+	$url  = $file ? wp_get_attachment_url( $file ) : '';
+	return $url ? array(
+		'kind' => 'upload',
+		'src'  => $url,
+		'type' => (string) get_post_mime_type( $file ),
+	) : array();
 }

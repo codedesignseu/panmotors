@@ -1,13 +1,16 @@
 <?php
 /**
- * Story (About, inner-pages §5): heading and paragraphs left, a 4:5 photo right.
+ * Story (About, inner-pages §5): heading and paragraphs left, a 4:5 photo right. Media type
+ * Video: the photo is the poster, with an uploaded clip or a YouTube / Vimeo player over it, as in
+ * About Pan Motors on Home (template-parts/components/media-video.php, about-video.js).
  *
  * Args (from blocks/story/render.php):
  * - eyebrow (string) Small red line.
  * - title   (string) Heading; new lines start new lines.
  * - lead    (string) First paragraph (defaults to the business description).
  * - text    (string) More paragraphs (rich text).
- * - image   (int)    Portrait photo.
+ * - image   (int)    Portrait photo, or the poster of the video.
+ * - video   (array)  From panmotors_block_video(); empty for a photo.
  *
  * @package panmotors
  */
@@ -17,8 +20,9 @@ $panmotors_eyebrow = trim( (string) ( $args['eyebrow'] ?? '' ) );
 $panmotors_lead    = trim( (string) ( $args['lead'] ?? '' ) );
 $panmotors_text    = trim( (string) ( $args['text'] ?? '' ) );
 $panmotors_image   = (int) ( $args['image'] ?? 0 );
+$panmotors_video   = (array) ( $args['video'] ?? array() );
 
-if ( ! $panmotors_title && ! $panmotors_image ) {
+if ( ! $panmotors_title && ! $panmotors_image && ! $panmotors_video ) {
 	return;
 }
 ?>
@@ -41,20 +45,16 @@ if ( ! $panmotors_title && ! $panmotors_image ) {
 			<?php endif; ?>
 		</div>
 
-		<?php if ( $panmotors_image ) : ?>
-			<div class="pm-media pm-story__media" data-rise-l data-zoom>
-				<?php
-				echo wp_get_attachment_image(
-					$panmotors_image,
-					'pm-portrait',
-					false,
-					array(
-						'sizes'   => '(max-width: 808px) calc(100vw - 40px), 50vw',
-						'loading' => 'lazy',
-					)
-				);
-				?>
-			</div>
-		<?php endif; ?>
+		<?php
+		get_template_part(
+			'template-parts/components/media-video',
+			null,
+			array(
+				'class' => 'pm-story__media',
+				'image' => $panmotors_image,
+				'video' => $panmotors_video,
+			)
+		);
+		?>
 	</div>
 </section>

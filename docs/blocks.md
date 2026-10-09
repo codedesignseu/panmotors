@@ -28,14 +28,14 @@ Each section becomes an ACF Block registered with `block.json` (ACF block API v3
 | `pm/featured-cars` | Cars (see below) | fields: heading, intro, which cars (all featured / pick), limit |
 | `pm/values` | Options → Our Values (D12) + block fields (style, heading, intro, link) | Dark cards (Home) or Light section (About) |
 | `pm/about` | block fields (media type, image or video with poster, eyebrow, heading, stats) + Options description | options: "Scroll colour fade" on/off; Media type Video: an upload plays muted in view (`about-video.js`), a YouTube/Vimeo player loads on request (cookies) |
-| `pm/latest-cars` | Cars | fields: eyebrow, heading, number of cars |
+| `pm/latest-cars` | Cars | fields: eyebrow, heading, number of cars. **Not in use since 9 Oct 2026**: removed from Home with its page and menu item (`dev/migrations/2026-10-09-remove-latest-cars.php`); the block stays in the theme, hidden from the inserter (`"inserter": false`), so it can come back |
 | `pm/live` | block fields (posts repeater) + Options Instagram URL | |
 | `pm/showroom` | block fields (photos gallery, eyebrow, heading, intro) + Options hours | option: show hours |
 | `pm/enquire` | block fields (heading, intro) + Options contact + form shortcode | |
 | `pm/faq` | block fields (questions repeater) | Contact, dark hairline rows; `panmotors_faq_items()` (inc/schema.php) returns the same items for the FAQPage node (TASKS §5) |
 | `pm/page-hero` | block fields | inner pages not yet rebuilt; replaced by `pm/page-header` (D12) |
 | `pm/page-header` | block fields | D12: the page's H1, Photo or Text style (`inner-pages.md` §2.3) |
-| `pm/story` | block fields + Options description (first paragraph when empty) | D12, About |
+| `pm/story` | block fields (incl. media type: image, or video with poster, as `pm/about`) + Options description (first paragraph when empty) | D12, About; the media frame is `template-parts/components/media-video.php` and `panmotors_block_video()`, shared with `pm/about` (`about-video.js`) |
 | `pm/services` | block fields (repeater, 2–4 tiles) | D12, About ("What We Do") |
 | `pm/cta-image` | block fields (incl. photo colour, brightness, card height) | D12, About and Showroom |
 | `pm/cta-band` | block fields | D12: paper card on the dark page, heading left, ink button right (`inner-pages.md` §2.4) |

@@ -5,3 +5,6 @@ _design/uploads/
 dev/.cache/
 dev/vendor/
 _design/events/uploads/
+
+# Private deploy notes (hosting steps), not committed
+/DEPLOY.md
