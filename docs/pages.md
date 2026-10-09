@@ -15,13 +15,12 @@ Decision 24 Sep 2026: Pan Motors is a multi-page site.
 | Home | `/` | `front-page.php` | logo |
 | Featured Cars | `/featured-cars/` | `templates/page-featured-cars.php` | primary |
 | About Pan Motors | `/about/` | `templates/page-about.php` | primary |
-| Latest Cars | `/latest-cars/` | `templates/page-latest-cars.php` | primary |
 | Showroom | `/showroom/` | `templates/page-showroom.php` | primary |
 | Contact | `/contact/` | `templates/page-contact.php` | contact pill + mobile menu |
 | Privacy Policy, Cookie Policy | `/privacy-policy/`, `/cookie-policy/` | `page.php` | footer |
 
 Menus:
-- Primary: Featured Cars, About Pan Motors, Latest Cars, Showroom. Links point to the pages, never to anchors.
+- Primary: Featured Cars, About Pan Motors, Events, Showroom (Latest Cars removed 9 Oct 2026). Links point to the pages, never to anchors.
 - Contact pill in the nav and the last item of the mobile menu: the Contact page.
 - Footer: Featured Cars, Showroom, Contact, Privacy Policy, Cookie Policy.
 - The current page gets `aria-current="page"` and a visible active state (underline shown, full opacity).

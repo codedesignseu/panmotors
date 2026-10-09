@@ -3,7 +3,6 @@ export const PAGES = {
   home: '',
   'featured-cars': 'featured-cars/',
   about: 'about/',
-  'latest-cars': 'latest-cars/',
   showroom: 'showroom/',
   contact: 'contact/',
   events: 'events/',

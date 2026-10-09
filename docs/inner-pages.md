@@ -5,7 +5,7 @@ Decision 27 Sep 2026. Source: the second Claude Design export, stored in `_desig
 Scope from Makis:
 - About: exactly as `_design/v2/about.html`. Our Values on the homepage uses the same four values as About.
 - Featured Cars: exactly as `_design/v2/cars.html`.
-- Latest Cars: out of scope. Leave the page and its menu item untouched until decided.
+- Latest Cars: out of scope. Removed on 9 Oct 2026 (page to the Bin, menu item and Home section gone; `dev/migrations/2026-10-09-remove-latest-cars.php`).
 - Showroom: exactly as `_design/v2/showroom.html`.
 - Contact: exactly as `_design/v2/contact.html`, plus the existing FAQs at the bottom.
 - Theme-wide: design settings for colours, fonts, typography, shape and logos.

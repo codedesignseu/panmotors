@@ -5,7 +5,7 @@
 	"title": "Latest Cars",
 	"category": "panmotors",
 	"icon": "images-alt2",
-	"description": "A slider with the newest cars.",
+	"description": "Not in use since 9 Oct 2026 (hidden from the inserter). A slider with the newest cars.",
 	"textdomain": "panmotors",
 	"supports": {
 		"align": false,
@@ -13,6 +13,7 @@
 		"customClassName": false,
 		"className": false,
 		"html": false,
+		"inserter": false,
 		"mode": false,
 		"multiple": true,
 		"renaming": false

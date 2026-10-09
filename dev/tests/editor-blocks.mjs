@@ -22,14 +22,14 @@ const EDITS = {
   'pm/hero': 'hero_eyebrow',
   'pm/featured-cars': 'featured_title',
   'pm/about': 'about_eyebrow',
-  'pm/latest-cars': 'latest_title',
+  'pm/events-intro': 'ei_title',
   'pm/live': 'live_title',
   'pm/showroom': 'showroom_intro',
   'pm/enquire': 'enquire_intro',
 };
 const SECTION = {
   'pm/hero': '#top', 'pm/marquee': '.pm-marquee', 'pm/featured-cars': '#floor', 'pm/values': '#ways', 'pm/about': '#heritage',
-  'pm/latest-cars': '#gallery', 'pm/live': '#live', 'pm/showroom': '#showroom', 'pm/enquire': '#enquire',
+  'pm/events-intro': '#events', 'pm/live': '#live', 'pm/showroom': '#showroom', 'pm/enquire': '#enquire',
 };
 
 const html = async (path = '') => (await fetch(SITE + path, { headers: { 'Cache-Control': 'no-cache' } })).text();
@@ -139,17 +139,17 @@ export default async ({ page, sleep, shot }) => {
   out.reorderBack = order(await html()).join(' ');
 
   // 4. Hide a block (Hide on the block toolbar sets metadata.blockVisibility) and show it again.
-  const latest = (await blocks()).find((b) => b.name === 'pm/latest-cars');
-  const setVisible = (v) => page.eval(`const s = wp.data.select('core/block-editor'); const id = ${JSON.stringify(latest.id)}; const m = { ...(s.getBlockAttributes(id).metadata || {}) }; if (${v}) delete m.blockVisibility; else m.blockVisibility = false; wp.data.dispatch('core/block-editor').updateBlockAttributes(id, { metadata: m }); return 1`);
+  const hideable = (await blocks()).find((b) => b.name === 'pm/showroom');
+  const setVisible = (v) => page.eval(`const s = wp.data.select('core/block-editor'); const id = ${JSON.stringify(hideable.id)}; const m = { ...(s.getBlockAttributes(id).metadata || {}) }; if (${v}) delete m.blockVisibility; else m.blockVisibility = false; wp.data.dispatch('core/block-editor').updateBlockAttributes(id, { metadata: m }); return 1`);
   await setVisible(false);
   out.hideSave = await save();
   out.hiddenInEditor = await page.eval(`return wp.data.select('core/block-editor').getBlocks().filter(b => b.attributes.metadata?.blockVisibility === false).map(b => b.name)`);
   let h = await html();
-  out.hidden = `${h.includes('id="gallery"') ? 'STILL SHOWN' : 'section gone'}, ${h.includes('js/slider-drag.js') ? 'SCRIPT STILL LOADED' : 'script not loaded'}`;
+  out.hidden = `${h.includes('id="showroom"') ? 'STILL SHOWN' : 'section gone'}, ${h.includes('js/showroom-slider.js') ? 'SCRIPT STILL LOADED' : 'script not loaded'}`;
   await setVisible(true);
   out.unhideSave = await save();
   h = await html();
-  out.unhidden = `${h.includes('id="gallery"') ? 'section back' : 'MISSING'}, ${h.includes('js/slider-drag.js') ? 'script back' : 'SCRIPT MISSING'}`;
+  out.unhidden = `${h.includes('id="showroom"') ? 'section back' : 'MISSING'}, ${h.includes('js/showroom-slider.js') ? 'script back' : 'SCRIPT MISSING'}`;
 
   // 5. The synced pattern: edit Our Values once (in the pattern), shown on Home and About.
   await open(PATTERN_ID);
@@ -179,9 +179,7 @@ export default async ({ page, sleep, shot }) => {
   out.car.id = await page.eval(`return Number(document.getElementById('post_ID')?.value || 0)`);
   h = await html();
   const featuredSection = (h.match(/<section id="floor"[\s\S]*?<\/section>/) || [''])[0];
-  const latestSection = (h.match(/<section id="gallery"[\s\S]*?<\/section>/) || [''])[0];
   out.car.featured = featuredSection.includes('Zqcar Coupé') ? `shown (tile ${[...featuredSection.matchAll(/pm-tile__model">\s*([^<]+)/g)].map((m) => m[1].trim()).indexOf('Zqcar Coupé') + 1} of ${(featuredSection.match(/class="pm-tile"/g) || []).length})` : 'NOT SHOWN';
-  out.car.latest = latestSection.includes('Zqcaption test car') ? `shown (slide ${[...latestSection.matchAll(/<figcaption[^>]*>\s*<span>([^<]*)/g)].map((m) => m[1]).indexOf('Zqcaption test car') + 1})` : 'NOT SHOWN';
   await page.go(ADMIN + 'edit.php?post_type=pm_car');
   await sleep(1500);
   out.shots.push(await shot('cars-list-with-test-car'));

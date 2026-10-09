@@ -13,7 +13,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 
 const SITE = process.env.SITE || 'http://panmotors.local/';
-const PAGES = { home: '', 'featured-cars': 'featured-cars/', about: 'about/', showroom: 'showroom/', contact: 'contact/', 'latest-cars': 'latest-cars/', events: 'events/', privacy: 'privacy-policy/', '404': 'no-such-page/' };
+const PAGES = { home: '', 'featured-cars': 'featured-cars/', about: 'about/', showroom: 'showroom/', contact: 'contact/', events: 'events/', privacy: 'privacy-policy/', '404': 'no-such-page/' };
 // Every published event, from the sitemap (Rank Math's when active, else core's). Cars are never in it.
 let sitemap = '';
 for (const map of ['pm_event-sitemap.xml', 'wp-sitemap-posts-pm_event-1.xml']) {

@@ -503,16 +503,6 @@ WP_CLI::log( 'Cars: ' . count( $pm_cars ) . ' in the seed, missing ones created.
  *    blocks on the page itself. Inner pages wait for their design (D10).
  * ------------------------------------------------------------------
  */
-$pm_cta = panmotors_seed_block(
-	'pm/cta-band',
-	array(
-		'cta_title' => 'Come and see',
-		'cta_text'  => 'Call, write, or walk in during showroom hours. Someone from the family will answer.',
-		'cta_label' => 'Contact us',
-		'cta_link'  => get_page_by_path( 'contact' ) ? get_page_by_path( 'contact' )->ID : 0,
-	)
-);
-
 $pm_about_block = panmotors_seed_block(
 	'pm/about',
 	array(
@@ -565,15 +555,6 @@ $pm_enquire_block = panmotors_seed_block(
 	)
 );
 
-$pm_hero = static fn( $eyebrow, $intro, $image ) => panmotors_seed_block(
-	'pm/page-hero',
-	array(
-		'page_eyebrow'    => $eyebrow,
-		'page_intro'      => $intro,
-		'page_hero_image' => $image,
-	)
-);
-
 // Contact page questions (DRAFT answers for the client to confirm).
 $pm_faq_block = panmotors_seed_block(
 	'pm/faq',
@@ -613,26 +594,7 @@ $pm_faq_block = panmotors_seed_block(
 );
 
 $pm_pages = array(
-	'latest'   => panmotors_seed_block_page(
-		'latest-cars',
-		'Latest Cars',
-		implode(
-			"\n\n",
-			array(
-				$pm_hero( 'Latest arrivals', 'Recent arrivals at the Paphos showroom, photographed as they came in.', $pm_media['mclaren'] ),
-				panmotors_seed_paragraphs( '<p>New cars reach Pan Motors throughout the year. This page shows the most recent arrivals in Paphos, before they join the featured collection or find their next owner.</p>' ),
-				panmotors_seed_block(
-					'pm/latest-cars',
-					array(
-						'latest_eyebrow' => 'Latest arrivals',
-						'latest_title'   => 'Latest Cars',
-						'latest_limit'   => 12,
-					)
-				),
-				$pm_cta,
-			)
-		)
-	),
+	// No Latest Cars page (removed 9 Oct 2026, migration 2026-10-09-remove-latest-cars.php).
 	'contact'  => panmotors_seed_block_page( 'contact', 'Contact', panmotors_demo_contact_content( $pm_faq_block ) ),
 	// After Contact, which its call to action links to (_design/events/events.html).
 	'events'   => panmotors_seed_block_page( 'events', 'Events', panmotors_demo_events_page_content() ),
@@ -805,14 +767,6 @@ $pm_home_content = implode(
 		),
 		$pm_values_dark,
 		$pm_about_block,
-		panmotors_seed_block(
-			'pm/latest-cars',
-			array(
-				'latest_eyebrow' => 'Latest arrivals',
-				'latest_title'   => 'Latest Cars',
-				'latest_limit'   => 6,
-			)
-		),
 		panmotors_demo_events_intro_block(),
 		panmotors_seed_block(
 			'pm/live',
@@ -979,7 +933,6 @@ $pm_menus = array(
 		array(
 			'Featured Cars'    => $pm_pages['featured'],
 			'About Pan Motors' => $pm_pages['about'],
-			'Latest Cars'      => $pm_pages['latest'],
 			'Events'           => $pm_pages['events'],
 			'Showroom'         => $pm_pages['showroom'],
 		)

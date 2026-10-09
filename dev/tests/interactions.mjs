@@ -102,7 +102,7 @@ async function run(name) {
     // Home sliders.
     {
       const { ctx, page } = await open('');
-      for (const [label, root] of [['latest slider', '#gallery'], ['showroom slider', '#showroom']]) {
+      for (const [label, root] of [['showroom slider', '#showroom']]) {
         const count = () => page.evaluate((r) => document.querySelector(`${r} [data-slider-count]`).textContent.trim(), root);
         const c0 = await count();
         await page.locator(`${root} [data-slider-next]:visible`).first().focus();

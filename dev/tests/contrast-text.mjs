@@ -23,7 +23,6 @@ export const TARGETS = [
   ['featured-cars/', '.pm-car__marque', 'Featured Cars card marque'],
   ['about/', '.pm-page-header__eyebrow', 'About header eyebrow'],
   ['about/', '.pm-service__index', 'About What We Do index'],
-  ['latest-cars/', '.pm-page-hero__eyebrow', 'Latest Cars hero eyebrow'],
   ['showroom/', '.pm-page-header__eyebrow', 'Showroom header eyebrow'],
   ['showroom/', '.pm-slider__count .is-current', 'Showroom Inside counter'],
   ['showroom/', '.pm-slider__captions .is-current', 'Showroom Inside caption'],
