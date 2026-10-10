@@ -99,6 +99,7 @@ One session each. Every session: compare with `_design/v2/<page>.html` at 1440, 
 - [ ] Cross-browser by hand: Safari (macOS), iOS Safari, Android Chrome
 - [x] Install the form plugin, paste its shortcode in options, check it matches the design (Fluent Forms `[fluentform id="1"]`, styled by `.pm-form`, axe clean)
 - [ ] Send one real test message through the form and check the notification email arrives
+- [x] No size or dimension limits on uploads (10 Oct 2026): every min/max width, height and file size in `dev/acf-fields.py` empty, recommended sizes kept as guidance in the instructions; a 600px image checked in the hero, car tiles and event cards
 - [x] Deploy package: `bash dev/build-zip.sh` (production files only, `.distignore`), `screenshot.png`, `Requires PHP: 8.2` (tested on a fresh install with PHP 8.2)
 - [ ] Remove demo content flags, deploy
 
