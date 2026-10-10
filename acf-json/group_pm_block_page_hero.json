@@ -66,7 +66,7 @@
             "name": "page_hero_image",
             "aria-label": "",
             "type": "image",
-            "instructions": "Optional background behind the page title, shown in black and white. Landscape, at least 2400px wide, JPG or WebP, sRGB colour.",
+            "instructions": "Optional background behind the page title, shown in black and white. Landscape, best at 2400px wide or larger, JPG or WebP, sRGB colour. Smaller files still upload.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -76,12 +76,12 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": 1920,
+            "min_width": "",
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         }
@@ -107,5 +107,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1791642406
 }

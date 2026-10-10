@@ -126,7 +126,7 @@
             "name": "business_photos",
             "aria-label": "",
             "type": "gallery",
-            "instructions": "Up to three photos of the showroom for Google and AI search (not shown on the site). Landscape, at least 1200px wide, JPG or WebP, sRGB colour. Empty: no photos are given.",
+            "instructions": "Up to three photos of the showroom for Google and AI search (not shown on the site). Landscape, best at 1200px wide or larger, JPG or WebP, sRGB colour. Smaller files still upload. Empty: no photos are given.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -138,12 +138,12 @@
             "library": "all",
             "min": "",
             "max": 3,
-            "min_width": 1200,
+            "min_width": "",
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "insert": "append",
             "preview_size": "medium"
@@ -1455,7 +1455,7 @@
             "name": "font_heading_regular",
             "aria-label": "",
             "type": "file",
-            "instructions": "WOFF2, up to 2 MB. The regular style.",
+            "instructions": "WOFF2, ideally under 2 MB. The regular style.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -1475,7 +1475,7 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": 2,
+            "max_size": "",
             "mime_types": "woff2"
         },
         {
@@ -1504,7 +1504,7 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": 2,
+            "max_size": "",
             "mime_types": "woff2"
         },
         {
@@ -1513,7 +1513,7 @@
             "name": "font_body_regular",
             "aria-label": "",
             "type": "file",
-            "instructions": "WOFF2, up to 2 MB. The regular style.",
+            "instructions": "WOFF2, ideally under 2 MB. The regular style.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -1533,7 +1533,7 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": 2,
+            "max_size": "",
             "mime_types": "woff2"
         },
         {
@@ -1562,7 +1562,7 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": 2,
+            "max_size": "",
             "mime_types": "woff2"
         },
         {
@@ -1715,7 +1715,7 @@
             "name": "logo_light",
             "aria-label": "",
             "type": "image",
-            "instructions": "Optional. A dark version of the logo, used in the light footer. Empty: the main logo is turned dark automatically. PNG or WebP with a transparent background, at least 300px wide.",
+            "instructions": "Optional. A dark version of the logo, used in the light footer. Empty: the main logo is turned dark automatically. PNG or WebP with a transparent background, best at 300px wide or larger. Smaller files still upload.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1731,7 +1731,7 @@
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "png, webp",
             "preview_size": "medium"
         },
@@ -1741,7 +1741,7 @@
             "name": "share_image",
             "aria-label": "",
             "type": "image",
-            "instructions": "Shown when a page is shared on social media or in messages and the page has no featured image of its own. 1200 × 630px. JPG or WebP, sRGB colour.",
+            "instructions": "Shown when a page is shared on social media or in messages and the page has no featured image of its own. Best at 1200 × 630px. JPG or WebP, sRGB colour. Smaller files still upload.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1752,12 +1752,12 @@
             "pm_design": 1,
             "return_format": "id",
             "library": "all",
-            "min_width": 1200,
-            "min_height": 630,
+            "min_width": "",
+            "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
@@ -2337,5 +2337,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1791319276
+    "modified": 1791642406
 }

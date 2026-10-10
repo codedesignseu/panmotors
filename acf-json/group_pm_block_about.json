@@ -31,7 +31,7 @@
             "name": "about_image",
             "aria-label": "",
             "type": "image",
-            "instructions": "Portrait (4:5), at least 1080 × 1350px. JPG or WebP, sRGB colour.",
+            "instructions": "Portrait (4:5), best at 1080 × 1350px or larger. JPG or WebP, sRGB colour. Smaller files still upload.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -49,12 +49,12 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": 1080,
-            "min_height": 1350,
+            "min_width": "",
+            "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
@@ -95,7 +95,7 @@
             "name": "about_video_file",
             "aria-label": "",
             "type": "file",
-            "instructions": "MP4 or WebM, portrait (4:5) or close, 10–20 seconds, under 8 MB. Plays without sound, on a loop.",
+            "instructions": "MP4 or WebM, portrait (4:5) or close, 10–20 seconds, ideally under 8 MB. Plays without sound, on a loop.",
             "required": 1,
             "conditional_logic": [
                 [
@@ -119,7 +119,7 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": 10,
+            "max_size": "",
             "mime_types": "mp4, webm"
         },
         {
@@ -158,7 +158,7 @@
             "name": "about_poster",
             "aria-label": "",
             "type": "image",
-            "instructions": "Shown before the video plays, for visitors who turn off motion, and in the editor. Portrait (4:5), at least 1080 × 1350px. JPG or WebP, sRGB colour. Its alt text from the media library describes the video.",
+            "instructions": "Shown before the video plays, for visitors who turn off motion, and in the editor. Portrait (4:5), best at 1080 × 1350px or larger. JPG or WebP, sRGB colour. Smaller files still upload. Its alt text from the media library describes the video.",
             "required": 1,
             "conditional_logic": [
                 [
@@ -176,12 +176,12 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": 1080,
-            "min_height": 1350,
+            "min_width": "",
+            "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
@@ -351,5 +351,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1791318445
+    "modified": 1791642406
 }

@@ -8,7 +8,7 @@
             "name": "image",
             "aria-label": "",
             "type": "image",
-            "instructions": "Landscape, at least 1960 × 1102px. JPG or WebP, sRGB colour. Keep the car in the centre: Featured Cars crops it tall, Latest Cars shows it 16:9. Empty: a plain dark card until the photo is ready (homepage rows need a photo).",
+            "instructions": "Landscape, best at 1960 × 1102px or larger. JPG or WebP, sRGB colour. Smaller files still upload. Keep the car in the centre: Featured Cars crops it tall, Latest Cars shows it 16:9. Empty: a plain dark card until the photo is ready (homepage rows need a photo).",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,12 +18,12 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": 1960,
-            "min_height": 1102,
+            "min_width": "",
+            "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
@@ -403,5 +403,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790520977
+    "modified": 1791642406
 }

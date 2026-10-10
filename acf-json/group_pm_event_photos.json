@@ -8,7 +8,7 @@
             "name": "photos",
             "aria-label": "",
             "type": "gallery",
-            "instructions": "Up to 12 photos for the slider on the event page; the first two also fill the row on the Events page, after the main image. Landscape (3:2), at least 1800px wide, JPG or WebP, sRGB colour. A caption from the media library shows under the photo. Drag to reorder. Empty: no slider.",
+            "instructions": "Up to 12 photos for the slider on the event page; the first two also fill the row on the Events page, after the main image. Landscape (3:2), best at 1800px wide or larger, JPG or WebP, sRGB colour. Smaller files still upload. A caption from the media library shows under the photo. Drag to reorder. Empty: no slider.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -20,12 +20,12 @@
             "library": "all",
             "min": "",
             "max": 12,
-            "min_width": 1600,
+            "min_width": "",
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "insert": "append",
             "preview_size": "medium"
@@ -52,5 +52,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1791319276
+    "modified": 1791642406
 }

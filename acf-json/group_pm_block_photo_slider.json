@@ -48,7 +48,7 @@
             "name": "slider_photos",
             "aria-label": "",
             "type": "gallery",
-            "instructions": "Landscape (16:10), at least 2160px wide, JPG or WebP, sRGB colour. The caption under each photo is the image's Caption in the media library; its alt text describes it for screen readers. Drag to reorder.",
+            "instructions": "Landscape (16:10), best at 2160px wide or larger, JPG or WebP, sRGB colour. Smaller files still upload. The caption under each photo is the image's Caption in the media library; its alt text describes it for screen readers. Drag to reorder.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -60,12 +60,12 @@
             "library": "all",
             "min": 1,
             "max": 12,
-            "min_width": 1600,
+            "min_width": "",
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "insert": "append",
             "preview_size": "medium"
@@ -92,5 +92,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790525817
+    "modified": 1791642406
 }

@@ -48,7 +48,7 @@
             "name": "hero_video",
             "aria-label": "",
             "type": "file",
-            "instructions": "MP4, landscape, 10–20 seconds, under 8 MB. Plays silently. Leave empty to show only the photo.",
+            "instructions": "MP4, landscape, 10–20 seconds, ideally under 8 MB. Plays silently. Leave empty to show only the photo.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -59,7 +59,7 @@
             "return_format": "id",
             "library": "all",
             "min_size": "",
-            "max_size": 10,
+            "max_size": "",
             "mime_types": "mp4"
         },
         {
@@ -68,7 +68,7 @@
             "name": "hero_poster",
             "aria-label": "",
             "type": "image",
-            "instructions": "Shown while the video loads and for visitors who turn off motion. Landscape, at least 2400px wide, JPG or WebP, sRGB colour.",
+            "instructions": "Shown while the video loads and for visitors who turn off motion. Landscape, best at 2400px wide or larger, JPG or WebP, sRGB colour. Smaller files still upload.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -78,12 +78,12 @@
             },
             "return_format": "id",
             "library": "all",
-            "min_width": 1920,
+            "min_width": "",
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
-            "max_size": 8,
+            "max_size": "",
             "mime_types": "jpg, jpeg, png, webp, avif",
             "preview_size": "medium"
         },
@@ -154,5 +154,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790513177
+    "modified": 1791642406
 }

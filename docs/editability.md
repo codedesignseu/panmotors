@@ -55,7 +55,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 | Block | Element | Where |
 |---|---|---|
 | Top video | Small red line, big title (new line = line break) | block fields |
-| | Background video, background photo | block fields (MP4 under 8 MB; photo ≥ 1920px wide, 2400 recommended) |
+| | Background video, background photo | block fields (MP4 ideally under 8 MB; photo 2400px wide recommended) |
 | | Button text, Button goes to | block fields (page picker, required) |
 | | ↓ arrow | decorative icon (aria-hidden) |
 | Marques strip | Names, separator | Settings → Marques (the block has no fields) |
@@ -139,7 +139,7 @@ Content architecture: Gutenberg + ACF Blocks (D11, [`blocks.md`](blocks.md)). Up
 
 1. **Events → Add event.** The screen opens with the title at the top, two empty paragraphs for the story under it, and the **Event details** and **Photographs** boxes below (drag the bar between them to give either more room).
 2. **Title**: the event's name, as it should read on the page (e.g. "Night at Avenue 65"). It becomes the big heading of the event page and its address.
-3. **Main image** (sidebar → Event → Set main image): required. The photo at the top of the event page, the first photo on the Events page and the image shared on social media. Landscape, at least 2400px wide, JPG or WebP. Its alt text in the media library describes it.
+3. **Main image** (sidebar → Event → Set main image): required. The photo at the top of the event page, the first photo on the Events page and the image shared on social media. Landscape, best at 2400px wide or larger, JPG or WebP (smaller files still upload). Its alt text in the media library describes it.
 4. **Story**: a few paragraphs about the event. Headings, lists, quotes, images and buttons are available from the + button. Leave a paragraph empty and it is not shown.
 5. **Event details**:
    - *Event type*: one word in red above the title (Evening, Drive, Unveiling…).
@@ -183,8 +183,9 @@ Unchanged: Settings → Footer (footer line, copyright with `{year}`), Settings 
 ## Editor experience
 
 - Blocks preview with the front-end markup and CSS (`main.css` + `editor.css` in the editor canvas). In the editor: no entrance or scroll animations, videos show their photo, the marquee holds still, sliders show their first slide, the About section stays dark. An empty block shows a dashed placeholder saying what to fill. The page title sits as a small label above the blocks.
-- Labels and instructions are written for the client: what the field is, where it shows, how long. Image and video fields state size and format; minimum sizes protect the layout (car photos ≥ 1960 × 1102px). Text that breaks the layout has a character limit.
+- Labels and instructions are written for the client: what the field is, where it shows, how long. Image and video fields state the recommended size and format (car photos 1960 × 1102px). Text that breaks the layout has a character limit.
 - Text formats: bold, italic, link. Core block styles the design doesn't have (outline buttons, rounded images, plain quotes) are removed. Embeds: YouTube and Vimeo in the inserter (Instagram links become embed blocks when pasted, and print as links). No Openverse, block directory, remote patterns, or code editor for the client.
+- No size limits on uploads (no minimum or maximum width, height or file size on any image, gallery, video or font field): recommended sizes are guidance only.
 - Messages link to where shared content is edited ({settings} → Pan Motors settings, {cars} → Cars).
 
 ## Client role (Editor)

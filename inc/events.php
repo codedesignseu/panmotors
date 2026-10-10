@@ -589,7 +589,7 @@ function panmotors_event_editor_assets() {
 		'pm-event-editor',
 		'pmEventEditor',
 		array(
-			'hint' => __( 'Required. The photo at the top of the event page, the first photo on the Events page and the image shared on social media. Landscape, at least 2400px wide, JPG or WebP, sRGB colour.', 'panmotors' ),
+			'hint' => __( 'Required. The photo at the top of the event page, the first photo on the Events page and the image shared on social media. Landscape, best at 2400px wide or larger, JPG or WebP, sRGB colour. Smaller files still upload.', 'panmotors' ),
 		)
 	);
 }

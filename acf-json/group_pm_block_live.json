@@ -114,7 +114,7 @@
                     "name": "video",
                     "aria-label": "",
                     "type": "file",
-                    "instructions": "Vertical MP4 (9:16), under 8 MB. Plays silently while on screen.",
+                    "instructions": "Vertical MP4 (9:16), ideally under 8 MB. Plays silently while on screen.",
                     "required": 0,
                     "conditional_logic": [
                         [
@@ -133,7 +133,7 @@
                     "return_format": "id",
                     "library": "all",
                     "min_size": "",
-                    "max_size": 8,
+                    "max_size": "",
                     "mime_types": "mp4",
                     "parent_repeater": "field_pm_live_posts"
                 },
@@ -143,7 +143,7 @@
                     "name": "image",
                     "aria-label": "",
                     "type": "image",
-                    "instructions": "The photo, or the still shown before a video plays. Portrait (4:5), at least 1080px wide. JPG or WebP, sRGB colour.",
+                    "instructions": "The photo, or the still shown before a video plays. Portrait (4:5), best at 1080px wide or larger. JPG or WebP, sRGB colour. Smaller files still upload.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -153,12 +153,12 @@
                     },
                     "return_format": "id",
                     "library": "all",
-                    "min_width": 1080,
+                    "min_width": "",
                     "min_height": "",
                     "min_size": "",
                     "max_width": "",
                     "max_height": "",
-                    "max_size": 8,
+                    "max_size": "",
                     "mime_types": "jpg, jpeg, png, webp, avif",
                     "preview_size": "medium",
                     "parent_repeater": "field_pm_live_posts"
@@ -268,5 +268,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1791318415
+    "modified": 1791642406
 }

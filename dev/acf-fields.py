@@ -7,7 +7,8 @@ instructions and limits stay consistent. Edit field groups here, not in wp-admin
 
 Editor rules (docs/editability.md):
 - Every label and instruction is written for the client: what it is, where it shows, how long.
-- Images and videos state the recommended size and format; minimums protect the layout.
+- Images and videos state the recommended size and format as guidance only: no size or dimension
+  limits on uploads, smaller files still upload.
 - Text that breaks the layout when too long gets a character limit.
 - Fields marked pm_admin_only are hidden from non-administrators (inc/acf.php).
 - Fields marked pm_design (the Design tab, D12) are for administrators, and for Editors only when
@@ -25,6 +26,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'acf-json')
 NOW = int(time.time())
 
 IMG_FORMAT = 'JPG or WebP, sRGB colour.'
+SMALLER = 'Smaller files still upload.'
 
 
 # ---------------------------------------------------------------- Field helpers
@@ -82,22 +84,24 @@ def number(key, label, name=None, **kw):
     return base(key, label, name or key, 'number', **kw)
 
 
-def image(key, label, name=None, min_width='', min_height='', **kw):
+# No size or dimension limits on uploads: recommended sizes are guidance in the instructions only.
+NO_LIMITS = dict(min_width='', min_height='', min_size='', max_width='', max_height='', max_size='')
+
+
+def image(key, label, name=None, **kw):
     return base(key, label, name or key, 'image', return_format='id', library='all',
-                min_width=min_width, min_height=min_height, min_size='', max_width='', max_height='',
-                max_size=kw.pop('max_size', 8), mime_types=kw.pop('mime_types', 'jpg, jpeg, png, webp, avif'),
+                **NO_LIMITS, mime_types=kw.pop('mime_types', 'jpg, jpeg, png, webp, avif'),
                 preview_size='medium', **kw)
 
 
 def video(key, label, name=None, **kw):
     return base(key, label, name or key, 'file', return_format='id', library='all',
-                min_size='', max_size=kw.pop('max_size', 10), mime_types=kw.pop('mime_types', 'mp4'), **kw)
+                min_size='', max_size='', mime_types=kw.pop('mime_types', 'mp4'), **kw)
 
 
-def gallery(key, label, name=None, min_width='', min_height='', **kw):
+def gallery(key, label, name=None, **kw):
     return base(key, label, name or key, 'gallery', return_format='id', library='all',
-                min=kw.pop('min', ''), max=kw.pop('max', ''), min_width=min_width, min_height=min_height, min_size='',
-                max_width='', max_height='', max_size=8, mime_types='jpg, jpeg, png, webp, avif',
+                min=kw.pop('min', ''), max=kw.pop('max', ''), **NO_LIMITS, mime_types='jpg, jpeg, png, webp, avif',
                 insert='append', preview_size='medium', **kw)
 
 
@@ -156,7 +160,7 @@ def range_field(key, label, default, min, max, step=1, append='', name=None, **k
 
 def font_file(key, label, name=None, **kw):
     return base(key, label, name or key, 'file', return_format='id', library='all',
-                min_size='', max_size=2, mime_types='woff2', **kw)
+                min_size='', max_size='', mime_types='woff2', **kw)
 
 
 def true_false(key, label, name=None, default=1, on='On', off='Off', **kw):
@@ -221,9 +225,9 @@ options = group('options', 'Pan Motors settings', [
              instructions='One factual sentence: who you are, what you do, where. Shown as the paragraph in '
                           'the homepage About section and used by Google. Up to 200 characters.'),
     number('founded_year', 'Year founded', width='50', min=1900, max=2100, instructions='Optional. Used by Google only.'),
-    gallery('business_photos', 'Business photos', max=3, min_width=1200,
+    gallery('business_photos', 'Business photos', max=3,
             instructions='Up to three photos of the showroom for Google and AI search (not shown on the site). '
-                         'Landscape, at least 1200px wide, ' + IMG_FORMAT + ' Empty: no photos are given.'),
+                         'Landscape, best at 1200px wide or larger, ' + IMG_FORMAT + ' ' + SMALLER + ' Empty: no photos are given.'),
 
     tab('contact', 'Contact'),
     text('street_address', 'Street', required=1, width='50', maxlength=60, placeholder='Avenue 65'),
@@ -335,13 +339,13 @@ options = group('options', 'Pan Motors settings', [
         'archivo': 'Archivo', 'inter': 'Inter', 'manrope': 'Manrope', 'dm-sans': 'DM Sans', 'custom': 'Custom (upload)',
     }, 'archivo', width='50', design=True, instructions='Paragraphs, menus, buttons and small labels.'),
     font_file('font_heading_regular', 'Heading font file', width='25', design=True,
-              instructions='WOFF2, up to 2 MB. The regular style.',
+              instructions='WOFF2, ideally under 2 MB. The regular style.',
               conditional_logic=[[{'field': 'field_pm_font_heading', 'operator': '==', 'value': 'custom'}]]),
     font_file('font_heading_italic', 'Heading font file, italic', width='25', design=True,
               instructions='Optional. WOFF2.',
               conditional_logic=[[{'field': 'field_pm_font_heading', 'operator': '==', 'value': 'custom'}]]),
     font_file('font_body_regular', 'Body font file', width='25', design=True,
-              instructions='WOFF2, up to 2 MB. The regular style.',
+              instructions='WOFF2, ideally under 2 MB. The regular style.',
               conditional_logic=[[{'field': 'field_pm_font_body', 'operator': '==', 'value': 'custom'}]]),
     font_file('font_body_italic', 'Body font file, italic', width='25', design=True,
               instructions='Optional. WOFF2.',
@@ -363,11 +367,11 @@ options = group('options', 'Pan Motors settings', [
                 instructions='The same logo on screens up to 880px wide.'),
     image('logo_light', 'Logo for light backgrounds', width='50', design=True,
           instructions='Optional. A dark version of the logo, used in the light footer. Empty: the main logo is '
-                       'turned dark automatically. PNG or WebP with a transparent background, at least 300px wide.',
+                       'turned dark automatically. PNG or WebP with a transparent background, best at 300px wide or larger. ' + SMALLER,
           mime_types='png, webp'),
-    image('share_image', 'Default share image', min_width=1200, min_height=630, width='50', design=True,
+    image('share_image', 'Default share image', width='50', design=True,
           instructions='Shown when a page is shared on social media or in messages and the page has no featured '
-                       'image of its own. 1200 × 630px. ' + IMG_FORMAT),
+                       'image of its own. Best at 1200 × 630px. ' + IMG_FORMAT + ' ' + SMALLER),
     message('site_icon', 'Main logo and site icon', '{identity}', design=True),
 
     tab('events', 'Events'),
@@ -426,8 +430,8 @@ def relationship(key, label, post_type, name=None, **kw):
 
 
 car = group('car', 'Car', [
-    image('car_image', 'Photo', name='image', min_width=1960, min_height=1102,
-          instructions='Landscape, at least 1960 × 1102px. ' + IMG_FORMAT + ' Keep the car in the centre: '
+    image('car_image', 'Photo', name='image',
+          instructions='Landscape, best at 1960 × 1102px or larger. ' + IMG_FORMAT + ' ' + SMALLER + ' Keep the car in the centre: '
                        'Featured Cars crops it tall, Latest Cars shows it 16:9. Empty: a plain dark card until '
                        'the photo is ready (homepage rows need a photo).'),
     text('car_marque', 'Marque', name='marque', required=1, width='50', maxlength=20, placeholder='Porsche'),
@@ -511,9 +515,9 @@ event = group('event', 'Event details', [
     desc='The facts of one event. The story is in the block editor above.')
 
 event_photos = group('event_photos', 'Photographs', [
-    gallery('event_photos', 'Photographs', name='photos', max=12, min_width=1600,
+    gallery('event_photos', 'Photographs', name='photos', max=12,
             instructions='Up to 12 photos for the slider on the event page; the first two also fill the row on the Events '
-                         'page, after the main image. Landscape (3:2), at least 1800px wide, ' + IMG_FORMAT +
+                         'page, after the main image. Landscape (3:2), best at 1800px wide or larger, ' + IMG_FORMAT + ' ' + SMALLER +
                          ' A caption from the media library shows under the photo. Drag to reorder. Empty: no slider.'),
 ], EVENT, order=1)
 
@@ -535,9 +539,9 @@ b_hero = block_group('hero', 'Top video', [
     textarea('hero_title', 'Big title', rows=2, required=1, maxlength=40,
              instructions='Each new line starts a new line on the page. Up to 40 characters.'),
     video('hero_video', 'Background video',
-          instructions='MP4, landscape, 10–20 seconds, under 8 MB. Plays silently. Leave empty to show only the photo.'),
-    image('hero_poster', 'Background photo', required=1, min_width=1920,
-          instructions='Shown while the video loads and for visitors who turn off motion. Landscape, at least 2400px wide, ' + IMG_FORMAT),
+          instructions='MP4, landscape, 10–20 seconds, ideally under 8 MB. Plays silently. Leave empty to show only the photo.'),
+    image('hero_poster', 'Background photo', required=1,
+          instructions='Shown while the video loads and for visitors who turn off motion. Landscape, best at 2400px wide or larger, ' + IMG_FORMAT + ' ' + SMALLER),
     text('hero_cta_label', 'Button text', width='50', default_value='View the cars', maxlength=24),
     page_link('hero_cta_link', 'Button goes to', width='50', required=1, allow_null=0,
               instructions='The page the button opens, e.g. Featured Cars.'),
@@ -583,23 +587,23 @@ ABOUT_VIDEO = [{'field': 'field_pm_about_media', 'operator': '==', 'value': 'vid
 b_about = block_group('about', 'About Pan Motors', [
     button_group('about_media', 'Media type', {'image': 'Image', 'video': 'Video'}, 'image',
                  instructions='What fills the frame on the left: a photo, or a video with a poster photo.'),
-    image('about_image', 'Photo', min_width=1080, min_height=1350,
-          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT,
+    image('about_image', 'Photo',
+          instructions='Portrait (4:5), best at 1080 × 1350px or larger. ' + IMG_FORMAT + ' ' + SMALLER,
           conditional_logic=[[{'field': 'field_pm_about_media', 'operator': '!=', 'value': 'video'}]]),
     button_group('about_video_source', 'Video source', {'upload': 'Upload', 'link': 'YouTube or Vimeo'}, 'upload',
                  instructions='Upload: a short silent clip from the media library that plays by itself while the section '
                               'is on screen. YouTube or Vimeo: the poster shows until the visitor presses play.',
                  conditional_logic=[ABOUT_VIDEO]),
-    video('about_video_file', 'Video file', required=1, max_size=10, mime_types='mp4, webm',
-          instructions='MP4 or WebM, portrait (4:5) or close, 10–20 seconds, under 8 MB. Plays without sound, on a loop.',
+    video('about_video_file', 'Video file', required=1, mime_types='mp4, webm',
+          instructions='MP4 or WebM, portrait (4:5) or close, 10–20 seconds, ideally under 8 MB. Plays without sound, on a loop.',
           conditional_logic=[ABOUT_VIDEO + [{'field': 'field_pm_about_video_source', 'operator': '==', 'value': 'upload'}]]),
     url('about_video_url', 'Video link', required=1, placeholder='https://www.youtube.com/watch?v=…',
         instructions='The address of the video on YouTube or Vimeo (other sites are not accepted). It loads only when '
                      'the visitor presses play, because YouTube and Vimeo set cookies.',
         conditional_logic=[ABOUT_VIDEO + [{'field': 'field_pm_about_video_source', 'operator': '==', 'value': 'link'}]]),
-    image('about_poster', 'Poster image', required=1, min_width=1080, min_height=1350,
+    image('about_poster', 'Poster image', required=1,
           instructions='Shown before the video plays, for visitors who turn off motion, and in the editor. Portrait (4:5), '
-                       'at least 1080 × 1350px. ' + IMG_FORMAT + ' Its alt text from the media library describes the video.',
+                       'best at 1080 × 1350px or larger. ' + IMG_FORMAT + ' ' + SMALLER + ' Its alt text from the media library describes the video.',
           conditional_logic=[ABOUT_VIDEO]),
     text('about_eyebrow', 'Small red line', maxlength=40, instructions='Above the heading.'),
     heading('about_title', 'About Pan Motors'),
@@ -627,11 +631,11 @@ b_live = block_group('live', 'Pan Motors Live', [
          instructions='Opens your Instagram (link in {settings} → Social).'),
     repeater('live_posts', 'Posts', [
         button_group('post_type', 'Type', {'video': 'Video', 'photo': 'Photo'}, 'video', name='type'),
-        video('post_video', 'Video', name='video', max_size=8,
-              instructions='Vertical MP4 (9:16), under 8 MB. Plays silently while on screen.',
+        video('post_video', 'Video', name='video',
+              instructions='Vertical MP4 (9:16), ideally under 8 MB. Plays silently while on screen.',
               conditional_logic=[[{'field': 'field_pm_post_type', 'operator': '==', 'value': 'video'}]]),
-        image('post_image', 'Photo', name='image', min_width=1080,
-              instructions='The photo, or the still shown before a video plays. Portrait (4:5), at least 1080px wide. ' + IMG_FORMAT),
+        image('post_image', 'Photo', name='image',
+              instructions='The photo, or the still shown before a video plays. Portrait (4:5), best at 1080px wide or larger. ' + IMG_FORMAT + ' ' + SMALLER),
         url('post_url', 'Instagram link', name='url', required=1, instructions='The post this tile opens.'),
         text('post_caption', 'Caption', name='caption', width='50', maxlength=18),
         text('post_likes', 'Likes', name='likes', width='25', maxlength=6, instructions='Optional, e.g. 24K.'),
@@ -645,8 +649,8 @@ b_showroom = block_group('showroom', 'The Showroom', [
     heading('showroom_title', 'The Showroom'),
     textarea('showroom_intro', 'Intro', rows=2, maxlength=200,
              instructions='One or two sentences next to the heading. Up to 200 characters.'),
-    gallery('showroom_photos', 'Photos', min=1, max=12, min_width=1600,
-            instructions='Landscape (16:10), at least 2160px wide, ' + IMG_FORMAT +
+    gallery('showroom_photos', 'Photos', min=1, max=12,
+            instructions='Landscape (16:10), best at 2160px wide or larger, ' + IMG_FORMAT + ' ' + SMALLER +
                          ' The caption under each photo is the image\'s Caption in the media library.'),
     true_false('showroom_hours', 'Opening hours', default=1, on='Shown', off='Hidden',
                instructions='The opening hours from {settings} under the photos.'),
@@ -685,8 +689,8 @@ b_page_hero = block_group('page-hero', 'Page top', [
     text('page_eyebrow', 'Small red line', maxlength=40, instructions='Above the page title, e.g. "Avenue 65, Mesoyi".'),
     textarea('page_intro', 'Short intro', rows=2, maxlength=200,
              instructions='One or two sentences under the page title. Also used as the page description for Google. Up to 200 characters.'),
-    image('page_hero_image', 'Top image', min_width=1920,
-          instructions='Optional background behind the page title, shown in black and white. Landscape, at least 2400px wide, ' + IMG_FORMAT),
+    image('page_hero_image', 'Top image',
+          instructions='Optional background behind the page title, shown in black and white. Landscape, best at 2400px wide or larger, ' + IMG_FORMAT + ' ' + SMALLER),
 ])
 
 b_cta = block_group('cta-band', 'Call to action', [
@@ -718,8 +722,8 @@ b_page_header = block_group('page-header', 'Page header', [
                           'Empty: the page title. Up to 40 characters.'),
     textarea('header_intro', 'Short intro', rows=2, maxlength=160,
              instructions='Next to the title. Also used as the page description for Google. Up to 160 characters.'),
-    image('header_image', 'Photo', min_width=1920,
-          instructions='Landscape, at least 2400px wide. ' + IMG_FORMAT + ' The alt text from the media library is used.',
+    image('header_image', 'Photo',
+          instructions='Landscape, best at 2400px wide or larger. ' + IMG_FORMAT + ' ' + SMALLER + ' The alt text from the media library is used.',
           conditional_logic=[[{'field': 'field_pm_header_style', 'operator': '==', 'value': 'image'}]]),
     button_group('header_filter', 'Photo colour', {'none': 'Colour', 'grayscale': 'Black and white'}, 'none', width='50',
                  conditional_logic=[[{'field': 'field_pm_header_style', 'operator': '==', 'value': 'image'}]]),
@@ -741,23 +745,23 @@ b_story = block_group('story', 'Story', [
                                                           'italic and links only.'),
     button_group('story_media', 'Media type', {'image': 'Image', 'video': 'Video'}, 'image',
                  instructions='What fills the frame on the right: a photo, or a video with a poster photo.'),
-    image('story_image', 'Photo', min_width=1080, min_height=1350,
-          instructions='Portrait (4:5), at least 1080 × 1350px. ' + IMG_FORMAT,
+    image('story_image', 'Photo',
+          instructions='Portrait (4:5), best at 1080 × 1350px or larger. ' + IMG_FORMAT + ' ' + SMALLER,
           conditional_logic=[[{'field': 'field_pm_story_media', 'operator': '!=', 'value': 'video'}]]),
     button_group('story_video_source', 'Video source', {'upload': 'Upload', 'link': 'YouTube or Vimeo'}, 'upload',
                  instructions='Upload: a short silent clip from the media library that plays by itself while the section '
                               'is on screen. YouTube or Vimeo: the poster shows until the visitor presses play.',
                  conditional_logic=[STORY_VIDEO]),
-    video('story_video_file', 'Video file', required=1, max_size=10, mime_types='mp4, webm',
-          instructions='MP4 or WebM, portrait (4:5) or close, 10–20 seconds, under 8 MB. Plays without sound, on a loop.',
+    video('story_video_file', 'Video file', required=1, mime_types='mp4, webm',
+          instructions='MP4 or WebM, portrait (4:5) or close, 10–20 seconds, ideally under 8 MB. Plays without sound, on a loop.',
           conditional_logic=[STORY_VIDEO + [{'field': 'field_pm_story_video_source', 'operator': '==', 'value': 'upload'}]]),
     url('story_video_url', 'Video link', required=1, placeholder='https://www.youtube.com/watch?v=…',
         instructions='The address of the video on YouTube or Vimeo (other sites are not accepted). It loads only when '
                      'the visitor presses play, because YouTube and Vimeo set cookies.',
         conditional_logic=[STORY_VIDEO + [{'field': 'field_pm_story_video_source', 'operator': '==', 'value': 'link'}]]),
-    image('story_poster', 'Poster image', required=1, min_width=1080, min_height=1350,
+    image('story_poster', 'Poster image', required=1,
           instructions='Shown before the video plays, for visitors who turn off motion, and in the editor. Portrait (4:5), '
-                       'at least 1080 × 1350px. ' + IMG_FORMAT + ' Its alt text from the media library describes the video.',
+                       'best at 1080 × 1350px or larger. ' + IMG_FORMAT + ' ' + SMALLER + ' Its alt text from the media library describes the video.',
           conditional_logic=[STORY_VIDEO]),
 ])
 
@@ -767,9 +771,9 @@ b_services = block_group('services', 'What We Do', [
         text('service_index', 'Small red label', name='index', maxlength=20, placeholder='01 — Sales'),
         text('service_title', 'Title', name='title', required=1, maxlength=20, placeholder='Sales'),
         textarea('service_body', 'Short text', name='body', rows=2, maxlength=110, instructions='Up to 110 characters.'),
-        image('service_image', 'Photo', name='image', min_width=1200,
-              instructions='At least 1200px wide, the subject in the centre: the tile is tall and narrow until '
-                           'hovered. ' + IMG_FORMAT),
+        image('service_image', 'Photo', name='image',
+              instructions='Best at 1200px wide or larger, the subject in the centre: the tile is tall and narrow until '
+                           'hovered. ' + IMG_FORMAT + ' ' + SMALLER),
     ], min=2, max=4, button='Add service', collapsed='service_title',
         instructions='Two to four tiles in a row. Drag to reorder.'),
 ])
@@ -778,8 +782,8 @@ b_cta_image = block_group('cta-image', 'Photo call to action', [
     text('ctai_eyebrow', 'Small red line', width='50', maxlength=40, instructions='Optional, above the heading.'),
     textarea('ctai_title', 'Heading', rows=2, width='50', maxlength=30,
              instructions='Each new line starts a new line on the page. Up to 30 characters.'),
-    image('ctai_image', 'Background photo', min_width=1920,
-          instructions='Landscape, at least 2400px wide, darkened behind the heading. ' + IMG_FORMAT),
+    image('ctai_image', 'Background photo',
+          instructions='Landscape, best at 2400px wide or larger, darkened behind the heading. ' + IMG_FORMAT + ' ' + SMALLER),
     button_group('ctai_filter', 'Photo colour', {'grayscale': 'Black and white', 'none': 'Colour'}, 'grayscale', width='33'),
     range_field('ctai_brightness', 'Photo brightness', 55, 40, 70, append='%', width='33',
                 instructions='About uses 55%, Showroom 50%.'),
@@ -819,8 +823,8 @@ b_photo_slider = block_group('photo-slider', 'Photo slider', [
     text('slider_title', 'Heading', width='50', default_value='Inside', maxlength=30),
     text('slider_hint', 'Hint', width='50', default_value='Drag or use arrows', maxlength=30,
          instructions='Right of the caption under the photo.'),
-    gallery('slider_photos', 'Photos', min=1, max=12, min_width=1600,
-            instructions='Landscape (16:10), at least 2160px wide, ' + IMG_FORMAT +
+    gallery('slider_photos', 'Photos', min=1, max=12,
+            instructions='Landscape (16:10), best at 2160px wide or larger, ' + IMG_FORMAT + ' ' + SMALLER +
                          ' The caption under each photo is the image\'s Caption in the media library; its alt text '
                          'describes it for screen readers. Drag to reorder.'),
 ])
